@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("spct")
+@RequestMapping("/spct")
 public class SPCTController {
     //    @RequestMapping(name="login", method = RequestMethod.POST)
     StoreRequest rem;

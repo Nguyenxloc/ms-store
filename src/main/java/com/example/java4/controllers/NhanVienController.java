@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-@RequestMapping("nhan_vien")
+@RestController
+@RequestMapping("/employee")
 public class NhanVienController {
     StoreRequest rem;
     @Autowired

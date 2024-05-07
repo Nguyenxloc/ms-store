@@ -10,11 +10,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StoreRequest {
-    private String id;
+    private Integer id;
     @NotBlank(message = "Do not empty ma")
     private String ma;
     @NotBlank(message = "Do not empty ten")
     private String ten;
     @NotNull(message = "Do not empty trang thai")
-    private String trangThai;
+    private Integer trangThai;
 }

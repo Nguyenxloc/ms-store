@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("sale")
+@RequestMapping("/sale")
 public class SaleController {
     Integer idHDState = null;
     @Autowired

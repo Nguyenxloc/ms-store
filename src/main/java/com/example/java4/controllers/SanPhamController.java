@@ -1,80 +1,106 @@
 package com.example.java4.controllers;
+
 import com.example.java4.dto.san_pham.StoreRequest;
+import com.example.java4.entities.NhanVien;
 import com.example.java4.entities.SanPham;
 import com.example.java4.repositories.SanPhamRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-@Controller
-@RequestMapping("san_pham")
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/san-pham")
 public class SanPhamController {
     //    @RequestMapping(name="login", method = RequestMethod.POST)
     StoreRequest rem;
     @Autowired
     SanPhamRepository spRepo;
+
     public SanPhamController() {
         rem = new StoreRequest();
     }
 
-    @GetMapping("/create")
-    public String create(Model model)
-    {
-        model.addAttribute("data",rem);
-        return "admin/ql_san_pham/Create";
+    //    Lấy tất cả các dữ liệu danh sách nhân viên
+    @GetMapping("/get-all")
+    public List<SanPham> index() {
+        return spRepo.findAll();
     }
 
-    @GetMapping("/index")
-    public String index(Model model){
-          model.addAttribute("data",spRepo.findAll());
-          return "admin/ql_san_pham/Index";
+    // Lấy dữ liệu đối tượng Nhân Viên theo Id
+    @GetMapping("/detail/{id}")
+    public SanPham detail(@PathVariable("id") Integer id, Model model) {
+        return spRepo.findById(id).orElse(null);
     }
 
-    @GetMapping("/delete/{id}")
-    public String delete(Model model, @PathVariable(value ="id") SanPham sp){
-        spRepo.delete(sp);
-        return "redirect:/san_pham/index";
+    //  Lấy danh sách Nhân Viên có phân trang, 5 phần tử trên 1 trang
+    @GetMapping("/phan-trang")
+    public List<SanPham> page(@RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 12);
+        return spRepo.findByTrangThai(1, pageable).getContent();
     }
 
-    @GetMapping("/update/{id}")
-    public String getUpdate(Model model, @PathVariable(value ="id") SanPham sp){
-        StoreRequest newReq = new StoreRequest();
-        model.addAttribute("data",sp);
-        return "admin/ql_san_pham/Edit";
-    }
 
-    @PostMapping ("/update/{id}")
-    public String doUpdate(@Valid @ModelAttribute("data") StoreRequest req,BindingResult result,@PathVariable(value ="id") SanPham sp){
-        if (result.hasErrors()) {
-            return "admin/ql_san_pham/Edit";
-        }
-        else{
-            sp.setTen(req.getTen());
-            sp.setMa(req.getMa());
-            sp.setTrangThai(req.getTrangThai());
-            spRepo.save(sp);
-            return  "redirect:/san_pham/index";
-        }
-    }
-
-    @PostMapping("store")
-    public String Store(
-            @Valid @ModelAttribute("data") StoreRequest req,
+    //    Chức năng thêm mới Nhân Viên
+    @PostMapping("/create")
+    public String create(
+            @RequestBody @Valid StoreRequest sanPhamRequest,
             BindingResult result
     ) {
-        SanPham sp = new SanPham();
+
         if (result.hasErrors()) {
-            System.out.println("Có lỗi");
-            return "admin/ql_san_pham/Create";
-        }
-        else{
-            sp.setTen(req.getTen());
-            sp.setMa(req.getMa());
-            sp.setTrangThai(req.getTrangThai());
-            spRepo.save(sp);
-            return  "redirect:/san_pham/index";
+            System.out.println(result.getFieldError().getDefaultMessage());
+            return "Thêm mới sản phẩm thất bại";
+        } else {
+            SanPham sanPham = new SanPham();
+            sanPham.setTen(sanPhamRequest.getTen());
+            sanPham.setMa(sanPhamRequest.getMa());
+            sanPham.setTrangThai(sanPhamRequest.getTrangThai());
+
+            spRepo.save(sanPham);
+            return "Thêm mới sản phẩm thành công";
         }
     }
+
+
+    //    Chức năng cập nhật nhân viên
+    @PutMapping("/update-product")
+    public String doUpdate(
+            @RequestBody @Valid StoreRequest sanPhamRequest,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            System.out.println(result.getFieldError().getDefaultMessage());
+            return "Sửa sản phẩm thất bại";
+        } else {
+
+            SanPham sanPham = new SanPham();
+            sanPham.setId(sanPhamRequest.getId());
+            sanPham.setTen(sanPhamRequest.getTen());
+            sanPham.setMa(sanPhamRequest.getMa());
+            sanPham.setTrangThai(sanPhamRequest.getTrangThai());
+
+            spRepo.save(sanPham);
+            return "Sửa sản phẩm thành công";
+        }
+    }
+
+    //    Chức năng xóa màu sắc
+    @DeleteMapping("/delete-product/{id}")
+    public String delete(@PathVariable(value = "id") SanPham sanPham) {
+
+        if (sanPham == null) {
+            return "Xóa sản phẩm thất bại";
+        }
+
+        spRepo.delete(sanPham);
+        return "Xóa sản phẩm thành công ";
+    }
+
 }

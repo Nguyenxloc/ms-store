@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/khach_hang")
+
 public class KhachHangController {
     //    @RequestMapping(name="login", method = RequestMethod.POST)
     List<KhachHang> ds;

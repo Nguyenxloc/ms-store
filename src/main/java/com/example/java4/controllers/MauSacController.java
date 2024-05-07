@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("mau_sac")
+@RequestMapping("/mau_sac")
 public class MauSacController {
     ArrayList<StoreRequest> ds;
     MauSac msRem = new MauSac();
