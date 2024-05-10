@@ -108,15 +108,17 @@
 <div class="shopping-cart" id="shopping-cart">
     <c:forEach items="${listHDCT}" varStatus="hoaDonChiTietDTO" var="hdct">
         <div class="cart-item">
-            <img src="img/product1.jpg" alt="Product 1">
+            <img src="../bootstrap-shop-template/img/product-1.jpg" alt="Product 1">
             <div class="cart-item-info">
-                <div class="cart-item-name">Ten</div>
-                <div class="cart-item-price">$ 150</div>
-                <div class="cart-item-quantity">Qty: 1</div>
+                <div class="cart-item-name">${hdct.spct.sanPham.ten}</div>
+                <div class="cart-item-price"><fmt:formatNumber value="${hdct.donGia}" type="currency" currencyCode="VND"/></div>
+                <div class="cart-item-quantity">Quantity: ${hdct.soLuong}</div>
             </div>
         </div>
     </c:forEach>
-    <div class="cart-total">Total: $79.97</div>
+
+    <small>${count} Item(s) selected</small>
+    <div class="cart-total"><fmt:formatNumber value="${total}" type="currency" currencyCode="VND"/></div>
     <div class="checkout-buttons">
         <button class="btn btn-success">Thanh toán</button>
         <button class="btn btn-primary">Check Out</button>
@@ -238,7 +240,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="shop.html" class="nav-item nav-link">Shop</a>
+                        <a href="shop.jsp" class="nav-item nav-link">Shop</a>
                         <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Pages</a>
@@ -297,8 +299,7 @@
                     <tr>
                         <td class="align-middle"> ${hdct.spct.sanPham.ten} </td>
                         <td><img src="../bootstrap-shop-template/img/product-1.jpg" alt="" style="width: 50px;"></td>
-                        <td class="align-middle"><fmt:formatNumber value="${hdct.donGia}" type="currency"
-                                                                   currencyCode="VND"/></td>
+                        <td class="align-middle"><fmt:formatNumber value="${hdct.donGia}" type="currency" currencyCode="VND"/></td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
@@ -342,17 +343,17 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium">$150</h6>
+                        <h6 class="font-weight-medium"><fmt:formatNumber value="${total}" type="currency" currencyCode="VND"/></h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium"><fmt:formatNumber value="30000" type="currency" currencyCode="VND"/></h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">$160</h5>
+                        <h5 class="font-weight-bold"><fmt:formatNumber value="${total + 30000}" type="currency" currencyCode="VND"/></h5>
                     </div>
                     <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                 </div>
@@ -383,7 +384,7 @@
                     <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-dark mb-2" href="shop.jsp"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                         <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop
                             Detail</a>
                         <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping
@@ -397,7 +398,7 @@
                     <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
+                        <a class="text-dark mb-2" href="shop.jsp"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
                         <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop
                             Detail</a>
                         <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping

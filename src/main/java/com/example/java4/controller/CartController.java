@@ -23,6 +23,7 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
+    //    private static HDCTRepository hdctRepository;
     @Autowired
     SanPhamRepository sanPhamRepository;
 
@@ -32,6 +33,10 @@ public class CartController {
     @Autowired
     SPCTRepository spctRepository;
 
+
+    int count;
+    double amount;
+    double total = 0;
 
 
 //    @GetMapping("/view")
@@ -45,13 +50,22 @@ public class CartController {
 
 
     @GetMapping("/shoppingCart")
-    public String shoppingCart(Model model){
+    public String shoppingCart(Model model) {
 
-        List<HDCT> listHDCT = hdctRepository.findAllByHoaDon_Id(1);
+        List<HDCT> listHDCT = hdctRepository.findAllByHoaDon_Id(4);
+        for (HDCT hdct : listHDCT) {
+            count = count + hdct.getSoLuong();
+            amount = hdct.getSoLuong() * hdct.getDonGia();
+            total += amount;
+        }
+        System.out.println(count);
+        System.out.println(total);
 
-
-
-        model.addAttribute("listHDCT",listHDCT);
+        model.addAttribute("listHDCT", listHDCT);
+       // Tính tổng số lượng các mặt hàng trong giỏ hàng
+        model.addAttribute("count", count);
+        // Tính tổng số tiền (thành tiền) các mặt hàng trong giỏ hàng
+        model.addAttribute("total", total);
         return "cart";
     }
 
@@ -68,7 +82,7 @@ public class CartController {
         SPCT sanPhamChiTiet = this.spctRepository.findById(idSPCT).orElse(null);
 
         // Tìm và xóa chi tiết hóa đơn chứa sản phẩm cần xóa
-        HDCT hoaDonChiTiet = this.hdctRepository.findByHoaDonAndIdSanPhamChiTiet(1, sanPhamChiTiet);
+        HDCT hoaDonChiTiet = this.hdctRepository.findByHoaDonAndIdSanPhamChiTiet(2, sanPhamChiTiet);
 
         if (hoaDonChiTiet != null) {
 //            int soLuong = hoaDonChiTiet.getSoLuong(); // Số lượng sản phẩm sẽ được cập nhật lại trong hóa đơn
@@ -79,7 +93,7 @@ public class CartController {
             this.hdctRepository.delete(hoaDonChiTiet);
         }
 
-        return "redirect:/cart/shoppingCart" ;
+        return "redirect:/cart/shoppingCart";
     }
 
 
