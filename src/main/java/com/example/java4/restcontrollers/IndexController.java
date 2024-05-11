@@ -15,15 +15,15 @@ public class IndexController {
         return "index";
     }
 
-//    @PostMapping("view/admin")
-//    public String index(
-//            LoginRequest req,
-//            Model model
-//    ) {
-//        System.out.println("LoginController@login");
-//        System.out.println(req.getEmail());
-//        System.out.println(req.getPassword());
-//        model.addAttribute("name", req.getEmail());
-//        return "index";
-//    }
+    @PostMapping("view/admin")
+    public String index(
+            LoginRequest req,
+            Model model
+    ) {
+        System.out.println("LoginController@login");
+        System.out.println(req.getEmail());
+        System.out.println(req.getPassword());
+        model.addAttribute("name", req.getEmail());
+        return "index";
+    }
 }

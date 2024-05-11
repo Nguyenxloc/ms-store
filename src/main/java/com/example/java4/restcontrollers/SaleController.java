@@ -57,8 +57,8 @@ public class SaleController {
 
     @GetMapping("/addNewHD")
     public String addNewHD(Model model) {
-//        HoaDon hd = new HoaDon(null, 1, 1, new Date(System.currentTimeMillis()), 0);
-//        hdBaseRepo.save(hd);
+        HoaDon hd = new HoaDon(null, 1, 1, new Date(System.currentTimeMillis()), 0);
+        hdBaseRepo.save(hd);
         return "redirect:/sale/create";
     }
 
@@ -67,8 +67,8 @@ public class SaleController {
         Integer idSPCT = spct.getId();
         spct.setSoLuong(spct.getSoLuong()-1);
         System.out.println("test spct: "+spct.getId());
-//        HDCT hdct = new HDCT(null, idHDState, idSPCT, 1, (int) spctBaseRepo.findById(idSPCT).get().getDonGia(), new Timestamp(System.currentTimeMillis()), 1);
-//        hdctBaseRepo.save(hdct);
+        HDCT hdct = new HDCT(null, idHDState, idSPCT, 1, (int) spctBaseRepo.findById(idSPCT).get().getDonGia(), new Timestamp(System.currentTimeMillis()), 1);
+        hdctBaseRepo.save(hdct);
         spctBaseRepo.save(spct);
         return "redirect:/sale/create";
     }
@@ -103,7 +103,7 @@ public class SaleController {
 
     @PostMapping("store")
     public String Store(
-//            @Valid @ModelAttribute("data") NewHDCTRequest req,
+            @Valid @ModelAttribute("data") NewHDCTRequest req,
             BindingResult result, Model model
     ) {
         return "redirect:/spct/create";
