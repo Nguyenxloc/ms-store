@@ -1,3 +1,8 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page pageEncoding="UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -293,32 +298,31 @@
                 </div>
                 <div class="card-body">
                     <h5 class="font-weight-medium mb-3">Products</h5>
-                    <div class="d-flex justify-content-between">
-                        <p>Colorful Stylish Shirt 1</p>
-                        <p>$150</p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p>Colorful Stylish Shirt 2</p>
-                        <p>$150</p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p>Colorful Stylish Shirt 3</p>
-                        <p>$150</p>
-                    </div>
+                    <h5 class="font-weight-medium mb-3">Products</h5>
+
+                    <c:forEach items="${listHDCT}" varStatus="hoaDonChiTietDTO" var="hdct">
+                        <div class="d-flex justify-content-between">
+                            <p>${hdct.spct.sanPham.ten}</p>
+                            <p><fmt:formatNumber value="${hdct.donGia}" type="currency" currencyCode="VND"/></p>
+<%--                            <div class="cart-item-quantity">Quantity: ${hdct.soLuong}</div>--%>
+                        </div>
+                    </c:forEach>
+
+
                     <hr class="mt-0">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium">$150</h6>
+                        <h6 class="font-weight-medium"><fmt:formatNumber value="${subtotal}" type="currency" currencyCode="VND"/></h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
+                        <h6 class="font-weight-medium"><fmt:formatNumber value="${shipping}" type="currency" currencyCode="VND"/></h6>
                     </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">$160</h5>
+                        <h5 class="font-weight-bold"> <fmt:formatNumber value="${subtotal + shipping}" type="currency" currencyCode="VND"/> </h5>
                     </div>
                 </div>
             </div>

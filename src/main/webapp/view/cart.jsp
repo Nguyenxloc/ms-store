@@ -278,13 +278,15 @@
 
 
 <!-- Cart Start -->
+
 <div class="container-fluid pt-5">
     <div class="row px-xl-5">
-        <div class="col-lg-8 table-responsive mb-5">
+        <div class="col-lg-12 table-responsive mb-5">
             <table class="table table-bordered text-center mb-0">
                 <thead class="bg-secondary text-dark">
                 <tr>
                     <th>Product</th>
+                    <th></th>
                     <th>Image</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -297,7 +299,14 @@
                 <c:forEach items="${listHDCT}" varStatus="hoaDonChiTietDTO" var="hdct">
 
                     <tr>
-                        <td class="align-middle"> ${hdct.spct.sanPham.ten} </td>
+                        <td class="">
+                            <img src="../bootstrap-shop-template/img/product-1.jpg" alt="" style="width: 50px; height: auto; float: left; margin-right: 10px;">
+                            <p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0;">${hdct.spct.sanPham.ten}</p>
+                        </td>
+                        <td>
+                            <p> Màu sắc: Nâu</p>
+                            <p>Kích thước:38</p>
+                        </td>
                         <td><img src="../bootstrap-shop-template/img/product-1.jpg" alt="" style="width: 50px;"></td>
                         <td class="align-middle"><fmt:formatNumber value="${hdct.donGia}" type="currency" currencyCode="VND"/></td>
                         <td class="align-middle">
@@ -326,6 +335,13 @@
                 </c:forEach>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 ">
         </div>
         <div class="col-lg-4">
             <form class="mb-5" action="">

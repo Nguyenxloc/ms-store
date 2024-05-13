@@ -7,6 +7,7 @@ import com.example.java4.entities.SanPham;
 import com.example.java4.repositories.HDCTRepository;
 import com.example.java4.repositories.SPCTRepository;
 import com.example.java4.repositories.SanPhamRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,11 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
+@SessionAttributes({"amount", "total"})
 public class CartController {
 
     //    private static HDCTRepository hdctRepository;
@@ -32,6 +35,9 @@ public class CartController {
 
     @Autowired
     SPCTRepository spctRepository;
+
+    @Autowired
+    HttpSession session;
 
 
     int count;
@@ -50,7 +56,7 @@ public class CartController {
 
 
     @GetMapping("/shoppingCart")
-    public String shoppingCart(Model model) {
+    public String shoppingCart(Model model,HttpSession session) {
 
         List<HDCT> listHDCT = hdctRepository.findAllByHoaDon_Id(4);
         for (HDCT hdct : listHDCT) {
@@ -58,6 +64,11 @@ public class CartController {
             amount = hdct.getSoLuong() * hdct.getDonGia();
             total += amount;
         }
+
+        session.setAttribute("total",total);
+        session.setAttribute("listHDCT",listHDCT);
+
+
         System.out.println(count);
         System.out.println(total);
 
@@ -74,10 +85,8 @@ public class CartController {
     @GetMapping("/remove-from-cart/{idSPCT}")
     public String deleteProductToCart(@PathVariable("idSPCT") int idSPCT) {
 
-//
-
         // Lấy ra thông tin hóa đơn hiện tại của người dùng
-//        HoaDon hoaDon = this.hoaDonRepository.findById(userInfo.idHoaDon).orElse(null);
+        //HoaDon hoaDon = this.hoaDonRepository.findById(userInfo.idHoaDon).orElse(null);
         // Lấy ra thông tin chi tiết sản phẩm để xóa
         SPCT sanPhamChiTiet = this.spctRepository.findById(idSPCT).orElse(null);
 
