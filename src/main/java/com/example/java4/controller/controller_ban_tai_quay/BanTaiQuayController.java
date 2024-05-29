@@ -58,11 +58,19 @@ public class BanTaiQuayController {
         listCTSP = sanPhamChiTietRepository.findAll();
         listHDCT = hoaDonChiTietRepository.findAll();
         listKH = khachHangRepository.findAll();
+<<<<<<< HEAD
         model.addAttribute("listHoaDon", listHoaDon);
         model.addAttribute("listCTSP", listCTSP);
         model.addAttribute("listHDCT", listHDCT);
         model.addAttribute("listKH", listKH);
         return "/view/view_ban_tai_quay/index.jsp";
+=======
+        model.addAttribute("listHoaDon",listHoaDon);
+        model.addAttribute("listCTSP",listCTSP);
+//        model.addAttribute("listHDCT",listHDCT);
+        model.addAttribute("listKH",listKH);
+        return "/view/view_ban_tai_quay/index";
+>>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
     }
 
     // Thêm mới hóa d
@@ -80,12 +88,17 @@ public class BanTaiQuayController {
         HoaDon hoaDon = new HoaDon();
         hoaDon.setTrangThai(0);
         hoaDon.setNgayTao(new Date());
+<<<<<<< HEAD
         try {
             this.hoaDonRepository.save(hoaDon);
             redirectAttributes.addFlashAttribute("success", "Hóa đơn được tạo thành công!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi khi tạo hóa đơn.");
         }
+=======
+
+        hoaDonRepository.save(hoaDon);
+>>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
 
         return "redirect:/ban-hang";
     }
@@ -122,8 +135,13 @@ public class BanTaiQuayController {
 
         //Lọc hóa đơn chi tiết theo id hóa đơn
         List<ChiTietHoaDon> gioHangTheoHoaDon = new ArrayList<>();
+<<<<<<< HEAD
         for (ChiTietHoaDon ct :listHDCT){
             if (ct.getIdHoaDon().getId() == idHD){
+=======
+        for (ChiTietHoaDon ct:listHDCT){
+            if (ct.getIdHoaDon().getId().equals(idHD)){
+>>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
                 gioHangTheoHoaDon.add(ct);
 
                 //Tính tổng tiền từng hóa đơn
@@ -140,9 +158,10 @@ public class BanTaiQuayController {
         }
 
 
-        return "/ban-hang/index";
+        return "/view/view_ban_tai_quay/index";
     }
 
+<<<<<<< HEAD
 //    @PostMapping("add-san-pham/{idCTSP}")
 //    public String addSanPhamVaoGioHang(@PathVariable String idCTSP,
 //                                       @RequestParam String idHoaDon){
@@ -241,5 +260,105 @@ public class BanTaiQuayController {
 //            }
 //        }
 //    }
+=======
+    @PostMapping("add-san-pham/{idCTSP}")
+    public String addSanPhamVaoGioHang(@PathVariable String idCTSP,
+                                       @RequestParam String idHoaDon){
+        ChiTietHoaDon hdct = new ChiTietHoaDon();
+
+        //Tìm sản phẩm trong giỏ hàng
+        boolean spTonTaiTrongGioHang = false;
+        Integer slBanDau = 1;
+        for (ChiTietHoaDon sp:listHDCT){
+            if (sp.getIdCTSP().getId().equals(idCTSP) && sp.getIdHoaDon().getId().equals(idHoaDon)){
+                System.out.println("idCTSP"+sp.getIdCTSP().getId());
+                System.out.println("ID hóa đơn"+sp.getIdHoaDon().getId());
+
+                sp.setSoLuong(sp.getSoLuong()+1);
+                hoaDonChiTietRepository.save(sp);
+
+//                slBanDau = sp.getSoLuongMua();
+                spTonTaiTrongGioHang=true;
+                System.out.println("-------Số lượng sản phẩm----------"+sp.getSoLuong());
+                System.out.println("-------Số lượng sản test----------"+slBanDau);
+                break;
+            }
+        }
+
+        Integer donGia = null;
+        if (!spTonTaiTrongGioHang){
+            for (ChiTietSanPham sp:listCTSP){
+                if (sp.getId().equals(idCTSP)){
+                    donGia = sp.getGiaBan();
+                }
+            }
+
+            ChiTietSanPham ctsp = new ChiTietSanPham();
+            ctsp.setId(idCTSP);
+            hdct.setIdCTSP(ctsp);
+
+            HoaDon hoaDon = new HoaDon();
+            hoaDon.setId(idHoaDon);
+            hdct.setIdHoaDon(hoaDon);
+            hdct.setSoLuong(1);
+            hdct.setDonGia(donGia);
+
+            hoaDonChiTietRepository.save(hdct);
+
+        }
+
+        return "redirect:/ban-hang/detail-hoa-don/" + idHoaDon;
+    }
+
+    @PostMapping("/delete-hdct/{idHDCT}")
+    public String deleteHDCT(@PathVariable Integer idHDCT,
+                             @RequestParam Integer idHoaDon){
+
+        for (ChiTietHoaDon hdct:listHDCT){
+            if (hdct.getId().equals(idHDCT)){
+                hoaDonChiTietRepository.delete(hdct);
+            }
+        }
+
+        return "redirect:/ban-hang/detail-hoa-don/" + idHoaDon;
+    }
+
+    //Thanh toán
+    @PostMapping("/thanh-toan/{idHoaDon}")
+    public String thanhToanSanPham(@PathVariable String idHoaDon,
+                                   @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date ngayTao,
+                                   @RequestParam String idKhachHang){
+
+        for (int i=0;i<listHoaDon.size();i++){
+            if (listHoaDon.get(i).getId().equals(idHoaDon)){
+                HoaDon hoaDon = new HoaDon();
+                hoaDon.setId(idHoaDon);
+                KhachHang khachHang = new KhachHang();
+                khachHang.setId(idKhachHang);
+                hoaDon.setIdKhachHang(khachHang);
+                capMhatSoLuong();
+                hoaDon.setTrangThai(1);
+                hoaDon.setNgayTao(ngayTao);
+                hoaDonRepository.save(hoaDon);
+            }
+        }
+
+        return "redirect:/ban-hang";
+    }
+
+    //Cập nhật só lượng sau khi thanh toán
+    public void capMhatSoLuong(){
+        for (ChiTietHoaDon hdct:listHDCT){
+            String idSPCT = hdct.getIdCTSP().getId();
+            int soLuong = hdct.getSoLuong();
+            for (ChiTietSanPham sp:listCTSP){
+                if (sp.getId().equals(idSPCT)){
+                    sp.setSoLuong(sp.getSoLuong()-soLuong);
+                    sanPhamChiTietRepository.save(sp);
+                }
+            }
+        }
+    }
+>>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public interface HDCTRepository
+<<<<<<< HEAD
         extends JpaRepository<ChiTietHoaDon,Integer>
 {
         public static final int ACTIVE = 1;
@@ -21,4 +22,15 @@ public interface HDCTRepository
 //        public List<ChiTietHoaDon> findAllByHoaDon_Id(Integer id);
 //        @Query ("SELECT h FROM ChiTietHoaDon h WHERE h.idHoaDon.id = :hoaDon AND h.idCTSP = :sanPhamChiTiet")
 //        ChiTietHoaDon findByHoaDonAndIdSanPhamChiTiet(@PathVariable ("hoaDon") Integer hoaDon, @PathVariable ("sanPhamChiTiet") ChiTietSanPham sanPhamChiTiet);
+=======
+        extends JpaRepository<ChiTietHoaDon,String>
+{
+//        public static final int ACTIVE = 1;
+//        public static final int INACTIVE = 0;
+//        public Page<ChiTietHoaDon> findByTrangThai(int trangThai, Pageable pageable);
+//        public List<ChiTietHoaDon> findAllByHoaDon_Id(String id);
+//        @Query ("SELECT h FROM ChiTietHoaDon h WHERE h.idHoaDon.id = :hoaDon AND h.idCTSP = :sanPhamChiTiet")
+//        ChiTietHoaDon findByHoaDonAndIdSanPhamChiTiet(@PathVariable ("hoaDon") String hoaDon, @PathVariable ("sanPhamChiTiet") ChiTietSanPham sanPhamChiTiet);
+//
+>>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
 };

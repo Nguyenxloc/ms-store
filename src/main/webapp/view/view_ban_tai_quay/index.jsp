@@ -72,8 +72,13 @@
                     <tr>
                         <td>${i.index+1}</td>
                         <td>${hoaDon.id}</td>
+<<<<<<< HEAD
                         <td><fmt:formatDate value="${hoaDon.ngayTao}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                         <td>${hoaDon.idKhachHang.ten}</td>
+=======
+                        <td>${hoaDon.ngayTao}</td>
+                        <td>${hoaDon.idKhachHang.hoTen}</td>
+>>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
                         <td>${hoaDon.trangThai==0?"Chua thanh toan":"Da thanh toan"}</td>
                         <td>
                             <div><a href="/ban-hang/detail-hoa-don/${hoaDon.id}" class="btn btn-primary">View</a></div>
@@ -105,11 +110,11 @@
                     <tr>
                         <td>${i.index+1}</td>
                         <td>${hdct.idHoaDon.id}</td>
-                        <td>${hdct.idCTSP.idSanPham.maSP}</td>
-                        <td>${hdct.idCTSP.idSanPham.tenSP}</td>
-                        <td>${hdct.soLuongMua}</td>
-                        <td>${hdct.giaBan}</td>
-                        <td>${hdct.soLuongMua*hdct.giaBan}</td>
+                        <td>${hdct.idCTSP.idSanPham.ma}</td>
+                        <td>${hdct.idCTSP.idSanPham.ten}</td>
+                        <td>${hdct.soLuong}</td>
+                        <td>${hdct.donGia}</td>
+                        <td>${hdct.soLuong*hdct.donGia}</td>
                         <td>
                             <form action="/ban-hang/delete-hdct/${hdct.id}" method="post">
                                 <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
@@ -139,10 +144,10 @@
                 <c:forEach varStatus="i" items="${listCTSP}" var="spct">
                     <tr>
                         <td>${i.index+1}</td>
-                        <td>${spct.idSanPham.maSP}</td>
-                        <td>${spct.idSanPham.tenSP}</td>
-                        <td>${spct.idMauSac.tenMau}</td>
-                        <td>${spct.idSize.tenSize}</td>
+                        <td>${spct.idSanPham.ma}</td>
+                        <td>${spct.idSanPham.ten}</td>
+                        <td>${spct.idMauSac.ten}</td>
+                        <td>${spct.idKichThuoc.ten}</td>
                         <td>${spct.soLuong}</td>
                         <td>${spct.giaBan}</td>
                         <td>
