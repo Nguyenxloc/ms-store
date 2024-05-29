@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="ms-store@localhost" uuid="9a375b8e-7edf-4c64-a3ee-0c4b94d42b5f">
+    <data-source source="LOCAL" name="MS_Store@localhost" uuid="4a3e9b63-4f1a-4d5d-a079-bbf46b75df3e">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost:1433;databaseName=ms-store;encrypt=true;trustServerCertificate=true;</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://localhost:1433;databaseName=MS_Store;encrypt=true;trustServerCertificate=true;</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
