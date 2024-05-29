@@ -18,7 +18,7 @@ public interface HDCTRepository
         public static final int ACTIVE = 1;
         public static final int INACTIVE = 0;
         public Page<ChiTietHoaDon> findByTrangThai(int trangThai, Pageable pageable);
-        public List<ChiTietHoaDon> findAllByHoaDon_Id(Integer id);
-        @Query ("SELECT h FROM ChiTietHoaDon h WHERE h.hoaDon.id = :hoaDon AND h. = :sanPhamChiTiet")
-        ChiTietHoaDon findByHoaDonAndIdSanPhamChiTiet(@PathVariable ("hoaDon") Integer hoaDon, @PathVariable ("sanPhamChiTiet") ChiTietSanPham sanPhamChiTiet);
+//        public List<ChiTietHoaDon> findAllByHoaDon_Id(Integer id);
+//        @Query ("SELECT h FROM ChiTietHoaDon h WHERE h.idHoaDon.id = :hoaDon AND h.idCTSP = :sanPhamChiTiet")
+//        ChiTietHoaDon findByHoaDonAndIdSanPhamChiTiet(@PathVariable ("hoaDon") Integer hoaDon, @PathVariable ("sanPhamChiTiet") ChiTietSanPham sanPhamChiTiet);
 };

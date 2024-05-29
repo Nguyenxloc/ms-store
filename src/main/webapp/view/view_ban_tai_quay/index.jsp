@@ -1,5 +1,8 @@
 <%@page pageEncoding="UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,14 +21,38 @@
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
             rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </head>
 
 <body>
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <h3>Bán hàng</h3>
+            <h3>Bán hàng Tại Quầy</h3>
+
+            <div class="card-header">
+                Hóa Đơn
+                <div class="float-end">
+
+                    <form action="/ban-hang/add-hoa-don" method="post" style="float: right;" id="addHoaDonForm">
+                                                    <button type="submit" class="btn btn-success btn-bill">+</button>
+                    </form>
+<%--                    <a href="/ban-hang/add-hoa-don">--%>
+<%--                        <button type="button" class="btn btn-success ">Create</button>--%>
+<%--                    </a>--%>
+                </div>
+
+            </div>
+
             <table class="table table-hover">
+                <input type="hidden" id="currentHoaDonCount" value="${currentHoaDonCount}">
                 <thead>
                 <tr>
                     <th>STT</th>
@@ -34,9 +61,9 @@
                     <th>Tên khách hàng</th>
                     <th>Trạng thái</th>
                     <th>Details
-                        <form action="/ban-hang/add-hoa-don" method="post" style="float: right;">
-                            <button type="submit" class="btn btn-success">+</button>
-                        </form>
+<%--                        <form action="/ban-hang/add-hoa-don" method="post" style="float: right;">--%>
+<%--                            <button type="submit" class="btn btn-success btn-bill">+</button>--%>
+<%--                        </form>--%>
                     </th>
                 </tr>
                 </thead>
@@ -45,11 +72,14 @@
                     <tr>
                         <td>${i.index+1}</td>
                         <td>${hoaDon.id}</td>
-                        <td>${hoaDon.ngayTao}</td>
+                        <td><fmt:formatDate value="${hoaDon.ngayTao}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                         <td>${hoaDon.idKhachHang.ten}</td>
                         <td>${hoaDon.trangThai==0?"Chua thanh toan":"Da thanh toan"}</td>
                         <td>
-                            <a href="/ban-hang/detail-hoa-don/${hoaDon.id}" class="btn btn-primary">View</a>
+                            <div><a href="/ban-hang/detail-hoa-don/${hoaDon.id}" class="btn btn-primary">View</a></div>
+
+<%--                            <div><a href="/ban-hang/delete-hoa-don/${hoaDon.id}" class="btn btn-danger">Delete</a></div>--%>
+
                         </td>
                     </tr>
                 </c:forEach>
@@ -138,7 +168,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label">ID hóa đơn</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${hoaDon.id}" />
+                                <input type="text" class="form-control" value="${hoaDon.id}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -150,10 +180,11 @@
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label">Sđt khách hàng</label>
                             <div class="col-sm-6">
-                                <select path="idKhachHang" class="form-select" aria-label="Default select example" name="idKhachHang">
+                                <select path="idKhachHang" class="form-select" aria-label="Default select example"
+                                        name="idKhachHang">
                                     <c:forEach items="${listKH}" var="khachHang">
 
-                                        <option value="${khachHang.id}" ${hoaDon.idKhachHang.sdt==khachHang.sdt?"selected":""}>${khachHang.sdt}</option>
+                                        <option value="${khachHang.id}" ${hoaDon.idKhachHang.sdt==khachHang.sdt?"selected":""}>${khachHang.sdt} </option>
 
                                     </c:forEach>
                                 </select>
@@ -166,11 +197,11 @@
                             <label class="col-sm-4 col-form-label">Tổng tiền</label>
                             <div class="col-sm-8">
                                 <input id="tongTien" type="number" class="form-control" value="${tongTien}"
-                                       readonly />
+                                       readonly/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-sm-4 col-form-label">Tiền khách đưa</label>
+                            <label class="col-sm-4 col-form-label">Tiền khách đưa </label>
                             <div class="col-sm-6">
                                 <input id="tienKhachDua" class="form-control" type="number" required>
                                 <span id="errTraLai" style="color: red"></span>
@@ -201,6 +232,70 @@
         </div>
     </div>
 </div>
+
+
+
+
+<script>
+    // Hiển thị thông báo thêm thành công hoặc thất bại sử dụng thư viện Sweet Alert2
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    <c:if test="${not empty success}">
+    Toast.fire({
+        icon: "success",
+        title: "${success}"
+    });
+    </c:if>
+
+    <c:if test="${not empty error}">
+    Toast.fire({
+        icon: "error",
+        title: "${error}"
+    });
+    </c:if>
+
+    <c:if test="${not empty errorBillMax}">
+    Toast.fire({
+        icon: "warning",
+        title: "${errorBillMax}"
+    });
+    </c:if>
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const addButton = document.querySelector(".btn-bill");
+        const currentHoaDonCount = parseInt(document.getElementById("currentHoaDonCount").value);
+
+        addButton.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            if (currentHoaDonCount >= 5) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Bạn chỉ có thể tạo tối đa 5 đơn hàng",
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            } else {
+                document.getElementById("addHoaDonForm").submit();
+            }
+        });
+    });
+</script>
 </body>
 
 <script>
@@ -209,17 +304,17 @@
         var tongTien = parseFloat('${tongTien}');
         var tienKhachDua = parseFloat(document.getElementById('tienKhachDua').value);
         var tienTraLai = tienKhachDua - tongTien;
-        var  thongBao = document.getElementById("errTraLai");
+        var thongBao = document.getElementById("errTraLai");
         if (isNaN(tienKhachDua)) {
-            thongBao.textContent="Vui lòng nhập số tiền hợp lệ.";
+            thongBao.textContent = "Vui lòng nhập số tiền hợp lệ.";
             // alert('Vui lòng nhập số tiền hợp lệ.');
             return false;
         }
 
         if (tienKhachDua < tongTien) {
-            thongBao.textContent="Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
+            thongBao.textContent = "Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
             // alert('Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.');
-            document.getElementById('tienTraLai').value ="";
+            document.getElementById('tienTraLai').value = "";
             return false;
         }
 
@@ -231,9 +326,9 @@
         var tienKhachDua = document.getElementById("tienKhachDua").value;
         var tongTien = parseFloat('${tongTien}');
         if (tienKhachDua === "" || tienKhachDua < tongTien) {
-            thongBao.textContent= thongBao.textContent="Vui lòng nhập số tiền khách đưa hợp lệ."
+            thongBao.textContent = thongBao.textContent = "Vui lòng nhập số tiền khách đưa hợp lệ."
             // alert("Vui lòng nhập số tiền khách đưa hợp lệ.");
-            document.getElementById('tienTraLai').value ="";
+            document.getElementById('tienTraLai').value = "";
             return false;
         }
         return true;
@@ -250,6 +345,7 @@
 
         return true; // Cho phép thêm sản phẩm vào giỏ hàng nếu đã chọn hóa đơn
     }
+
 
 </script>
 

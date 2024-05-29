@@ -12,13 +12,14 @@ import java.util.Optional;
 
 @Repository
 public interface HoaDonRepository
-        extends JpaRepository<HoaDon,Integer>
+        extends JpaRepository<HoaDon,String>
 {
     public static final int ACTIVE  = 1;
     public static final int INACTIVE =0;
     public Page<HoaDon> findByTrangThai(int trangThai, Pageable pageable);
+    public List<HoaDon> findByTrangThai(int trangThai);
     @Query(value = "SELECT TOP 5 * FROM HoaDon where trangThai = 0 ORDER BY ID DESC ",
             nativeQuery = true)
     public List<HoaDon>  selectTop5();
-    public Optional<HoaDon> findById(Integer id);
+//    public Optional<HoaDon> findById(Integer id);
 };
