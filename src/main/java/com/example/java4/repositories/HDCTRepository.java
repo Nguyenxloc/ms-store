@@ -1,7 +1,7 @@
 package com.example.java4.repositories;
 
-import com.example.java4.entities.HDCT;
-import com.example.java4.entities.SPCT;
+import com.example.java4.entities.ChiTietHoaDon;
+import com.example.java4.entities.ChiTietSanPham;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @Repository
 public interface HDCTRepository
-        extends JpaRepository<HDCT,Integer>
+        extends JpaRepository<ChiTietHoaDon,Integer>
 {
         public static final int ACTIVE = 1;
         public static final int INACTIVE = 0;
-        public Page<HDCT> findByTrangThai(int trangThai, Pageable pageable);
-        public List<HDCT> findAllByHoaDon_Id(Integer id);
-        @Query ("SELECT h FROM HDCT h WHERE h.hoaDon.id = :hoaDon AND h.spct = :sanPhamChiTiet")
-        HDCT findByHoaDonAndIdSanPhamChiTiet(@PathVariable ("hoaDon") Integer hoaDon, @PathVariable ("sanPhamChiTiet") SPCT sanPhamChiTiet);
+        public Page<ChiTietHoaDon> findByTrangThai(int trangThai, Pageable pageable);
+        public List<ChiTietHoaDon> findAllByHoaDon_Id(Integer id);
+        @Query ("SELECT h FROM ChiTietHoaDon h WHERE h.hoaDon.id = :hoaDon AND h. = :sanPhamChiTiet")
+        ChiTietHoaDon findByHoaDonAndIdSanPhamChiTiet(@PathVariable ("hoaDon") Integer hoaDon, @PathVariable ("sanPhamChiTiet") ChiTietSanPham sanPhamChiTiet);
 };

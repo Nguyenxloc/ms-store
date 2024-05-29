@@ -1,9 +1,7 @@
 package com.example.java4.controller.controller_ban_tai_quay;
 
-import com.example.java4.entities.HDCT;
 import com.example.java4.entities.HoaDon;
 import com.example.java4.entities.KhachHang;
-import com.example.java4.entities.SPCT;
 import com.example.java4.repositories.HDCTRepository;
 import com.example.java4.repositories.HoaDonRepository;
 import com.example.java4.repositories.KhachHangRepository;
@@ -62,8 +60,11 @@ public class BanTaiQuayController {
 //        KhachHang khachHang = new KhachHang();
 //        khachHang.setId(1);
 //        hoaDon.setIdKhachHang(khachHang);
+
+
+
         hoaDon.setTrangThai(0);
-        hoaDon.setNgayMuaHang(new Date());
+        hoaDon.setNgayTao(new Date());
 
         hoaDonRepository.save(hoaDon);
 
@@ -182,10 +183,10 @@ public class BanTaiQuayController {
                 hoaDon.setId(idHoaDon);
                 KhachHang khachHang = new KhachHang();
                 khachHang.setId(idKhachHang);
-                hoaDon.setKhachHang(khachHang);
+//                hoaDon.set(khachHang);
                 capMhatSoLuong();
                 hoaDon.setTrangThai(1);
-                hoaDon.setNgayMuaHang(ngayTao);
+                hoaDon.setNgayTao( ngayTao);
                 hoaDonRepository.save(hoaDon);
             }
         }
