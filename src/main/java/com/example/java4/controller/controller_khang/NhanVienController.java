@@ -41,9 +41,9 @@ public class NhanVienController {
             return "/view_khang/ql_nhan_vien/create";
         }else {
             NhanVien nhanVien = new NhanVien();
-            nhanVien.setMa(request.getMa());
-            nhanVien.setTen(request.getTen());
-            nhanVien.setTenDangNhap(request.getTenDangNhap());
+//            nhanVien.set(request.getMa());
+            nhanVien.setHoTen(request.getTen());
+            nhanVien.setTaiKhoan(request.getTenDangNhap());
             nhanVien.setMatKhau(request.getMatKhau());
             nhanVien.setTrangThai(request.getTrangThai());
             nhanVienRepository.save(nhanVien);
@@ -70,9 +70,9 @@ public class NhanVienController {
             return "/view_khang/ql_nhan_vien/create";
         }
 
-        nv.setMa(req.getMa());
-        nv.setTen(req.getTen());
-        nv.setTenDangNhap(req.getTenDangNhap());
+//        nv.setMa(req.getMa());
+        nv.setHoTen(req.getTen());
+        nv.setTaiKhoan(req.getTenDangNhap());
         nv.setMatKhau(req.getMatKhau());
         nv.setTrangThai(req.getTrangThai());
         this.nhanVienRepository.save(nv);
