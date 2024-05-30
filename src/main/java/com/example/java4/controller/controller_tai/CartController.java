@@ -1,10 +1,7 @@
 //package com.example.java4.controller.controller_tai;
 //
-<<<<<<< HEAD
-=======
 //import com.example.java4.entities.ChiTietHoaDon;
 //import com.example.java4.entities.ChiTietSanPham;
->>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
 //import com.example.java4.repositories.HDCTRepository;
 //import com.example.java4.repositories.SPCTRepository;
 //import com.example.java4.repositories.SanPhamRepository;
@@ -50,13 +47,10 @@
 //    @GetMapping("/shoppingCart")
 //    public String shoppingCart(Model model) {
 //
-<<<<<<< HEAD
 //        List<HDCT> listHDCT = hdctRepository.findAllByHoaDon_Id(4);
 //        for (HDCT hdct : listHDCT) {
-=======
 //        List<ChiTietHoaDon> listHDCT = hdctRepository.findAllByHoaDon_Id("fagagadg");
 //        for (ChiTietHoaDon hdct : listHDCT) {
->>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
 //            count = count + hdct.getSoLuong();
 //            amount = hdct.getSoLuong() * hdct.getDonGia();
 //            total += amount;
@@ -82,17 +76,14 @@
 //        // Lấy ra thông tin hóa đơn hiện tại của người dùng
 ////        HoaDon hoaDon = this.hoaDonRepository.findById(userInfo.idHoaDon).orElse(null);
 //        // Lấy ra thông tin chi tiết sản phẩm để xóa
-<<<<<<< HEAD
 //        SPCT sanPhamChiTiet = this.spctRepository.findById(idSPCT).orElse(null);
 //
 //        // Tìm và xóa chi tiết hóa đơn chứa sản phẩm cần xóa
 //        HDCT hoaDonChiTiet = this.hdctRepository.findByHoaDonAndIdSanPhamChiTiet(2, sanPhamChiTiet );
-=======
 //        ChiTietSanPham sanPhamChiTiet = this.spctRepository.findById(idSPCT).orElse(null);
 //
 //        // Tìm và xóa chi tiết hóa đơn chứa sản phẩm cần xóa
 //        ChiTietHoaDon hoaDonChiTiet = this.hdctRepository.findByHoaDonAndIdSanPhamChiTiet("2", sanPhamChiTiet );
->>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
 //
 //        if (hoaDonChiTiet != null) {
 ////            int soLuong = hoaDonChiTiet.getSoLuong(); // Số lượng sản phẩm sẽ được cập nhật lại trong hóa đơn

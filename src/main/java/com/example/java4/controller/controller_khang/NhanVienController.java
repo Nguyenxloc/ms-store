@@ -42,10 +42,6 @@ public class NhanVienController {
             return "/view_khang/ql_nhan_vien/create";
         }else {
             NhanVien nhanVien = new NhanVien();
-<<<<<<< HEAD
-=======
-//            nhanVien.set(request.getMa());
->>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
             nhanVien.setHoTen(request.getTen());
             nhanVien.setTaiKhoan(request.getTenDangNhap());
             nhanVien.setMatKhau(request.getMatKhau());
@@ -74,10 +70,6 @@ public class NhanVienController {
             return "/view_khang/ql_nhan_vien/create";
         }
 
-<<<<<<< HEAD
-=======
-//        nv.setMa(req.getMa());
->>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
         nv.setHoTen(req.getTen());
         nv.setTaiKhoan(req.getTenDangNhap());
         nv.setMatKhau(req.getMatKhau());

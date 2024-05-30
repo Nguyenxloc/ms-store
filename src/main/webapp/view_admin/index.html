@@ -1,177 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quầy Bán Hàng - Áo Sơ Mi Admin</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
 
 <div class="container mt-5">
-    <div class="row">
-        <!-- Danh sách hóa đơn -->
-        <div class="col-md-4">
-            <h4>Hóa Đơn</h4>
-            <ul class="list-group" id="invoiceList">
-                <li class="list-group-item active">Hóa Đơn 1</li>
-                <li class="list-group-item">Hóa Đơn 2</li>
-                <li class="list-group-item">Hóa Đơn 3</li>
-            </ul>
-            <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#addProductModal">Thêm Sản Phẩm</button>
-        </div>
+    <h2>Quản Lý Bán Hàng</h2>
+    <button class="btn btn-primary mb-3" id="addInvoiceBtn">Thêm Hóa Đơn</button>
+    
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="invoiceTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="invoice-1-tab" data-toggle="tab" href="#invoice-1" role="tab" aria-controls="invoice-1" aria-selected="true">Hóa Đơn 1</a>
+        </li>
+    </ul>
 
-        <!-- Danh sách sản phẩm -->
-        <div class="col-md-8">
-            <h4>Danh Sách Sản Phẩm</h4>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <input type="text" class="form-control" id="searchProduct" placeholder="Tìm kiếm sản phẩm">
-                </div>
-                <div class="form-group col-md-2">
-                    <select class="form-control" id="filterColor">
-                        <option value="">Màu sắc</option>
-                        <option value="red">Đỏ</option>
-                        <option value="blue">Xanh</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <select class="form-control" id="filterMaterial">
-                        <option value="">Chất liệu</option>
-                        <option value="cotton">Cotton</option>
-                        <option value="polyester">Polyester</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <select class="form-control" id="filterSleeve">
-                        <option value="">Kiểu tay</option>
-                        <option value="short">Ngắn</option>
-                        <option value="long">Dài</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <select class="form-control" id="filterSize">
-                        <option value="">Kích cỡ</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-1">
-                    <button class="btn btn-secondary" id="refreshFilters">Làm Mới</button>
-                </div>
-            </div>
-
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Hình Ảnh</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Giá Bán</th>
-                    <th>Số Lượng</th>
-                    <th>Kích Thước</th>
-                    <th>Màu Sắc</th>
-                    <th>Trạng Thái</th>
-                    <th>Hành Động</th>
-                </tr>
-                </thead>
-                <tbody id="productList">
-                <!-- Add products here -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Giỏ hàng -->
-    <div class="mt-5">
-        <h4>Giỏ Hàng</h4>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>STT</th>
-                <th>Sản Phẩm</th>
-                <th>Tổng Tiền</th>
-                <th>Số Lượng</th>
-                <th>Thao Tác</th>
-            </tr>
-            </thead>
-            <tbody id="cartList">
-            <!-- Add cart items here -->
-            </tbody>
-        </table>
-
-        <div class="form-group">
-            <label for="customerAccount">Tài Khoản Khách Hàng</label>
-            <input type="text" class="form-control" id="customerAccount">
-        </div>
-
-        <div class="form-group">
-            <label for="discountCode">Mã Giảm Giá</label>
-            <input type="text" class="form-control" id="discountCode">
-            <button class="btn btn-primary mt-2">Chọn Mã Giảm Giá</button>
-        </div>
-
-        <div class="form-group">
-            <button class="btn btn-success">Giao Hàng</button>
-        </div>
-
-        <div class="form-group">
-            <label for="totalPrice">Tiền Hàng</label>
-            <input type="text" class="form-control" id="totalPrice" readonly>
-        </div>
-
-        <div class="form-group">
-            <label for="discountAmount">Giảm Giá</label>
-            <input type="text" class="form-control" id="discountAmount" readonly>
-        </div>
-
-        <div class="form-group">
-            <label for="finalPrice">Thanh Toán</label>
-            <input type="text" class="form-control" id="finalPrice" readonly>
-        </div>
-    </div>
-</div>
-
-<!-- Modal thêm sản phẩm -->
-<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addProductModalLabel">Thêm Sản Phẩm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="modalSearchProduct">Tìm kiếm sản phẩm</label>
-                        <input type="text" class="form-control" id="modalSearchProduct" placeholder="Nhập tên sản phẩm">
+    <!-- Tab content -->
+    <div class="tab-content" id="invoiceTabsContent">
+        <div class="tab-pane fade show active" id="invoice-1" role="tabpanel" aria-labelledby="invoice-1-tab">
+            <!-- Nội dung hóa đơn 1 -->
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <h4>Danh Sách Sản Phẩm</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select class="form-control">
+                                <option value="">Màu sắc</option>
+                                <option value="red">Đỏ</option>
+                                <option value="blue">Xanh</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select class="form-control">
+                                <option value="">Chất liệu</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="polyester">Polyester</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select class="form-control">
+                                <option value="">Kiểu tay</option>
+                                <option value="short">Ngắn</option>
+                                <option value="long">Dài</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select class="form-control">
+                                <option value="">Kích cỡ</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <button class="btn btn-secondary">Làm Mới</button>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary">Tìm kiếm</button>
-                    <button type="button" class="btn btn-secondary" id="modalRefreshFilters">Làm mới</button>
-                </form>
 
-                <table class="table table-bordered mt-3">
-                    <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Hình Ảnh</th>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Giá Bán</th>
-                        <th>Số Lượng</th>
-                        <th>Kích Thước</th>
-                        <th>Màu Sắc</th>
-                        <th>Hành Động</th>
-                    </tr>
-                    </thead>
-                    <tbody id="modalProductList">
-                    <!-- Add modal products here -->
-                    </tbody>
-                </table>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Hình Ảnh</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Giá Bán</th>
+                            <th>Số Lượng</th>
+                            <th>Kích Thước</th>
+                            <th>Màu Sắc</th>
+                            <th>Trạng Thái</th>
+                            <th>Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Add products here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Giỏ hàng -->
+                <div class="col-md-4">
+                    <h4>Giỏ Hàng</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Sản Phẩm</th>
+                            <th>Tổng Tiền</th>
+                            <th>Số Lượng</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Add cart items here -->
+                        </tbody>
+                    </table>
+
+                    <div class="form-group">
+                        <label for="customerAccount">Tài Khoản Khách Hàng</label>
+                        <input type="text" class="form-control" id="customerAccount">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discountCode">Mã Giảm Giá</label>
+                        <input type="text" class="form-control" id="discountCode">
+                        <button class="btn btn-primary mt-2">Chọn Mã Giảm Giá</button>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success">Giao Hàng</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totalPrice">Tiền Hàng</label>
+                        <input type="text" class="form-control" id="totalPrice" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discountAmount">Giảm Giá</label>
+                        <input type="text" class="form-control" id="discountAmount" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="finalPrice">Thanh Toán</label>
+                        <input type="text" class="form-control" id="finalPrice" readonly>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -183,72 +143,141 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-    // Sample data for products
-    const products = [
-        {
-            id: 1,
-            image: 'https://via.placeholder.com/50',
-            name: 'Áo Sơ Mi Trắng',
-            price: 100000,
-            quantity: 50,
-            size: 'M',
-            color: 'Trắng',
-            status: 'Còn hàng'
-        },
-        {
-            id: 2,
-            image: 'https://via.placeholder.com/50',
-            name: 'Áo Sơ Mi Xanh',
-            price: 120000,
-            quantity: 30,
-            size: 'L',
-            color: 'Xanh',
-            status: 'Hết hàng'
-        }
-    ];
+    let invoiceCount = 1;
 
-    // Function to load products into the table
-    function loadProducts() {
-        const productList = document.getElementById('productList');
-        productList.innerHTML = '';
+    document.getElementById('addInvoiceBtn').addEventListener('click', function () {
+        invoiceCount++;
+        const newTabId = 'invoice-' + invoiceCount;
 
-        products.forEach((product, index) => {
-            const productRow = `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td><img src="${product.image}" alt="Ảnh" width="50"></td>
-                    <td>${product.name}</td>
-                    <td>${product.price}</td>
-                    <td>${product.quantity}</td>
-                    <td>${product.size}</td>
-                    <td>${product.color}</td>
-                    <td>${product.status}</td>
-                    <td><button class="btn btn-primary btn-sm" onclick="addToCart(${product.id})">Thêm vào giỏ</button></td>
-                </tr>
-            `;
-            productList.insertAdjacentHTML('beforeend', productRow);
-        });
-    }
-
-    // Function to add product to cart
-    function addToCart(productId) {
-        const product = products.find(p => p.id === productId);
-        const cartList = document.getElementById('cartList');
-
-        const cartRow = `
-            <tr>
-                <td>${cartList.rows.length + 1}</td>
-                <td>${product.name}</td>
-                <td>${product.price}</td>
-                <td><input type="number" value="1" min="1" class="form-control"></td>
-                <td><button class="btn btn-danger btn-sm">Xóa</button></td>
-            </tr>
+        // Add new tab
+        const newTab = `
+            <li class="nav-item">
+                <a class="nav-link" id="${newTabId}-tab" data-toggle="tab" href="#${newTabId}" role="tab" aria-controls="${newTabId}" aria-selected="false">Hóa Đơn ${invoiceCount}</a>
+            </li>
         `;
-        cartList.insertAdjacentHTML('beforeend', cartRow);
-    }
+        document.getElementById('invoiceTabs').insertAdjacentHTML('beforeend', newTab);
 
-    // Initialize the product list
-    loadProducts();
+        // Add new tab content
+        // const newTabContent = `
+        //     <div class="tab-pane fade" id="${newTabId}" role="tabpanel" aria-labelledby="${newTabId}-tab">
+        //         <!-- Nội dung hóa đơn ${invoiceCount} -->
+        //         <div class="row mt-3">
+        //             <div class="col-md-8">
+        //                 <h4>Danh Sách Sản Phẩm</h4>
+        //                 <div class="form-row">
+        //                     <div class="form-group col-md-3">
+        //                         <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+        //                     </div>
+        //                     <div class="form-group col-md-2">
+        //                         <select class="form-control">
+        //                             <option value="">Màu sắc</option>
+        //                             <option value="red">Đỏ</option>
+        //                             <option value="blue">Xanh</option>
+        //                         </select>
+        //                     </div>
+        //                     <div class="form-group col-md-2">
+        //                         <select class="form-control">
+        //                             <option value="">Chất liệu</option>
+        //                             <option value="cotton">Cotton</option>
+        //                             <option value="polyester">Polyester</option>
+        //                         </select>
+        //                     </div>
+        //                     <div class="form-group col-md-2">
+        //                         <select class="form-control">
+        //                             <option value="">Kiểu tay</option>
+        //                             <option value="short">Ngắn</option>
+        //                             <option value="long">Dài</option>
+        //                         </select>
+        //                     </div>
+        //                     <div class="form-group col-md-2">
+        //                         <select class="form-control">
+        //                             <option value="">Kích cỡ</option>
+        //                             <option value="S">S</option>
+        //                             <option value="M">M</option>
+        //                             <option value="L">L</option>
+        //                         </select>
+        //                     </div>
+        //                     <div class="form-group col-md-1">
+        //                         <button class="btn btn-secondary">Làm Mới</button>
+        //                     </div>
+        //                 </div>
+
+        //                 <table class="table table-bordered">
+        //                     <thead>
+        //                     <tr>
+        //                         <th>STT</th>
+        //                         <th>Hình Ảnh</th>
+        //                         <th>Tên Sản Phẩm</th>
+        //                         <th>Giá Bán</th>
+        //                         <th>Số Lượng</th>
+        //                         <th>Kích Thước</th>
+        //                         <th>Màu Sắc</th>
+        //                         <th>Trạng Thái</th>
+        //                         <th>Hành Động</th>
+        //                     </tr>
+        //                     </thead>
+        //                     <tbody>
+        //                     <!-- Add products here -->
+        //                     </tbody>
+        //                 </table>
+        //             </div>
+
+        //             <!-- Giỏ hàng -->
+        //             <div class="col-md-4">
+        //                 <h4>Giỏ Hàng</h4>
+        //                 <table class="table table-bordered">
+        //                     <thead>
+        //                     <tr>
+        //                         <th>STT</th>
+        //                         <th>Sản Phẩm</th>
+        //                         <th>Tổng Tiền</th>
+        //                         <th>Số Lượng</th>
+        //                         <th>Thao Tác</th>
+        //                     </tr>
+        //                     </thead>
+        //                     <tbody>
+        //                     <!-- Add cart items here -->
+        //                     </tbody>
+        //                 </table>
+
+        //                 <div class="form-group">
+        //                     <label for="customerAccount">Tài Khoản Khách Hàng</label>
+        //                     <input type="text" class="form-control" id="customerAccount">
+        //                 </div>
+
+        //                 <div class="form-group">
+        //                     <label for="discountCode">Mã Giảm Giá</label>
+        //                     <input type="text" class="form-control" id="discountCode">
+        //                     <button class="btn btn-primary mt-2">Chọn Mã Giảm Giá</button>
+        //                 </div>
+
+        //                 <div class="form-group">
+        //                     <button class="btn btn-success">Giao Hàng</button>
+        //                 </div>
+
+        //                 <div class="form-group">
+        //                     <label for="totalPrice">Tiền Hàng</label>
+        //                     <input type="text" class="form-control" id="totalPrice" readonly>
+        //                 </div>
+
+        //                 <div class="form-group">
+        //                     <label for="discountAmount">Giảm Giá</label>
+        //                     <input type="text" class="form-control" id="discountAmount" readonly>
+        //                 </div>
+
+        //                 <div class="form-group">
+        //                     <label for="finalPrice">Thanh Toán</label>
+        //                     <input type="text" class="form-control" id="finalPrice" readonly>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // `;
+        // document.getElementById('invoiceTabsContent').insertAdjacentHTML('beforeend', newTabContent);
+
+        // Activate the new tab
+        $(`#${newTabId}-tab`).tab('show');
+    });
 </script>
 
 </body>
