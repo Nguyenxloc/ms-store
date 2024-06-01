@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,9 +79,11 @@ public class BanTaiQuayController {
             return "redirect:/ban-hang";
         }
 
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
         HoaDon hoaDon = new HoaDon();
         hoaDon.setTrangThai(0);
-        hoaDon.setNgayTao(new Date());
+        hoaDon.setNgayTao(now);
         try {
             this.hoaDonRepository.save(hoaDon);
             redirectAttributes.addFlashAttribute("success", "Hóa đơn được tạo thành công!");

@@ -417,7 +417,7 @@
                                 <c:forEach varStatus="i" items="${listCTSP}" var="spct">
                                     <tr>
                                         <td>${i.index+1}</td>
-                                        <td>${spct.idSanPham.maSP}</td>
+                                        <td>${spct.idSanPham.ma}</td>
                                         <td>${spct.idSanPham.tenSP}</td>
                                         <td>${spct.idMauSac.tenMau}</td>
                                         <td>${spct.idSize.tenSize}</td>

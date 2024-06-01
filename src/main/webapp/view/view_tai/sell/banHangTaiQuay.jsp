@@ -2,6 +2,7 @@
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +35,13 @@
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
             rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+<%--    Thêm thư viện SweetAlert2 để thiển thị thông báo--%>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -245,7 +253,8 @@
                                 </div>
                                 <div class="font-weight-bold">
                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.</div>
+                                        problem I've been having.
+                                    </div>
                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                                 </div>
                             </a>
@@ -257,7 +266,8 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?</div>
+                                        would you like them sent to you?
+                                    </div>
                                     <div class="small text-gray-500">Jae Chun · 1d</div>
                                 </div>
                             </a>
@@ -269,7 +279,8 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!</div>
+                                        the progress so far, keep up the good work!
+                                    </div>
                                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                 </div>
                             </a>
@@ -281,7 +292,8 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...</div>
+                                        told me that people say this to all dogs, even if they aren't good...
+                                    </div>
                                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                 </div>
                             </a>
@@ -325,39 +337,50 @@
             </nav>
 
 
-
-
             <!-- Bán hàng tại quầy -->
             <div class="container-fluid">
                 <div class="container">
                     <div class="row">
                         <div class="col-8">
-                            <h3>Bán hàng</h3>
+                            <h3>Bán Hàng Tại Quầy</h3>
+
+
+                            <form action="/ban-hang/sell/add-hoa-don" method="post" style="float: right;"
+                                  id="addHoaDonForm">
+                                <button type="submit" class="btn btn-success btn-bill">+</button>
+                            </form>
+
                             <table class="table table-hover">
+                                <input type="hidden" id="currentHoaDonCount" value="${currentHoaDonCount}">
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>ID</th>
-                                    <th>Ngày tạo</th>
+                                    <th>Mã HD</th>
                                     <th>Tên khách hàng</th>
+                                    <th>Ngày tạo</th>
                                     <th>Trạng thái</th>
                                     <th>Details
-                                        <form action="/ban-hang/add-hoa-don" method="post" style="float: right;">
-                                            <button type="submit" class="btn btn-success">+</button>
-                                        </form>
+
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach varStatus="i" items="${listHoaDon}" var="hoaDon">
+                                <c:forEach varStatus="i" items="${listHoaDonDTO}" var="hoaDon">
                                     <tr>
                                         <td>${i.index+1}</td>
-                                        <td>${hoaDon.id}</td>
-                                        <td>${hoaDon.ngayTao}</td>
-                                        <td>${hoaDon.idKhachHang.ten}</td>
-                                        <td>${hoaDon.trangThai==0?"Chua thanh toan":"Da thanh toan"}</td>
+                                        <td>${hoaDon.ma}</td>
+                                        <td>${hoaDon.tenKhachHang}</td>
+                                        <td> ${hoaDon.ngayTao}</td>
                                         <td>
-                                            <a href="/ban-hang/detail-hoa-don/${hoaDon.id}" class="btn btn-primary">View</a>
+                                            <span
+                                                    class="badge rounded-pill ${hoaDon.trangThai == 0 ? 'bg-danger' : 'bg-success'}">
+                                                    ${hoaDon.trangThai == 0 ? 'Chưa thanh toán' : 'Đã thanh toán'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="/ban-hang/detail-hoa-don/${hoaDon.id}"
+                                               class="btn btn-primary">View</a>
+<%--                                            <a href="/ban-hang/sell/delete-hoa-don/${hoaDon.id}" class="btn btn-danger">Delete</a>--%>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -379,23 +402,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach varStatus="i" items="${listHDCT}" var="hdct">
-                                    <tr>
-                                        <td>${i.index+1}</td>
-                                        <td>${hdct.idHoaDon.id}</td>
-                                        <td>${hdct.idCTSP.idSanPham.maSP}</td>
-                                        <td>${hdct.idCTSP.idSanPham.tenSP}</td>
-                                        <td>${hdct.soLuongMua}</td>
-                                        <td>${hdct.giaBan}</td>
-                                        <td>${hdct.soLuongMua*hdct.giaBan}</td>
-                                        <td>
-                                            <form action="/ban-hang/delete-hdct/${hdct.id}" method="post">
-                                                <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
-                                                <button class="btn btn-danger" type="submit">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                <%--                                <c:forEach varStatus="i" items="${listHDCT}" var="hdct">--%>
+                                <%--                                    <tr>--%>
+                                <%--                                        <td>${i.index+1}</td>--%>
+                                <%--                                        <td>${hdct.idHoaDon.id}</td>--%>
+                                <%--                                        <td>${hdct.idCTSP.idSanPham.maSP}</td>--%>
+                                <%--                                        <td>${hdct.idCTSP.idSanPham.tenSP}</td>--%>
+                                <%--                                        <td>${hdct.soLuongMua}</td>--%>
+                                <%--                                        <td>${hdct.giaBan}</td>--%>
+                                <%--                                        <td>${hdct.soLuongMua*hdct.giaBan}</td>--%>
+                                <%--                                        <td>--%>
+                                <%--                                            <form action="/ban-hang/delete-hdct/${hdct.id}" method="post">--%>
+                                <%--                                                <input type="hidden" name="idHoaDon" value="${hoaDon.id}">--%>
+                                <%--                                                <button class="btn btn-danger" type="submit">Delete</button>--%>
+                                <%--                                            </form>--%>
+                                <%--                                        </td>--%>
+                                <%--                                    </tr>--%>
+                                <%--                                </c:forEach>--%>
                                 </tbody>
                             </table>
                             <!-- Sản phẩm -->
@@ -414,25 +437,25 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach varStatus="i" items="${listCTSP}" var="spct">
-                                    <tr>
-                                        <td>${i.index+1}</td>
-                                        <td>${spct.idSanPham.maSP}</td>
-                                        <td>${spct.idSanPham.tenSP}</td>
-                                        <td>${spct.idMauSac.tenMau}</td>
-                                        <td>${spct.idSize.tenSize}</td>
-                                        <td>${spct.soLuong}</td>
-                                        <td>${spct.giaBan}</td>
-                                        <td>
-                                            <form action="/ban-hang/add-san-pham/${spct.id}" method="post"
-                                                  onsubmit="return validateBeforeAddToCart();">
-                                                <input type="hidden" name="idHoaDon" value="${hoaDon.id}"
-                                                       id="selectedInvoiceId">
-                                                <button class="btn btn-success" type="submit">+</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                <%--                                <c:forEach varStatus="i" items="${listCTSP}" var="spct">--%>
+                                <%--                                    <tr>--%>
+                                <%--                                        <td>${i.index+1}</td>--%>
+                                <%--                                        <td>${spct.idSanPham.maSP}</td>--%>
+                                <%--                                        <td>${spct.idSanPham.tenSP}</td>--%>
+                                <%--                                        <td>${spct.idMauSac.tenMau}</td>--%>
+                                <%--                                        <td>${spct.idSize.tenSize}</td>--%>
+                                <%--                                        <td>${spct.soLuong}</td>--%>
+                                <%--                                        <td>${spct.giaBan}</td>--%>
+                                <%--                                        <td>--%>
+                                <%--                                            <form action="/ban-hang/add-san-pham/${spct.id}" method="post"--%>
+                                <%--                                                  onsubmit="return validateBeforeAddToCart();">--%>
+                                <%--                                                <input type="hidden" name="idHoaDon" value="${hoaDon.id}"--%>
+                                <%--                                                       id="selectedInvoiceId">--%>
+                                <%--                                                <button class="btn btn-success" type="submit">+</button>--%>
+                                <%--                                            </form>--%>
+                                <%--                                        </td>--%>
+                                <%--                                    </tr>--%>
+                                <%--                                </c:forEach>--%>
 
                                 </tbody>
                             </table>
@@ -446,35 +469,39 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label">ID hóa đơn</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" value="${hoaDon.id}" />
+                                                <input type="text" class="form-control" value="${hoaDon.id}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label">Ngày tạo</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="ngayTao" value="${hoaDon.ngayTao}">
+                                                <input type="text" class="form-control" name="ngayTao"
+                                                       value="${hoaDon.ngayTao}">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label">Sđt khách hàng</label>
                                             <div class="col-sm-6">
-                                                <select path="idKhachHang" class="form-select" aria-label="Default select example" name="idKhachHang">
-                                                    <c:forEach items="${listKH}" var="khachHang">
+                                                <select path="idKhachHang" class="form-select"
+                                                        aria-label="Default select example" name="idKhachHang">
+                                                    <%--                                                    <c:forEach items="${listKH}" var="khachHang">--%>
 
-                                                        <option value="${khachHang.id}" ${hoaDon.idKhachHang.sdt==khachHang.sdt?"selected":""}>${khachHang.sdt}</option>
+                                                    <%--                                                        <option value="${khachHang.id}" ${hoaDon.idKhachHang.sdt==khachHang.sdt?"selected":""}>${khachHang.sdt}</option>--%>
 
-                                                    </c:forEach>
+                                                    <%--                                                    </c:forEach>--%>
                                                 </select>
                                             </div>
-                                            <a class="col-sm-2" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
+                                            <a class="col-sm-2" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                               href="#">
                                                 <i class=" bi bi-folder-plus col-3" style="font-size: 25px;"></i>
                                             </a>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label">Tổng tiền</label>
                                             <div class="col-sm-8">
-                                                <input id="tongTien" type="number" class="form-control" value="${tongTien}"
-                                                       readonly />
+                                                <input id="tongTien" type="number" class="form-control"
+                                                       value="${tongTien}"
+                                                       readonly/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -492,7 +519,8 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label">Trả lại</label>
                                             <div class="col-sm-8">
-                                                <input id="tienTraLai" type="number" class="form-control" required readonly>
+                                                <input id="tienTraLai" type="number" class="form-control" required
+                                                       readonly>
 
                                             </div>
                                         </div>
@@ -572,6 +600,68 @@
 <script src="/view_admin/js/demo/chart-area-demo.js"></script>
 <script src="/view_admin/js/demo/chart-pie-demo.js"></script>
 
+
+<script>
+    // Hiển thị thông báo thêm thành công hoặc thất bại sử dụng thư viện Sweet Alert2
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    // Kiểm tra dữ liệu từ bên Controller chuyển sang, nếu có thì hiển thị thông báo,
+    // nếu không thì sẽ không hiện gì cả
+    <c:if test="${not empty success}">
+    Toast.fire({
+        icon: "success",
+        title: "${success}"
+    });
+    </c:if>
+
+    <c:if test="${not empty error}">
+    Toast.fire({
+        icon: "error",
+        title: "${error}"
+    });
+    </c:if>
+
+        <c:if test="${not empty errorBillMax}">
+        Toast.fire({
+            icon: "warning",
+            title: "${errorBillMax}"
+        });
+        </c:if>
+
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     const addButton = document.querySelector(".btn-bill");
+    //     const currentHoaDonCount = parseInt(document.getElementById("currentHoaDonCount").value);
+    //
+    //     addButton.addEventListener("click", function (event) {
+    //         event.preventDefault();
+    //
+    //         if (currentHoaDonCount >= 4) {
+    //             Swal.fire({
+    //                 icon: "warning",
+    //                 title: "Bạn chỉ có thể tạo tối đa 5 đơn hàng",
+    //                 toast: true,
+    //                 position: "top-end",
+    //                 showConfirmButton: false,
+    //                 timer: 3000,
+    //                 timerProgressBar: true
+    //             });
+    //         } else {
+    //             document.getElementById("addHoaDonForm").submit();
+    //         }
+    //     });
+    // });
+</script>
+
 </body>
 <script>
 
@@ -579,17 +669,17 @@
         var tongTien = parseFloat('${tongTien}');
         var tienKhachDua = parseFloat(document.getElementById('tienKhachDua').value);
         var tienTraLai = tienKhachDua - tongTien;
-        var  thongBao = document.getElementById("errTraLai");
+        var thongBao = document.getElementById("errTraLai");
         if (isNaN(tienKhachDua)) {
-            thongBao.textContent="Vui lòng nhập số tiền hợp lệ.";
+            thongBao.textContent = "Vui lòng nhập số tiền hợp lệ.";
             // alert('Vui lòng nhập số tiền hợp lệ.');
             return false;
         }
 
         if (tienKhachDua < tongTien) {
-            thongBao.textContent="Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
+            thongBao.textContent = "Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
             // alert('Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.');
-            document.getElementById('tienTraLai').value ="";
+            document.getElementById('tienTraLai').value = "";
             return false;
         }
 
@@ -601,9 +691,9 @@
         var tienKhachDua = document.getElementById("tienKhachDua").value;
         var tongTien = parseFloat('${tongTien}');
         if (tienKhachDua === "" || tienKhachDua < tongTien) {
-            thongBao.textContent= thongBao.textContent="Vui lòng nhập số tiền khách đưa hợp lệ."
+            thongBao.textContent = thongBao.textContent = "Vui lòng nhập số tiền khách đưa hợp lệ."
             // alert("Vui lòng nhập số tiền khách đưa hợp lệ.");
-            document.getElementById('tienTraLai').value ="";
+            document.getElementById('tienTraLai').value = "";
             return false;
         }
         return true;

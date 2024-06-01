@@ -72,13 +72,10 @@
                     <tr>
                         <td>${i.index+1}</td>
                         <td>${hoaDon.id}</td>
-<<<<<<< HEAD
                         <td><fmt:formatDate value="${hoaDon.ngayTao}" pattern="dd/MM/yyyy HH:mm:ss"/></td>
                         <td>${hoaDon.idKhachHang.ten}</td>
-=======
                         <td>${hoaDon.ngayTao}</td>
                         <td>${hoaDon.idKhachHang.hoTen}</td>
->>>>>>> e299e3ed8516d8f5f05b3cc9364fe642a9d9db76
                         <td>${hoaDon.trangThai==0?"Chua thanh toan":"Da thanh toan"}</td>
                         <td>
                             <div><a href="/ban-hang/detail-hoa-don/${hoaDon.id}" class="btn btn-primary">View</a></div>

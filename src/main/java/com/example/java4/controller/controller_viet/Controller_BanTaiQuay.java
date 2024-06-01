@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/store")
+@RequestMapping("store")
 public class Controller_BanTaiQuay {
 
-    @GetMapping("/admin/ban-tai-quay")
+    @GetMapping("admin/ban-tai-quay")
     public String getBanTaiQuay(){
-        return "/view/view_viet/banHangTaiQuay.jsp";
+        return "/view/view_viet/banHangTaiQuay";
     }
 }

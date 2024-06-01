@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
 
 @Entity
 public class HoaDon {
@@ -14,8 +16,8 @@ public class HoaDon {
     private KhuyenMai idKhuyenMai;
     private NhanVien idNhanVien;
     private KhachHang idKhachHang;
-    private Date ngayTao;
-    private Date ngayThanhToan;
+    private LocalDateTime ngayTao;
+    private LocalDateTime ngayThanhToan;
     private Integer tongTien;
     private Integer trangThai;
 
@@ -49,20 +51,20 @@ public class HoaDon {
     }
 
     @Column(name = "NgayTao")
-    public Date getNgayTao() {
+    public LocalDateTime getNgayTao() {
         return ngayTao;
     }
 
-    public void setNgayTao(Date ngayTao) {
+    public void setNgayTao(LocalDateTime ngayTao) {
         this.ngayTao = ngayTao;
     }
 
     @Column(name = "NgayThanhToan")
-    public Date getNgayThanhToan() {
+    public LocalDateTime getNgayThanhToan() {
         return ngayThanhToan;
     }
 
-    public void setNgayThanhToan(Date ngayThanhToan) {
+    public void setNgayThanhToan(LocalDateTime ngayThanhToan) {
         this.ngayThanhToan = ngayThanhToan;
     }
 
@@ -126,4 +128,14 @@ public class HoaDon {
     public void setIdKhachHang(KhachHang khachHangByIdKhachHang) {
         this.idKhachHang = khachHangByIdKhachHang;
     }
+
+
+
+//     Phương thức tạo ra mã tự sinh
+    public void generateMa() {
+        int randomNumber = new Random().nextInt(999) + 1;
+        String formattedNumber = String.format("%03d", randomNumber);
+        this.ma = "HD" + formattedNumber;
+    }
+
 }
