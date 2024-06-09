@@ -1,5 +1,6 @@
 package com.example.java4.repositories;
 
+import com.example.java4.entities.ChiTietHoaDon;
 import com.example.java4.entities.ChiTietSanPham;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -64,7 +66,11 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham,String>, Jp
             "and idChatLieu = :idChatLieu and idKieuTay = :idKieuTay", nativeQuery = true)
     Page<ChiTietSanPham> filterCombobox(@Param("idSanPham")String idSanPham, @Param("idMauSac")String idMauSac, @Param("idKichThuoc")String idKichThuoc, @Param("idChatLieu")String idChatLieu, @Param("idKieuTay")String idKieuTay, Pageable pageable);
     @Query("SELECT ctsp  FROM ChiTietSanPham ctsp WHERE ctsp.id = ?1 ")
+
+
     ChiTietSanPham findByIdCTSP(String id);
+
+    Optional<ChiTietSanPham> findById(String id);
 };
 
 

@@ -63,31 +63,32 @@ public class BanTaiQuayController {
     private List<ChatLieu> listChatLieu;
     private String idNV = "FE755A99-83D6-4431-8FDE-4DF25C6B8BD0";
 
-@GetMapping("")
-public String hienThi(Model model,@RequestParam(value = "page",defaultValue ="0") String pageParam ) {
-    System.out.println("========================================= test paa"+pageParam);
-    Pageable pageable = PageRequest.of(Integer.valueOf(pageParam), 10);
-    listHoaDon = hoaDonRepository.selectTop5();
-    Page<ChiTietSanPham> listCTSP = sanPhamChiTietRepository.findByTrangThai(1,pageable);
-    listKH = khachHangRepository.findAll();
-    listMauSac = mauSacRepository.findAll();
-    listKichThuoc = kichThuocRepo.findAll();
-    listKieuTay = kieuTayRepo.findAll();
-    listSanPham = sanPhamRepo.findAll();
-    listChatLieu = chatLieuRepo.findAll();
-    model.addAttribute("listMauSac", listMauSac);
-    model.addAttribute("listKichThuoc", listKichThuoc);
-    model.addAttribute("listChatLieu", listChatLieu);
-    model.addAttribute("listKieuTay", listKieuTay);
-    model.addAttribute("listSanPham", listSanPham);
-    model.addAttribute("listHoaDon", listHoaDon);
-    model.addAttribute("listCTSP", listCTSP);
-    model.addAttribute("listKH", listKH);
-    System.out.println(listMauSac);
-    return "/view/view_payment_counter/banHangTaiQuay.jsp";
-}
+    @GetMapping("")
+    public String hienThi(Model model, @RequestParam(value = "page", defaultValue = "0") String pageParam) {
+        System.out.println("========================================= test paa" + pageParam);
+        Pageable pageable = PageRequest.of(Integer.valueOf(pageParam), 10);
+        listHoaDon = hoaDonRepository.selectTop5();
+        Page<ChiTietSanPham> listCTSP = sanPhamChiTietRepository.findByTrangThai(1, pageable);
+        listKH = khachHangRepository.findAll();
+        listMauSac = mauSacRepository.findAll();
+        listKichThuoc = kichThuocRepo.findAll();
+        listKieuTay = kieuTayRepo.findAll();
+        listSanPham = sanPhamRepo.findAll();
+        listChatLieu = chatLieuRepo.findAll();
+        model.addAttribute("listMauSac", listMauSac);
+        model.addAttribute("listKichThuoc", listKichThuoc);
+        model.addAttribute("listChatLieu", listChatLieu);
+        model.addAttribute("listKieuTay", listKieuTay);
+        model.addAttribute("listSanPham", listSanPham);
+        model.addAttribute("listHoaDon", listHoaDon);
+        model.addAttribute("listCTSP", listCTSP);
+        model.addAttribute("listKH", listKH);
+        System.out.println(listMauSac);
+        return "/view/view_payment_counter/banHangTaiQuay.jsp";
+    }
+
     @GetMapping("detail-hoa-don/{idHD}")
-    public String detailHoaDon(@PathVariable String idHD,@RequestParam Optional<Integer> pageParam, Model model) {
+    public String detailHoaDon(@PathVariable String idHD, @RequestParam Optional<Integer> pageParam, Model model) {
         Optional<HoaDon> hoaDon = hoaDonRepository.findById(idHD);
         model.addAttribute("hoaDon", hoaDon.get());
         listHoaDon = hoaDonRepository.selectTop5();
@@ -131,20 +132,20 @@ public String hienThi(Model model,@RequestParam(value = "page",defaultValue ="0"
 
 
     @PostMapping("/delete-hdct/{idHDCT}")
-    public String deleteHDCT(@PathVariable String idHDCT){
-    HoaDon hd = new HoaDon();
-    int count = 0;
-    ChiTietSanPham ctsp = new ChiTietSanPham();
-        for (ChiTietHoaDon hdct:listHDCT){
-            if (hdct.getId().equals(idHDCT)){
+    public String deleteHDCT(@PathVariable String idHDCT) {
+        HoaDon hd = new HoaDon();
+        int count = 0;
+        ChiTietSanPham ctsp = new ChiTietSanPham();
+        for (ChiTietHoaDon hdct : listHDCT) {
+            if (hdct.getId().equals(idHDCT)) {
                 hoaDonChiTietRepository.delete(hdct);
                 hd = hdct.getIdHoaDon();
                 ctsp = hdct.getIdCTSP();
-                count=hdct.getSoLuong();
+                count = hdct.getSoLuong();
                 System.out.println("test data :========================== ");
             }
         }
-        ctsp.setSoLuong(ctsp.getSoLuong()+count);
+        ctsp.setSoLuong(ctsp.getSoLuong() + count);
         sanPhamChiTietRepository.save(ctsp);
         return "redirect:/ban-hang-tai-quay/detail-hoa-don/" + hd.getId();
     }
@@ -159,11 +160,11 @@ public String hienThi(Model model,@RequestParam(value = "page",defaultValue ="0"
             redirectAttributes.addFlashAttribute("errorBillMax", "Bạn chỉ có thể tạo tối đa 5 đơn hàng");
             return "redirect:/ban-hang-tai-quay";
         }
-        String ma1="HD";
+        String ma1 = "HD";
         Integer sum = hoaDonRepository.countHD() + 1;
         String ma = ma1 + sum;
-        System.out.println("==============test hoa don:"+ma);
-        LocalDateTime now =LocalDateTime.now();
+        System.out.println("==============test hoa don:" + ma);
+        LocalDateTime now = LocalDateTime.now();
         HoaDon hoaDon = new HoaDon();
         //Tạo mã tự sinh
         hoaDon.setNgayTao(now);
@@ -239,7 +240,6 @@ public String hienThi(Model model,@RequestParam(value = "page",defaultValue ="0"
         }
         return "redirect:/ban-hang-tai-quay/detail-hoa-don/" + idHoaDon;
     }
-
 
 
     @PostMapping("add-san-pham/{idCTSP}")
