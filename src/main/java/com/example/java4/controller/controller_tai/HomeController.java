@@ -118,4 +118,9 @@ public class HomeController {
         redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
         return "redirect:/home";
     }
+
+    @GetMapping("/quan-ly-tai-khoan")
+    public String viewAccount(Model model) {
+        return "/view/view_tai/login/quan_ly_tai_khoan.jsp";
+    }
 }

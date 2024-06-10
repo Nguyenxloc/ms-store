@@ -85,4 +85,9 @@ public class LoginUserController {
         model.addAttribute("khachHangDTO", new KhachHangDTO());
         return "/view/view_tai/login/register.jsp";
     }
+
+    @GetMapping("/quan-ly-tai-khoan")
+    public String viewAccount(Model model) {
+        return "/view/view_tai/login/quan_ly_tai_khoan.jsp";
+    }
 }

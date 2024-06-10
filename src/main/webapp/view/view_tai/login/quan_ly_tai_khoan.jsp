@@ -44,6 +44,86 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .profile-card {
+            max-width: 900px;
+            margin: 50px auto;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-card-header {
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .profile-card-body {
+            background-color: white;
+            padding: 20px;
+        }
+
+        .profile-card-body .row > div {
+            padding: 10px;
+        }
+
+        .profile-card-body input[type="file"] {
+            display: none;
+        }
+
+        .profile-card-body label[for="profile-image"] {
+            cursor: pointer;
+        }
+
+        .profile-image-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 80px;
+        }
+
+        .profile-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-image-wrapper label.btn {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* .profile-card-body .btn-primary {
+            background-color: #ff5722;
+            border-color: #ff5722;
+        } */
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .info-text {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+
+
         .userCart {
             display: flex;
             align-items: center;
@@ -58,7 +138,15 @@
             max-width: 500px;
             margin: 100px auto;
         }
+
+        .btn-outline-secondary{
+            color: black;
+        }
     </style>
+
+
+
+
 </head>
 
 <body>
@@ -150,7 +238,7 @@
                             <!-- Hiển thị nút đăng xuất khi đã đăng nhập -->
                             <li><a class="dropdown-item" href="#">Theo dõi đơn hàng</a></li>
                             <li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
-                            <li><a class="dropdown-item" href="/home/quan-ly-tai-khoan">Quản lý tài khoản</a></li>
+                            <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
                             <li><a class="dropdown-item" href="/home/logout">Đăng xuất</a></li>
                         </c:otherwise>
                     </c:choose>
@@ -296,253 +384,70 @@
 <!-- Navbar End -->
 
 
-<!-- Page Header Start -->
-<div id="header-carousel" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active" style="height: 410px;">
-            <img class="img-fluid" src="/view_ban_hang/img/carousel-1.jpg" alt="Image">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
-                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
-                </div>
-            </div>
+
+
+
+<%--        Body Giao diện quản lý hồ sơ cá nhân--%>
+<div class="container">
+    <div class="card profile-card">
+        <div class="card-header profile-card-header text-center">
+            <h4>Quản lý thông tin cá nhân</h4>
         </div>
-        <div class="carousel-item" style="height: 410px;">
-            <img class="img-fluid" src="/view_ban_hang/img/carousel-2.jpg" alt="Image">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
-                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-            <span class="carousel-control-prev-icon mb-n2"></span>
-        </div>
-    </a>
-    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-            <span class="carousel-control-next-icon mb-n2"></span>
-        </div>
-    </a>
-</div>
-<!-- Page Header End -->
+        <div class="card-body profile-card-body">
+            <div class="row">
+                <!-- Form thông tin cá nhân -->
+                <div class="col-md-8">
 
-
-<!-- Shop Start -->
-<div class="container-fluid pt-5">
-    <div class="row px-xl-5">
-        <!-- Shop Sidebar Start -->
-        <div class="col-lg-3 col-md-12">
-            <!-- Price Start -->
-            <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                        <label class="custom-control-label" for="price-all">All Price</label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-1">
-                        <label class="custom-control-label" for="price-1">$0 - $100</label>
-                        <span class="badge border font-weight-normal">150</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-2">
-                        <label class="custom-control-label" for="price-2">$100 - $200</label>
-                        <span class="badge border font-weight-normal">295</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-3">
-                        <label class="custom-control-label" for="price-3">$200 - $300</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="price-4">
-                        <label class="custom-control-label" for="price-4">$300 - $400</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="price-5">
-                        <label class="custom-control-label" for="price-5">$400 - $500</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
-                </form>
-
-            </div>
-            <!-- Price End -->
-
-            <!-- Color Start -->
-            <div class="border-bottom mb-4 pb-4">
-                <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
-                <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="color-all">
-                        <label class="custom-control-label" for="price-all">All Color</label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-1">
-                        <label class="custom-control-label" for="color-1">Black</label>
-                        <span class="badge border font-weight-normal">150</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-2">
-                        <label class="custom-control-label" for="color-2">White</label>
-                        <span class="badge border font-weight-normal">295</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-3">
-                        <label class="custom-control-label" for="color-3">Red</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="color-4">
-                        <label class="custom-control-label" for="color-4">Blue</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="color-5">
-                        <label class="custom-control-label" for="color-5">Green</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
-                </form>
-            </div>
-            <!-- Color End -->
-
-            <!-- Size Start -->
-            <div class="mb-5">
-                <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
-                <form>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" checked id="size-all">
-                        <label class="custom-control-label" for="size-all">All Size</label>
-                        <span class="badge border font-weight-normal">1000</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-1">
-                        <label class="custom-control-label" for="size-1">XS</label>
-                        <span class="badge border font-weight-normal">150</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-2">
-                        <label class="custom-control-label" for="size-2">S</label>
-                        <span class="badge border font-weight-normal">295</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-3">
-                        <label class="custom-control-label" for="size-3">M</label>
-                        <span class="badge border font-weight-normal">246</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                        <input type="checkbox" class="custom-control-input" id="size-4">
-                        <label class="custom-control-label" for="size-4">L</label>
-                        <span class="badge border font-weight-normal">145</span>
-                    </div>
-                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                        <input type="checkbox" class="custom-control-input" id="size-5">
-                        <label class="custom-control-label" for="size-5">XL</label>
-                        <span class="badge border font-weight-normal">168</span>
-                    </div>
-                </form>
-            </div>
-            <!-- Size End -->
-        </div>
-        <!-- Shop Sidebar End -->
-
-
-        <!-- Shop Product Start -->
-        <div class="col-lg-9 col-md-12">
-            <div class="row pb-3">
-                <div class="col-12 pb-1">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search by name">
-                                <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
-                                </div>
+                    <c:if test="${not empty sessionScope.user}">
+                        <form>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Tên đăng nhập:</label>
+                                <input type="text" value="${sessionScope.user.taiKhoan}" class="form-control disabled" id="username" placeholder="Tên đăng nhập">
                             </div>
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label">Họ và tên:</label>
+                                <input type="text" value="${sessionScope.user.hoTen}" class="form-control" id="fullName" placeholder="Họ và tên">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" value="${sessionScope.user.email}" class="form-control" id="email" placeholder="Email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Số điện thoại:</label>
+                                <input type="text" value="${sessionScope.user.sdt}" class="form-control" id="phone" placeholder="Số điện thoại">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Giới tính:</label>
+                                <select class="form-select" id="gender">
+                                    <option value="1" ${sessionScope.user.gioiTinh == 1 ? 'selected' : ''}>Nam</option>
+                                    <option value="2" ${sessionScope.user.gioiTinh == 2 ? 'selected' : ''}>Nữ</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dob" class="form-label">Ngày sinh:</label>
+                                <input type="date"value="${sessionScope.user.ngaySinh}" class="form-control" id="dob">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-25">Lưu</button>
                         </form>
-                        <div class="dropdown ml-4">
-                            <button class="btn border dropdown-toggle" type="button" id="triggerId"
-                                    data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                Sort by
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                <a class="dropdown-item" href="#">Latest</a>
-                                <a class="dropdown-item" href="#">Popularity</a>
-                                <a class="dropdown-item" href="#">Best Rating</a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:if>
+
+
                 </div>
 
-
-                <c:forEach varStatus="i" items="${pageSP.content}" var="sp">
-                    <a href="/store/detail-san-pham/${sp.idCTSP}" style="text-decoration: none">
-                        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
-                            <div class="card product-item border-0 mb-2">
-                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                    <img style="width: 100%; height: 370px;" class="img-fluid w-100"
-                                         src="/image/${sp.hinhAnh1}" alt="">
-                                </div>
-                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3"
-                                     style="margin-top: -10px; margin-bottom: -12px">
-                                    <h6 class="text-truncate mb-2">${sp.tenSP}</h6>
-                                    <h6 class="text-truncate mb-2" style="font-family: auto">${sp.maSP}</h6>
-                                </div>
-                                <div class="card-footer d-flex justify-content-between bg-light border float-start"
-                                     style="margin-top: -3px; margin-bottom: -3px">
-                                    <div class="d-flex justify-content-center mb-0" style="margin-bottom: 3px">
-                                        <h6>${sp.giaBan} <span
-                                                style="font-size: 16px; text-decoration: underline">đ</span></h6>
-                                    </div>
-                                    <a href="/store/detail-san-pham/${sp.idCTSP}" class="btn btn-sm text-dark p-0"><i
-                                            class="fas fa-eye text-primary mr-1"></i>Chi tiết</a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </c:forEach>
-
-
-                <div class="col-12 pb-1">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center mb-3">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                <!-- Chọn ảnh -->
+                <div class="col-md-4 text-center">
+                    <div class="profile-image-wrapper mb-3 d-flex justify-content-center align-items-center">
+                        <img src="/image/${sessionScope.user.anhDaiDien}" alt="Profile Image" id="profileImagePreview">
+                    </div>
+                    <input type="file" id="profile-image" accept="image/*">
+                    <label for="profile-image" class="btn btn-outline-secondary">Chọn ảnh</label>
+                    <p class="info-text mt-3  p-0">Định dạng: jpg, png, jpeg</p>
+                    <p class="info-text m-0 p-0">Dung lượng tối đa: 2MB.</p>
                 </div>
             </div>
         </div>
-        <!-- Shop Product End -->
     </div>
 </div>
-<!-- Shop End -->
 
 
 <!-- Footer Start -->
@@ -678,7 +583,7 @@
 
 
 
-<%--Validate Form đăng nhặp--%>
+    <%--Validate Form đăng nhặp--%>
     $(document).ready(function () {
         // Bắt lỗi khi submit form
         $('#login-form').submit(function (event) {
@@ -789,10 +694,10 @@
                 hasError = true;
             }
             else if (password.length < 6) {
-            $('#registerPasswordError').text('Mật khẩu phải có ít nhất 6 ký tự.');
-            $('#registerPassword').addClass('border-danger');
-            hasError = true;
-        }
+                $('#registerPasswordError').text('Mật khẩu phải có ít nhất 6 ký tự.');
+                $('#registerPassword').addClass('border-danger');
+                hasError = true;
+            }
 
 
             // Check if username already exists
