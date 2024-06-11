@@ -35,8 +35,11 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <%--    Thêm thư viện SweetAlert2 để thiển thị thông báo--%>
+
+
+<%--    Thêm thư viện SweetAlert2 để thiển thị thông báo--%>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -57,6 +60,23 @@
         .modal-dialog {
             max-width: 500px;
             margin: 100px auto;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group .form-control {
+            padding-right: 2.5rem; /* Tùy chỉnh để biểu tượng không che nội dung nhập */
+        }
+
+        .input-group-append {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
     </style>
 </head>
@@ -120,7 +140,8 @@
                     <c:choose>
                         <c:when test="${not empty sessionScope.user}">
                             <!-- Hiển thị tên và hình ảnh người dùng nếu đã đăng nhập -->
-                            <img src="/image/${sessionScope.user.anhDaiDien}" alt="" style="width: 30px; height: 30px; border-radius: 50%; margin-left: 5px;">
+                            <img src="/image/${sessionScope.user.anhDaiDien}" alt=""
+                                 style="width: 30px; height: 30px; border-radius: 50%; margin-left: 5px;">
                             <span class="info-text" style="font-size: 14px">${sessionScope.user.hoTen}</span>
                         </c:when>
                         <c:otherwise>
@@ -136,12 +157,14 @@
                         <c:when test="${empty sessionScope.user}">
                             <!-- Hiển thị nút đăng nhập khi chưa đăng nhập -->
                             <li><a class="dropdown-item text-center" href="#">
-                                <button class="btn btn-primary w-100 px-5" data-toggle="modal" data-target="#loginModal">Đăng nhập
+                                <button class="btn btn-primary w-100 px-5" data-toggle="modal"
+                                        data-target="#loginModal">Đăng nhập
                                 </button>
                             </a></li>
 
                             <li><a class="dropdown-item text-center mt-3 " href="#">
-                                <button class="btn btn-primary w-100 px-5" data-toggle="modal" data-target="#registerModal">Đăng ký
+                                <button class="btn btn-primary w-100 px-5" data-toggle="modal"
+                                        data-target="#registerModal">Đăng ký
                                 </button>
                             </a></li>
                         </c:when>
@@ -156,8 +179,6 @@
                     </c:choose>
 
 
-
-
                 </ul>
             </div>
             <a href="" class="btn border">
@@ -170,7 +191,8 @@
 <!-- Topbar End -->
 
 <!-- Login Modal Start  (Modal Form đăng nhập)-->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true"
      data-backdrop="true" data-keyboard="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -191,8 +213,15 @@
                         </div>
                         <div class="form-group">
                             <label for="matKhau" class="text-info">Password:</label><br>
-                            <input placeholder="Password" type="password" id="matKhau" name="matKhau"
-                                   value="${khachHangDTO.matKhau}" class="form-control">
+                            <div class="input-group">
+                                <input placeholder="Password" type="password" id="matKhau" name="matKhau"
+                                       value="${khachHangDTO.matKhau}" class="form-control">
+                                <div class="input-group-append">
+                                <span class="input-group-text" id="toggle-password">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                                </div>
+                            </div>
                             <small id="matKhauError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
@@ -201,7 +230,8 @@
                             <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Submit">
                         </div>
                         <div id="register-link" class="text-right">
-                            <a href="#" class="text-info " data-toggle="modal" data-target="#registerModal" data-dismiss="modal">Register here</a>
+                            <a href="#" class="text-info " data-toggle="modal" data-target="#registerModal"
+                               data-dismiss="modal">Register here</a>
                         </div>
                     </form>
                 </div>
@@ -212,7 +242,8 @@
 <!-- Login Modal End -->
 
 <!-- Registration Modal Start (Modal Form đăng ký) -->
-<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true"
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
+     aria-hidden="true"
      data-backdrop="true" data-keyboard="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -224,11 +255,12 @@
             </div>
             <div class="modal-body">
                 <div class="register-form-wrapper">
-                    <form id="register-form" class="form" action="/home/register" method="post"  modelAttribute="khachHangDTO">
+                    <form id="register-form" class="form" action="/home/register" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="registerUsername" class="text-info">Username:</label><br>
                             <input placeholder="Username" type="text" id="registerUsername" name="taiKhoan"
-                                   class="form-control"  value="${khachHangDTO.taiKhoan}">
+                                   class="form-control" value="${khachHangDTO.taiKhoan}">
                             <small id="registerUsernameError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
@@ -246,14 +278,15 @@
                         <div class="form-group">
                             <label for="registerPassword" class="text-info">Password:</label><br>
                             <input placeholder="Password" type="password" id="registerPassword" name="matKhau"
-                                   class="form-control"  value="${khachHangDTO.matKhau}">
+                                   class="form-control" value="${khachHangDTO.matKhau}">
                             <small id="registerPasswordError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Register">
                         </div>
                         <div id="login-link" class="text-right">
-                            <a href="#" class="text-info " data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Back to Login</a>
+                            <a href="#" class="text-info " data-toggle="modal" data-target="#loginModal"
+                               data-dismiss="modal">Back to Login</a>
                         </div>
                     </form>
                 </div>
@@ -658,8 +691,6 @@
     });
 
 
-
-
     <%--    Hiển thị thông báo thành công khi đăng nhập thất bại--%>
     <c:if test="${not empty error}">
     Toast.fire({
@@ -678,7 +709,7 @@
 
 
 
-<%--Validate Form đăng nhặp--%>
+    <%--Validate Form đăng nhặp--%>
     $(document).ready(function () {
         // Bắt lỗi khi submit form
         $('#login-form').submit(function (event) {
@@ -787,12 +818,11 @@
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
                 $('#registerPassword').addClass('border-danger');
                 hasError = true;
+            } else if (password.length < 6) {
+                $('#registerPasswordError').text('Mật khẩu phải có ít nhất 6 ký tự.');
+                $('#registerPassword').addClass('border-danger');
+                hasError = true;
             }
-            else if (password.length < 6) {
-            $('#registerPasswordError').text('Mật khẩu phải có ít nhất 6 ký tự.');
-            $('#registerPassword').addClass('border-danger');
-            hasError = true;
-        }
 
 
             // Check if username already exists
@@ -810,7 +840,6 @@
         });
 
 
-
         // Ẩn lỗi khi người dùng click vào trường input
         $('input').focus(function () {
             $(this).siblings('.text-danger').text('');
@@ -820,7 +849,7 @@
         // Hiển thị lỗi từ Controller (nếu có)
         var errorUsername = '<%= request.getAttribute("errorUsername") %>';
         var errorPassword = '<%= request.getAttribute("errorPassword") %>';
-        var errorUsernameExit= '<%= request.getAttribute("errorUsernameExit") %>';
+        var errorUsernameExit = '<%= request.getAttribute("errorUsernameExit") %>';
 
         if (errorUsername && errorUsername !== 'null') {
             $('#taiKhoanError').text(errorUsername);
@@ -837,7 +866,6 @@
         }
 
 
-
         // Khi modal được mở, thêm class "modal-open" vào body
         $('#loginModal').on('shown.bs.modal', function () {
             $('body').addClass('modal-open');
@@ -847,7 +875,6 @@
         $('#loginModal').on('hidden.bs.modal', function () {
             $('body').removeClass('modal-open');
         });
-
 
 
     });
@@ -866,12 +893,22 @@
         return regex.test(phoneNumber);
     }
 
+    // Chức năng ẩn và hiển thị mật khẩu
+    document.getElementById('toggle-password').addEventListener('click', function () {
+        const passwordInput = document.getElementById('matKhau');
+        const icon = this.querySelector('i');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
 </script>
-
-
-
-
-
 
 
 </body>

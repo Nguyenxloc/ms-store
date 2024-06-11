@@ -5,6 +5,7 @@ import com.example.java4.config.UserInfor;
 import com.example.java4.entities.KhachHang;
 import com.example.java4.repositories.KhachHangRepository;
 import com.example.java4.request.req_tai.KhachHangDTO;
+import com.example.java4.service.service_tai.StorageService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -26,6 +32,14 @@ public class HomeController {
 
     @Autowired
     KhachHangRepository khachHangRepository;
+
+
+
+    // Đường dãn Upload file HinhAnh
+    private static final String UPLOAD_DIR = "src/main/webapp/image/";
+
+    @Autowired
+    private StorageService storageService;
 
     @GetMapping("")
     public String home(Model model) {
@@ -120,7 +134,61 @@ public class HomeController {
     }
 
     @GetMapping("/quan-ly-tai-khoan")
-    public String viewAccount(Model model) {
+    public String viewAccount(Model model,HttpSession session) {
+        KhachHang user = (KhachHang) session.getAttribute("user");
+        if (user != null) {
+            KhachHang updatedUser = khachHangRepository.findByIdKH(user.getId());
+            if (updatedUser != null) {
+                model.addAttribute("user", updatedUser);
+            }
+        }
         return "/view/view_tai/login/quan_ly_tai_khoan.jsp";
+    }
+
+    // Làm chức năng cập nhật thông tin cá nhân của User có upload file HinhAnh
+    @PostMapping("/update-profile")
+    public String updateProfile(@ModelAttribute("user")  KhachHangDTO userDTO, BindingResult result,
+                                @RequestParam("profileImage") MultipartFile file, RedirectAttributes redirectAttributes,
+                                HttpSession session) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("updateErrors", result.getAllErrors());
+            return "redirect:/home/quan-ly-tai-khoan";
+        }
+
+        KhachHang user = khachHangRepository.findByIdKH(UserInfor.idKhachHang);
+        System.out.println(user.getTaiKhoan());
+        if (user != null) {
+            user.setHoTen(userDTO.getHoTen());
+            user.setEmail(userDTO.getEmail());
+            user.setSdt(userDTO.getSdt());
+            user.setGioiTinh(userDTO.getGioiTinh());
+            user.setNgaySinh(userDTO.getNgaySinh());
+            user.setNgayTao(LocalDateTime.now());
+            user.setNgaySua(LocalDateTime.now());
+            user.setTrangThai(khachHangRepository.ACTIVE);
+
+            // Lưu hình ảnh
+            if (!file.isEmpty()) {
+                try {
+                    storageService.store(file);
+                    user.setAnhDaiDien(file.getOriginalFilename());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Xử lý lỗi khi lưu file
+                    redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi lưu hình ảnh");
+                    return "redirect:/home/quan-ly-tai-khoan";
+                }
+            }
+
+            khachHangRepository.save(user);
+            redirectAttributes.addFlashAttribute("successAccount", "Cập nhật thông tin thành công!");
+            // Cập nhật lại thông tin mới của user
+            redirectAttributes.addFlashAttribute("user", user);
+            session.setAttribute("user", user);
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy người dùng!");
+        }
+
+        return "redirect:/home/quan-ly-tai-khoan";
     }
 }

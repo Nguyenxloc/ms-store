@@ -8,20 +8,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class KhachHangDTO {
-    @NotBlank(message = "Vui lòng nhập tài khoản.")
+//    @NotBlank(message = "Vui lòng nhập tài khoản.")
     private String taiKhoan;
-    @NotBlank(message = "Vui lòng nhập mật khẩu.")
+//    @NotBlank(message = "Vui lòng nhập mật khẩu.")
     private String matKhau;
 
-    @NotBlank(message = "Vui lòng nhập email.")
+//    @NotBlank(message = "Vui lòng nhập email.")
     private String email;
-    @NotBlank(message = "Vui lòng nhập số điện thoại")
+//    @NotBlank(message = "Vui lòng nhập số điện thoại")
     private String sdt;
+
+    private String hoTen;
+    private Integer gioiTinh;
+    private Date ngaySinh;
 
     private LocalDateTime ngayTao;
 

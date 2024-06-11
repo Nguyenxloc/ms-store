@@ -10,10 +10,7 @@ import com.example.java4.repositories.NhanVienRepository;
 import com.example.java4.repositories.repo_tai.IHoaDonRepository;
 import com.example.java4.response.HoaDonChiTietDTO;
 import com.example.java4.response.HoaDonDTO;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
+
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

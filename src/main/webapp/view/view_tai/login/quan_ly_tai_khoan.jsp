@@ -91,7 +91,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 80px;
+            margin-left: 86px;
         }
 
         .profile-image-wrapper img {
@@ -394,57 +394,73 @@
             <h4>Quản lý thông tin cá nhân</h4>
         </div>
         <div class="card-body profile-card-body">
-            <div class="row">
                 <!-- Form thông tin cá nhân -->
-                <div class="col-md-8">
 
-                    <c:if test="${not empty sessionScope.user}">
-                        <form>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Tên đăng nhập:</label>
-                                <input type="text" value="${sessionScope.user.taiKhoan}" class="form-control disabled" id="username" placeholder="Tên đăng nhập">
-                            </div>
-                            <div class="mb-3">
-                                <label for="fullName" class="form-label">Họ và tên:</label>
-                                <input type="text" value="${sessionScope.user.hoTen}" class="form-control" id="fullName" placeholder="Họ và tên">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email:</label>
-                                <input type="email" value="${sessionScope.user.email}" class="form-control" id="email" placeholder="Email">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Số điện thoại:</label>
-                                <input type="text" value="${sessionScope.user.sdt}" class="form-control" id="phone" placeholder="Số điện thoại">
-                            </div>
-                            <div class="mb-3">
-                                <label for="gender" class="form-label">Giới tính:</label>
-                                <select class="form-select" id="gender">
-                                    <option value="1" ${sessionScope.user.gioiTinh == 1 ? 'selected' : ''}>Nam</option>
-                                    <option value="2" ${sessionScope.user.gioiTinh == 2 ? 'selected' : ''}>Nữ</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="dob" class="form-label">Ngày sinh:</label>
-                                <input type="date"value="${sessionScope.user.ngaySinh}" class="form-control" id="dob">
-                            </div>
-                            <button type="submit" class="btn btn-primary w-25">Lưu</button>
-                        </form>
-                    </c:if>
+            <%--@elvariable id="user" type=""--%>
 
-
-                </div>
-
-                <!-- Chọn ảnh -->
-                <div class="col-md-4 text-center">
-                    <div class="profile-image-wrapper mb-3 d-flex justify-content-center align-items-center">
-                        <img src="/image/${sessionScope.user.anhDaiDien}" alt="Profile Image" id="profileImagePreview">
+            <form:form modelAttribute="user" action="/home/update-profile" method="post" enctype="multipart/form-data" id="updateProfileForm">
+                <div class="row">
+                    <!-- Thông tin cá nhân -->
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Tên đăng nhập:</label>
+                            <form:input readonly="true" path="taiKhoan" id="username" placeholder="Tên đăng nhập" cssClass="form-control" />
+                            <div class="text-danger" id="usernameError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Họ và tên:</label>
+                            <form:input path="hoTen" id="fullName" placeholder="Họ và tên" cssClass="form-control" />
+                            <div class="text-danger" id="fullNameError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <form:input path="email" type="email" id="email" placeholder="Email" cssClass="form-control" />
+                            <div class="text-danger" id="emailError"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Số điện thoại:</label>
+                            <form:input path="sdt" id="phone" placeholder="Số điện thoại" cssClass="form-control" />
+                            <div class="text-danger" id="phoneError"></div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Giới tính:</label>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <form:radiobutton path="gioiTinh" id="genderMale" value="1" cssClass="form-check-input" />
+                                    <label class="form-check-label" for="genderMale">Nam</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <form:radiobutton path="gioiTinh" id="genderFemale" value="2" cssClass="form-check-input" />
+                                    <label class="form-check-label" for="genderFemale">Nữ</label>
+                                </div>
+                                <div class="text-danger" id="genderError"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dob" class="form-label">Ngày sinh:</label>
+                            <form:input path="ngaySinh" type="date" id="dob" cssClass="form-control" />
+                            <div class="text-danger" id="dobError"></div>
+                        </div>
                     </div>
-                    <input type="file" id="profile-image" accept="image/*">
-                    <label for="profile-image" class="btn btn-outline-secondary">Chọn ảnh</label>
-                    <p class="info-text mt-3  p-0">Định dạng: jpg, png, jpeg</p>
-                    <p class="info-text m-0 p-0">Dung lượng tối đa: 2MB.</p>
+                    <!-- Hình ảnh -->
+                    <div class="col-md-4 text-center">
+                        <div class="profile-image-wrapper mb-3 d-flex justify-content-center align-items-center">
+                            <label for="profileImage">
+                                <img src="/image/<c:out value="${user.anhDaiDien != null ? user.anhDaiDien : 'https://via.placeholder.com/100'}" />" alt="Profile Image" id="profileImagePreview" class="profile-image">
+                            </label>
+                        </div>
+                        <input type="file" id="profileImage" name="profileImage" accept="image/*" style="display: none;">
+                        <label for="profileImage" class="btn btn-outline-secondary">Chọn ảnh</label>
+                        <div class="text-danger" id="profileImageError"></div>
+                        <p class="info-text mt-3 p-0">Định dạng: jpg, png, jpeg</p>
+                        <p class="info-text m-0 p-0">Dung lượng tối đa: 2MB.</p>
+                    </div>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary w-25">Lưu</button>
+            </form:form>
+
+
+        </div>
         </div>
     </div>
 </div>
@@ -549,7 +565,7 @@
 
 <%--Validate form--%>
 <script>
-    //  // Hiển thị thông báo thất bại nếu đăng nhập thất bại
+    //Hiển thị thông báo
     const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -562,159 +578,96 @@
         }
     });
 
+    // Thông báo lỗi không tìm thấy người dùng
+      <c:if test="${not empty errorMessage}">
+      Toast.fire({
+          icon: "error",
+          title: "${errorMessage}"
+      });
+      </c:if>
 
 
-
-    <%--    Hiển thị thông báo thành công khi đăng nhập thất bại--%>
-    <c:if test="${not empty error}">
-    Toast.fire({
-        icon: "error",
-        title: "${error}"
-    });
-    </c:if>
-
-    <%--    Hiển thị thông báo thành công khi đăng nhập thành công--%>
-    <c:if test="${not empty successMessage}">
+    // Hiển thị thông báo cập nhật thông tin cá nhân thành công
+    <c:if test="${not empty successAccount}">
     Toast.fire({
         icon: "success",
-        title: "${successMessage}"
+        title: "${successAccount}"
     });
     </c:if>
 
 
 
-    <%--Validate Form đăng nhặp--%>
+    <%--Validate Form hồ sơ cá nhân--%>
     $(document).ready(function () {
-        // Bắt lỗi khi submit form
-        $('#login-form').submit(function (event) {
+        $('#updateProfileForm').submit(function (event) {
             event.preventDefault(); // Ngăn form submit mặc định
 
             var form = $(this);
-            var username = $('#taiKhoan').val().trim();
-            var password = $('#matKhau').val().trim();
+            var fullName = $('#fullName').val().trim();
+            var email = $('#email').val().trim();
+            var phone = $('#phone').val().trim();
+            var dob = $('#dob').val().trim();
+            var gender = $('input[name="gioiTinh"]:checked').val();
+            var profileImage = $('#profileImage')[0].files[0];
 
             var hasError = false;
-
-            if (!username) {
-                $('#taiKhoanError').text('Vui lòng nhập username.');
-                $('#taiKhoan').addClass('border-danger');
-                hasError = true;
-            } else {
-                $('#taiKhoanError').text('');
-                $('#taiKhoan').removeClass('border-danger');
-            }
-
-            if (!password) {
-                $('#matKhauError').text('Vui lòng nhập password.');
-                $('#matKhau').addClass('border-danger');
-                hasError = true;
-            } else {
-                $('#matKhauError').text('');
-                $('#matKhau').removeClass('border-danger');
-            }
-
-            if (!hasError) {
-                // Gửi yêu cầu đăng nhập bằng AJAX
-                $.ajax({
-                    type: 'POST',
-                    url: form.attr('action'),
-                    data: form.serialize(),
-                    success: function (response) {
-                        if (response.success) {
-                            // Đăng nhập thành công, điều hướng sang trang home
-                            Toast.fire({
-                                icon: "success",
-                                title: response.successMessage
-                            });
-
-                            setTimeout(function () {
-                                window.location.href = response.redirectUrl;
-                            }, 2000);
-                        } else {
-                            // Đăng nhập không thành công, hiển thị lỗi
-                            if (response.errorUsername) {
-                                $('#taiKhoanError').text(response.errorUsername);
-                                $('#taiKhoan').addClass('border-danger');
-                            }
-                            if (response.errorPassword) {
-                                $('#matKhauError').text(response.errorPassword);
-                                $('#matKhau').addClass('border-danger');
-                            }
-
-                        }
-                    },
-                    error: function () {
-                        console.error('Đã xảy ra lỗi khi gửi yêu cầu đăng nhập.');
-                    }
-                });
-            }
-        });
-
-        // Xử lý lỗi và hiển thị modal khi submit form đăng ký
-        $('#register-form').submit(function (event) {
-            var form = $(this);
-            var hasError = false;
-
-            var username = $('#registerUsername').val().trim();
-            var email = $('#registerEmail').val().trim();
-            var phone = $('#registerPhone').val().trim();
-            var password = $('#registerPassword').val().trim();
 
             // Clear previous errors
             $('.text-danger').text('');
             $('.form-control').removeClass('border-danger');
 
-            // Validate fields
-            if (!username) {
-                $('#registerUsernameError').text('Vui lòng nhập username.');
-                $('#registerUsername').addClass('border-danger');
+            if (!fullName) {
+                $('#fullNameError').text('Vui lòng nhập họ và tên.');
+                $('#fullName').addClass('border-danger');
                 hasError = true;
             }
+
             if (!email) {
-                $('#registerEmailError').text('Vui lòng nhập email.');
-                $('#registerEmail').addClass('border-danger');
+                $('#emailError').text('Vui lòng nhập email.');
+                $('#email').addClass('border-danger');
                 hasError = true;
             } else if (!isValidEmail(email)) {
-                $('#registerEmailError').text('Email không hợp lệ.');
-                $('#registerEmail').addClass('border-danger');
+                $('#emailError').text('Email không hợp lệ.');
+                $('#email').addClass('border-danger');
                 hasError = true;
             }
+
             if (!phone) {
-                $('#registerPhoneError').text('Vui lòng nhập số điện thoại.');
-                $('#registerPhone').addClass('border-danger');
+                $('#phoneError').text('Vui lòng nhập số điện thoại.');
+                $('#phone').addClass('border-danger');
                 hasError = true;
             } else if (!isValidVietnamesePhoneNumber(phone)) {
-                $('#registerPhoneError').text('Số điện thoại không hợp lệ');
-                $('#registerPhone').addClass('border-danger');
-                hasError = true;
-            }
-            if (!password) {
-                $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
-                $('#registerPassword').addClass('border-danger');
-                hasError = true;
-            }
-            else if (password.length < 6) {
-                $('#registerPasswordError').text('Mật khẩu phải có ít nhất 6 ký tự.');
-                $('#registerPassword').addClass('border-danger');
+                $('#phoneError').text('Số điện thoại không hợp lệ.');
+                $('#phone').addClass('border-danger');
                 hasError = true;
             }
 
+            if (!dob) {
+                $('#dobError').text('Vui lòng nhập ngày sinh.');
+                $('#dob').addClass('border-danger');
+                hasError = true;
+            }
 
-            // Check if username already exists
-            <%--var registerErrors = '<%= request.getAttribute("registerErrors") %>';--%>
-            <%--if (registerErrors !== 'null') {--%>
-            <%--    $('#registerUsernameError').text(registerErrors);--%>
-            <%--    $('#registerUsername').addClass('border-danger');--%>
-            <%--    hasError = true;--%>
-            <%--}--%>
+            if (!gender) {
+                $('#genderError').text('Vui lòng chọn giới tính.');
+                hasError = true;
+            }
 
-            // If any validation errors exist, prevent form submission
-            if (hasError) {
-                event.preventDefault();
+            if (profileImage) {
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                if (!allowedExtensions.exec(profileImage.name)) {
+                    $('#profileImageError').text('Định dạng ảnh không hợp lệ.');
+                    hasError = true;
+                } else if (profileImage.size > 2097152) {
+                    $('#profileImageError').text('Dung lượng ảnh tối đa là 2MB.');
+                    hasError = true;
+                }
+            }
+
+            if (!hasError) {
+                form.unbind('submit').submit(); // Allow form submission
             }
         });
-
-
 
         // Ẩn lỗi khi người dùng click vào trường input
         $('input').focus(function () {
@@ -722,54 +675,44 @@
             $(this).removeClass('border-danger');
         });
 
-        // Hiển thị lỗi từ Controller (nếu có)
-        var errorUsername = '<%= request.getAttribute("errorUsername") %>';
-        var errorPassword = '<%= request.getAttribute("errorPassword") %>';
-        var errorUsernameExit= '<%= request.getAttribute("errorUsernameExit") %>';
-
-        if (errorUsername && errorUsername !== 'null') {
-            $('#taiKhoanError').text(errorUsername);
-            $('#taiKhoan').addClass('border-danger');
-        }
-        if (errorPassword && errorPassword !== 'null') {
-            $('#matKhauError').text(errorPassword);
-            $('#matKhau').addClass('border-danger');
+        // Hàm kiểm tra định dạng email
+        function isValidEmail(email) {
+            var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
         }
 
-        if (errorUsernameExit !== 'null') {
-            $('#registerUsername').text(errorUsernameExit);
-            $('#taiKhoan').addClass('border-danger');
+        // Hàm kiểm tra định dạng số điện thoại
+        function isValidVietnamesePhoneNumber(phoneNumber) {
+            var regex = /^(0|\+84)\d{9,10}$/;
+            return regex.test(phoneNumber);
         }
-
-
-
-        // Khi modal được mở, thêm class "modal-open" vào body
-        $('#loginModal').on('shown.bs.modal', function () {
-            $('body').addClass('modal-open');
-        });
-
-        // Khi modal được đóng, loại bỏ class "modal-open" khỏi body
-        $('#loginModal').on('hidden.bs.modal', function () {
-            $('body').removeClass('modal-open');
-        });
-
-
-
     });
 
-    // Hàm kiểm tra định dạng email
-    function isValidEmail(email) {
-        // Biểu thức chính quy để kiểm tra định dạng email
-        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    }
 
-    // Hàm kiểm tra định dạng số điện thoại
-    function isValidVietnamesePhoneNumber(phoneNumber) {
-        // Biểu thức chính quy để kiểm tra định dạng số điện thoại (theo quy định của Việt Nam)
-        var regex = /^(0|\+84)\d{9,10}$/;
-        return regex.test(phoneNumber);
-    }
+    // Hàm hiển thị hình ảnh khi chọn ảnh ở trang quản lý tài khoản
+      function previewImage() {
+          const fileInput = document.getElementById('profileImage');
+          const imagePreview = document.getElementById('profileImagePreview');
+
+          fileInput.addEventListener('change', function() {
+              const file = this.files[0];
+              if (file) {
+                  const reader = new FileReader();
+
+                  reader.addEventListener('load', function() {
+                      imagePreview.setAttribute('src', this.result);
+                  });
+
+                  reader.readAsDataURL(file);
+              }
+          });
+      }
+
+      document.addEventListener('DOMContentLoaded', previewImage);
+
+
+
+
 
 </script>
 
