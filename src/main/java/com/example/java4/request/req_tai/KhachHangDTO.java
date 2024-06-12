@@ -18,6 +18,7 @@ public class KhachHangDTO {
     private String taiKhoan;
 //    @NotBlank(message = "Vui lòng nhập mật khẩu.")
     private String matKhau;
+    private String nhapLaiMatKhau;
 
 //    @NotBlank(message = "Vui lòng nhập email.")
     private String email;

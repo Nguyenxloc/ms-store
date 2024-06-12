@@ -104,34 +104,68 @@ public class HomeController {
         return "redirect:/home";
     }
 
+
+    // Hiển thị giao diện đăng nhâp của User
+    @GetMapping("/register")
+    public String viewRegister(Model model) {
+        if (!model.containsAttribute("khachHangDTO")) {
+            model.addAttribute("khachHangDTO", new KhachHangDTO());
+        }
+        return "/view/view_tai/home/trangChu.jsp";
+    }
+
     @PostMapping("/register")
-    public String register( @ModelAttribute("khachHangDTO") KhachHangDTO khachHangDTO,
-                           BindingResult result,
-                           RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Map<String, Object>> register(@ModelAttribute("khachHangDTO") KhachHangDTO khachHangDTO, BindingResult result) {
+        Map<String, Object> response = new HashMap<>();
+
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("registerErrors", result.getAllErrors());
-            return "redirect:/home";
+            response.put("success", false);
+            response.put("errors", result.getAllErrors());
+            return ResponseEntity.ok(response);
         }
 
-        KhachHang existingUser = khachHangRepository.findByTaiKhoan(khachHangDTO.getTaiKhoan());
-        if (existingUser != null) {
-            redirectAttributes.addFlashAttribute("registerErrors", "Username already exists");
-            return "redirect:/home";
+        if (!khachHangDTO.getMatKhau().equals(khachHangDTO.getNhapLaiMatKhau())) {
+            response.put("success", false);
+            response.put("errorPasswordMatch", "Mật khẩu không trùng khớp");
+            return ResponseEntity.ok(response);
         }
 
-        // Save the new user
+        KhachHang existingUserByUsername = khachHangRepository.findByTaiKhoan(khachHangDTO.getTaiKhoan());
+        if (existingUserByUsername != null) {
+            response.put("success", false);
+            response.put("errorUsernameExists", "Tài khoản đã tồn tại");
+            return ResponseEntity.ok(response);
+        }
+
+        KhachHang existingUserByEmail = khachHangRepository.findByEmail(khachHangDTO.getEmail());
+        if (existingUserByEmail != null) {
+            response.put("success", false);
+            response.put("errorEmailExists", "Email đã tồn tại");
+            return ResponseEntity.ok(response);
+        }
+
+        KhachHang existingUserByPhone = khachHangRepository.findBySdt(khachHangDTO.getSdt());
+        if (existingUserByPhone != null) {
+            response.put("success", false);
+            response.put("errorPhoneExists", "Số điện thoại đã tồn tại");
+            return ResponseEntity.ok(response);
+        }
+
         KhachHang newUser = new KhachHang();
         newUser.setTaiKhoan(khachHangDTO.getTaiKhoan());
         newUser.setEmail(khachHangDTO.getEmail());
         newUser.setSdt(khachHangDTO.getSdt());
         newUser.setMatKhau(khachHangDTO.getMatKhau());
-        newUser.setNgayTao( LocalDateTime.now());
+        newUser.setNgayTao(LocalDateTime.now());
         newUser.setTrangThai(khachHangRepository.ACTIVE);
         khachHangRepository.save(newUser);
 
-        redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
-        return "redirect:/home";
+        response.put("success", true);
+        response.put("successMessage", "Đăng ký thành công!");
+        response.put("redirectUrl", "/home");
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/quan-ly-tai-khoan")
     public String viewAccount(Model model,HttpSession session) {
@@ -156,7 +190,6 @@ public class HomeController {
         }
 
         KhachHang user = khachHangRepository.findByIdKH(UserInfor.idKhachHang);
-        System.out.println(user.getTaiKhoan());
         if (user != null) {
             user.setHoTen(userDTO.getHoTen());
             user.setEmail(userDTO.getEmail());

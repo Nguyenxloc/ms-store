@@ -38,8 +38,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
-
-<%--    Thêm thư viện SweetAlert2 để thiển thị thông báo--%>
+    <%--    Thêm thư viện SweetAlert2 để thiển thị thông báo--%>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -62,21 +61,23 @@
             margin: 100px auto;
         }
 
+
         .input-group {
             position: relative;
-            width: 100%;
-        }
-
-        .input-group .form-control {
-            padding-right: 2.5rem; /* Tùy chỉnh để biểu tượng không che nội dung nhập */
         }
 
         .input-group-append {
             position: absolute;
-            right: 0.75rem;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
+            z-index: 10;
+        }
+
+        .input-group-append .input-group-text {
+            border: none;
+            background: none;
         }
     </style>
 </head>
@@ -215,11 +216,11 @@
                             <label for="matKhau" class="text-info">Password:</label><br>
                             <div class="input-group">
                                 <input placeholder="Password" type="password" id="matKhau" name="matKhau"
-                                       value="${khachHangDTO.matKhau}" class="form-control">
+                                       value="${khachHangDTO.matKhau}" class="form-control password-input">
                                 <div class="input-group-append">
-                                <span class="input-group-text" id="toggle-password">
-                                    <i class="fa fa-eye"></i>
-                                </span>
+                                    <span class="input-group-text toggle-password" name="toggle-password">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
                                 </div>
                             </div>
                             <small id="matKhauError" class="text-danger"></small>
@@ -277,10 +278,30 @@
                         </div>
                         <div class="form-group">
                             <label for="registerPassword" class="text-info">Password:</label><br>
-                            <input placeholder="Password" type="password" id="registerPassword" name="matKhau"
-                                   class="form-control" value="${khachHangDTO.matKhau}">
+                            <div class="input-group">
+                                <input placeholder="Password" type="password" id="registerPassword" name="matKhau" value="${khachHangDTO.matKhau}" class="form-control password-input">
+                                <div class="input-group-append">
+                                    <span class="input-group-text toggle-password" name="toggle-password">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
                             <small id="registerPasswordError" class="text-danger"></small>
                         </div>
+
+                        <div class="form-group">
+                            <label for="repeatPassword" class="text-info">Repeat Password:</label><br>
+                            <div class="input-group">
+                                <input placeholder="Repeat Password" type="password" id="repeatPassword" name="nhapLaiMatKhau" class="form-control password-input" value="${khachHangDTO.nhapLaiMatKhau}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text toggle-password" name="toggle-password">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <small id="repeatPasswordError" class="text-danger"></small>
+                        </div>
+
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Register">
                         </div>
@@ -709,7 +730,7 @@
 
 
 
-    <%--Validate Form đăng nhặp--%>
+    <%--Validate Form đăng nhập--%>
     $(document).ready(function () {
         // Bắt lỗi khi submit form
         $('#login-form').submit(function (event) {
@@ -778,6 +799,8 @@
 
         // Xử lý lỗi và hiển thị modal khi submit form đăng ký
         $('#register-form').submit(function (event) {
+            event.preventDefault();
+
             var form = $(this);
             var hasError = false;
 
@@ -785,12 +808,13 @@
             var email = $('#registerEmail').val().trim();
             var phone = $('#registerPhone').val().trim();
             var password = $('#registerPassword').val().trim();
+            var repeatPassword = $('#repeatPassword').val().trim();
 
-            // Clear previous errors
+            // Xóa các lỗi trước đó
             $('.text-danger').text('');
             $('.form-control').removeClass('border-danger');
 
-            // Validate fields
+            // Xác thực các trường
             if (!username) {
                 $('#registerUsernameError').text('Vui lòng nhập username.');
                 $('#registerUsername').addClass('border-danger');
@@ -824,20 +848,71 @@
                 hasError = true;
             }
 
+            if (!repeatPassword) {
+                $('#repeatPasswordError').text('Vui lòng nhập lại mật khẩu.');
+                $('#repeatPassword').addClass('border-danger');
+                hasError = true;
+            } else if (password !== repeatPassword) {
+                $('#repeatPasswordError').text('Mật khẩu không trùng khớp.');
+                $('#repeatPassword').addClass('border-danger');
+                hasError = true;
+            }
 
-            // Check if username already exists
-            <%--var registerErrors = '<%= request.getAttribute("registerErrors") %>';--%>
-            <%--if (registerErrors !== 'null') {--%>
-            <%--    $('#registerUsernameError').text(registerErrors);--%>
-            <%--    $('#registerUsername').addClass('border-danger');--%>
-            <%--    hasError = true;--%>
-            <%--}--%>
 
-            // If any validation errors exist, prevent form submission
-            if (hasError) {
-                event.preventDefault();
+
+
+            // Xảy ra lỗi thì không cho submit
+            if (!hasError) {
+                //Gửi yêu cầu đăng ký qua AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            // Nếu đăng ký thành công hiển thị thông báo và chuyển hướng sáng trang chủ
+                            Toast.fire({
+                                icon: "success",
+                                title: response.successMessage
+                            });
+
+                            setTimeout(function () {
+                                window.location.href = response.redirectUrl;
+                            }, 2000);
+                        } else {
+                            // Hiển thị lỗi
+                            if (response.errors) {
+                                response.errors.forEach(function (error) {
+                                    // Assuming the error code is mapped to field ID
+                                    $('#' + error.field + 'Error').text(error.defaultMessage);
+                                    $('#' + error.field).addClass('border-danger');
+                                });
+                            }
+                            // CHeck lỗi tài khoản đã tồn tại
+                            if (response.errorUsernameExists) {
+                                $('#registerUsernameError').text(response.errorUsernameExists);
+                                $('#registerUsername').addClass('border-danger');
+                            }
+
+
+                            if (response.errorEmailExists) {
+                                $('#registerEmailError').text(response.errorEmailExists);
+                                $('#registerEmail').addClass('border-danger');
+                            }
+                            if (response.errorPhoneExists) {
+                                $('#registerPhoneError').text(response.errorPhoneExists);
+                                $('#registerPhone').addClass('border-danger');
+                            }
+                        }
+                    },
+                    error: function () {
+                        console.error('Đã xảy ra lỗi khi gửi yêu cầu đăng ký.');
+                    }
+                });
             }
         });
+
+
 
 
         // Ẩn lỗi khi người dùng click vào trường input
@@ -845,25 +920,6 @@
             $(this).siblings('.text-danger').text('');
             $(this).removeClass('border-danger');
         });
-
-        // Hiển thị lỗi từ Controller (nếu có)
-        var errorUsername = '<%= request.getAttribute("errorUsername") %>';
-        var errorPassword = '<%= request.getAttribute("errorPassword") %>';
-        var errorUsernameExit = '<%= request.getAttribute("errorUsernameExit") %>';
-
-        if (errorUsername && errorUsername !== 'null') {
-            $('#taiKhoanError').text(errorUsername);
-            $('#taiKhoan').addClass('border-danger');
-        }
-        if (errorPassword && errorPassword !== 'null') {
-            $('#matKhauError').text(errorPassword);
-            $('#matKhau').addClass('border-danger');
-        }
-
-        if (errorUsernameExit !== 'null') {
-            $('#registerUsername').text(errorUsernameExit);
-            $('#taiKhoan').addClass('border-danger');
-        }
 
 
         // Khi modal được mở, thêm class "modal-open" vào body
@@ -894,18 +950,22 @@
     }
 
     // Chức năng ẩn và hiển thị mật khẩu
-    document.getElementById('toggle-password').addEventListener('click', function () {
-        const passwordInput = document.getElementById('matKhau');
-        const icon = this.querySelector('i');
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePasswordElements = document.querySelectorAll('.toggle-password');
+        togglePasswordElements.forEach(togglePassword => {
+            togglePassword.addEventListener('click', function () {
+                const passwordInput = this.parentElement.previousElementSibling;
+                const eyeIcon = this.querySelector('i');
+
+                // Chuyển đổi thuộc tính 'type' của ô input giữa 'password' và 'text'
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Chuyển đổi biểu tượng mắt giữa 'fa-eye' và 'fa-eye-slash
+                eyeIcon.classList.toggle('fa-eye');
+                eyeIcon.classList.toggle('fa-eye-slash');
+            });
+        });
     });
 
 </script>

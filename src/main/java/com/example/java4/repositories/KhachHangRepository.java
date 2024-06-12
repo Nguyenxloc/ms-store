@@ -22,6 +22,8 @@ public interface KhachHangRepository
     // Lấy thông tin khách hàng theo Username và Password làm chức năng đăng nhập
     KhachHang findByTaiKhoanAndMatKhau(String taiKhoan, String matKhau);
     KhachHang findByTaiKhoan(String taiKhoan);
+    KhachHang findByEmail(String email);
+    KhachHang findBySdt(String sdt);
     @Query("select kh from KhachHang kh where kh.id = ?1")
     KhachHang findByIdKH(String idKH);
 };
