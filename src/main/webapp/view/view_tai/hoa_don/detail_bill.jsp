@@ -476,14 +476,14 @@
                     <div class="card-body">
                         <c:choose>
                             <%-- Hiển thị stepper cho bán hàng tại quầy (LoaiHD == 1) --%>
-                            <c:when test="${hoaDonDTO.loaiHoaDon == 0}">
+                            <c:when test="${hoaDonDTO.loaiHoaDon == 1}">
                                 <div class="stepper-horizontal" id="stepper_offline">
                                     <div class="step" id="step_offline_1">
                                         <div class="step-icon-wrapper">
                                             <i class="bi bi-card-text step-icon"></i>
                                         </div>
                                         <div class="step-title">Tạo hóa đơn</div>
-                                        <div class="step-date">01/01/2023</div>
+                                        <div class="step-date">${hoaDonDTO.ngayTao}</div>
                                         <div class="connector"></div>
                                     </div>
                                     <div class="step" id="step_offline_2">
@@ -491,7 +491,7 @@
                                             <i class="bi bi-check-circle step-icon"></i>
                                         </div>
                                         <div class="step-title">Đã hoàn thành</div>
-                                        <div class="step-date">02/01/2023</div>
+                                        <div class="step-date">${hoaDonDTO.ngayThanhToan}</div>
                                     </div>
                                 </div>
                             </c:when>
@@ -642,7 +642,7 @@
 
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#paymentModal"
-                                <c:if test="${hoaDonDTO.loaiHoaDon == 0}">disabled</c:if>>
+                                <c:if test="${hoaDonDTO.loaiHoaDon == 1}">disabled</c:if>>
                             <i class="bi bi-plus-lg"></i> Thanh Toán
                         </button>
                     </div>

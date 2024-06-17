@@ -52,6 +52,7 @@ public class AdminService {
                         record.getTongTien(),
                         record.getLoaiHoaDon(),
                         record.getNgayTao() != null ? record.getNgayTao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) : null,
+                        record.getNgayThanhToan() != null ? record.getNgayThanhToan().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) : null,
                         record.getTrangThai()))
                 .collect(Collectors.toList());
         return res;
