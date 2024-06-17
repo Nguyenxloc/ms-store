@@ -1,6 +1,7 @@
 package com.example.java4.controller.controller_tai;
 
 
+import com.example.java4.config.HoaDonUtil;
 import com.example.java4.entities.ChiTietHoaDon;
 import com.example.java4.entities.DiaChi;
 import com.example.java4.entities.HoaDon;
@@ -59,10 +60,6 @@ public class QuanLyHoaDonController {
 
     @Autowired
     IDiaChiRepository _diaChiRepository;
-
-
-
-
 
 
 
@@ -158,6 +155,62 @@ public class QuanLyHoaDonController {
 //
 
 
+//    @GetMapping("/hien-thi")
+//    public String view(Model model,
+//                       @RequestParam(value = "page", defaultValue = "0") int page,
+//                       @RequestParam(value = "status", required = false) String status,
+//                       @RequestParam(value = "loaiHoaDon", required = false) Integer loaiHoaDon,
+//                       @RequestParam(value = "keyword", required = false) String keyword,
+//                       @RequestParam(value = "startDate", required = false) String startDateStr,
+//                       @RequestParam(value = "endDate", required = false) String endDateStr) {
+//        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "ngayTao"));
+//
+//        // Xử lý ngày tạo
+//        LocalDateTime startDate = null;
+//        LocalDateTime endDate = null;
+//        if (startDateStr != null && !startDateStr.isEmpty()) {
+//            startDate = LocalDate.parse(startDateStr).atStartOfDay();
+//        }
+//        if (endDateStr != null && !endDateStr.isEmpty()) {
+//            endDate = LocalDate.parse(endDateStr).atTime(LocalTime.MAX);
+//        }
+//
+//        Page<HoaDon> pageHD;
+//        // Tìm kiếm theo từ khóa
+//        if (keyword != null && !keyword.isEmpty()) {
+//            pageHD = hoaDonRepository.searchByKeywordAndDate(keyword, startDate, endDate, pageable);
+//        } else {
+//            pageHD = filterHoaDon(status, loaiHoaDon, startDate, endDate, pageable);
+//        }
+//
+//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//        List<HoaDonDTO> listHoaDonDTO = pageHD.stream()
+//                .map(hoaDon -> new HoaDonDTO(
+//                        hoaDon.getId().toString(),
+//                        hoaDon.getMa(),
+//                        hoaDon.getIdKhachHang(),
+//                        hoaDon.getIdNhanVien(),
+//                        hoaDon.getPhuongThucThanhToan(),
+//                        hoaDon.getTongTien(),
+//                        hoaDon.getLoaiHoaDon(),
+//                        hoaDon.getNgayTao() != null ? hoaDon.getNgayTao().format(dateTimeFormatter) : null,
+//                        hoaDon.getTrangThai()))
+//                .collect(Collectors.toList());
+//
+//        model.addAttribute("hoaDonPage", listHoaDonDTO);
+//        model.addAttribute("pageHD", pageHD);
+//        model.addAttribute("currentStatus", status);
+//        model.addAttribute("currentLoaiHoaDon", loaiHoaDon);
+//        model.addAttribute("keyword", keyword);
+//        model.addAttribute("startDate", startDateStr);
+//        model.addAttribute("endDate", endDateStr);
+//
+//        return "/view/view_tai/hoa_don/bill.jsp";
+//    }
+//
+//
+
+
     @GetMapping("/hien-thi")
     public String view(Model model,
                        @RequestParam(value = "page", defaultValue = "0") int page,
@@ -168,6 +221,10 @@ public class QuanLyHoaDonController {
                        @RequestParam(value = "endDate", required = false) String endDateStr) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "ngayTao"));
 
+
+        //Lớp Util để xử chuyển đổi trạng thái
+        HoaDonUtil hoaDonUtil = new HoaDonUtil();
+
         // Xử lý ngày tạo
         LocalDateTime startDate = null;
         LocalDateTime endDate = null;
@@ -177,9 +234,6 @@ public class QuanLyHoaDonController {
         if (endDateStr != null && !endDateStr.isEmpty()) {
             endDate = LocalDate.parse(endDateStr).atTime(LocalTime.MAX);
         }
-
-
-
 
         Page<HoaDon> pageHD;
         //Tìm kiếm theo từ khóa
@@ -225,16 +279,23 @@ public class QuanLyHoaDonController {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         List<HoaDonDTO> listHoaDonDTO = pageHD.stream()
-                .map(hoaDon -> new HoaDonDTO(
-                        hoaDon.getId().toString(),
-                        hoaDon.getMa(),
-                        hoaDon.getIdKhachHang(),
-                        hoaDon.getIdNhanVien(),
-                        hoaDon.getPhuongThucThanhToan(),
-                        hoaDon.getTongTien(),
-                        hoaDon.getLoaiHoaDon(),
-                        hoaDon.getNgayTao() != null ? hoaDon.getNgayTao().format(dateTimeFormatter) : null,
-                        hoaDon.getTrangThai()))
+                .map(hoaDon -> {
+                    HoaDonDTO hd = new HoaDonDTO(
+                            hoaDon.getId().toString(),
+                            hoaDon.getMa(),
+                            hoaDon.getIdKhachHang(),
+                            hoaDon.getIdNhanVien(),
+                            hoaDon.getPhuongThucThanhToan(),
+                            hoaDon.getTongTien(),
+                            hoaDon.getLoaiHoaDon(),
+                            hoaDon.getNgayTao() != null ? hoaDon.getNgayTao().format(dateTimeFormatter) : null,
+                            hoaDon.getTrangThai()
+                        );
+                    hd.setTrangThaiText(hoaDonUtil.getTrangThaiName(hoaDon.getTrangThai()));
+                    hd.setMaMau(hoaDonUtil.getStatusClass(hoaDon.getTrangThai()));
+                    return hd;
+                })
+
                 .collect(Collectors.toList());
 
         model.addAttribute("hoaDonPage", listHoaDonDTO);
@@ -248,7 +309,6 @@ public class QuanLyHoaDonController {
 
         return "/view/view_tai/hoa_don/bill.jsp";
     }
-
 
 
 
@@ -270,12 +330,11 @@ public class QuanLyHoaDonController {
         List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHD);
         // Lấy ra hóa đơn theo ID
         HoaDon hoaDon = _hoaDonRepo.findById(idHD).orElse(null);
-//        DiaChi diaChiKhachHang = _diaChiRepository.findByIdKhachHang(hoaDon.getIdKhachHang().getId());
-//
-//        if(diaChiKhachHang == null){
-//            model.addAttribute("errorMessage", "Khách hàng chưa có địa chỉ");
-//            return "/view/view_tai/hoa_don/detail_bill.jsp";
-//        }
+        DiaChi diaChiKhachHang = _diaChiRepository.findByIdKhachHang_Id(hoaDon.getIdKhachHang().getId());
+        if(diaChiKhachHang == null){
+            model.addAttribute("errorMessage", "Khách hàng chưa có địa chỉ");
+            return "/view/view_tai/hoa_don/detail_bill.jsp";
+        }
 
         if (hoaDon == null) {
             // Xử lý trường hợp không tìm thấy hóa đơn
@@ -349,6 +408,14 @@ public class QuanLyHoaDonController {
         return "/view/view_tai/hoa_don/bill.jsp";
     }
 
+
+    // Chức năng in phiếu giao hàng
+    @GetMapping("/in-phieu-giao-hang/{idHD}")
+    public String printDelivery(Model model,
+                                @PathVariable("idHD") String idHD){
+
+        return "/view/view_tai/hoa_don/in_phieu_giao_hang.jsp";
+    }
 
     // Chức năng in phiếu HoaDon ra file PDF
 //    @GetMapping(value = "/in-hoa-don/pdf/{idHD}")

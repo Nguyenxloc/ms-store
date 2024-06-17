@@ -48,6 +48,7 @@ public interface IHoaDonRepository   extends JpaRepository<HoaDon,String> {
     Page<HoaDon> findByTrangThaiOrderByNgayTaoDesc(int trangThai, Pageable pageable);
 
     // Tìm hóa đơn theo loại hóa đơn, chức năng lọc hóa đơn theo LoaiHoaDon
+
     Page<HoaDon> findByLoaiHoaDon(int loaiHoaDon, Pageable pageable);
 
     // Tìm hóa đơn theo loại hóa đơn, chức năng lọc hóa đơn theo LoaiHoaDon và Trạng thái của hóa đơn
