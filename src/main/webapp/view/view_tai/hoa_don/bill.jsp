@@ -1114,7 +1114,8 @@
     </c:if>
 
 
-    $(document).ready(function () {
+
+    document.addEventListener('DOMContentLoaded', function () {
         // Function to get status from URL
         function getStatusFromUrl() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1136,10 +1137,13 @@
             } else {
                 $('#myTab .nav-link[data-status="' + status + '"]').addClass('bg-warning').tab('show');
             }
+
+            // Save the current status to localStorage
+            localStorage.setItem('currentTabStatus', status);
         }
 
         // Initial setup
-        let status = getStatusFromUrl();
+        let status = getStatusFromUrl() || localStorage.getItem('currentTabStatus');
         setStatusAndHighlightTab(status);
 
         // When clicking on a tab
@@ -1148,15 +1152,31 @@
             $('#myTab .nav-link').removeClass('bg-warning');
             // Add the bg-warning class to the clicked tab
             $(this).addClass('bg-warning');
+
+            // Update the URL without reloading the page
+            let status = $(this).data('status');
+            history.pushState(null, '', '?status=' + status);
+
+            // Save the current status to localStorage
+            localStorage.setItem('currentTabStatus', status);
         });
 
         // When clicking on any a tag
         $('a').click(function () {
-            status = getStatusFromUrl();
-            if (status === null) {
-                status = 'all';
-            }
-            setStatusAndHighlightTab('all');
+            // Save the current tab status before navigating away
+            let currentTabStatus = $('#myTab .nav-link.bg-warning').data('status');
+            localStorage.setItem('currentTabStatus', currentTabStatus);
+        });
+    });
+
+    // Handle data loading when tabs are clicked
+    document.querySelectorAll('.nav-link').forEach(button => {
+        button.addEventListener('click', function () {
+            let status = this.getAttribute('data-status');
+            let url = new URL(window.location.href);
+            url.searchParams.set('status', status);
+            window.history.pushState({}, '', url.toString());
+            // Load data for the selected tab if needed
         });
     });
 

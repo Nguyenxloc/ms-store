@@ -117,6 +117,23 @@ public class HoaDonDTO {
     }
 
 
+    public static HoaDonDTO fromEntity(HoaDon hoaDon) {
+        return new HoaDonDTO(
+                hoaDon.getId(),
+                hoaDon.getMa(),
+                hoaDon.getIdKhachHang(),
+                hoaDon.getIdNhanVien(),
+                hoaDon.getPhuongThucThanhToan(),
+                hoaDon.getTongTien(),
+                hoaDon.getLoaiHoaDon(),
+                hoaDon.getNgayTao() != null ? hoaDon.getNgayTao().toString() : null,
+                hoaDon.getNgayThanhToan() != null ? hoaDon.getNgayThanhToan().toString() : null,
+                hoaDon.getTrangThai()
+        );
+    }
+
+
+
 }
 
 

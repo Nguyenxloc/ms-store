@@ -715,7 +715,7 @@
                         </c:choose>
                     </div>
 
-                    <c:if test="${hoaDonDTO.loaiHoaDon == 1 && hoaDonDTO.trangThai != 6 || hoaDonDTO.trangThai != 4 }">
+                    <c:if test="${hoaDonDTO.loaiHoaDon == 1 && hoaDonDTO.trangThai != 6 }">
                         <div class="card-footer">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
@@ -736,13 +736,13 @@
 
                                         </c:if>
 
-                                        <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 6}">
-                                            <a href="/hoa-don/hoan-tac/${hoaDonDTO.id}">
-                                                <button type="button" class="btn btn-warning" id="">
-                                                    Hoàn tác
-                                                </button>
-                                            </a>
-                                        </c:if>
+<%--                                        <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 6}">--%>
+<%--                                            <a href="/hoa-don/hoan-tac/${hoaDonDTO.id}">--%>
+<%--                                                <button type="button" class="btn btn-warning" id="">--%>
+<%--                                                    Hoàn tác--%>
+<%--                                                </button>--%>
+<%--                                            </a>--%>
+<%--                                        </c:if>--%>
                                     </c:if>
                                 </div>
                             </div>
@@ -826,16 +826,16 @@
                         <h5 class="card-title mb-0">Lịch sử thanh toán:</h5>
 
 
-                        <c:if test="${hoaDonDTO.loaiHoaDon == 1 && hoaDonDTO.trangThai == 4}">
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#paymentModal"
-                                    <c:if test="${hoaDonDTO.trangThai == 6}">
-                                        disabled
-                                    </c:if>
-                            >
-                                <i class="bi bi-plus-lg"></i> Thanh Toán
-                            </button>
-                        </c:if>
+<%--                        <c:if test="${hoaDonDTO.loaiHoaDon == 1 && hoaDonDTO.trangThai == 4}">--%>
+<%--                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"--%>
+<%--                                    data-bs-target="#paymentModal"--%>
+<%--                                    <c:if test="${hoaDonDTO.trangThai == 6}">--%>
+<%--                                        disabled--%>
+<%--                                    </c:if>--%>
+<%--                            >--%>
+<%--                                <i class="bi bi-plus-lg"></i> Thanh Toán--%>
+<%--                            </button>--%>
+<%--                        </c:if>--%>
                     </div>
 
                     <div class="card-body">
@@ -854,8 +854,7 @@
                             </thead>
 
                             <tbody>
-                            <c:if test="${hoaDonDTO.trangThai == 4 || hoaDonDTO.loaiHoaDon == 0}">
-                                <c:if test="${hoaDonDTO.ngayThanhToan != null}">
+<%--                            <c:if test="${hoaDonDTO.trangThai == 4 || hoaDonDTO.loaiHoaDon == 0}">--%>
                                     <tr>
                                         <td>1</td>
                                         <td><fmt:formatNumber value="${hoaDonDTO.tongTien}" type="currency"
@@ -874,24 +873,18 @@
 
                                         <td>
 
-                                            <c:choose>
-                                                <c:when test="${hoaDonDTO.trangThai == 1 && hoaDonDTO.loaiHoaDon == 0}">
-
-                                                </c:when>
-                                                <c:otherwise>
+<%--                                            <c:choose>--%>
+<%--                                                <c:when test="${hoaDonDTO.loaiHoaDon == 1}">--%>
                                                     ${hoaDonDTO.nhanVien.hoTen}
-                                                </c:otherwise>
-                                            </c:choose>
+<%--                                                </c:when>--%>
+
+<%--                                            </c:choose>--%>
                                         </td>
                                         <td>
                                                 ${hoaDonDTO.ghiChu}
                                         </td>
-
                                     </tr>
-                                </c:if>
-
-
-                            </c:if>
+<%--                            </c:if>--%>
 
                             </tbody>
 
@@ -967,7 +960,7 @@
                 <%--                <h1 class="h3 mb-3 text-gray-800">Thông tin chi tiết hóa đơn</h1>--%>
 
 
-                <!-- Thông tin đơn hàng -->
+<%--                <!-- Thông tin đơn hàng -->--%>
 
                 <div class="row d-flex align-items-stretch">
                     <div class="col-7 mb-3 d-flex align-items-stretch">
@@ -1073,7 +1066,7 @@
                                                             </span>
 
                                                         </p>
-                                                        <p class="fw-bold mb-1 pb-3 small">Tên khách hàng: <span
+                                                        <p class="fw-bold mb-1 pb-3 small">Tên người nhận: <span
                                                                 class="fw-normal">${giaoHangDTO.tenNguoiNhan == null ? "Khách lẻ" : giaoHangDTO.tenNguoiNhan }</span>
                                                         </p>
                                                         <p class="fw-bold mb-1 pb-3 small">Địa chỉ:
@@ -1211,16 +1204,15 @@
                                 <input type="hidden" name="tenPhuongXa" id="tenPhuongXa">
 
 
-
                                 <div class="mb-3">
                                     <label for="hoTen" class="form-label">Họ tên:</label>
-                                    <input type="text" class="form-control" id="hoTen" name="hoTen"
+                                    <input type="text" class="form-control" id="hoTen" name="tenNguoiNhan"
                                            value="${giaoHangDTO.tenNguoiNhan}">
                                     <div id="hoTenError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="sdt" class="form-label">Số điện thoại:</label>
-                                    <input type="text" class="form-control" id="sdt" name="sdt"
+                                    <input type="text" class="form-control" id="sdt" name="sdtNguoiNhan"
                                            value="${giaoHangDTO.sdtNguoiNhan}">
                                     <div id="sdtError" class="text-danger"></div>
                                 </div>
@@ -1228,7 +1220,7 @@
                                     <label for="diaChiChiTiet" class="form-label">Địa chỉ cụ thể:</label>
                                     <input type="text" class="form-control" id="diaChiChiTiet" name="diaChiChiTiet"
                                            value="${giaoHangDTO.diaChiChiTiet}">
-                                    <div id="diaChiError" class="text-danger"></div>
+                                    <div id="diaChiChiTietError" class="text-danger"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
@@ -1283,7 +1275,7 @@
             </div>
 
 
-            <%-- Thông tin sản phẩm đã mua                --%>
+            <%-- Thông tin sản phẩm đã mua           --%>
             <div class="card shadow mb-4 mx-2" id="custom-card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="m-0 font-weight-bold">Thông tin sản phẩm đã mua</h5>
@@ -1352,7 +1344,7 @@
                                                 <input type="number" id="soLuong-${chiTiet.idCTSP.id}"
                                                        value="${chiTiet.soLuong}"
                                                        data-id="${chiTiet.idCTSP.id}" data-hoadon="${hoaDonDTO.id}"
-                                                       class="form-control form-control-sm" style="width: 50px;"
+                                                       class="form-control form-control-sm" style="width: 100px;"
                                                        min="1">
                                             </c:otherwise>
                                         </c:choose>
@@ -1374,10 +1366,10 @@
                                                 </button>
                                             </c:when>
                                             <c:otherwise>
-                                                <button type="button" class="btn btn-outline-warning"
+                                                <button type="button" class="btn btn-outline-warning  update-sl"
                                                         id="editBtn-${chiTiet.idCTSP.id}" data-id="${chiTiet.idCTSP.id}"
                                                         data-hoadon="${hoaDonDTO.id}">
-                                                    <i class="bi bi-arrow-clockwise" style="font-size: 1.0em;"></i>
+                                                    <i class="bi bi-arrow-clockwise" style="font-size: 1.0em; "></i>
                                                 </button>
                                                 <button type="button"
                                                         class="btn btn-outline-danger btn-sm delete-product"
@@ -1476,7 +1468,7 @@
                         <table class="table table-hover table-bordered custom-table ">
                             <thead>
                             <tr>
-                                <th>STT</th>
+<%--                                <th>STT</th>--%>
                                 <th>Tên sản phẩm</th>
                                 <th>Ảnh sản phẩm</th>
                                 <th>Màu sắc</th>
@@ -1490,8 +1482,8 @@
                             <tbody id="tbl_ds_spct">
                             <c:forEach var="product" items="${listCTSP.content}" varStatus="status">
                                 <tr>
-<%--                                <c:if test="${product.soLuong > 0 }">--%>
-                                    <td>${status.index + 1}</td>
+                                <c:if test="${product.soLuong > 0 }">
+<%--                                    <td>${status.index + 1}</td>--%>
                                     <td>${product.idSanPham.ten}</td>
                                             <td>
                                                 <c:set var="hinhAnh" value="${hinhAnhMapCTSP[product.id]}"/>
@@ -1517,7 +1509,7 @@
                                         </a>
                                     </td>
                                     </tr>
-<%--                                </c:if>--%>
+                                </c:if>
                             </c:forEach>
                             </tbody>
                         </table>
@@ -1699,7 +1691,7 @@
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
@@ -1803,6 +1795,11 @@
     // Validate form  Thay đổi thông tin khách hàng
     $(document).ready(function () {
         var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+        var updatedData = {
+            idTinhThanh: '${giaoHangDTO.idTinhThanh}',   // Cập nhật dữ liệu mẫu
+            idQuanHuyen: '${giaoHangDTO.idQuanHuyen}',
+            idPhuongXa: '${giaoHangDTO.idPhuongXa}'
+        };
 
         // Function to get JSON with token
         function getJSONWithToken(url, callback) {
@@ -1832,12 +1829,16 @@
                 var tinhSelect = modal.find('#tinh');
                 tinhSelect.empty(); // Clear previous options
                 $.each(data.data, function (key, val) {
-                    tinhSelect.append('<option value="' + val.ProvinceID + '">' + val.ProvinceName + '</option>');
+                    var selected = updatedData.idTinhThanh == val.ProvinceName ? 'selected' : '';
+                    tinhSelect.append('<option value="' + val.ProvinceID + '" ' + selected + '>' + val.ProvinceName + '</option>');
                 });
 
                 // Trigger change event to load districts based on selected province
                 tinhSelect.change();
             });
+
+            // Repopulate other fields with updated data
+
         });
 
         // Populate districts based on selected province
@@ -1848,7 +1849,8 @@
             getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=' + idTinh, function (data) {
                 huyenSelect.empty(); // Clear previous options
                 $.each(data.data, function (key, val) {
-                    huyenSelect.append('<option value="' + val.DistrictID + '">' + val.DistrictName + '</option>');
+                    var selected = updatedData.idQuanHuyen == val.DistrictName ? 'selected' : '';
+                    huyenSelect.append('<option value="' + val.DistrictID + '" ' + selected + '>' + val.DistrictName + '</option>');
                 });
 
                 // Trigger change event to load wards based on selected district
@@ -1864,14 +1866,11 @@
             getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idQuan, function (data) {
                 xaSelect.empty(); // Clear previous options
                 $.each(data.data, function (key, val) {
-                    xaSelect.append('<option value="' + val.WardCode + '">' + val.WardName + '</option>');
+                    var selected = updatedData.idPhuongXa == val.WardName ? 'selected' : '';
+                    xaSelect.append('<option value="' + val.WardCode + '" ' + selected + '>' + val.WardName + '</option>');
                 });
             });
         });
-
-        // Form submission handler
-
-
 
         $('#updateButton').click(function () {
             $('#updateForm').submit();
@@ -1908,7 +1907,7 @@
             if ($('#diaChiChiTiet').val().trim() === '') {
                 isValid = false;
                 $('#diaChiChiTiet').addClass('border-danger');
-                $('#diaChiError').text('Vui lòng nhập địa chỉ');
+                $('#diaChiChiTietError').text('Vui lòng nhập địa chỉ chi tiết');
             }
 
             if ($('#tinh').val() === '') {
@@ -1940,24 +1939,27 @@
             $('#tenPhuongXa').val($('#xa option:selected').text());
 
             if (isValid) {
-                this.submit(); // Submit the form
-                console.log("Form is valid. Ready to submit...");
+                // Store the updated data in the updatedData object
+                updatedData = {
+                    idTinhThanh: $('#tinh').val(),
+                    idQuanHuyen: $('#huyen').val(),
+                    idPhuongXa: $('#xa').val(),
+                };
+
+                // Submit the form via AJAX or standard form submission
+                this.submit();
             } else {
                 $(".modal-body").scrollTop(0);
             }
-
         });
 
         // Clear errors when input/select value changes
-        $('#hoTen, #sdt, #diaChiChiTiet, #tinh, #huyen, #xa,#phiShip').on('input click change', function () {
+        $('#hoTen, #sdt, #diaChiChiTiet, #tinh, #huyen, #xa, #phiShip').on('input click change', function () {
             var errorId = '#' + $(this).attr('id') + 'Error';
             $(this).removeClass('border-danger');
             $(errorId).text('');
         });
     });
-
-
-
 
 
     // Validate form hủy đơn hàng
@@ -1993,7 +1995,7 @@
 
 
 <%--Chức năng xóa sản phẩm chi tiết khỏi chi tiết hóa đơn--%>
-<script th:inline="javascript">
+<script>
 
 
     $(document).ready(function () {
@@ -2038,8 +2040,24 @@
 </script>
 
 <%--Chức năng cập nhat so luong chi tiet san pham trong hoa don chi tiet--%>
-<script th:inline="javascript">
+<script >
+
+// Hiển thị thông báo thành công nếu xác nhận đơn hàng thành công
+// const Toast = Swal.mixin({
+//     toast: true,
+//     position: "top-end",
+//     showConfirmButton: false,
+//     timer: 3000,
+//     timerProgressBar: true,
+//     didOpen: (toast) => {
+//         toast.onmouseenter = Swal.stopTimer;
+//         toast.onmouseleave = Swal.resumeTimer;
+//     }
+// });
+
     $(document).ready(function () {
+        console.log('Document ready');
+
         $('input[type="number"]').on('input', function () {
             // Ngăn ngừa nhập chữ và số âm
             if (this.value.match(/[^0-9]/g) || parseInt(this.value, 10) <= 0) {
@@ -2048,50 +2066,44 @@
         });
 
         $('.update-sl').click(function () {
+            console.log('Update button clicked');
+
             var idCTSP = $(this).data('id');
             var idHoaDon = $(this).data('hoadon');
             var newQuantity = parseInt($('#soLuong-' + idCTSP).val().trim(), 10);
 
+            console.log('idCTSP:', idCTSP, 'idHoaDon:', idHoaDon, 'newQuantity:', newQuantity);
+
             // Validate input
             if (isNaN(newQuantity) || newQuantity <= 0) {
-                Swal.fire({
+                Toast.fire({
                     title: 'Số lượng không hợp lệ',
                     icon: 'error'
                 });
                 return;
             }
 
-            Swal.fire({
-                title: 'Xác nhận cập nhật số lượng sản phẩm?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Cập nhật',
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Gửi Ajax request để cập nhật số lượng
-                    $.ajax({
-                        type: 'GET',
-                        url: '/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,
-                        data: {
-                            idHoaDon: idHoaDon,
-                            soLuong: newQuantity
-                        },
-                        success: function (response) {
-                            Swal.fire({
-                                title: 'Đã cập nhật số lượng sản phẩm',
-                                icon: 'success'
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function (xhr) {
-                            let errorMsg = xhr.responseText || 'Đã xảy ra lỗi khi cập nhật số lượng';
-                            Swal.fire({
-                                title: errorMsg,
-                                icon: 'error'
-                            });
-                        }
+            // Gửi Ajax request để cập nhật số lượng
+            $.ajax({
+                type: 'GET',
+                url: '/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,
+                data: {
+                    idHoaDon: idHoaDon,
+                    soLuong: newQuantity
+                },
+                success: function (response) {
+                    Toast.fire({
+                        title: 'Cập nhật số lượng sản phẩm thành công',
+                        icon: 'success'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: function (xhr) {
+                    let errorMsg = xhr.responseText || 'Đã xảy ra lỗi khi cập nhật số lượng';
+                    Toast.fire({
+                        title: errorMsg,
+                        icon: 'error'
                     });
                 }
             });

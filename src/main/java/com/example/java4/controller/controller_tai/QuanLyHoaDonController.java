@@ -9,6 +9,7 @@ import com.example.java4.entities.tai.HoaDon_Tai;
 import com.example.java4.repositories.*;
 import com.example.java4.repositories.repo_tai.*;
 import com.example.java4.request.Areq_fixed.DiaChiRequest;
+import com.example.java4.request.Areq_fixed.GiaoHangRequest;
 import com.example.java4.request.req_tai.DiaChiDTO;
 import com.example.java4.request.req_viet.NhanVienRequest;
 import com.example.java4.response.GiaoHangDTO;
@@ -18,6 +19,7 @@ import com.example.java4.response.HoaDonDTO;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -258,6 +260,9 @@ public class QuanLyHoaDonController {
         NhanVien nhanVien = new NhanVien();
         if (UserInfor.idNhanVien != null) {
              nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+            if(nhanVien == null){
+                nhanVien = _nhanVienRepo.findById("BF29DB87-6ED2-46E8-B34C-135B2EA4CCA6").get();
+            }
             model.addAttribute("nv", nhanVien);
         }
 
@@ -272,30 +277,29 @@ public class QuanLyHoaDonController {
         // Lấy danh sách chi tiết hóa đơn
         List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHD);
         // Lấy ra hóa đơn theo ID
-//        HoaDon hoaDon = _hoaDonRepo.findById(idHD).orElse(null);
         HoaDon_Tai hoaDon = _hoaDonRepoTai.findById(idHD).orElse(null);
         if (hoaDon == null) {
-            // Xử lý trường hợp không tìm thấy hóa đơn
             model.addAttribute("errorMessage", "Không tìm thấy hóa đơn.");
             return "/view/view_tai/hoa_don/detail_bill.jsp";
         }
 
-        // Check if customer information is available
+
+
+
         KhachHang khachHang = hoaDon.getIdKhachHang();
-//        KhachHang khachHang = _khachHangRepo.findByIdKH(hoaDon.getIdKhachHang().getId());
-        if(nhanVien == null){
-            nhanVien = _nhanVienRepo.findById("BF29DB87-6ED2-46E8-B34C-135B2EA4CCA6").get();
-        }
 
         DiaChi diaChiKhachHang = new DiaChi();
         if(khachHang == null){
             khachHang = new KhachHang(); // Assume you have a default constructor
             khachHang.setHoTen("Khách lẻ"); // Default name
         }
-        if (khachHang.getId() != null) {
-            diaChiKhachHang = _diaChiRepository.findDiaChiByKhachHangId(khachHang.getId());
+        if(diaChiKhachHang == null){
+            diaChiKhachHang = new DiaChi();
+            diaChiKhachHang.setDiaChiChiTiet("");
+        }else {
+            List<DiaChi> diaChiList = _diaChiRepository.findDiaChiByKhachHangId(khachHang.getId());
+            diaChiKhachHang = diaChiList.isEmpty() ? new DiaChi() : diaChiList.get(0);
         }
-
 
         // Chuyển đổi từ HoaDon sang HoaDonDTO
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -666,9 +670,10 @@ public class QuanLyHoaDonController {
             giaoHang = new GiaoHang();
             giaoHang.setIdHoaDon(hoaDon); // Liên kết với HoaDon
         }
-        HoaDonDTO hoaDonDTO = new HoaDonDTO();
-        hoaDonDTO.setTongTien(hoaDonTai.getTongTien());
-         giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
+        HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDonTai);
+        giaoHangDTO.setIdPhuongXa(tenPhuongXa);
+        giaoHangDTO.setIdQuanHuyen(tenQuanHuyen);
+        giaoHangDTO.setIdTinhThanh(tenTinhThanh);
         // Cập nhật các thông tin khác như phí ship, ghi chú nếu cần
         giaoHang.setTenNguoiNhan(giaoHangDTO.getTenNguoiNhan());
         giaoHang.setSdtNguoiNhan(giaoHangDTO.getSdtNguoiNhan());
@@ -682,7 +687,6 @@ public class QuanLyHoaDonController {
 
         _giaoHangRepo.save(giaoHang);
         // Thêm thông báo thành công và chuyển hướng
-        System.out.println("Thành công");
         redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
         redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
         redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thông tin địa chỉ thành công.");
@@ -798,9 +802,6 @@ public class QuanLyHoaDonController {
             hoaDon.setId(idHoaDon);
             hdct.setIdHoaDon(hoaDon);
             hdct.setSoLuong(1);
-
-            // Số lượng mặc định khi thêm vào giỏ hàng là 1
-
             // Lấy giá của sản phẩm chi tiết để lưu vào chi tiết hóa đơn
             hdct.setDonGia(chiTietSanPham.getGiaBan());
 
@@ -813,6 +814,7 @@ public class QuanLyHoaDonController {
 
 
         // Tính tổng tiền
+        listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
         BigDecimal tongTien = BigDecimal.ZERO;
         for (ChiTietHoaDon hdct : listHDCT) {
             BigDecimal donGia = hdct.getDonGia();
@@ -820,7 +822,10 @@ public class QuanLyHoaDonController {
             tongTien = tongTien.add(donGia.multiply(BigDecimal.valueOf(soLuong)));
         }
 
-        HoaDonDTO hoaDonDTO = new HoaDonDTO();
+        HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(idHoaDon).orElse(null);
+        hoaDonTai.setTongTien(tongTien);
+        _hoaDonRepoTai.save(hoaDonTai);
+        HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDonTai);
         hoaDonDTO.setTongTien(tongTien);
 
         redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
@@ -871,7 +876,7 @@ public class QuanLyHoaDonController {
 
             // Kiểm tra số lượng nhập vào không được vượt quá số lượng trong kho
             if (soLuong > chiTietSanPham.getSoLuong()) {
-                return ResponseEntity.badRequest().body("Số lượng không được vượt quá số lượng trong kho.");
+                return ResponseEntity.badRequest().body("Số lượng sản phẩm đã được vượt quá số lượng trong kho.");
             }
 
             // Lấy danh sách chi tiết hóa đơn và cập nhật số lượng
@@ -894,6 +899,7 @@ public class QuanLyHoaDonController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi cập nhật số lượng.");
         }
     }
+
 
 
 }
