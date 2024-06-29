@@ -501,10 +501,8 @@
                                         <tr>
                                             <td>${i.index + 1}</td>
                                             <td>${hoaDon.ma}</td>
-
                                             <td>${hoaDon.nhanVien.hoTen}</td>
                                             <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                             <td>${hoaDon.khachHang.sdt}</td>
                                             <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">
@@ -582,10 +580,8 @@
                                             <tr>
                                                 <td>${i.index + 1}</td>
                                                 <td>${hoaDon.ma}</td>
-
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                                 <td>${hoaDon.khachHang.sdt}</td>
                                                 <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">
@@ -661,10 +657,8 @@
                                             <tr>
                                                 <td>${i.index + 1}</td>
                                                 <td>${hoaDon.ma}</td>
-
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                                 <td>${hoaDon.khachHang.sdt}</td>
                                                 <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">
@@ -740,10 +734,8 @@
                                             <tr>
                                                 <td>${i.index + 1}</td>
                                                 <td>${hoaDon.ma}</td>
-
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                                 <td>${hoaDon.khachHang.sdt}</td>
                                                 <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">
@@ -819,10 +811,8 @@
                                             <tr>
                                                 <td>${i.index + 1}</td>
                                                 <td>${hoaDon.ma}</td>
-
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                                 <td>${hoaDon.khachHang.sdt}</td>
                                                 <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">
@@ -899,10 +889,8 @@
                                             <tr>
                                                 <td>${i.index + 1}</td>
                                                 <td>${hoaDon.ma}</td>
-
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                                 <td>${hoaDon.khachHang.sdt}</td>
                                                 <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">
@@ -978,10 +966,8 @@
                                             <tr>
                                                 <td>${i.index + 1}</td>
                                                 <td>${hoaDon.ma}</td>
-
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
-
                                                 <td>${hoaDon.khachHang.sdt}</td>
                                                 <td>
                                                 <span class="badge rounded-pill ${hoaDon.loaiHoaDon == 0 ? 'bg-success' : 'bg-primary'}">

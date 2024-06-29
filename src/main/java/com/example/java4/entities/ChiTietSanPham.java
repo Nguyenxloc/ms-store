@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 
@@ -17,20 +16,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="chiTietSanPham")
 public class ChiTietSanPham {
     private String id;
     private Integer soLuong;
     private String moTa;
     private BigDecimal giaNhap;
     private BigDecimal giaBan;
-    private LocalDateTime ngayTao;
+    private Date ngayTao;
     private Integer trangThai;
     private MauSac idMauSac;
     private KichThuoc idKichThuoc;
     private ChatLieu idChatLieu;
     private KieuTay idKieuTay;
     private SanPham idSanPham;
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "ID")
@@ -74,10 +73,10 @@ public class ChiTietSanPham {
     }
 
     @Column(name = "NgayTao")
-    public LocalDateTime getNgayTao() {
+    public Date getNgayTao() {
         return ngayTao;
     }
-    public void setNgayTao(LocalDateTime ngayTao) {
+    public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
 

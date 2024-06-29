@@ -75,24 +75,37 @@
             margin-bottom: 0;
         }
 
-        .custom-table img {
-            max-width: 100%;
-            height: auto;
+        .custom-card-body {
+            max-height: 400px; /* Đặt chiều cao tối đa của card-body */
+            overflow-y: auto;
+            scrollbar-width: thin; /* Độ rộng của thanh cuộn */
         }
 
-        .custom-card-body::-webkit-scrollbar {
-            width: 8px;
-        }
-
+        /* Tùy chỉnh thumb của thanh cuộn */
         .custom-card-body::-webkit-scrollbar-thumb {
-            background-color: #007bff;
-            border-radius: 4px;
+            background-color: #6c757d; /* Màu sắc của thumb */
+            border-radius: 8px; /* Độ cong viền của thumb */
         }
 
+        /* Tùy chỉnh track của thanh cuộn */
         .custom-card-body::-webkit-scrollbar-track {
-            background-color: #f1f1f1;
+            background: #f1f1f1; /* Màu sắc phần track */
         }
 
+        /* Ẩn nút cuộn lên và xuống */
+        .custom-card-body::-webkit-scrollbar-button {
+            display: none;
+        }
+
+        /* Tùy chỉnh thumb của thanh cuộn khi hover */
+        .custom-card-body::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        /* Tùy chỉnh thumb của thanh cuộn khi ấn giữ */
+        .custom-card-body::-webkit-scrollbar-thumb:active {
+            background-color: #333;
+        }
         /* Stepper container */
         .stepper-horizontal {
             display: flex;
@@ -736,13 +749,13 @@
 
                                         </c:if>
 
-<%--                                        <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 6}">--%>
-<%--                                            <a href="/hoa-don/hoan-tac/${hoaDonDTO.id}">--%>
-<%--                                                <button type="button" class="btn btn-warning" id="">--%>
-<%--                                                    Hoàn tác--%>
-<%--                                                </button>--%>
-<%--                                            </a>--%>
-<%--                                        </c:if>--%>
+                                        <%--                                        <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 6}">--%>
+                                        <%--                                            <a href="/hoa-don/hoan-tac/${hoaDonDTO.id}">--%>
+                                        <%--                                                <button type="button" class="btn btn-warning" id="">--%>
+                                        <%--                                                    Hoàn tác--%>
+                                        <%--                                                </button>--%>
+                                        <%--                                            </a>--%>
+                                        <%--                                        </c:if>--%>
                                     </c:if>
                                 </div>
                             </div>
@@ -826,16 +839,16 @@
                         <h5 class="card-title mb-0">Lịch sử thanh toán:</h5>
 
 
-<%--                        <c:if test="${hoaDonDTO.loaiHoaDon == 1 && hoaDonDTO.trangThai == 4}">--%>
-<%--                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"--%>
-<%--                                    data-bs-target="#paymentModal"--%>
-<%--                                    <c:if test="${hoaDonDTO.trangThai == 6}">--%>
-<%--                                        disabled--%>
-<%--                                    </c:if>--%>
-<%--                            >--%>
-<%--                                <i class="bi bi-plus-lg"></i> Thanh Toán--%>
-<%--                            </button>--%>
-<%--                        </c:if>--%>
+                        <%--                        <c:if test="${hoaDonDTO.loaiHoaDon == 1 && hoaDonDTO.trangThai == 4}">--%>
+                        <%--                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"--%>
+                        <%--                                    data-bs-target="#paymentModal"--%>
+                        <%--                                    <c:if test="${hoaDonDTO.trangThai == 6}">--%>
+                        <%--                                        disabled--%>
+                        <%--                                    </c:if>--%>
+                        <%--                            >--%>
+                        <%--                                <i class="bi bi-plus-lg"></i> Thanh Toán--%>
+                        <%--                            </button>--%>
+                        <%--                        </c:if>--%>
                     </div>
 
                     <div class="card-body">
@@ -848,45 +861,43 @@
                                 <th>Trạng thái</th>
                                 <th>Thời gian</th>
                                 <th>Phương thức thanh toán</th>
-                                <th>Nhân viên xác nhận</th>
+                                <th>Người xác nhận</th>
                                 <th>Ghi chú</th>
                             </tr>
                             </thead>
 
                             <tbody>
-<%--                            <c:if test="${hoaDonDTO.trangThai == 4 || hoaDonDTO.loaiHoaDon == 0}">--%>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><fmt:formatNumber value="${hoaDonDTO.tongTien}" type="currency"
-                                                              currencySymbol="₫"
-                                                              groupingUsed="true"/>
-                                        </td>
-                                        <td>
+                            <%--                            <c:if test="${hoaDonDTO.trangThai == 4 || hoaDonDTO.loaiHoaDon == 0}">--%>
+                            <tr>
+                                <td>1</td>
+                                <td><fmt:formatNumber value="${hoaDonDTO.tongTien}" type="currency"
+                                                      currencySymbol="₫"
+                                                      groupingUsed="true"/>
+                                </td>
+                                <td>
                                     <span class="badge rounded-pill bg-success">
                                            Thành công
                                     </span>
-                                        </td>
-                                        <td>${hoaDonDTO.ngayThanhToan}</td>
-                                        <td>
-                                            <span class="badge rounded-pill bg-primary">${hoaDonDTO.phuongThucThanhToan == 0 ? "Tiền mặt" :"Chuyển khoản"}</span>
-                                        </td>
+                                </td>
+                                <td>${hoaDonDTO.ngayThanhToan}</td>
+                                <td>
+                                    <span class="badge rounded-pill bg-primary">${hoaDonDTO.phuongThucThanhToan == 0 ? "Tiền mặt" :"Chuyển khoản"}</span>
+                                </td>
 
-                                        <td>
+                                <td>
 
-<%--                                            <c:choose>--%>
-<%--                                                <c:when test="${hoaDonDTO.loaiHoaDon == 1}">--%>
-                                                    ${hoaDonDTO.nhanVien.hoTen}
-<%--                                                </c:when>--%>
+                                    <%--                                            <c:choose>--%>
+                                    <%--                                                <c:when test="${hoaDonDTO.loaiHoaDon == 1}">--%>
+                                    ${hoaDonDTO.nhanVien.hoTen}
+                                    <%--                                                </c:when>--%>
 
-<%--                                            </c:choose>--%>
-                                        </td>
-                                        <td>
-                                                ${hoaDonDTO.ghiChu}
-                                        </td>
-                                    </tr>
-<%--                            </c:if>--%>
-<%--                                </c:if>--%>
-<%--                            </c:if>--%>
+                                    <%--                                            </c:choose>--%>
+                                </td>
+                                <td>
+                                    ${hoaDonDTO.ghiChu}
+                                </td>
+                            </tr>
+                            <%--                            </c:if>--%>
 
                             </tbody>
 
@@ -962,7 +973,7 @@
                 <%--                <h1 class="h3 mb-3 text-gray-800">Thông tin chi tiết hóa đơn</h1>--%>
 
 
-<%--                <!-- Thông tin đơn hàng -->--%>
+                <%--                <!-- Thông tin đơn hàng -->--%>
 
                 <div class="row d-flex align-items-stretch">
                     <div class="col-7 mb-3 d-flex align-items-stretch">
@@ -1142,33 +1153,31 @@
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Tổng tiền đơn hàng:</span>
                                             <span class="text-danger" id="tongTienValue">
-                                            <fmt:formatNumber value="${tongTien}" type="currency" currencySymbol="₫"
-                                                              groupingUsed="true"/>
-                                        </span>
+                                    <fmt:formatNumber value="${tongTien}" type="currency" currencySymbol="₫"
+                                                      groupingUsed="true"/>
+                                </span>
                                         </p>
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Phí Giảm giá:</span>
                                             <span class="fw-normal" id="giamGia">
-                                            <fmt:formatNumber value="${giamGia}" type="currency" currencySymbol="₫"
-                                                              groupingUsed="true"/>
-                                        </span>
+                            <fmt:formatNumber value="${giamGia}" type="currency" currencySymbol="₫"
+                                              groupingUsed="true"/>
+                        </span>
                                         </p>
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Phí vận chuyển:</span>
                                             <span class="fw-normal" id="phiVanChuyen">
-                                            <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫"
-                                                              groupingUsed="true"/>
-                                        </span>
+                            <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫"
+                                              groupingUsed="true"/>
+                        </span>
                                         </p>
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Tổng tiền giảm:</span>
                                             <span class="fw-normal" id="tongTienGiam">
-                                                <c:set var="tongTienGiam"
-                                                       value="${tongTien - giamGia - phiVanChuyen}"></c:set>
-                                                 <fmt:formatNumber
-                                                         value="${tongTienGiam}"
-                                                         type="currency" currencySymbol="₫" groupingUsed="true"/>
-                                            </span>
+                            <c:set var="tongTienGiam" value="${tongTien - giamGia - phiVanChuyen}"/>
+                            <fmt:formatNumber value="${tongTienGiam}" type="currency" currencySymbol="₫"
+                                              groupingUsed="true"/>
+                        </span>
                                         </p>
                                     </div>
                                 </div>
@@ -1176,16 +1185,16 @@
                             <div class="card-footer">
                                 <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                     <span>Tổng tiền thanh toán:</span>
-                                    <span class=" text-danger  " id="tongTienThanhToanValue">
-                                          <c:set var="tongTienThanhToan"
-                                                 value="${tongTien - giamGia - phiVanChuyen}"></c:set>
-                                            <fmt:formatNumber value="${tongTienThanhToan}"
-                                                              type="currency" currencySymbol="₫" groupingUsed="true"/>
-                                    </span>
+                                    <span class=" text-danger" id="tongTienThanhToanValue">
+                    <c:set var="tongTienThanhToan" value="${tongTien - giamGia - phiVanChuyen}"/>
+                    <fmt:formatNumber value="${tongTienThanhToan}" type="currency" currencySymbol="₫"
+                                      groupingUsed="true"/>
+                </span>
                                 </p>
                             </div>
                         </div>
                     </div>
+
                     <!-- End Recent Activity -->
                 </div>
             </div>
@@ -1230,7 +1239,7 @@
                                         <select class="form-select" id="tinh" name="idTinhThanh"
                                                 title="Chọn tỉnh thành">
                                             <!-- Options populated dynamically -->
-                                            <option value="${giaoHangDTO.idTinhThanh}" >${giaoHangDTO.idTinhThanh}</option>
+                                            <option value="${giaoHangDTO.idTinhThanh}">${giaoHangDTO.idTinhThanh}</option>
                                         </select>
                                         <div id="tinhError" class="text-danger"></div>
                                     </div>
@@ -1239,7 +1248,7 @@
                                         <select class="form-select" id="huyen" name="idQuanHuyen"
                                                 title="Chọn quận huyện">
                                             <!-- Options populated dynamically -->
-                                            <option value="${giaoHangDTO.idQuanHuyen}" >${giaoHangDTO.idQuanHuyen}</option>
+                                            <option value="${giaoHangDTO.idQuanHuyen}">${giaoHangDTO.idQuanHuyen}</option>
                                         </select>
                                         <div id="huyenError" class="text-danger"></div>
                                     </div>
@@ -1247,8 +1256,8 @@
                                         <label for="xa" class="form-label">Phường/Xã:</label>
                                         <select class="form-select" id="xa" name="idPhuongXa" title="Chọn phường xã">
                                             <!-- Options populated dynamically -->
-<%--                                            <option value="" selected>Chọn phường xã</option>--%>
-                                            <option value="${giaoHangDTO.idPhuongXa}" >${giaoHangDTO.idPhuongXa}</option>
+                                            <%--                                            <option value="" selected>Chọn phường xã</option>--%>
+                                            <option value="${giaoHangDTO.idPhuongXa}">${giaoHangDTO.idPhuongXa}</option>
                                         </select>
                                         <div id="xaError" class="text-danger"></div>
                                     </div>
@@ -1288,6 +1297,7 @@
                                 <c:if test="${hoaDonDTO.trangThai != 1}">
                                     disabled
                                 </c:if> >
+                            <i class="bi bi-plus text-white"></i>
                             Thêm sản phẩm
                         </button>
                     </c:if>
@@ -1313,7 +1323,7 @@
 
                         <tbody>
                         <c:forEach var="chiTiet" items="${listHDCT}" varStatus="i">
-                            <tr>
+                            <tr class="product-row">
                                 <td>${i.index + 1}</td>
 
                                 <td>
@@ -1328,8 +1338,12 @@
 
 
                                 <td>${chiTiet.idCTSP.idSanPham.ten}</td>
-                                <td><fmt:formatNumber value="${chiTiet.donGia}" type="currency" currencySymbol="₫"
-                                                      groupingUsed="true"/></td>
+                                <td class="total-amount" id="total-${chiTiet.idCTSP.id} ">
+                                    <span  id="tongTienSanPham">
+                                         <fmt:formatNumber value="${chiTiet.donGia * chiTiet.soLuong}" type="currency"
+                                                           currencySymbol="₫" groupingUsed="true"/>
+                                    </span>
+                                </td>
                                 <td>${chiTiet.idCTSP.idMauSac.ten}</td>
                                 <td>${chiTiet.idCTSP.idKichThuoc.ten}</td>
                                 <td>
@@ -1352,8 +1366,12 @@
                                         </c:choose>
                                     </c:if>
                                 </td>
-                                <td><fmt:formatNumber value="${chiTiet.donGia * chiTiet.soLuong}" type="currency"
-                                                      currencySymbol="₫" groupingUsed="true"/></td>
+                                <td class="" id="tongTienSanPham-${chiTiet.idCTSP.id}">
+                                    <c:set var="tongTienSanPham" value="${chiTiet.donGia * chiTiet.soLuong}"></c:set>
+                                    <fmt:formatNumber value="${tongTienSanPham}" type="currency"
+                                                      currencySymbol="₫" groupingUsed="true"/>
+
+                                </td>
                                 <c:if test="${hoaDonDTO.loaiHoaDon == 1}">
                                     <td>
                                         <c:choose>
@@ -1378,7 +1396,6 @@
                                                         data-id="${chiTiet.idCTSP.id}" data-hoadon="${hoaDonDTO.id}"
                                                         id="deleteBtn-${chiTiet.idCTSP.id}">
                                                     <i class="bi bi-trash-fill" style="font-size: 1.3em;"></i>
-                                                        <%--                                                    <i class="bi bi-trash" ></i>--%>
                                                 </button>
                                             </c:otherwise>
                                         </c:choose>
@@ -1470,7 +1487,7 @@
                         <table class="table table-hover table-bordered custom-table ">
                             <thead>
                             <tr>
-<%--                                <th>STT</th>--%>
+                                <th>STT</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Ảnh sản phẩm</th>
                                 <th>Màu sắc</th>
@@ -1485,20 +1502,20 @@
                             <c:forEach var="product" items="${listCTSP.content}" varStatus="status">
                                 <tr>
                                 <c:if test="${product.soLuong > 0 }">
-<%--                                    <td>${status.index + 1}</td>--%>
+                                    <td>${status.index + 1}</td>
                                     <td>${product.idSanPham.ten}</td>
-                                            <td>
-                                                <c:set var="hinhAnh" value="${hinhAnhMapCTSP[product.id]}"/>
-                                                <c:choose>
-                                                    <c:when test="${not empty hinhAnh}">
-                                                        <img src="/image/${hinhAnh.hinhAnh1}" alt="Ảnh sản phẩm" width="50">
-                                                    </c:when>
-                                                </c:choose>
-                                            </td>
+                                    <td>
+                                        <c:set var="hinhAnh" value="${hinhAnhMapCTSP[product.id]}"/>
+                                        <c:choose>
+                                            <c:when test="${not empty hinhAnh}">
+                                                <img src="/image/${hinhAnh.hinhAnh1}" alt="Ảnh sản phẩm" width="50">
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
                                     <td>${product.idMauSac.ten}</td>
                                     <td>${product.idKichThuoc.ten}</td>
                                     <td>${product.soLuong}</td>
-                                    <td>${product.giaNhap}</td>
+                                    <td>${product.giaBan}</td>
                                     <td><span
                                             class=" fw-normal badge rounded-pill ${product.trangThai == 0 ? 'bg-danger' : 'bg-success'}">
                                             ${product.trangThai == 0 ? "Hết hàng" : "Còn hàng"}
@@ -1726,13 +1743,6 @@
     });
     </c:if>
 
-    <%--    Thông báo cập nhật trạng thi hóa đơn thất bại --%>
-    <c:if test="${not empty confirmError}">
-    Toast.fire({
-        icon: "error",
-        title: "${confirmError}"
-    });
-    </c:if>
     <%--    Thông báo lỗi sản phẩm chi tiết--%>
     <c:if test="${not empty errorProductDetail}">
     Toast.fire({
@@ -1740,6 +1750,15 @@
         title: "${errorProductDetail}"
     });
     </c:if>
+
+    <%--    Thông báo cập nhật trạng thi hóa đơn thất bại --%>
+    <c:if test="${not empty confirmError}">
+    Toast.fire({
+        icon: "error",
+        title: "${confirmError}"
+    });
+    </c:if>
+
 
 
     // Nút in hóa đơn để giao hàng
@@ -1998,12 +2017,11 @@
 
 <%--Chức năng xóa sản phẩm chi tiết khỏi chi tiết hóa đơn--%>
 <script>
-
-
     $(document).ready(function () {
         $('.delete-product').click(function () {
             var idCTSP = $(this).data('id');
             var idHoaDon = $(this).data('hoadon');
+            var productRow = $(this).closest('tr'); // Assuming each product is in a <tr> element
 
             Swal.fire({
                 title: 'Bạn chắc chắn muốn xóa sản phẩm này?',
@@ -2021,15 +2039,41 @@
                             idHoaDon: idHoaDon
                         },
                         success: function (response) {
-                            Swal.fire({
-                                title: 'Đã xóa sản phẩm khỏi giỏ hàng',
-                                icon: 'success'
-                            }).then(() => {
-                                window.location.reload();
-                            });
+                            if (response.error) {
+                                Toast.fire({
+                                    title: response.error,
+                                    icon: 'error'
+                                });
+                            } else {
+                                // Remove the product row from the DOM
+                                productRow.remove();
+
+                                $('.product-row').each(function (index) {
+                                    $(this).find('td:first').text(index + 1);
+                                });
+
+                                // Update the total price displayed on the page
+                                const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                    currencyDisplay: 'code'
+                                }).format(amount).replace('VND', '₫');
+
+                                $('#tongTienValue').text(formatCurrency(response.tongTien));
+                                const giamGia = parseFloat($('#giamGia').text().replace(/[^0-9.-]+/g, ""));
+                                const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
+                                const tongTienGiam = response.tongTien - giamGia - phiVanChuyen;
+                                $('#tongTienGiam').text(formatCurrency(tongTienGiam));
+                                $('#tongTienThanhToanValue').text(formatCurrency(tongTienGiam));
+
+                                Toast.fire({
+                                    title: 'Xóa sản phẩm khỏi giỏ hàng thành công',
+                                    icon: 'success'
+                                });
+                            }
                         },
                         error: function () {
-                            Swal.fire({
+                            Toast.fire({
                                 title: 'Đã xảy ra lỗi khi xóa sản phẩm',
                                 icon: 'error'
                             });
@@ -2042,24 +2086,11 @@
 </script>
 
 <%--Chức năng cập nhat so luong chi tiet san pham trong hoa don chi tiet--%>
-<script >
-
-// Hiển thị thông báo thành công nếu xác nhận đơn hàng thành công
-// const Toast = Swal.mixin({
-//     toast: true,
-//     position: "top-end",
-//     showConfirmButton: false,
-//     timer: 3000,
-//     timerProgressBar: true,
-//     didOpen: (toast) => {
-//         toast.onmouseenter = Swal.stopTimer;
-//         toast.onmouseleave = Swal.resumeTimer;
-//     }
-// });
-
+<script>
     $(document).ready(function () {
         console.log('Document ready');
 
+        // Bắt sự kiện khi người dùng nhập vào input số lượng
         $('input[type="number"]').on('input', function () {
             // Ngăn ngừa nhập chữ và số âm
             if (this.value.match(/[^0-9]/g) || parseInt(this.value, 10) <= 0) {
@@ -2067,6 +2098,7 @@
             }
         });
 
+        // Bắt sự kiện khi người dùng click vào nút cập nhật số lượng
         $('.update-sl').click(function () {
             console.log('Update button clicked');
 
@@ -2085,6 +2117,14 @@
                 return;
             }
 
+            // if (newQuantity > 10) {
+            //     Toast.fire({
+            //         title: 'Bạn chỉ có thể cập nhật tối đa 10 sản phẩm',
+            //         icon: 'error'
+            //     });
+            //     return;
+            // }
+
             // Gửi Ajax request để cập nhật số lượng
             $.ajax({
                 type: 'GET',
@@ -2094,15 +2134,51 @@
                     soLuong: newQuantity
                 },
                 success: function (response) {
-                    Toast.fire({
-                        title: 'Cập nhật số lượng sản phẩm thành công',
-                        icon: 'success'
-                    }).then(() => {
-                        window.location.reload();
-                    });
+                    if (response.error) {
+                        Toast.fire({
+                            title: response.error,
+                            icon: 'error'
+                        });
+                    } else {
+                        // Update the quantity and total amount in the UI
+                        const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                            currencyDisplay: 'code'
+                        }).format(amount).replace('VND', '₫');
+
+                        let totalAmount = 0;
+
+                        // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền
+                        response.listHDCT.forEach(item => {
+                            const itemTotal = item.donGia * item.soLuong;
+                            $('#soLuong-' + item.idCTSP.id).val(item.soLuong);
+                            $('#total-' + item.idCTSP.id).text(formatCurrency(itemTotal));
+                            $('#tongTienSanPham-' + item.idCTSP.id).text(formatCurrency(itemTotal));
+                            totalAmount += itemTotal; // Tính tổng tiền sản phẩm
+                        });
+
+                        // Lấy giá trị giảm giá và phí vận chuyển từ giao diện
+                        const giamGia = parseFloat($('#giamGia').text().replace(/[^0-9.-]+/g, ""));
+                        const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
+
+                        // Tính lại tổng tiền sau khi đã cập nhật
+                        const tongTienGiam = totalAmount - giamGia + phiVanChuyen;
+
+                        // Cập nhật lại các giá trị tổng tiền trên giao diện
+                        $('#tongTienValue').text(formatCurrency(totalAmount));
+                        $('#tongTienGiam').text(formatCurrency(tongTienGiam));
+                        $('#tongTienThanhToanValue').text(formatCurrency(tongTienGiam));
+
+                        // Hiển thị thông báo cập nhật thành công
+                        Toast.fire({
+                            title: 'Cập nhật số lượng sản phẩm thành công',
+                            icon: 'success'
+                        });
+                    }
                 },
                 error: function (xhr) {
-                    let errorMsg = xhr.responseText || 'Đã xảy ra lỗi khi cập nhật số lượng';
+                    let errorMsg = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : 'Đã xảy ra lỗi khi cập nhật số lượng';
                     Toast.fire({
                         title: errorMsg,
                         icon: 'error'
@@ -2112,6 +2188,8 @@
         });
     });
 </script>
+
+
 
 
 </body>

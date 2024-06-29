@@ -1,28 +1,53 @@
+//
 //package com.example.java4.controller.QuanLyHoaDon;
 //
+//
 //import com.example.java4.config.HoaDonUtil;
+//import com.example.java4.config.UserInfor;
 //import com.example.java4.entities.*;
 //import com.example.java4.entities.tai.HoaDon_Tai;
 //import com.example.java4.repositories.*;
 //import com.example.java4.repositories.repo_tai.*;
+//import com.example.java4.request.Areq_fixed.DiaChiRequest;
+//import com.example.java4.request.Areq_fixed.GiaoHangRequest;
+//import com.example.java4.request.req_tai.DiaChiDTO;
+//import com.example.java4.request.req_viet.NhanVienRequest;
 //import com.example.java4.response.GiaoHangDTO;
+//import com.example.java4.response.HoaDonChiTietDTO;
 //import com.example.java4.response.HoaDonDTO;
+//
+//import jakarta.servlet.http.HttpServletResponse;
+//import jakarta.servlet.http.HttpSession;
+//import jakarta.validation.Valid;
+//import org.hibernate.NonUniqueResultException;
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.core.io.InputStreamResource;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 //import org.springframework.data.domain.Pageable;
+//import org.springframework.data.repository.query.Param;
+//import org.springframework.http.*;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
+//import org.springframework.validation.BindingResult;
 //import org.springframework.web.bind.annotation.*;
 //import org.springframework.data.domain.Sort;
+//import org.springframework.web.client.HttpClientErrorException;
+//import org.springframework.web.client.RestTemplate;
 //import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+//
+//import java.io.ByteArrayInputStream;
+//import java.io.ByteArrayOutputStream;
+//import java.io.IOException;
+//import java.math.BigDecimal;
+//import java.sql.Date;
+//import java.text.SimpleDateFormat;
 //import java.time.LocalDate;
 //import java.time.LocalDateTime;
 //import java.time.LocalTime;
+//import java.time.ZoneId;
 //import java.time.format.DateTimeFormatter;
-//import java.util.List;
-//import java.util.Optional;
-//import java.util.UUID;
+//import java.util.*;
 //import java.util.stream.Collectors;
 //
 //@Controller
@@ -43,6 +68,9 @@
 //
 //    @Autowired
 //    IHoaDonRepository hoaDonRepository;
+//
+//    @Autowired
+//    IHoaDonChiTietReposioty _hoaDonChiTietReposioty;
 //
 //    @Autowired
 //    IDiaChiRepository _diaChiRepository;
@@ -79,7 +107,11 @@
 //    @Autowired
 //    IChiTietSanPhamRepository _chiTietSanPhamRepo;
 //
+//    @Autowired
+//    IHinhAnhRepository _hinhAnhRepo;
 //
+//
+//    private final RestTemplate restTemplate = new RestTemplate();
 //
 //
 //    private List<MauSac> listMauSac;
@@ -89,6 +121,11 @@
 //    private List<ChatLieu> listChatLieu;
 //    private List<KhuyenMai> listKhuyenMai;
 //    private List<ChiTietSanPham> listChiTietSanPham;
+//
+//
+//
+//
+//
 //
 //    @GetMapping("/hien-thi")
 //    public String view(Model model,
@@ -100,6 +137,11 @@
 //                       @RequestParam(value = "endDate", required = false) String endDateStr) {
 //        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "ngayTao"));
 //
+//
+//        if (UserInfor.idNhanVien != null) {
+//            NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+//            model.addAttribute("nv", nhanVien);
+//        }
 //
 //        //Lớp Util để xử chuyển đổi trạng thái
 //        HoaDonUtil hoaDonUtil = new HoaDonUtil();
@@ -119,10 +161,7 @@
 //        if (keyword != null && !keyword.isEmpty()) {
 //            pageHD = hoaDonRepository.searchByKeywordAndDate(keyword, startDate, endDate, pageable);
 //        }
-//        // Tìm kiếm theo ngày tạo
-////        else if(ngayTao != null){
-////            pageHD = hoaDonRepository.findByNgayTaoBetween(startOfDay, endOfDay, pageable);
-////        }
+//
 //        else {
 //            if (status != null && !status.isEmpty()) {
 //                switch (status) {
@@ -211,44 +250,55 @@
 //    }
 //
 //
-//
 //    // Chức năng xem thông tin chi tiết hóa đơn theo IDHD
 //    @GetMapping("/detail/{idHD}")
 //    public String detailHDCT(Model model,
 //                             @PathVariable("idHD") String idHD,
-//                             @RequestParam(value = "page",defaultValue ="0") String pageParam
+//                             @RequestParam(value = "page", defaultValue = "0") String pageParam
 //    ) {
 //
-//        //Convert String sang UUId
+//        NhanVien nhanVien = new NhanVien();
+//        if (UserInfor.idNhanVien != null) {
+//            nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+//            if(nhanVien == null){
+//                nhanVien = _nhanVienRepo.findById("BF29DB87-6ED2-46E8-B34C-135B2EA4CCA6").get();
+//            }
+//            model.addAttribute("nv", nhanVien);
+//        }
+//
 //        try {
 //            UUID uuid = UUID.fromString(idHD);
 //        } catch (IllegalArgumentException e) {
-//            // Handle the invalid UUID format
 //            model.addAttribute("errorMessage", "ID hóa đơn không hợp lệ.");
 //            return "/view/view_tai/hoa_don/detail_bill.jsp";
 //        }
 //
+//
 //        // Lấy danh sách chi tiết hóa đơn
 //        List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHD);
 //        // Lấy ra hóa đơn theo ID
-////        HoaDon hoaDon = _hoaDonRepo.findById(idHD).orElse(null);
 //        HoaDon_Tai hoaDon = _hoaDonRepoTai.findById(idHD).orElse(null);
-//        DiaChi diaChiKH = new DiaChi();
-//        if(hoaDon.getIdKhachHang() != null && hoaDon.getIdKhachHang().getId()!=null){
-//            diaChiKH = _diaChiRepository.findByIdKhachHang_Id(hoaDon.getIdKhachHang().getId());
-//        }
-//        else{
-//            diaChiKH =null;
-//        }
-//        if(diaChiKH == null){
-//            model.addAttribute("errorMessage", "Khách hàng chưa có địa chỉ");
+//        if (hoaDon == null) {
+//            model.addAttribute("errorMessage", "Không tìm thấy hóa đơn.");
 //            return "/view/view_tai/hoa_don/detail_bill.jsp";
 //        }
 //
-//        if (hoaDon == null) {
-//            // Xử lý trường hợp không tìm thấy hóa đơn
-//            model.addAttribute("errorMessage", "Không tìm thấy hóa đơn.");
-//            return "/view/view_tai/hoa_don/detail_bill.jsp";
+//
+//
+//
+//        KhachHang khachHang = hoaDon.getIdKhachHang();
+//
+//        DiaChi diaChiKhachHang = new DiaChi();
+//        if(khachHang == null){
+//            khachHang = new KhachHang(); // Assume you have a default constructor
+//            khachHang.setHoTen("Khách lẻ"); // Default name
+//        }
+//        if(diaChiKhachHang == null){
+//            diaChiKhachHang = new DiaChi();
+//            diaChiKhachHang.setDiaChiChiTiet("");
+//        }else {
+//            List<DiaChi> diaChiList = _diaChiRepository.findDiaChiByKhachHangId(khachHang.getId());
+//            diaChiKhachHang = diaChiList.isEmpty() ? new DiaChi() : diaChiList.get(0);
 //        }
 //
 //        // Chuyển đổi từ HoaDon sang HoaDonDTO
@@ -257,7 +307,7 @@
 //                hoaDon.getId().toString(),
 //                hoaDon.getMa(),
 //                hoaDon.getIdKhachHang(),
-//                hoaDon.getIdNhanVien(),
+//                nhanVien,
 //                hoaDon.getPhuongThucThanhToan(),
 //                hoaDon.getTongTien(),
 //                hoaDon.getLoaiHoaDon(),
@@ -272,15 +322,60 @@
 //
 //        );
 //        HoaDonUtil hoaDonUtil = new HoaDonUtil();
-////        hoaDonDTO.setNgayCapNhat(hoaDon.getNgayCapNhat().format(dateTimeFormatter));
-////        if(hoaDon.getNga)
 //        hoaDonDTO.setGhiChu(hoaDon.getGhiChu());
 //        hoaDonDTO.setTrangThaiText(hoaDonUtil.getTrangThaiName(hoaDon.getTrangThai()));
 //        hoaDonDTO.setMaMau(hoaDonUtil.getStatusClass(hoaDon.getTrangThai()));
+//
+//        // Tính tổng tiền từ danh sách chi tiết hóa đơn
+//        BigDecimal tongTien = BigDecimal.ZERO;
+//        Map<String, HinhAnh> hinhAnhMap = new HashMap<>();
+//        for (ChiTietHoaDon hdct : listHDCT) {
+//            BigDecimal donGia = hdct.getDonGia();
+//            int soLuong = hdct.getSoLuong();
+//            tongTien = tongTien.add(donGia.multiply(BigDecimal.valueOf(soLuong)));
+//
+//            // Lấy hình ảnh cho từng chi tiết sản phẩm
+//            HinhAnh hinhAnh = _hinhAnhRepo.findByIdCTSP(hdct.getIdCTSP().getId());
+//            if (hinhAnh != null) {
+//                hinhAnhMap.put(hdct.getIdCTSP().getId(), hinhAnh);
+//            }
+//        }
+//
+//        Map<String, HinhAnh> hinhAnhMapCTSP = new HashMap<>();
+//        listChiTietSanPham = _chiTietSanPhamRepo.findAll();
+//        for (ChiTietSanPham ctsp : listChiTietSanPham) {
+//            HinhAnh hinhAnh = _hinhAnhRepo.findByIdCTSP(ctsp.getId());
+//            // Lấy hình ảnh cho từng chi tiết sản phẩm
+//            if (hinhAnh != null) {
+//                hinhAnhMapCTSP.put(ctsp.getId(), hinhAnh);
+//            }
+//        }
+//
+//
+//
+//        // Lấy ra đối tượng giao hàng theo IdHoaDon
+//        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHD);
+//        if (giaoHang == null) {
+//            model.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+//        }
+//
+//        GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
+//        if (giaoHangDTO == null) {
+//            model.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+//        }
+//
+//
+//
+//
 //        // Thêm các thông tin vào model để truyền sang JSP
+//        model.addAttribute("hinhAnhMap",hinhAnhMap);
+//        model.addAttribute("hinhAnhMapCTSP",hinhAnhMapCTSP);
+//        model.addAttribute("khachHang",khachHang);
 //        model.addAttribute("hoaDonDTO", hoaDonDTO);
 //        model.addAttribute("listHDCT", listHDCT);
-//        model.addAttribute("diaChiKhachHang", diaChiKH);
+//        model.addAttribute("diaChiKhachHang", diaChiKhachHang);
+//        model.addAttribute("giaoHangDTO", giaoHangDTO);
+//
 //
 //
 //        switch (hoaDon.getTrangThai()) {
@@ -306,39 +401,29 @@
 //
 //        // Lấy ra danh sách chi tiết sản phẩm để hiển thị lên modal Thêm sản phẩm
 //        Pageable pageable = PageRequest.of(Integer.valueOf(pageParam), 10);
-//        Page<ChiTietSanPham> listCTSP = _sanPhamChiTietRepo.findByTrangThai(1,pageable);
+//        Page<ChiTietSanPham> listCTSP = _sanPhamChiTietRepo.findByTrangThai(1, pageable);
 //
-//        for (ChiTietSanPham ctsp : listCTSP){
-//            if(ctsp.getSoLuong() <= 0 ){
-//                listCTSP = _sanPhamChiTietRepo.findByTrangThai(_sanPhamChiTietRepo.INACTIVE,pageable);
+//        for (ChiTietSanPham ctsp : listCTSP) {
+//            if (ctsp.getSoLuong() <= 0) {
+//                listCTSP = _sanPhamChiTietRepo.findByTrangThai(_sanPhamChiTietRepo.INACTIVE, pageable);
 //            }
 //        }
 //
-//        // Lấy ra đối tượng giao hàng theo IdHoaDon
-//        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHD);
-//        if(giaoHang == null){
-//            model.addAttribute("errorDelivery","Không tìm thấy đối tượng giao hàng");
-//        }
-//
-//        GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
-//        if(giaoHangDTO == null){
-//            model.addAttribute("errorDelivery","Không tìm thấy đối tượng giao hàng");
-//        }
-//        model.addAttribute("giaoHangDTO",giaoHangDTO);
 //        listMauSac = mauSacRepository.findAll();
 //        listKichThuoc = kichThuocRepo.findAll();
 //        listKieuTay = kieuTayRepo.findAll();
 //        listChatLieu = chatLieuRepo.findAll();
 //        listKhuyenMai = khuyenMaiRepo.findAll();
-//        model.addAttribute("listCTSP",listCTSP);
+//        model.addAttribute("listCTSP", listCTSP);
 //        model.addAttribute("listMauSac", listMauSac);
 //        model.addAttribute("listKichThuoc", listKichThuoc);
 //        model.addAttribute("listChatLieu", listChatLieu);
 //        model.addAttribute("listKieuTay", listKieuTay);
 //        model.addAttribute("listSanPham", listSanPham);
-//        model.addAttribute("listKM",listKhuyenMai);
+//        model.addAttribute("listKM", listKhuyenMai);
 //        model.addAttribute("listCTSP", listCTSP);
 //        model.addAttribute("pageCTSP", listCTSP);
+//
 //        return "/view/view_tai/hoa_don/detail_bill.jsp";
 //    }
 //
@@ -356,7 +441,7 @@
 ////            ngayTao = LocalDate.parse(ngayTaoStr);
 ////        }
 //
-//        Page<HoaDon> pageHD = hoaDonRepository.searchByKeyword(keyword,pageable);
+//        Page<HoaDon> pageHD = hoaDonRepository.searchByKeyword(keyword, pageable);
 //
 //        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 //        List<HoaDonDTO> listHoaDonDTO = pageHD.stream()
@@ -402,12 +487,22 @@
 //                return "redirect:/hoa-don/detail/" + idHD;
 //            }
 //
+//            NhanVien nhanVien = new NhanVien();
+//            if (UserInfor.idNhanVien != null){
+//                nhanVien  = _nhanVienRepo.findById(UserInfor.idNhanVien).get();
+//
+//            }
+////            GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(hoaDon.getId());
+////            GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
+//
 //
 //            // Cập nhật trạng thái và ngày giờ cụ thể tùy theo từng trường hợp
 //            switch (hoaDon.getTrangThai()) {
 //                case IHoaDonRepository.CHO_XAC_NHAN:
 //                    hoaDon.setTrangThai(IHoaDonRepository.DA_XAC_NHAN);
+//                    hoaDon.setIdNhanVien(nhanVien);
 //                    hoaDon.setNgayDaXacNhan(LocalDateTime.now());
+//
 //
 //                    // Lấy ra danh sách Chi tiết hóa đơn theo IDHoaDon
 //                    List<ChiTietHoaDon> chiTietList = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHD);
@@ -424,7 +519,6 @@
 //                            if (soLuongConLai >= 0) {
 //                                chiTietSanPham.setSoLuong(soLuongConLai);
 //                                _chiTietSanPhamRepo.save(chiTietSanPham);
-//                                redirectAttributes.addFlashAttribute("confirmSuccess", "Cập nhật số lượng thành công");
 //
 //
 //                            } else {
@@ -442,16 +536,23 @@
 //                case IHoaDonRepository.DA_XAC_NHAN:
 //                    hoaDon.setTrangThai(IHoaDonRepository.CHO_GIAO_HANG);
 //                    hoaDon.setNgayChoGiaoHang(LocalDateTime.now());
+//                    hoaDon.setIdNhanVien(nhanVien);
+////                    giaoHang.setNgayShip(Date.valueOf(LocalDate.now()));
+////                    giaoHang.setPhiShip(giaoHangDTO.getPhiShip().intValue());
 //
 //                    break;
 //                case IHoaDonRepository.CHO_GIAO_HANG:
 //                    hoaDon.setTrangThai(IHoaDonRepository.DANG_GIAO_HANG);
 //                    hoaDon.setNgayDangGiaoHang(LocalDateTime.now());
+//                    hoaDon.setIdNhanVien(nhanVien);
+//
 //
 //                    break;
 //                case IHoaDonRepository.DANG_GIAO_HANG:
 //                    hoaDon.setTrangThai(IHoaDonRepository.DA_HOAN_THANH);
-//                    hoaDon.setNgayThanhToan(LocalDateTime.now());
+//                    hoaDon.setNgayCapNhat(LocalDateTime.now());
+//                    hoaDon.setIdNhanVien(nhanVien);
+////                    giaoHang.setNgayNhan(Date.valueOf(LocalDate.now()));
 //
 //                    break;
 //                default:
@@ -459,15 +560,12 @@
 //                    return "redirect:/hoa-don/detail/" + idHD;
 //            }
 //
-//            if( moTa == null){
-//                redirectAttributes.addFlashAttribute("confirmError", "Vui lòng điền vào mô tả.");
-//                return "redirect:/hoa-don/detail/" + idHD;
-//            }
 //
-////            hoaDon.setGhiChu(moTa);
 //            _hoaDonRepoTai.save(hoaDon);
+////            _giaoHangRepo.save(giaoHang);
 //            HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDon);
-//            redirectAttributes.addFlashAttribute("hoaDonDTO",hoaDonDTO);
+//            redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
+////            redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
 //            // Thông báo cập nhật thành công
 //            redirectAttributes.addFlashAttribute("confirmSuccess", "Cập nhật trạng thái đơn hàng thành công.");
 //        } catch (Exception e) {
@@ -480,6 +578,7 @@
 //
 //    @GetMapping("/hoan-tac/{idHD}")
 //    public String undoBill(@PathVariable("idHD") String idHD,
+//
 ////                              @PathVariable("trangThai") int trangThai,
 ////                              @RequestParam("moTa") String moTa,
 //                           Model model,
@@ -488,31 +587,52 @@
 ////            HoaDon hoaDon = _hoaDonRepo.findById(idHD).orElse(null);
 //            HoaDon_Tai hoaDon = _hoaDonRepoTai.findById(idHD).orElse(null);
 //
-//
 //            if (hoaDon == null) {
 //                model.addAttribute("errorMessage", "Không tìm thấy hóa đơn.");
 //                redirectAttributes.addFlashAttribute("confirmError", "Không tìm thấy hóa đơn.");
 //                return "redirect:/hoa-don/detail/" + idHD;
 //            }
 //
+//            GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHD);
+//            if (giaoHang == null) {
+//                model.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+//            }
+//
+//            GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
+//            if (giaoHangDTO == null) {
+//                model.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+//            }
+//
+//            NhanVien nhanVien = new NhanVien();
+//            if (UserInfor.idNhanVien != null){
+//                nhanVien  = _nhanVienRepo.findById(UserInfor.idNhanVien).get();
+//
+//            }
+//
 //
 //            switch (hoaDon.getTrangThai()) {
 //                case IHoaDonRepository.DA_XAC_NHAN:
 //                    hoaDon.setTrangThai(IHoaDonRepository.CHO_XAC_NHAN);
-////                    hoaDon.setGhiChu("Đã xác nhận: " + moTa);
-////                    hoaDon.setNgayCapNhat(LocalDateTime.now());
+//                    hoaDon.setNgayCapNhat(LocalDateTime.now());
 //                    hoaDon.setNgayDaXacNhan(null);
+//                    hoaDon.setIdNhanVien(nhanVien);
 //                    break;
 //                case IHoaDonRepository.CHO_GIAO_HANG:
-//                    hoaDon.setTrangThai(IHoaDonRepository.CHO_XAC_NHAN);
-////                    hoaDon.setGhiChu("Đã xác nhận: " + moTa);
+//                    hoaDon.setTrangThai(IHoaDonRepository.DA_XAC_NHAN);
 //                    hoaDon.setNgayCapNhat(LocalDateTime.now());
 //                    hoaDon.setNgayChoGiaoHang(null);
+//                    hoaDon.setIdNhanVien(nhanVien);
+//                    break;
+//
+//                case IHoaDonRepository.DANG_GIAO_HANG:
+//                    hoaDon.setTrangThai(IHoaDonRepository.CHO_GIAO_HANG);
+//                    hoaDon.setNgayCapNhat(LocalDateTime.now());
+//                    hoaDon.setIdNhanVien(nhanVien);
 //                    break;
 //                case IHoaDonRepository.DA_HOAN_THANH:
-//                    hoaDon.setTrangThai(IHoaDonRepository.CHO_XAC_NHAN);
-////                    hoaDon.setGhiChu("Đã xác nhận: " + moTa);
+//                    hoaDon.setTrangThai(IHoaDonRepository.DANG_GIAO_HANG);
 //                    hoaDon.setNgayCapNhat(LocalDateTime.now());
+//                    hoaDon.setIdNhanVien(nhanVien);
 //                    break;
 //                default:
 //                    model.addAttribute("errorMessage", "Trạng thái không hợp lệ.");
@@ -524,7 +644,6 @@
 //            // Chuyển đổi HoaDon sang HoaDonDTO sau khi cập nhật và thêm vào model
 //
 //
-//
 //            redirectAttributes.addFlashAttribute("confirmSuccess", "Cập nhật trạng thái đơn hàng thành công.");
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -534,33 +653,253 @@
 //    }
 //
 //
-//    // Cập nhật thông tin khách hàng
-////    @PostMapping("/them-dia-chi")
-////    public String themDiaChiByidKH(DiaChiRequest request, @RequestParam("tenTinhThanh") String idTinh,
-////                                   @RequestParam("tenQuanHuyen") String idQuan,
-////                                   @RequestParam("tenPhuongXa") String idPhuong) {
-////        KhachHang khachHang = khachHangRepo.findByIdKH(UserInfor.idKhachHang);
-////        listDiaChi = diaChiRepo.findAll();
-////
-////        DiaChi diaChi = new DiaChi();
-////        diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
-////        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
-////        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
-////        diaChi.setIdTinhThanh(idTinh);
-////        diaChi.setIdQuanHuyen(idQuan);
-////        diaChi.setIdPhuongXa(idPhuong);
-////        diaChi.setIdKhachHang(khachHang);
-////        if (listDiaChi != null && !listDiaChi.isEmpty()) {
-////            diaChi.setTrangThai(DiaChiRepository.TUY_CHON);
-////        } else {
-////            diaChi.setTrangThai(DiaChiRepository.MAC_DINH);
-////        }
-////        diaChiRepo.save(diaChi);
-////         return "redirect:/hoa-don/detail/" + idHD;
-////    }
+//
+//    @PostMapping("/cap-nhat/{hoaDonId}")
+//    public String updateDiaChi(@PathVariable("hoaDonId") String hoaDonId,
+//                               @ModelAttribute("giaoHangDTO") GiaoHangDTO giaoHangDTO,
+//                               @Param("tenTinhThanh") String tenTinhThanh,
+//                               @Param("tenQuanHuyen") String tenQuanHuyen,
+//                               @Param("tenPhuongXa") String tenPhuongXa,
+//                               RedirectAttributes redirectAttributes) {
+//
+//        HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).get();
+//        HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(hoaDonId).get();
+//        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(hoaDonId);
+//        if (giaoHang == null) {
+//            // Nếu không tìm thấy, bạn có thể tạo mới nếu được phép
+//            giaoHang = new GiaoHang();
+//            giaoHang.setIdHoaDon(hoaDon); // Liên kết với HoaDon
+//        }
+//        HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDonTai);
+//        giaoHangDTO.setIdPhuongXa(tenPhuongXa);
+//        giaoHangDTO.setIdQuanHuyen(tenQuanHuyen);
+//        giaoHangDTO.setIdTinhThanh(tenTinhThanh);
+//        // Cập nhật các thông tin khác như phí ship, ghi chú nếu cần
+//        giaoHang.setTenNguoiNhan(giaoHangDTO.getTenNguoiNhan());
+//        giaoHang.setSdtNguoiNhan(giaoHangDTO.getSdtNguoiNhan());
+//        giaoHang.setDiaChiChiTiet(giaoHangDTO.getDiaChiChiTiet());
+//        giaoHang.setIdPhuongXa(tenPhuongXa);
+//        giaoHang.setIdQuanHuyen(tenQuanHuyen);
+//        giaoHang.setIdTinhThanh(tenTinhThanh);
+//        giaoHang.setPhiShip(giaoHangDTO.getPhiShip());
+//        giaoHang.setGhiChu(giaoHangDTO.getGhiChu());
 //
 //
+//        _giaoHangRepo.save(giaoHang);
+//        // Thêm thông báo thành công và chuyển hướng
+//        redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
+//        redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
+//        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thông tin địa chỉ thành công.");
+//        return "redirect:/hoa-don/detail/" + hoaDonId;
+//    }
+//
+//
+//    // Chức năng hủy đơn hàng
+//    @PostMapping("/huy/{hoaDonId}")
+//    public String cancelOlder(@PathVariable("hoaDonId") String hoaDonId,
+//                              @RequestParam("lyDo") String lyDo,
+//                              RedirectAttributes redirectAttributes) {
+//        // Tìm đối tượng DiaChi theo IdHoaDon (hoaDonId)
+//        HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(hoaDonId).get();
+//
+//        if (hoaDonTai == null) {
+//            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy thông tin đơn hàng");
+//            return "redirect:/hoa-don/detail/" + hoaDonId;
+//        }
+//
+//        hoaDonTai.setTrangThai(hoaDonRepository.DA_HUY);
+//        hoaDonTai.setGhiChu(lyDo);
+//        hoaDonTai.setNgayCapNhat(LocalDateTime.now());
+////        hoaDonTai.setIdNhanVien();
+//
+//
+//        // Lưu lại vào cơ sở dữ liệu
+//        _hoaDonRepoTai.save(hoaDonTai);
+//        // Thêm thông báo thành công và chuyển hướng
+//        System.out.println("Thành công");
+//        redirectAttributes.addFlashAttribute("cancelSuccess", "Hủy hóa đơn thành công");
+//        return "redirect:/hoa-don/hien-thi";
+//    }
+//
+//
+//    @PostMapping("/xac-nhan-thanh-toan")
+//    public String confirmPayment(
+//            @ModelAttribute HoaDonDTO hoaDonDTO,
+//            RedirectAttributes redirectAttributes) {
+//        try {
+//            HoaDon_Tai hoaDon = _hoaDonRepoTai.findById(hoaDonDTO.getId()).orElse(null);
+//
+//            if (hoaDon == null) {
+//                redirectAttributes.addFlashAttribute("paymentError", "Không tìm thấy hóa đơn.");
+//                return "redirect:/hoa-don/detail/" + hoaDonDTO.getId();
+//            }
+//
+//            hoaDon.setTongTien(hoaDonDTO.getTongTien());
+//            hoaDon.setTrangThai(IHoaDonRepository.DA_HOAN_THANH);
+//            hoaDon.setNgayThanhToan(LocalDateTime.now());
+//            hoaDon.setPhuongThucThanhToan(hoaDonDTO.getPhuongThucThanhToan());
+//            hoaDon.setGhiChu(hoaDonDTO.getGhiChu());
+//
+//            _hoaDonRepoTai.save(hoaDon);
+//
+//            // Add success message
+//            redirectAttributes.addFlashAttribute("confirmSuccess", "Cập nhật trạng thái đơn hàng thành công.");
+//            redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            redirectAttributes.addFlashAttribute("confirmError", "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.");
+//        }
+//        return "redirect:/hoa-don/detail/" + hoaDonDTO.getId();
+//    }
+//
+//    // Chức năng thếm sản phẩm vào giỏ hàng
+//    @GetMapping("/them-san-pham/{idCTSP}")
+//    public String addSanPhamVaoGioHang(@PathVariable("idCTSP") String idCTSP, @RequestParam(value = "page",defaultValue = "0") Optional<Integer> pageParam,
+//                                       @RequestParam("idHoaDon") String idHoaDon, RedirectAttributes redirectAttributes) {
+//
+//        // Tìm hóa đơn chi tiết trong giỏ hàng của hóa đơn có id là idHoaDon
+//        List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
+//
+//        if (idHoaDon == null || idHoaDon.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("error", "Không tìm thấy hóa đơn hoặc chi tiết sản phẩm");
+//            return "redirect:/hoa-don/detail/" + idHoaDon;
+//        }
+//
+//        // Tìm sản phẩm chi tiết theo idCTSP
+//        Optional<ChiTietSanPham> optionalCTSP = _sanPhamChiTietRepo.findById(idCTSP);
+//        if (optionalCTSP.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("error", "Không tìm thấy sản phẩm chi tiết.");
+//            return "redirect:/hoa-don/detail/" + idHoaDon;
+//        }
+//        ChiTietSanPham chiTietSanPham = optionalCTSP.get();
+//
+//        if(chiTietSanPham == null){
+//            redirectAttributes.addFlashAttribute("error", "Không tìm thấy sản phẩm chi tiết.");
+//            return "redirect:/hoa-don/detail/" + idHoaDon;
+//        }
+//
+//        // Kiểm tra xem sản phẩm chi tiết đã có trong giỏ hàng hay chưa
+//        boolean spTonTaiTrongGioHang = false;
+//        for (ChiTietHoaDon hdct : listHDCT) {
+//            if (hdct.getIdCTSP().getId().equals(idCTSP)) {
+//                // Nếu sản phẩm chi tiết đã có trong giỏ hàng, cộng dồn số lượng
+//                hdct.setSoLuong(hdct.getSoLuong() + 1);
+//                _hoaDonChiTietRepo.save(hdct);
+//                spTonTaiTrongGioHang = true;
+//
+//                // Giảm số lượng của sản phẩm chi tiết trong kho (tạm thời không xử lý số lượng tồn)
+////                chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() - 1);
+////                _sanPhamChiTietRepo.save(chiTietSanPham);
+//                break;
+//            }
+//        }
+//
+//        // Nếu sản phẩm chi tiết chưa có trong giỏ hàng, thêm mới vào giỏ hàng
+//        if (!spTonTaiTrongGioHang) {
+//            ChiTietHoaDon hdct = new ChiTietHoaDon();
+//            hdct.setIdCTSP(chiTietSanPham);
+//            HoaDon hoaDon = new HoaDon();
+//            hoaDon.setId(idHoaDon);
+//            hdct.setIdHoaDon(hoaDon);
+//            hdct.setSoLuong(1);
+//            // Lấy giá của sản phẩm chi tiết để lưu vào chi tiết hóa đơn
+//            hdct.setDonGia(chiTietSanPham.getGiaBan());
+//
+//            _hoaDonChiTietRepo.save(hdct);
+//
+//            // Giảm số lượng của sản phẩm chi tiết trong kho (tạm thời không xử lý số lượng tồn)
+////            chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() - 1);
+////            _sanPhamChiTietRepo.save(chiTietSanPham);
+//        }
+//
+//
+//        // Tính tổng tiền
+//        listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
+//        BigDecimal tongTien = BigDecimal.ZERO;
+//        for (ChiTietHoaDon hdct : listHDCT) {
+//            BigDecimal donGia = hdct.getDonGia();
+//            int soLuong = hdct.getSoLuong();
+//            tongTien = tongTien.add(donGia.multiply(BigDecimal.valueOf(soLuong)));
+//        }
+//
+//        HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(idHoaDon).orElse(null);
+//        hoaDonTai.setTongTien(tongTien);
+//        _hoaDonRepoTai.save(hoaDonTai);
+//        HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDonTai);
+//        hoaDonDTO.setTongTien(tongTien);
+//        redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
+//        redirectAttributes.addFlashAttribute("addProductSuccess","Thêm sản phẩm vào giỏ hàng thành công");
+//        return "redirect:/hoa-don/detail/" + idHoaDon;
+//    }
+//
+//
+//
+//
+//    // Chức năng xóa sản phẩm chi tiết khỏi hoa đơn chi tiết
+//    @GetMapping("/xoa-san-pham/{idCTSP}")
+//    public ResponseEntity<String> xoaSanPhamChiTiet(@PathVariable("idCTSP") String idCTSP,
+//                                                    @RequestParam("idHoaDon") String idHoaDon) {
+//        try {
+//            // Kiểm tra và xóa sản phẩm chi tiết
+//            Optional<ChiTietSanPham> optionalCTSP = _sanPhamChiTietRepo.findById(idCTSP);
+//            if (optionalCTSP.isEmpty()) {
+//                return ResponseEntity.badRequest().body("Không tìm thấy sản phẩm chi tiết.");
+//            }
+//            ChiTietSanPham chiTietSanPham = optionalCTSP.get();
+//
+//            // Xóa sản phẩm chi tiết từ hóa đơn
+//            int deletedCount = _hoaDonChiTietReposioty.deleteByHoaDon_IdAndIdCTSP_Id(idHoaDon, idCTSP);
+//            if (deletedCount == 0) {
+//                return ResponseEntity.badRequest().body("Không tìm thấy sản phẩm trong giỏ hàng.");
+//            }
+//
+//            return ResponseEntity.ok("Xóa sản phẩm thành công.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi xóa sản phẩm.");
+//        }
+//    }
+//
+//    @GetMapping("/cap-nhat-so-luong-san-pham/{idCTSP}")
+//    public ResponseEntity<String> updateSoLuong(
+//            @PathVariable String idCTSP,
+//            @RequestParam int soLuong,
+//            @RequestParam("idHoaDon") String idHoaDon
+//    ) {
+//        try {
+//            ChiTietSanPham chiTietSanPham = _sanPhamChiTietRepo.findByIdCTSP(idCTSP);
+//
+//            // Kiểm tra số lượng nhập vào hợp lệ
+//            if (soLuong <= 0) {
+//                return ResponseEntity.badRequest().body("Số lượng phải lớn hơn 0.");
+//            }
+//
+//            // Kiểm tra số lượng nhập vào không được vượt quá số lượng trong kho
+//            if (soLuong > chiTietSanPham.getSoLuong()) {
+//                return ResponseEntity.badRequest().body("Số lượng sản phẩm đã được vượt quá số lượng trong kho.");
+//            }
+//
+//            // Lấy danh sách chi tiết hóa đơn và cập nhật số lượng
+//            List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
+//
+//            if (idHoaDon == null || idHoaDon.isEmpty()) {
+//                return ResponseEntity.badRequest().body("Mã hóa đơn không hợp lệ.");
+//            }
+//
+//            for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
+//                if (chiTietHoaDon.getIdCTSP().getId().equals(idCTSP)) {
+//                    chiTietHoaDon.setSoLuong(soLuong);
+//                    _hoaDonChiTietRepo.save(chiTietHoaDon);
+//                    break;
+//                }
+//            }
+//
+//            return ResponseEntity.ok("Cập nhật số lượng thành công.");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi cập nhật số lượng.");
+//        }
+//    }
 //
 //
 //
 //}
+//

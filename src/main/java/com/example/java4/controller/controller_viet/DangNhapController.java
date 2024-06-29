@@ -1,6 +1,4 @@
 package com.example.java4.controller.controller_viet;
-
-import com.example.java4.entities.NhanVienViet;
 import com.example.java4.config.UserInfor;
 import com.example.java4.entities.*;
 import com.example.java4.repositories.*;
@@ -16,14 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
-
 @Controller
 @RequestMapping("store")
 public class DangNhapController {
     @Autowired
-    NhanVienRepository_Viet nhanVienRepo;
+    NhanVienRepository nhanVienRepo;
 
     @Autowired
     private HoaDonRepository hoaDonRepository;
@@ -71,7 +67,7 @@ public class DangNhapController {
 
         //Hiển thị thông tin nhân viên đăng nhập
         if (UserInfor.idNhanVien != null){
-            NhanVienViet nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+            NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
             model.addAttribute("nv", nhanVien);
         }
 
@@ -100,25 +96,32 @@ public class DangNhapController {
 
     @GetMapping("dang-nhap-view")
     public String getDangNhapview(Model model){
+        NhanVienRequest nhanVienRequest = new NhanVienRequest();
+        model.addAttribute("nhanVien", nhanVienRequest);
         return "/view/view_viet/dangNhapAdmin.jsp";
     }
 
     @PostMapping("dang-nhap")
     public String dangNhap(
             Model model,
+            @Valid @ModelAttribute("nhanVien") NhanVienRequest nvReq,
+            BindingResult result,
             RedirectAttributes redirectAttributes,
-            HttpSession session,
-            @RequestParam("taiKhoan") String taiKhoan,
-            @RequestParam("matKhau") String matKhau
+            HttpSession session
     ){
+        if (result.hasErrors()){
+            System.out.println("Có lỗi");
+            return "/view/view_viet/dangNhapAdmin.jsp";
+        }
 
         //Tìm kiếm nhân viên theo tên tài khoản
-        NhanVienViet nhanVienByTK = nhanVienRepo.findByTaiKhoan(taiKhoan);
+        boolean checkRole = false;
+        NhanVien nhanVienByTK = nhanVienRepo.findByTaiKhoan(nvReq.getTaiKhoan());
         if (nhanVienByTK == null){
             redirectAttributes.addFlashAttribute("error", "Tên tài khoản không tồn tại!");
             return "redirect:/store/dang-nhap-view";
         }else {
-            if (matKhau.equals(nhanVienByTK.getMatKhau())){
+            if (nvReq.getMatKhau().equals(nhanVienByTK.getMatKhau())){
                 UserInfor.idNhanVien = nhanVienByTK.getId();
 
                 //Check admin hay nhân viên

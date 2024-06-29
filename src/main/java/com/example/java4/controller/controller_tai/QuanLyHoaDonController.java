@@ -405,7 +405,9 @@ public class QuanLyHoaDonController {
 
         for (ChiTietSanPham ctsp : listCTSP) {
             if (ctsp.getSoLuong() <= 0) {
+                ctsp.setTrangThai(_sanPhamChiTietRepo.INACTIVE);
                 listCTSP = _sanPhamChiTietRepo.findByTrangThai(_sanPhamChiTietRepo.INACTIVE, pageable);
+                _sanPhamChiTietRepo.save(ctsp);
             }
         }
 
@@ -490,10 +492,12 @@ public class QuanLyHoaDonController {
             NhanVien nhanVien = new NhanVien();
             if (UserInfor.idNhanVien != null){
                 nhanVien  = _nhanVienRepo.findById(UserInfor.idNhanVien).get();
-
             }
-//            GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(hoaDon.getId());
-//            GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
+            else {
+                nhanVien  = _nhanVienRepo.findById("BF29DB87-6ED2-46E8-B34C-135B2EA4CCA6").get();
+            }
+            GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(hoaDon.getId());
+            GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
 
 
             // Cập nhật trạng thái và ngày giờ cụ thể tùy theo từng trường hợp
@@ -502,7 +506,6 @@ public class QuanLyHoaDonController {
                     hoaDon.setTrangThai(IHoaDonRepository.DA_XAC_NHAN);
                     hoaDon.setIdNhanVien(nhanVien);
                     hoaDon.setNgayDaXacNhan(LocalDateTime.now());
-
 
                     // Lấy ra danh sách Chi tiết hóa đơn theo IDHoaDon
                     List<ChiTietHoaDon> chiTietList = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHD);
@@ -516,11 +519,9 @@ public class QuanLyHoaDonController {
 
                             // Kiểm tra và cập nhật số lượng sản phẩm chi tiết
                             int soLuongConLai = chiTietSanPham.getSoLuong() - chiTietHD.getSoLuong();
-                            if (soLuongConLai >= 0) {
+                            if (soLuongConLai > 0) {
                                 chiTietSanPham.setSoLuong(soLuongConLai);
                                 _chiTietSanPhamRepo.save(chiTietSanPham);
-
-
                             } else {
                                 redirectAttributes.addFlashAttribute("errorProductDetail", "Không đủ số lượng sản phẩm trong kho");
                                 return "redirect:/hoa-don/detail/" + idHD;
@@ -559,13 +560,11 @@ public class QuanLyHoaDonController {
                     model.addAttribute("errorMessage", "Trạng thái không hợp lệ.");
                     return "redirect:/hoa-don/detail/" + idHD;
             }
-
-
             _hoaDonRepoTai.save(hoaDon);
-//            _giaoHangRepo.save(giaoHang);
+            _giaoHangRepo.save(giaoHang);
             HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDon);
             redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
-//            redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
+            redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
             // Thông báo cập nhật thành công
             redirectAttributes.addFlashAttribute("confirmSuccess", "Cập nhật trạng thái đơn hàng thành công.");
         } catch (Exception e) {
@@ -757,8 +756,6 @@ public class QuanLyHoaDonController {
     public String addSanPhamVaoGioHang(@PathVariable("idCTSP") String idCTSP, @RequestParam(value = "page",defaultValue = "0") Optional<Integer> pageParam,
                                        @RequestParam("idHoaDon") String idHoaDon, RedirectAttributes redirectAttributes) {
 
-        // Tìm hóa đơn chi tiết trong giỏ hàng của hóa đơn có id là idHoaDon
-        List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
 
         if (idHoaDon == null || idHoaDon.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Không tìm thấy hóa đơn hoặc chi tiết sản phẩm");
@@ -778,6 +775,10 @@ public class QuanLyHoaDonController {
             return "redirect:/hoa-don/detail/" + idHoaDon;
         }
 
+        // Tìm hóa đơn chi tiết trong giỏ hàng của hóa đơn có id là idHoaDon
+        List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
+
+
         // Kiểm tra xem sản phẩm chi tiết đã có trong giỏ hàng hay chưa
         boolean spTonTaiTrongGioHang = false;
         for (ChiTietHoaDon hdct : listHDCT) {
@@ -786,7 +787,6 @@ public class QuanLyHoaDonController {
                 hdct.setSoLuong(hdct.getSoLuong() + 1);
                 _hoaDonChiTietRepo.save(hdct);
                 spTonTaiTrongGioHang = true;
-
                 // Giảm số lượng của sản phẩm chi tiết trong kho (tạm thời không xử lý số lượng tồn)
 //                chiTietSanPham.setSoLuong(chiTietSanPham.getSoLuong() - 1);
 //                _sanPhamChiTietRepo.save(chiTietSanPham);
@@ -802,9 +802,7 @@ public class QuanLyHoaDonController {
             hoaDon.setId(idHoaDon);
             hdct.setIdHoaDon(hoaDon);
             hdct.setSoLuong(1);
-            // Lấy giá của sản phẩm chi tiết để lưu vào chi tiết hóa đơn
             hdct.setDonGia(chiTietSanPham.getGiaBan());
-
             _hoaDonChiTietRepo.save(hdct);
 
             // Giảm số lượng của sản phẩm chi tiết trong kho (tạm thời không xử lý số lượng tồn)
@@ -823,11 +821,12 @@ public class QuanLyHoaDonController {
         }
 
         HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(idHoaDon).orElse(null);
-        hoaDonTai.setTongTien(tongTien);
-        _hoaDonRepoTai.save(hoaDonTai);
+        if (hoaDonTai != null) {
+            hoaDonTai.setTongTien(tongTien);
+            _hoaDonRepoTai.save(hoaDonTai);
+        }
         HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDonTai);
         hoaDonDTO.setTongTien(tongTien);
-
         redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
         redirectAttributes.addFlashAttribute("addProductSuccess","Thêm sản phẩm vào giỏ hàng thành công");
         return "redirect:/hoa-don/detail/" + idHoaDon;
@@ -838,52 +837,71 @@ public class QuanLyHoaDonController {
 
     // Chức năng xóa sản phẩm chi tiết khỏi hoa đơn chi tiết
     @GetMapping("/xoa-san-pham/{idCTSP}")
-    public ResponseEntity<String> xoaSanPhamChiTiet(@PathVariable("idCTSP") String idCTSP,
+    public ResponseEntity<Map<String, Object>> xoaSanPhamChiTiet(@PathVariable("idCTSP") String idCTSP,
                                                     @RequestParam("idHoaDon") String idHoaDon) {
         try {
             // Kiểm tra và xóa sản phẩm chi tiết
             Optional<ChiTietSanPham> optionalCTSP = _sanPhamChiTietRepo.findById(idCTSP);
             if (optionalCTSP.isEmpty()) {
-                return ResponseEntity.badRequest().body("Không tìm thấy sản phẩm chi tiết.");
+                return ResponseEntity.badRequest().body(Map.of("error", "Không tìm thấy sản phẩm chi tiết."));
             }
             ChiTietSanPham chiTietSanPham = optionalCTSP.get();
 
             // Xóa sản phẩm chi tiết từ hóa đơn
             int deletedCount = _hoaDonChiTietReposioty.deleteByHoaDon_IdAndIdCTSP_Id(idHoaDon, idCTSP);
             if (deletedCount == 0) {
-                return ResponseEntity.badRequest().body("Không tìm thấy sản phẩm trong giỏ hàng.");
+                return ResponseEntity.badRequest().body(Map.of("error", "Không tìm thấy sản phẩm trong giỏ hàng."));
             }
 
-            return ResponseEntity.ok("Xóa sản phẩm thành công.");
+            // Tính lại tổng tiền để cập nhật tổng tiền bên view
+            BigDecimal tongTien = BigDecimal.ZERO;
+            List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
+            for (ChiTietHoaDon hdct : listHDCT) {
+                tongTien = tongTien.add(hdct.getDonGia().multiply(BigDecimal.valueOf(hdct.getSoLuong())));
+            }
+
+            HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(idHoaDon).orElse(null);
+            if (hoaDonTai != null) {
+                hoaDonTai.setTongTien(tongTien);
+                _hoaDonRepoTai.save(hoaDonTai);
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("tongTien", tongTien);
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi xóa sản phẩm.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Đã xảy ra lỗi khi xóa sản phẩm."));
         }
     }
 
     @GetMapping("/cap-nhat-so-luong-san-pham/{idCTSP}")
-    public ResponseEntity<String> updateSoLuong(
+    public ResponseEntity<Map<String, Object>> updateSoLuong(
             @PathVariable String idCTSP,
             @RequestParam int soLuong,
             @RequestParam("idHoaDon") String idHoaDon
     ) {
         try {
+            Map<String, Object> response = new HashMap<>();
             ChiTietSanPham chiTietSanPham = _sanPhamChiTietRepo.findByIdCTSP(idCTSP);
 
             // Kiểm tra số lượng nhập vào hợp lệ
             if (soLuong <= 0) {
-                return ResponseEntity.badRequest().body("Số lượng phải lớn hơn 0.");
+                return ResponseEntity.badRequest().body(Map.of("error", "Số lượng phải lớn hơn 0."));
             }
 
             // Kiểm tra số lượng nhập vào không được vượt quá số lượng trong kho
             if (soLuong > chiTietSanPham.getSoLuong()) {
-                return ResponseEntity.badRequest().body("Số lượng sản phẩm đã được vượt quá số lượng trong kho.");
+                response.put("error", "Số lượng sản phẩm đã được vượt quá số lượng trong kho.");
+                return ResponseEntity.badRequest().body(response);
             }
 
             // Lấy danh sách chi tiết hóa đơn và cập nhật số lượng
             List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
 
             if (idHoaDon == null || idHoaDon.isEmpty()) {
-                return ResponseEntity.badRequest().body("Mã hóa đơn không hợp lệ.");
+                response.put("error", "Mã hóa đơn không hợp lệ.");
+                return ResponseEntity.badRequest().body(response);
             }
 
             for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
@@ -894,9 +912,24 @@ public class QuanLyHoaDonController {
                 }
             }
 
-            return ResponseEntity.ok("Cập nhật số lượng thành công.");
+            // Tính lại tổng tiền để cập nhật tổng tiền bên view
+            BigDecimal tongTien = BigDecimal.ZERO;
+            for (ChiTietHoaDon hdct : listHDCT) {
+                tongTien = tongTien.add(hdct.getDonGia().multiply(BigDecimal.valueOf(hdct.getSoLuong())));
+            }
+
+            HoaDon_Tai hoaDonTai = _hoaDonRepoTai.findById(idHoaDon).orElse(null);
+            if (hoaDonTai != null) {
+                hoaDonTai.setTongTien(tongTien);
+                _hoaDonRepoTai.save(hoaDonTai);
+            }
+
+            response.put("tongTien", tongTien);
+            response.put("listHDCT", listHDCT);
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi cập nhật số lượng.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Đã xảy ra lỗi khi cập nhật số lượng sản phẩm."));
         }
     }
 

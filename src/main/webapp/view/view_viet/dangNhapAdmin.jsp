@@ -67,20 +67,24 @@
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12 ">
+                    <%--@elvariable id="khachHangDTO" type=""--%>
                     <div class="login-form-wrapper">
-                        <form id="login-form" class="form" action="/store/dang-nhap" method="post">
+                        <form:form id="login-form" class="form" action="/store/dang-nhap" method="post"
+                                   modelAttribute="nhanVien">
                             <h3 class="text-center text-info">Login</h3>
 
                             <div class="form-group">
-                                <label path="taiKhoan" class="text-info">Username:</label><br>
-                                <input path="taiKhoan" class="form-control" name="taiKhoan" id="taiKhoan">
+                                <form:label path="taiKhoan" class="text-info">Username:</form:label><br>
+                                <form:input path="taiKhoan" class="form-control"/>
+<%--                                <form:errors path="taiKhoan" cssStyle="color: red"></form:errors>--%>
                                 <small id="taiKhoanError" class="text-danger">
 
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label path="matKhau" class="text-info">Password:</label><br>
-                                <input type="password" path="matKhau" class="form-control" name="matKhau" id="matKhau">
+                                <form:label path="matKhau" class="text-info">Password:</form:label><br>
+                                <form:password path="matKhau" class="form-control"/>
+<%--                                <form:errors path="matKhau" cssStyle="color: red"></form:errors>--%>
                                 <small id="matKhauError" class="text-danger"></small>
                             </div>
                             <div class="form-group">
@@ -88,7 +92,10 @@
                                         id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                                 <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Submit">
                             </div>
-                        </form>
+<%--                            <div id="register-link" class="text-right">--%>
+<%--                                <a href="/dang-ky/singup" class="text-info">Register here</a>--%>
+<%--                            </div>--%>
+                        </form:form>
                     </div>
 
                 </div>

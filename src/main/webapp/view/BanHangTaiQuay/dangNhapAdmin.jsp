@@ -70,7 +70,7 @@
                     <%--@elvariable id="khachHangDTO" type=""--%>
                     <div class="login-form-wrapper">
                         <form:form id="login-form" class="form" action="/ban-hang-tai-quay/dang-nhap" method="post"
-                                   modelAttribute="nhanVienViet">
+                                   modelAttribute="nhanVien">
                             <h3 class="text-center text-info">Login</h3>
 
                             <div class="form-group">
