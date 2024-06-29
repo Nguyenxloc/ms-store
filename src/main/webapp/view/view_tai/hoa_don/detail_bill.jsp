@@ -848,7 +848,7 @@
                                 <th>Trạng thái</th>
                                 <th>Thời gian</th>
                                 <th>Phương thức thanh toán</th>
-                                <th>Người xác nhận</th>
+                                <th>Nhân viên xác nhận</th>
                                 <th>Ghi chú</th>
                             </tr>
                             </thead>
