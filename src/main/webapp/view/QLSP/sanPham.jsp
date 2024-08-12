@@ -1393,7 +1393,9 @@
     let howManyCboKichThuoc = 0;
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
-    let lstMauSac = [];
+    size =[];
+    let dataCell = {name:"",size:size};
+    let lstDataSet = [];
     let checkChooseDropdown = "";
     function refresh(e) {
         e.preventDefault();
@@ -1414,12 +1416,14 @@
         document.getElementById("lblMauSacAdd"+indx).textContent = ms.ten;
         console.log('Selected mau sac ID:', idMauSacAdd);
         console.log('data set index: ', indx);
-        ///conduct lstMauSac
-        if(howManyCboMauSac>lstMauSac.length){
-            lstMauSac.push(ms.ten);
+        ///conduct lstDataSet
+        if(howManyCboMauSac>lstDataSet.length){
+            size = [];
+            dataCell = {name:ms.ten,size:size}
+            lstDataSet.push(dataCell);
         }
-            lstMauSac[indx] = ms.ten;
-        console.log("test lst mausac: ",lstMauSac);
+            lstDataSet[indx].name = ms.ten;
+        console.log("test lst mausac: ",lstDataSet);
         checkChooseDropdown  = ms.ten;
         loadKichThuocWrapper();
         //do load cbo kich thuoc wrapper
@@ -1614,25 +1618,25 @@
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
         htmlKichThuocWrapper.innerHTML = '';
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
-        for (let i = 0; i < lstMauSac.length; i++) {
+        for (let i = 0; i < lstDataSet.length; i++) {
             newHtmlContent +=
                 '<div class="col col-md-12">' +
                 '<div class="d-flex">' +
-                '<p class="mt-2" style="width: 80px;">' + lstMauSac.at(i) + '</p>' +
+                '<p class="mt-2" style="width: 80px;">' + lstDataSet.at(i).name + '</p>' +
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
                 'id="iconHotAddKichThuoc" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
-                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox">' +
+                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc" ' +
+                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc" ' +
+                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
@@ -1697,7 +1701,7 @@
         const htmlDropdown = document.getElementById("mauSacBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
         if(checkChooseDropdown !=""){
-            lstMauSac.pop();
+            lstDataSet.pop();
             loadKichThuocWrapper();
         }
         else{
@@ -1713,7 +1717,7 @@
         e.preventDefault();
         const htmlDropdown = document.getElementById("kichThuocBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
-        console.log("lst mau sac :", lstMauSac);
+        console.log("lst mau sac :", lstDataSet);
         howManyCboKichThuocMemo--;
         howManyCboKichThuoc--;
         loadCboKichThuoc();
