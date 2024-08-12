@@ -300,8 +300,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -335,7 +335,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm/quan-ly-km" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -359,8 +359,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -627,6 +627,8 @@
                             <c:otherwise>
                                 <div class="stepper-horizontal" id="stepper_online">
                                     <c:forEach var="step" items="${listLichSuHoaDonDTO}" varStatus="status">
+
+
                                         <div class="step-wrapper">
                                             <div class="step ${status.index == 0 ? 'active' : ''}"
                                                  id="step_online_${step.index}">
@@ -1088,7 +1090,7 @@
 
                                                         <p class="fw-bold mb-1 pb-3 small">Ghi chú:
                                                             <span
-                                                                    class="fw-normal">${hoaDonDTO.ghiChu}</span>
+                                                                    class="fw-normal">${giaoHangDTO.ghiChu}</span>
                                                         </p>
 
                                                         <c:if test="${hoaDonDTO.loaiHoaDon == 0}">
@@ -2141,7 +2143,7 @@
                     if (result.isConfirmed) {
                         // $('#confirmModal').modal('hide'); // Đóng modal
                         // Sau khi đóng modal, gửi form
-                        $('#confirmForm').off('submit').submit();
+                            $('#confirmForm').off('submit').submit();
                     }
                 });
             }

@@ -6,6 +6,7 @@ import com.example.java4.controller.BanHangTaiQuay.Validator;
 import com.example.java4.entities.*;
 import com.example.java4.repositories.*;
 import com.example.java4.request.dangNhap.NVSignUpRequest;
+import com.example.java4.request.req_sang.DiaChiRequest;
 import com.example.java4.response.GiaoHangDTO;
 import com.example.java4.response.HoaDonDTO;
 import com.example.java4.response.HoaDonResponse;
@@ -96,6 +97,9 @@ public class QuanLyHoaDonController {
 
     @Autowired
     KhuyenMaiRepository _khuyenMaiRepo;
+
+    @Autowired
+    DiaChiRepository _diaChiRepo;
 
     @Autowired
     Validator validator;
@@ -358,6 +362,7 @@ public class QuanLyHoaDonController {
             LichSuHoaDon lichSuHoaDon = new LichSuHoaDon();
             lichSuHoaDon.setTrangThai(1);
         }
+        
         List<LichSuHoaDonDTO> listLichSuHoaDonDTO = listLichSuHoaDon.stream()
                 .map(this::processLichSuHoaDon)
                 .collect(Collectors.toList());
@@ -826,11 +831,14 @@ public class QuanLyHoaDonController {
 
     // Chức năng cập nhật thông tin khách hàng
     @PostMapping("/cap-nhat/{hoaDonId}")
-    public String updateDiaChi(@PathVariable("hoaDonId") String hoaDonId,
+    public String updateDiaChi(DiaChiRequest request, @PathVariable("hoaDonId") String hoaDonId,
                                @ModelAttribute("giaoHangDTO") GiaoHangDTO giaoHangDTO,
                                @Param("tenTinhThanh") String tenTinhThanh,
                                @Param("tenQuanHuyen") String tenQuanHuyen,
                                @Param("tenPhuongXa") String tenPhuongXa,
+                               @RequestParam("idTinhThanh") Integer idTinhThanh,
+                               @RequestParam("idQuanHuyen") Integer idQuanHuyen,
+                               @RequestParam("idPX") String idPX,
                                RedirectAttributes redirectAttributes) {
 
         HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).get();
@@ -853,7 +861,23 @@ public class QuanLyHoaDonController {
         giaoHang.setIdTinhThanh(tenTinhThanh);
         giaoHang.setPhiShip(giaoHangDTO.getPhiShip());
         giaoHang.setGhiChu(giaoHangDTO.getGhiChu());
+
+        // Cập nhập địa chỉ khách hàng
+        KhachHang khachHang = _khachHangRepo.findByIdKH(UserInfor.idKhachHang);
+        DiaChi diaChi = _diaChiRepo.findDiaChiByKhachHangId(UserInfor.idKhachHang);
+        diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
+        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
+        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
+        diaChi.setIdTinhThanh(tenTinhThanh);
+        diaChi.setIdQuanHuyen(tenQuanHuyen);
+        diaChi.setIdPhuongXa(tenPhuongXa);
+        diaChi.setIdKhachHang(khachHang);
+        diaChi.setIdT(idTinhThanh);
+        diaChi.setIdQH(idQuanHuyen);
+        diaChi.setIdPX(idPX);
+
         _giaoHangRepo.save(giaoHang);
+        _diaChiRepo.save(diaChi);
         // Thêm thông báo thành công và chuyển hướng
         redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
         redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
