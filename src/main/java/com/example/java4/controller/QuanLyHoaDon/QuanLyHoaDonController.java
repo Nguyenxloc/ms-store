@@ -829,61 +829,61 @@ public class QuanLyHoaDonController {
     }
 
 
-    // Chức năng cập nhật thông tin khách hàng
-//    @PostMapping("/cap-nhat/{hoaDonId}")
-//    public String updateDiaChi(DiaChiRequest request, @PathVariable("hoaDonId") String hoaDonId,
-//                               @ModelAttribute("giaoHangDTO") GiaoHangDTO giaoHangDTO,
-//                               @Param("tenTinhThanh") String tenTinhThanh,
-//                               @Param("tenQuanHuyen") String tenQuanHuyen,
-//                               @Param("tenPhuongXa") String tenPhuongXa,
-//                               @RequestParam("idTinhThanh") Integer idTinhThanh,
-//                               @RequestParam("idQuanHuyen") Integer idQuanHuyen,
-//                               @RequestParam("idPX") String idPX,
-//                               RedirectAttributes redirectAttributes) {
-//
-//        HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).get();
-//        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(hoaDonId);
-//        if (giaoHang == null) {
-//            // Nếu không tìm thấy, bạn có thể tạo mới nếu được phép
-//            giaoHang = new GiaoHang();
-//            giaoHang.setIdHoaDon(hoaDon); // Liên kết với HoaDon
-//        }
-//        HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDon);
-//        giaoHangDTO.setIdPhuongXa(tenPhuongXa);
-//        giaoHangDTO.setIdQuanHuyen(tenQuanHuyen);
-//        giaoHangDTO.setIdTinhThanh(tenTinhThanh);
-//        // Cập nhật các thông tin khác như phí ship, ghi chú nếu cần
-//        giaoHang.setTenNguoiNhan(giaoHangDTO.getTenNguoiNhan());
-//        giaoHang.setSdtNguoiNhan(giaoHangDTO.getSdtNguoiNhan());
-//        giaoHang.setDiaChiChiTiet(giaoHangDTO.getDiaChiChiTiet());
-//        giaoHang.setIdPhuongXa(tenPhuongXa);
-//        giaoHang.setIdQuanHuyen(tenQuanHuyen);
-//        giaoHang.setIdTinhThanh(tenTinhThanh);
-//        giaoHang.setPhiShip(giaoHangDTO.getPhiShip());
-//        giaoHang.setGhiChu(giaoHangDTO.getGhiChu());
-//
-//        // Cập nhập địa chỉ khách hàng
-//        KhachHang khachHang = _khachHangRepo.findByIdKH(UserInfor.idKhachHang);
-//        DiaChi diaChi = _diaChiRepo.findDiaChiByKhachHangId(UserInfor.idKhachHang);
-//        diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
-//        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
-//        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
-//        diaChi.setIdTinhThanh(tenTinhThanh);
-//        diaChi.setIdQuanHuyen(tenQuanHuyen);
-//        diaChi.setIdPhuongXa(tenPhuongXa);
-//        diaChi.setIdKhachHang(khachHang);
-//        diaChi.setIdT(idTinhThanh);
-//        diaChi.setIdQH(idQuanHuyen);
-//        diaChi.setIdPX(idPX);
-//
-//        _giaoHangRepo.save(giaoHang);
-//        _diaChiRepo.save(diaChi);
-//        // Thêm thông báo thành công và chuyển hướng
-//        redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
-//        redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
-//        redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thông tin địa chỉ thành công.");
-//        return "redirect:/hoa-don/detail/" + hoaDonId;
-//    }
+        // Chức năng cập nhật thông tin khách hàng
+        @PostMapping("/cap-nhat/{hoaDonId}")
+        public String updateDiaChi(DiaChiRequest request, @PathVariable("hoaDonId") String hoaDonId,
+                                   @ModelAttribute("giaoHangDTO") GiaoHangDTO giaoHangDTO,
+                                   @Param("tenTinhThanh") String tenTinhThanh,
+                                   @Param("tenQuanHuyen") String tenQuanHuyen,
+                                   @Param("tenPhuongXa") String tenPhuongXa,
+                                   @RequestParam("idTinhThanh") Integer idTinhThanh,
+                                   @RequestParam("idQuanHuyen") Integer idQuanHuyen,
+                                   @RequestParam("idPhuongXa") Integer idPhuongXa,
+                                   RedirectAttributes redirectAttributes) {
+
+            HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).get();
+            GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(hoaDonId);
+            if (giaoHang == null) {
+                // Nếu không tìm thấy, bạn có thể tạo mới nếu được phép
+                giaoHang = new GiaoHang();
+                giaoHang.setIdHoaDon(hoaDon); // Liên kết với HoaDon
+            }
+            HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDon);
+            giaoHangDTO.setIdPhuongXa(tenPhuongXa);
+            giaoHangDTO.setIdQuanHuyen(tenQuanHuyen);
+            giaoHangDTO.setIdTinhThanh(tenTinhThanh);
+            // Cập nhật các thông tin khác như phí ship, ghi chú nếu cần
+            giaoHang.setTenNguoiNhan(giaoHangDTO.getTenNguoiNhan());
+            giaoHang.setSdtNguoiNhan(giaoHangDTO.getSdtNguoiNhan());
+            giaoHang.setDiaChiChiTiet(giaoHangDTO.getDiaChiChiTiet());
+            giaoHang.setIdPhuongXa(tenPhuongXa);
+            giaoHang.setIdQuanHuyen(tenQuanHuyen);
+            giaoHang.setIdTinhThanh(tenTinhThanh);
+            giaoHang.setPhiShip(giaoHangDTO.getPhiShip());
+            giaoHang.setGhiChu(giaoHangDTO.getGhiChu());
+
+            // Cập nhập địa chỉ khách hàng
+            KhachHang khachHang = _khachHangRepo.findByIdKH(UserInfor.idKhachHang);
+            DiaChi diaChi = _diaChiRepo.findDiaChiByKhachHangId(UserInfor.idKhachHang);
+            diaChi.setTenNguoiNhan(giaoHangDTO.getTenNguoiNhan());
+            diaChi.setSdtNguoiNhan(giaoHangDTO.getSdtNguoiNhan());
+            diaChi.setDiaChiChiTiet(giaoHangDTO.getDiaChiChiTiet());
+            diaChi.setIdTinhThanh(tenTinhThanh);
+            diaChi.setIdQuanHuyen(tenQuanHuyen);
+            diaChi.setIdPhuongXa(tenPhuongXa);
+            diaChi.setIdKhachHang(khachHang);
+            diaChi.setIdT(idTinhThanh);
+            diaChi.setIdQH(idQuanHuyen);
+            diaChi.setIdPX(String.valueOf(idPhuongXa));
+
+            _giaoHangRepo.save(giaoHang);
+            _diaChiRepo.save(diaChi);
+            // Thêm thông báo thành công và chuyển hướng
+            redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
+            redirectAttributes.addFlashAttribute("giaoHangDTO", giaoHangDTO);
+            redirectAttributes.addFlashAttribute("successMessage", "Cập nhật thông tin địa chỉ thành công.");
+            return "redirect:/hoa-don/detail/" + hoaDonId;
+        }
 
     // Chức năng hủy đơn hàng
     @PostMapping("/huy/{hoaDonId}")
