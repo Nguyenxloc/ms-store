@@ -1393,8 +1393,15 @@
     let howManyCboKichThuoc = 0;
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
+<<<<<<< HEAD
     let msMemo = 0;
     let lstMauSac = [];
+=======
+    size =[];
+    let dataCell = {name:"",size:size};
+    let lstDataSet = [];
+    let checkChooseDropdown = "";
+>>>>>>> 32c53a2bab3ca08266b07ba6c773c262ed8b0f52
     function refresh(e) {
         e.preventDefault();
         idMauSacAdd = "";
@@ -1414,9 +1421,21 @@
         document.getElementById("lblMauSacAdd"+indx).textContent = ms.ten;
         console.log('Selected mau sac ID:', idMauSacAdd);
         console.log('data set index: ', indx);
+<<<<<<< HEAD
         msMemo = lstMauSac.length;
         lstMauSac.push(ms.ten);
         console.log("test lst mausac: ",lstMauSac);
+=======
+        ///conduct lstDataSet
+        if(howManyCboMauSac>lstDataSet.length){
+            size = [];
+            dataCell = {name:ms.ten,size:size}
+            lstDataSet.push(dataCell);
+        }
+            lstDataSet[indx].name = ms.ten;
+        console.log("test lst mausac: ",lstDataSet);
+        checkChooseDropdown  = ms.ten;
+>>>>>>> 32c53a2bab3ca08266b07ba6c773c262ed8b0f52
         loadKichThuocWrapper();
         //do load cbo kich thuoc wrapper
         // You can add more logic here to handle the selected value
@@ -1609,26 +1628,30 @@
     const loadKichThuocWrapper = () => {
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
+<<<<<<< HEAD
 
         for (let i = msMemo; i < lstMauSac.length; i++) {
+=======
+        for (let i = 0; i < lstDataSet.length; i++) {
+>>>>>>> 32c53a2bab3ca08266b07ba6c773c262ed8b0f52
             newHtmlContent +=
                 '<div class="col col-md-12">' +
                 '<div class="d-flex">' +
-                '<p class="mt-2" style="width: 80px;">' + lstMauSac.at(i) + '</p>' +
+                '<p class="mt-2" style="width: 80px;">' + lstDataSet.at(i).name + '</p>' +
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
                 'id="iconHotAddKichThuoc" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
-                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox">' +
+                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc" ' +
+                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc" ' +
+                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
@@ -1680,6 +1703,16 @@
         console.log("remove")
         const htmlDropdown = document.getElementById("mauSacBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
+<<<<<<< HEAD
+=======
+        if(checkChooseDropdown !=""){
+            lstDataSet.pop();
+            loadKichThuocWrapper();
+        }
+        else{
+             checkChooseDropdown = "hold";
+        }
+>>>>>>> 32c53a2bab3ca08266b07ba6c773c262ed8b0f52
         howManyCboMauSacMemo--;
         howManyCboMauSac--;
         loadTotalCboMauSac();
@@ -1690,6 +1723,10 @@
         e.preventDefault();
         const htmlDropdown = document.getElementById("kichThuocBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
+<<<<<<< HEAD
+=======
+        console.log("lst mau sac :", lstDataSet);
+>>>>>>> 32c53a2bab3ca08266b07ba6c773c262ed8b0f52
         howManyCboKichThuocMemo--;
         howManyCboKichThuoc--;
         loadCboKichThuoc();

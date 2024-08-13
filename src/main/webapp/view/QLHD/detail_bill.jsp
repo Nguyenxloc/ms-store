@@ -1934,7 +1934,13 @@
     // Validate form  Thay đổi thông tin khách hàng
     $(document).ready(function () {
         var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+        var updatedData = {
+            idTinhThanh: '${giaoHangDTO.idTinhThanh}',   // Cập nhật dữ liệu mẫu
+            idQuanHuyen: '${giaoHangDTO.idQuanHuyen}',
+            idPhuongXa: '${giaoHangDTO.idPhuongXa}'
+        };
 
+        // Function to get JSON with token
         function getJSONWithToken(url, callback) {
             $.ajax({
                 url: url,
@@ -1948,97 +1954,151 @@
             });
         }
 
-        $('#updateModal').on('show.bs.modal', function () {
-            var modalId = $(this).attr('id');
-            var provinceSelect = $("#" + modalId + " select[name='idTinhThanh']");
-            var districtSelect = $("#" + modalId + " select[name='idQuanHuyen']");
-            var wardSelect = $("#" + modalId + " select[name='idPhuongXa']");
+        // Populate provinces on modal open
+        $('#updateModal').on('show.bs.modal', function (event) {
+            var modal = $(this);
 
-            // Gọi API để lấy danh sách tỉnh/thành phố
-            getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', function (data_tinh) {
-                // provinceSelect.html('<option value="">Chọn Tỉnh/Thành Phố</option>');
-                // Đổ danh sách tỉnh/thành phố vào dropdown
-                data_tinh.data.sort(function (a, b) {
+            // Populate province select
+            getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', function (data) {
+                // Sort provinces by ProvinceID ascending
+                data.data.sort(function (a, b) {
                     return a.ProvinceID - b.ProvinceID;
                 });
-                $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                    provinceSelect.append('<option value="' + val_tinh.ProvinceID + '">' + val_tinh.ProvinceName + '</option>');
+
+                var tinhSelect = modal.find('#tinh');
+                tinhSelect.empty(); // Clear previous options
+                $.each(data.data, function (key, val) {
+                    var selected = updatedData.idTinhThanh == val.ProvinceName ? 'selected' : '';
+                    tinhSelect.append('<option value="' + val.ProvinceID + '" ' + selected + '>' + val.ProvinceName + '</option>');
                 });
 
-                provinceSelect.change(function () {
-                    var idtinh = $(this).val();
+                // Trigger change event to load districts based on selected province
+                tinhSelect.change();
+            });
 
-                    // Lấy quận/huyện dựa trên tỉnh thành đã chọn
-                    getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=' + idtinh, function (data_quan) {
-                        districtSelect.html('<option value="">Chọn Quận/Huyện</option>');
-                        wardSelect.html('<option value="">Chọn Phường/Xã</option>');
-                        $.each(data_quan.data, function (key_quan, val_quan) {
-                            districtSelect.append('<option value="' + val_quan.DistrictID + '">' + val_quan.DistrictName + '</option>');
-                        });
+            // Repopulate other fields with updated data
 
-                        districtSelect.change(function () {
-                            var idquan = $(this).val();
-                            getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idquan, function (data_phuong) {
-                                wardSelect.html('<option value="">Chọn Phường/Xã</option>');
-                                $.each(data_phuong.data, function (key_phuong, val_phuong) {
-                                    wardSelect.append('<option value="' + val_phuong.WardCode + '">' + val_phuong.WardName + '</option>');
-                                });
-                            });
-                        });
-                    });
+        });
+
+        // Populate districts based on selected province
+        $('#tinh').change(function (e) {
+            var idTinh = $(this).val();
+            var huyenSelect = $('#huyen');
+
+            getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=' + idTinh, function (data) {
+                huyenSelect.empty(); // Clear previous options
+                $.each(data.data, function (key, val) {
+                    var selected = updatedData.idQuanHuyen == val.DistrictName ? 'selected' : '';
+                    huyenSelect.append('<option value="' + val.DistrictID + '" ' + selected + '>' + val.DistrictName + '</option>');
+                });
+
+                // Trigger change event to load wards based on selected district
+                huyenSelect.change();
+            });
+        });
+
+        // Populate wards based on selected district
+        $('#huyen').change(function (e) {
+            var idQuan = $(this).val();
+            var xaSelect = $('#xa');
+
+            getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idQuan, function (data) {
+                xaSelect.empty(); // Clear previous options
+                $.each(data.data, function (key, val) {
+                    var selected = updatedData.idPhuongXa == val.WardName ? 'selected' : '';
+                    xaSelect.append('<option value="' + val.WardCode + '" ' + selected + '>' + val.WardName + '</option>');
                 });
             });
         });
 
+        $('#updateButton').click(function () {
+            $('#updateForm').submit();
+        });
+
         $('#updateForm').submit(function (e) {
-            var modalId = $(this).closest('.modal').attr('id');
-            var tenTinh = $("#" + modalId + " select[name='idTinhThanh'] option:selected").text();
-            var tenQuan = $("#" + modalId + " select[name='idQuanHuyen'] option:selected").text();
-            var tenPhuong = $("#" + modalId + " select[name='idPhuongXa'] option:selected").text();
+            e.preventDefault(); // Prevent default form submission
 
-            var idTinh = $("#" + modalId + " select[name='idTinhThanh']").val();
-            var idQuan = $("#" + modalId + " select[name='idQuanHuyen']").val();
-            var idPhuong = $("#" + modalId + " select[name='idPhuongXa']").val();
+            // Clear previous error messages
+            $('.text-danger').text('');
+            $('.form-control, .form-select').removeClass('border-danger');
 
-            // Append hidden inputs to the form
-            $("<input>").attr({
-                type: "hidden",
-                name: "tenTinhThanh",
-                value: tenTinh
-            }).appendTo(this);
+            // Example validation
+            var isValid = true;
+            if ($('#hoTen').val().trim() === '') {
+                isValid = false;
+                $('#hoTen').addClass('border-danger');
+                $('#hoTenError').text('Vui lòng nhập họ tên');
+            }
 
-            $("<input>").attr({
-                type: "hidden",
-                name: "tenQuanHuyen",
-                value: tenQuan
-            }).appendTo(this);
+            if ($('#sdt').val().trim() === '') {
+                isValid = false;
+                $('#sdt').addClass('border-danger');
+                $('#sdtError').text('Vui lòng nhập số điện thoại');
+            } else {
+                var phonePattern = /^(03|05|07|08|09)+([0-9]{8})$/;
+                if (!phonePattern.test($('#sdt').val().trim())) {
+                    isValid = false;
+                    $('#sdt').addClass('border-danger');
+                    $('#sdtError').text('Số điện thoại không hợp lệ');
+                }
+            }
 
-            $("<input>").attr({
-                type: "hidden",
-                name: "tenPhuongXa",
-                value: tenPhuong
-            }).appendTo(this);
+            if ($('#diaChiChiTiet').val().trim() === '') {
+                isValid = false;
+                $('#diaChiChiTiet').addClass('border-danger');
+                $('#diaChiChiTietError').text('Vui lòng nhập địa chỉ chi tiết');
+            }
 
-            $("<input>").attr({
-                type: "hidden",
-                name: "idTinhThanh",
-                value: idTinh
-            }).appendTo(this);
+            if ($('#tinh').val() === '') {
+                isValid = false;
+                $('#tinh').addClass('border-danger');
+                $('#tinhError').text('Vui lòng chọn Tỉnh/Thành Phố');
+            }
 
-            $("<input>").attr({
-                type: "hidden",
-                name: "idQuanHuyen",
-                value: idQuan
-            }).appendTo(this);
+            if ($('#huyen').val() === '') {
+                isValid = false;
+                $('#huyen').addClass('border-danger');
+                $('#huyenError').text('Vui lòng chọn Quận/Huyện');
+            }
 
-            $("<input>").attr({
-                type: "hidden",
-                name: "idPhuongXa",
-                value: idPhuong
-            }).appendTo(this);
+            if ($('#xa').val() === '') {
+                isValid = false;
+                $('#xa').addClass('border-danger');
+                $('#xaError').text('Vui lòng chọn Phường/Xã');
+            }
+
+            if ($('#phiShip').val().trim() === '') {
+                isValid = false;
+                $('#phiShip').addClass('border-danger');
+                $('#phiShipError').text('Vui lòng nhập phí ship');
+            }
+
+            $('#tenTinhThanh').val($('#tinh option:selected').text());
+            $('#tenQuanHuyen').val($('#huyen option:selected').text());
+            $('#tenPhuongXa').val($('#xa option:selected').text());
+
+            if (isValid) {
+                // Store the updated data in the updatedData object
+                updatedData = {
+                    idTinhThanh: $('#tinh').val(),
+                    idQuanHuyen: $('#huyen').val(),
+                    idPhuongXa: $('#xa').val(),
+                };
+
+                // Submit the form via AJAX or standard form submission
+                this.submit();
+            } else {
+                $(".modal-body").scrollTop(0);
+            }
+        });
+
+        // Clear errors when input/select value changes
+        $('#hoTen, #sdt, #diaChiChiTiet, #tinh, #huyen, #xa, #phiShip').on('input click change', function () {
+            var errorId = '#' + $(this).attr('id') + 'Error';
+            $(this).removeClass('border-danger');
+            $(errorId).text('');
         });
     });
-
 
 
     // Nút hoàn tác
