@@ -170,7 +170,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm/quan-ly-km" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -443,8 +443,9 @@
                                             <c:if test="${hoaDon.idKhachHang.id == null}">Khách lẻ</c:if>
                                             <c:if test="${hoaDon.idKhachHang.id != null}">${hoaDon.idKhachHang.hoTen}</c:if>
                                         </td>
-                                        <td class="original-date">${hoaDon.ngayTao}</td>
-                                        <td>${hoaDon.trangThai == 0 ? "Chua thanh toan" : "Da thanh toan"}</td>
+<%--                                        <td class="original-date">${hoaDon.ngayTao}</td>--%>
+                                        <td>${hoaDon.ngayTao}</td>
+                                        <td>${hoaDon.trangThai == 0 ? "Chưa thanh toán" : "Đã thanh toán"}</td>
                                         <td>
                                             <a href="/ban-hang-tai-quay/detail-hoa-don/${hoaDon.id}?highlightId=${hoaDon.id}"
                                                class="btn btn-primary">
@@ -644,7 +645,7 @@
                                             <label class="form-label">Tiền Khách Đưa</label>
                                             <div class="row align-items-center">
                                                 <div class="col-sm-10 d-flex align-items-center">
-                                                    <input id="tienKhachDua" class="form-control" type="text" required>
+                                                    <input id="tienKhachDua" class="form-control" type="text" value="" required>
 
                                                 </div>
                                                 <div class="col-sm-2 d-flex">
@@ -659,9 +660,13 @@
                                         </div>
                                         <div class="mb-3" style="margin-top: 25px">
                                             <div class="col-sm-12">
-                                                <button id="checkBtn" idhd =${hoaDon.id} type="submit" class="btn btn-outline-primary"><i class="bi bi-wallet2" style="padding-right: 5px"></i>Thanh Toán</button>
-                                                <%--Hủy hóa đơn--%>
-                                                <a href="#" id="cancelOrder" class="btn btn-outline-danger"><i class="bi bi-x"></i> Hủy Đơn</a>
+                                                <c:if test="${hoaDon.id!=null}">
+                                                    <button id="checkBtn" type="submit" class="btn btn-outline-primary" idhd =${hoaDon.id}><i class="bi bi-wallet2" style="padding-right: 5px"></i>Thanh Toán</button>
+                                                    <%--Hủy hóa đơn--%>
+                                                    <a href="#" id="cancelOrder" class="btn btn-outline-danger"><i class="bi bi-x"></i> Hủy Đơn</a>
+                                                </c:if>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -856,14 +861,29 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="/ban-hang-tai-quay/create">
+                        <form id="khachHangForm" method="post" action="/ban-hang-tai-quay/create">
                             <div class="mb-3 mt-3">
-                                <label for="email" class="form-label">Họ tên khách hàng:</label>
-                                <input type="text" class="form-control" id="email" name="hoTen">
+                                <label class="form-label">Họ tên khách hàng:</label>
+                                <input type="text" class="form-control" id="tenKhachHang" name="hoTen">
+                                <p id="error-tenKhachHang" style="color: red"></p>
                             </div>
+
                             <div class="mb-3">
-                                <label for="pwd" class="form-label">Số điện thoại:</label>
-                                <input type="text" class="form-control" id="pwd" name="sdt">
+                                <label class="form-label">Số điện thoại:</label>
+                                <input type="text" class="form-control" id="soDienThoai" name="sdt">
+                                <p id="error-soDienThoai" style="color: red"></p>
+                            </div>
+                            <div class="mb-3 mt-3">
+                                <label  class="form-label">Giới tính:</label>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="gioiTinhNam" name="gioiTinh" value="1">Nam
+                                    <label class="form-check-label" for="radio1"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="gioiTinhNu" name="gioiTinh" value="0">Nữ
+                                    <label class="form-check-label" for="radio2"></label>
+                                </div>
+                                <p id="error-gioiTinh" style="color: red"></p>
                             </div>
 
                             <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
@@ -1149,6 +1169,83 @@
 
 <script>
 
+    //Chuyển list khách hàng java -> js
+    var listKH = []
+    <c:forEach items="${listKH}" var="kh">
+    var KhachHang = {};
+    KhachHang.id = "${kh.id}";
+    KhachHang.hoTen = "${kh.hoTen}";
+    KhachHang.gioiTinh = "${kh.gioiTinh}";
+    KhachHang.sdt = "${kh.sdt}";
+    listKH.push(KhachHang);
+    </c:forEach>
+
+    //Validate form
+    function isVietnamesePhoneNumber(phone) {
+        const regex = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
+        return regex.test(phone);
+    }
+
+    function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    function clearErrors() {
+        document.querySelectorAll('.error').forEach(element => {
+            element.textContent = '';
+        });
+    }
+
+    //Thêm khách hàng
+    document.getElementById('khachHangForm').addEventListener('submit', function(event) {
+        // Get the form fields
+        const tenKhachHang = document.getElementById('tenKhachHang').value.trim();
+        const soDienThoai = document.getElementById('soDienThoai').value.trim();
+        const gioiTinhNam = document.getElementById('gioiTinhNam').checked;
+        const gioiTinhNu = document.getElementById('gioiTinhNu').checked;
+
+        // Reset error messages
+        document.getElementById('error-tenKhachHang').innerText = '';
+        document.getElementById('error-soDienThoai').innerText = '';
+        document.getElementById('error-gioiTinh').innerText = '';
+
+        let isValid = true;
+
+        // Validate name
+        if (tenKhachHang === '') {
+            document.getElementById('error-tenKhachHang').innerText = 'Họ tên khách hàng không được để trống.';
+            isValid = false;
+        }
+
+        // Validate sđt
+        console.log("Sdt c: ",${sdtC});
+        if (!soDienThoai) {
+            document.getElementById('error-soDienThoai').textContent = 'Số điện thoại không được để trống';
+            isValid = false;
+        } else if (!isVietnamesePhoneNumber(soDienThoai)) {
+            document.getElementById('error-soDienThoai').textContent = 'Số điện thoại không hợp lệ';
+            isValid = false;
+        } else if (listKH.some(khachHang => khachHang.sdt === soDienThoai)) {
+            document.getElementById('error-soDienThoai').textContent = 'Số điện thoại đã tồn tại';
+            isValid = false;
+        }
+
+        // Validate gender
+        if (!gioiTinhNam && !gioiTinhNu) {
+            document.getElementById('error-gioiTinh').innerText = 'Vui lòng chọn giới tính.';
+            isValid = false;
+        }
+
+        // Prevent form submission if validation fails
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+
+
+    //kết thúc thêm nhanh khách hàng
+
     //check validate khi update số lượng ở giỏ hàng
     function validateForm(form) {
         var soLuong = form.soLuong.value;
@@ -1409,21 +1506,45 @@
     document.getElementById('cancelOrder').addEventListener('click', function(event) {
         event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
 
-        Swal.fire({
-            title: 'Bạn có muốn hủy đơn không?',
-            // text: "Bạn không thể hoàn tác hành động này!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Có, hủy đơn!',
-            cancelButtonText: 'Không'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Chuyển hướng đến URL để hủy đơn
-                window.location.href = "/ban-hang-tai-quay/delete-hoa-don/${hoaDon.id}";
-            }
-        })
+
+        var listHDCT = []
+        <c:forEach items="${listHDCT}" var="hdct">
+        var HoaDonCT = {};
+        HoaDonCT.id = "${hdct.id}";
+        listHDCT.push(HoaDonCT);
+        </c:forEach>
+
+
+
+        if (listHDCT.some(hoaDonCT => hoaDonCT.id != null)){
+            Swal.fire({
+                title: 'Bạn có muốn hủy đơn không?',
+                // text: "Bạn không thể hoàn tác hành động này!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có, hủy đơn!',
+                cancelButtonText: 'Không'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Chuyển hướng đến URL để hủy đơn
+                    window.location.href = "/ban-hang-tai-quay/delete-hoa-don/${hoaDon.id}";
+                }
+            })
+        }else{
+            // thongBao.textContent =  "Vui lòng kiểm tra lại thanh toán";
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Giỏ hàng không có sản phẩm.',
+                icon: 'error',
+                confirmButtonText: 'Đóng'
+            });
+        }
+
+
+
+
     });
     //
 
@@ -1537,6 +1658,22 @@
         return true; // Cho phép thêm sản phẩm vào giỏ hàng nếu đã chọn hóa đơn
     }
 
+    // function validateThanhToan() {
+    //     // Get the button element
+    //     var checkBtn = document.getElementById("checkBtn");
+    //
+    //     // Get the idhd attribute value
+    //     var idhd = checkBtn.getAttribute("idhd");
+    //     console.log(idhd);
+    //
+    //     // Check if idhd is null or empty
+    //     if (idhd=="") {
+    //         alert("Vui lòng chọn hóa đơn.");
+    //         return false; // Prevent form submission
+    //     }
+    //
+    //     return true; // Allow form submission
+    // }
 
     function validateAddToMaGiamGia(){
         // Kiểm tra xem hóa đơn đã được chọn chưa
@@ -1554,6 +1691,9 @@
 
         return true; // Cho phép thêm sản phẩm vào giỏ hàng nếu đã chọn hóa đơn
     }
+
+
+
 
     const deleteButtons = document.querySelectorAll('.delete-button');
     const checkBtn = document.querySelectorAll('#checkBtn');
@@ -1588,6 +1728,10 @@
             });
         });
     });
+
+
+
+
     checkBtn.forEach(button => {
         button.addEventListener('click', function () {
             console.log("test check btn");
@@ -1605,14 +1749,19 @@
             }
             var tongTien = getRawValue(tongTienInput);
 
+            var tongTienInput = document.getElementById('tongTien');
+            var tienKhachDuaInput = document.getElementById('tienKhachDua');
+            var testTTKhachDua = getRawValue(tienKhachDuaInput);
+
             var moneyGiven = parseInt(document.getElementById("tienKhachDua").value);
             var thongBao = document.getElementById("errTraLai");
             console.log("====================== id hd:",idHD);
             console.log("====================== id kh:",idKH);
             console.log("====================== id khuyen mai:",idKhuyenMai);
             console.log("====================== tong tien:",tongTien);
-            console.log("====================== money given:",moneyGiven);
-            if(!isNaN(moneyGiven)&&!isNaN(tongTien)){
+            console.log("====================== money given:",testTTKhachDua);
+
+            if(!isNaN(moneyGiven)&&!isNaN(tongTien)&&testTTKhachDua>=tongTien){
                 Swal.fire({
                     title: 'Xác nhận thanh toán?',
                     text: "Dữ liệu sẽ được lưu lại!",
@@ -1638,6 +1787,15 @@
                         button.closest('tr').remove();
                         thongBao.textContent =  "";
                     }
+                });
+            }
+            else if (testTTKhachDua<tongTien){
+                // thongBao.textContent =  "Vui lòng kiểm tra lại thanh toán";
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: 'Vui lòng kiểm tra lại tiền khách đưa khi thanh toán.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
                 });
             }
             else{
