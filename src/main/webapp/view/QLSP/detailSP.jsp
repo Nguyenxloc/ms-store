@@ -128,9 +128,38 @@
             opacity: 0;
             cursor: pointer;
         }
-
     </style>
 
+    <%--    tooltip style--%>
+    <style>
+        #tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        #tooltip #tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the tooltip element */
+            left: 50%;
+            margin-left: -60px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #tooltip:hover #tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -422,45 +451,44 @@
                                     <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoSP"></span></h5>
                                     <h5 class="">Trạng thái:&nbsp&nbsp<span id="trangThaiSP"></span></h5>
 
-                                            <div class="d-flex">
-                                                <h5 class="">Chất liệu:&nbsp&nbsp</h5>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                            id="lblChatLieuModalEdit" style="width: 150px;"
-                                                            data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                        Chọn chất liệu
-                                                    </button>
-                                                    <ul class="dropdown-menu" id="cboChatLieuModalEdit"
-                                                        aria-labelledby="dropdownMenuButton4">
-                                                    </ul>
-                                                    <p style="color: red;" id="cboChatLieuModalEditErr"></p>
-                                                </div>
-                                                <div class="icon-container">
-                                                    <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                       data-bs-target="#ModalHotAddCL" style="font-size: 25px"></i>
-                                                </div>
-                                            </div>
-
-                                            <div class="d-flex">
-                                                <h5 class="">Kiểu tay:&nbsp&nbsp</h5>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                            id="lblKieuTayModalEdit" style="width: 150px;"
-                                                            data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                        Chọn kiểu tay
-                                                    </button>
-                                                    <ul class="dropdown-menu" id="cboKieuTayModalEdit"
-                                                        aria-labelledby="dropdownMenuButton5">
-                                                    </ul>
-                                                    <p style="color: red;" id="cboKieuTayModalEditErr"></p>
-                                                </div>
-                                                <div class="icon-container">
-                                                    <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                       data-bs-target="#ModalHotAddKTA" style="font-size: 25px"></i>
-                                                </div>
-                                            </div>
+                                    <div class="d-flex">
+                                        <h5 class="">Chất liệu:&nbsp&nbsp</h5>
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    id="lblChatLieuModalEdit" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Chọn chất liệu
+                                            </button>
+                                            <ul class="dropdown-menu" id="cboChatLieuModalEdit"
+                                                aria-labelledby="dropdownMenuButton4">
+                                            </ul>
+                                            <p style="color: red;" id="cboChatLieuModalEditErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddCL" style="font-size: 25px"></i>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h5 class="">Kiểu tay:&nbsp&nbsp</h5>
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    id="lblKieuTayModalEdit" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Chọn kiểu tay
+                                            </button>
+                                            <ul class="dropdown-menu" id="cboKieuTayModalEdit"
+                                                aria-labelledby="dropdownMenuButton5">
+                                            </ul>
+                                            <p style="color: red;" id="cboKieuTayModalEditErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddKTA" style="font-size: 25px"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <h5 class="mt-3 border-bottom">Danh sách sản phẩm chi tiết: </h5>
@@ -505,10 +533,13 @@
                                 <thead>
                                 <tr>
                                     <th>STT</th>
+                                    <th>Hình ảnh</th>
                                     <th>Màu sắc</th>
                                     <th>Kích thước</th>
                                     <th>Số lượng</th>
+                                    <th>Giá nhập</th>
                                     <th>Giá bán</th>
+                                    <th>Mô tả</th>
                                     <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -811,13 +842,21 @@
                                                value="">
                                         <p style="color: red;" id="giaBanModalEditErr"></p>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-md-3">
+                                    <div class="col col-md-6">
                                         <label for="moTaModalEdit" class="form-label">Ghi chú</label>
                                         <textarea class="form-control custom-textarea" style="width: 550px;"
                                                   id="moTaModalEdit" name="moTa"></textarea>
                                         <p style="color: red;" id="moTaModalEditErr"></p>
+                                    </div>
+                                    <div class="col col-md-3 d-flex justify-content-center align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                   id="trangThaiModalEdit"
+                                                   checked>
+                                            <label class="form-check-label" for="trangThaiLabelModalEdit"
+                                                   id="trangThaiLabelModalEdit">Trạng
+                                                thái</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -846,14 +885,6 @@
                                                class="file-input-overlay"/>
                                     </div>
                                 </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="trangThaiModalEdit"
-                                           checked>
-                                    <label class="form-check-label" for="trangThaiLabelModalEdit"
-                                           id="trangThaiLabelModalEdit">Trạng
-                                        thái</label>
-                                </div>
                                 <button id="saveEditBtn" class="btn btn-primary">Lưu</button>
                             </form>
                         </div>
@@ -876,81 +907,93 @@
                     </div>
                     <div class="modal-body" style="overflow-y: auto; height: 80vh;">
                         <div class="mb-3">
-                            <form id="uploadFormEditAll" method="post" enctype="multipart/form-data"
-                                  action="/hinh-anh/upload">
-                                <div class="row">
-                                    <div class="d-flex" style="gap: 500px;">
-                                        <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
-                                                id="tenSPModalEditAll"></span>
-                                        </h5>
-                                        <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEditAll"></span>
-                                        </h5>
+                            <div class="">
+                                <form id="uploadFormEditAll" method="post" enctype="multipart/form-data"
+                                      action="/hinh-anh/upload">
+                                    <div class="row">
+                                        <div class="d-flex" style="gap: 500px;">
+                                            <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                                    id="tenSPModalEditAll"></span>
+                                            </h5>
+                                            <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span
+                                                    id="ngayTaoModalEditAll"></span>
+                                            </h5>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-md-4">
-                                        <label for="soLuongModalEdit" class="form-label">Số lượng</label>
-                                        <input type="number" name="file" class="form-control" id="soLuongModalEditAll"
-                                               value="">
-                                        <p style="color: red;" id="soLuongModalEditErrAll"></p>
+                                    <div class="row">
+                                        <div class="col col-md-4 border" id="soLuongContainer">
+                                            <label id="lblSoLuongModalEditAll" for="soLuongModalEdit"
+                                                   class="form-label">Số lượng</label>
+                                            <input type="number" name="file" class="form-control"
+                                                   id="soLuongModalEditAll"
+                                                   value="">
+                                            <p style="color: red;" id="soLuongModalEditErrAll"></p>
+                                        </div>
+                                        <div class="col col-md-4 border" id="giaNhapContainer">
+                                            <label id="lblGiaNhapModalEditAll" for="giaNhapModalEdit"
+                                                   class="form-label">Giá nhập</label>
+                                            <input type="number" name="file" class="form-control"
+                                                   id="giaNhapModalEditAll"
+                                                   value="">
+                                            <p style="color: red;" id="giaNhapModalEditErrAll"></p>
+                                        </div>
+                                        <div class="col col-md-4 border" id="giaBanContainer">
+                                            <label id="lblGiaBanModalEditAll" for="giaBanModalEdit" class="form-label">Giá
+                                                bán</label>
+                                            <input type="number" name="file" class="form-control"
+                                                   id="giaBanModalEditAll"
+                                                   value="">
+                                            <p style="color: red;" id="giaBanModalEditErrAll"></p>
+                                        </div>
+                                        <div class="col col-md-6 border" id="moTaContainer">
+                                            <label for="moTaModalEdit" class="form-label">Mô tả</label>
+                                            <textarea class="form-control custom-textarea" style="width: 550px;"
+                                                      id="moTaModalEditAll" name="moTa"></textarea>
+                                            <p style="color: red;" id="moTaModalEditErrAll"></p>
+                                        </div>
+                                        <div class="col col-md-3 " id="trangThaiContainer">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                       id="trangThaiModalEditAll"
+                                                       checked>
+                                                <label class="form-check-label" for="trangThaiLabelModalEdit"
+                                                       id="trangThaiLabelModalEditAll">Trạng
+                                                    thái</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col col-md-4">
-                                        <label for="giaNhapModalEdit" class="form-label">Giá nhập</label>
-                                        <input type="number" name="file" class="form-control" id="giaNhapModalEditAll"
-                                               value="">
-                                        <p style="color: red;" id="giaNhapModalEditErrAll"></p>
+                                    <div class="row">
+                                        <div class="col col-md-3 border hover-effect click-effect image-container"
+                                             id="hinhAnh1Container">
+                                            <img width="200" height="200"
+                                                 src="/image-icon/pendingIMG.png"
+                                                 alt="" class="fit-img" id="hinhAnh1DisplayModalEditAll">
+                                            <p class="text-center">Hình ảnh 1</p>
+                                            <input type="file" name="hinhAnh1File" id="fileHinhAnh1ModalEditAll"
+                                                   class="file-input-overlay"/>
+                                        </div>
+                                        <div class="col col-md-3 hover-effect click-effect image-container"
+                                             id="hinhAnh2Container">
+                                            <img width="200" height="200"
+                                                 src="/image-icon/pendingIMG.png"
+                                                 alt="" class="fit-img" id="hinhAnh2DisplayModalEditAll">
+                                            <p class="text-center">Hình ảnh 2</p>
+                                            <input type="file" name="hinhAnh2File" id="fileHinhAnh2ModalEditAll"
+                                                   class="file-input-overlay"/>
+                                        </div>
+                                        <div class="col col-md-3 hover-effect click-effect image-container"
+                                             id="hinhAnh3Container">
+                                            <img width="200" height="200"
+                                                 src="/image-icon/pendingIMG.png"
+                                                 alt="" class="fit-img" id="hinhAnh3DisplayModalEditAll">
+                                            <p class="text-center">Hình ảnh 3</p>
+                                            <input type="file" name="hinhAnh3File" id="fileHinhAnh3ModalEditAll"
+                                                   class="file-input-overlay"/>
+                                        </div>
                                     </div>
-                                    <div class="col col-md-4">
-                                        <label for="giaBanModalEdit" class="form-label">Giá bán</label>
-                                        <input type="number" name="file" class="form-control" id="giaBanModalEditAll"
-                                               value="">
-                                        <p style="color: red;" id="giaBanModalEditErrAll"></p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-md-3">
-                                        <label for="moTaModalEdit" class="form-label">Ghi chú</label>
-                                        <textarea class="form-control custom-textarea" style="width: 550px;"
-                                                  id="moTaModalEditAll" name="moTa"></textarea>
-                                        <p style="color: red;" id="moTaModalEditErrAll"></p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
-                                        <img width="200" height="200"
-                                             src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh1DisplayModalEditAll">
-                                        <p class="text-center">Hình ảnh 1</p>
-                                        <input type="file" name="hinhAnh1File" id="fileHinhAnh1ModalEditAll"
-                                               class="file-input-overlay"/>
-                                    </div>
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
-                                        <img width="200" height="200"
-                                             src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh2DisplayModalEditAll">
-                                        <p class="text-center">Hình ảnh 2</p>
-                                        <input type="file" name="hinhAnh2File" id="fileHinhAnh2ModalEditAll"
-                                               class="file-input-overlay"/>
-                                    </div>
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
-                                        <img width="200" height="200"
-                                             src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh3DisplayModalEditAll">
-                                        <p class="text-center">Hình ảnh 3</p>
-                                        <input type="file" name="hinhAnh3File" id="fileHinhAnh3ModalEditAll"
-                                               class="file-input-overlay"/>
-                                    </div>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="trangThaiModalEditAll"
-                                           checked>
-                                    <label class="form-check-label" for="trangThaiLabelModalEdit"
-                                           id="trangThaiLabelModalEditAll">Trạng
-                                        thái</label>
-                                </div>
-                                <button id="saveEditAllBtn" class="btn btn-primary">Lưu</button>
-                            </form>
+                                </form>
+                            </div>
+                            <button id="saveEditAllBtn" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -1109,6 +1152,7 @@
 
 <script>
     let idSPCTLocal = "";
+    let idMauSacHolder = "";
     let currentPage = 1;
     let totalPage = 0;
     const queryString = window.location.pathname;
@@ -1132,6 +1176,12 @@
     let ghiChuModalEdit = document.getElementById("moTaModalEdit");
     let trangThaiModalEditRaw = document.getElementById("trangThaiModalEdit");
     const trangThaiLabelModalEdit = document.getElementById("trangThaiLabelModalEdit");
+
+    let soLuongModalEditAll = document.getElementById("soLuongModalEditAll");
+    let giaNhapModalEditAll = document.getElementById("giaNhapModalEditAll");
+    let giaBanModalEditAll = document.getElementById("giaBanModalEditAll");
+    let moTaModalEditAll = document.getElementById("moTaModalEditAll");
+    let trangThaiModalEditAll = document.getElementById("trangThaiModalEditAll");
 
     const lblMauSacModalEdit = document.getElementById("lblMauSacModalEdit");
     const lblKichThuocModalEdit = document.getElementById("lblKichThuocModalEdit");
@@ -1169,6 +1219,10 @@
     const fileHinhAnh1ModalEdit = document.getElementById('fileHinhAnh1ModalEdit');
     const fileHinhAnh2ModalEdit = document.getElementById('fileHinhAnh2ModalEdit');
     const fileHinhAnh3ModalEdit = document.getElementById('fileHinhAnh3ModalEdit');
+
+    const fileHinhAnh1ModalEditAll = document.getElementById('fileHinhAnh1ModalEditAll');
+    const fileHinhAnh2ModalEditAll = document.getElementById('fileHinhAnh2ModalEditAll');
+    const fileHinhAnh3ModalEditAll = document.getElementById('fileHinhAnh3ModalEditAll');
     let fileHinhAnh1ModalEditObject = null;
 
     const hinhAnh1DisplayModalAdd = document.getElementById('hinhAnh1DisplayModalAdd');
@@ -1178,6 +1232,11 @@
     const hinhAnh1DisplayModalEdit = document.getElementById('hinhAnh1DisplayModalEdit');
     const hinhAnh2DisplayModalEdit = document.getElementById('hinhAnh2DisplayModalEdit');
     const hinhAnh3DisplayModalEdit = document.getElementById('hinhAnh3DisplayModalEdit');
+
+    const hinhAnh1DisplayModalEditAll = document.getElementById('hinhAnh1DisplayModalEditAll');
+    const hinhAnh2DisplayModalEditAll = document.getElementById('hinhAnh2DisplayModalEditAll');
+    const hinhAnh3DisplayModalEditAll = document.getElementById('hinhAnh3DisplayModalEditAll');
+
 </script>
 <script>
     // filefunc
@@ -1246,6 +1305,41 @@
             console.log("file cmp: ", fileHinhAnh3ModalEdit.files[0]);
             const imgURL = URL.createObjectURL(fileHinhAnh3ModalEdit.files[0]);
             hinhAnh3DisplayModalEdit.src = imgURL;
+        }
+    });
+    //form edit all
+    fileHinhAnh1ModalEditAll.addEventListener('change', function (e) {
+        const files = e.target.files;
+        console.log("test change data: ", files);
+        if (files.length > 0) {
+            const file = files[0];
+            console.log("File selected: ", file);
+            console.log("file cmp: ", fileHinhAnh1ModalEditAll.files[0]);
+            fileHinhAnh1ModalEditAllObject = fileHinhAnh1ModalEditAll.files[0];
+            const imgURL = URL.createObjectURL(fileHinhAnh1ModalEditAll.files[0]);
+            hinhAnh1DisplayModalEditAll.src = imgURL;
+        }
+    });
+    fileHinhAnh2ModalEditAll.addEventListener('change', function (e) {
+        const files = e.target.files;
+        console.log("test change data: ", files);
+        if (files.length > 0) {
+            const file = files[0];
+            console.log("File selected: ", file);
+            console.log("file cmp: ", fileHinhAnh2ModalEditAll.files[0]);
+            const imgURL = URL.createObjectURL(fileHinhAnh2ModalEditAll.files[0]);
+            hinhAnh2DisplayModalEditAll.src = imgURL;
+        }
+    });
+    fileHinhAnh3ModalEditAll.addEventListener('change', function (e) {
+        const files = e.target.files;
+        console.log("test change data: ", files);
+        if (files.length > 0) {
+            const file = files[0];
+            console.log("File selected: ", file);
+            console.log("file cmp: ", fileHinhAnh3ModalEditAll.files[0]);
+            const imgURL = URL.createObjectURL(fileHinhAnh3ModalEditAll.files[0]);
+            hinhAnh3DisplayModalEditAll.src = imgURL;
         }
     });
 </script>
@@ -1576,6 +1670,9 @@
                     const kieuTay = spct.idKieuTay.ten || 'N/A';
                     const soLuong = spct.soLuong || 'N/A';
                     const giaBan = spct.giaBan || 'N/A';
+                    const giaNhap = spct.giaNhap || 'N/A';
+                    const moTa = spct.moTa || 'N/A';
+                    const hinhAnh = spct.hinhAnh || 'N/A';
                     if (spct.idMauSac.ten != mauSacMemo) {
                         let labelms = spct.idMauSac.ten;
                         console.log("Mau sac memo: ", spct.idMauSac.ten);
@@ -1585,25 +1682,35 @@
                         idKieuTayModalEdit = spct.idKieuTay.id;
                         html +=
                             '<tr>' +
-                            '<td>'+
-                            '<h5 class="">' + spct.idMauSac.ten + '<h5>'+
-                            '</td>'+
-                            '<td>' +'</td>' +
-                            '<td>' +'</td>' +
-                            '<td><input style="width: 20px;height: 20px" type="checkbox" id="cbSoLuong_'+spct.id+'"></td>' +
-                            '<td><input style="width: 20px;height: 20px" type="checkbox" id="cbGiaBan_'+spct.id+'"></td>' +
-                            '<td><input style="width: 20px;height: 20px" type="checkbox" id="cbTrangThai_'+spct.id+'"></td>' +
-                            '<td>'+
-                            '<button id="editAllSPCTBtn_' + spct.idMauSac + '" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#ModalEditAll">Sửa toàn bộ</button>' +
-                            '</td>'+
-                             '</tr>';
+                            '<td>' +
+                            '<h5 class="">' + spct.idMauSac.ten + '<h5>' +
+                            '</td>' +
+                            '<td><input class="mt-2" style="width: 20px;height: 20px" type="checkbox" id="cbHinhAnh_' + spct.idMauSac.id + '"></td>' +
+                            '<td>' + '</td>' +
+                            '<td>' + '</td>' +
+                            '<td><input class="mt-2" style="width: 20px;height: 20px" type="checkbox" id="cbSoLuong_' + spct.idMauSac.id + '"></td>' +
+                            '<td><input class="mt-2" style="width: 20px;height: 20px" type="checkbox" id="cbGiaNhap_' + spct.idMauSac.id + '"></td>' +
+                            '<td><input class="mt-2" style="width: 20px;height: 20px" type="checkbox" id="cbGiaBan_' + spct.idMauSac.id + '"></td>' +
+                            '<td><input class="mt-2" style="width: 20px;height: 20px" type="checkbox" id="cbMoTa_' + spct.idMauSac.id + '"></td>' +
+                            '<td><input class="mt-2" style="width: 20px;height: 20px" type="checkbox" id="cbTrangThai_' + spct.idMauSac.id + '"></td>' +
+                            '<td>' +
+                            '<button id="editAllSPCTBtn_' + spct.idMauSac.id + '" class="btn btn-primary me-2">Sửa theo màu</button>' +
+                            '</td>' +
+                            '</tr>';
                     }
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
+                        '<td><img src="' + "/image/" + hinhAnh + '" alt="Image" style="width: 50px ; height: 60px" class="img-fluid rounded border" /></td>' +
                         '<td>' + mauSac + '</td>' +
                         '<td>' + kichThuoc + '</td>' +
                         '<td>' + soLuong + '</td>' +
+                        '<td>' + giaNhap + '</td>' +
                         '<td>' + giaBan + '</td>' +
+                        '<td>' +
+                        '<div  id="tooltip">Xem' +
+                        '<span id="tooltiptext">' + moTa + '</span>' +
+                        '</div>' +
+                        '</td>' +
                         '<td>' + trangThai + '</td>' +
                         '<td>' +
                         '<div class="d-inline">' +
@@ -1781,13 +1888,72 @@
                 hinhAnh3DisplayModalEdit.src = resp.hinhAnh3 ? "/image/" + resp.hinhAnh3 : "/image-icon/pendingIMG.png";
             });
     });
-    //continue
+
     $(document).on('click', "button[id^='editAllSPCTBtn_']", e => {
         e.preventDefault();
-        console.log("test");
-        document.getElementById("giaNhapModalEditAll").style.display = "none";
-    });
+        idMauSacHolder = "";
+        const idMauSac = e.currentTarget.id.replace("editAllSPCTBtn_", "");
+        idMauSacHolder = idMauSac;
+        console.log("id mau sac:", idMauSac);
+        console.log("test id mau sac holder: ", idMauSacHolder);
+        console.log("checkbox so luong btn: ", document.getElementById("cbSoLuong_" + idMauSac).checked);
+        console.log("checkbox gia nhap btn: ", document.getElementById("cbSoLuong_" + idMauSac).checked);
+        console.log("checkbox gia ban  btn: ", document.getElementById("cbSoLuong_" + idMauSac).checked);
+        console.log("checkbox mo ta btn: ", document.getElementById("cbSoLuong_" + idMauSac).checked);
+        console.log("checkbox trang thai btn: ", document.getElementById("cbTrangThai_" + idMauSac).checked);
+        let countCheckBox = 0;
 
+        if (!document.getElementById("cbHinhAnh_" + idMauSac).checked) {
+            document.getElementById("hinhAnh1Container").style.display = "none";
+            document.getElementById("hinhAnh2Container").style.display = "none";
+            document.getElementById("hinhAnh3Container").style.display = "none";
+        } else {
+            countCheckBox++
+            document.getElementById("hinhAnh1Container").style.display = "block";
+            document.getElementById("hinhAnh2Container").style.display = "block";
+            document.getElementById("hinhAnh3Container").style.display = "block";
+        }
+        if (!document.getElementById("cbSoLuong_" + idMauSac).checked) {
+            document.getElementById("soLuongContainer").style.display = "none";
+        } else {
+            countCheckBox++
+            document.getElementById("soLuongContainer").style.display = "block";
+        }
+        if (!document.getElementById("cbGiaNhap_" + idMauSac).checked) {
+            document.getElementById("giaNhapContainer").style.display = "none";
+        } else {
+            countCheckBox++
+            document.getElementById("giaNhapContainer").style.display = "block";
+        }
+        if (!document.getElementById("cbGiaBan_" + idMauSac).checked) {
+            document.getElementById("giaBanContainer").style.display = "none";
+        } else {
+            countCheckBox++
+            document.getElementById("giaBanContainer").style.display = "block";
+        }
+        if (!document.getElementById("cbMoTa_" + idMauSac).checked) {
+            document.getElementById("moTaContainer").style.display = "none";
+        } else {
+            countCheckBox++
+            document.getElementById("moTaContainer").style.display = "block";
+        }
+        if (!document.getElementById("cbTrangThai_" + idMauSac).checked) {
+            console.log("test is true: ");
+            document.getElementById("trangThaiContainer").style.display = "none";
+        } else {
+            countCheckBox++
+            document.getElementById("trangThaiContainer").style.display = "block";
+        }
+        if (countCheckBox > 0) {
+            $('#ModalEditAll').modal('show');
+        } else {
+            Swal.fire({
+                icon: 'error',
+                text: 'Vui lòng chọn trước khi sửa !',
+            })
+            console.log("please fill check box");
+        }
+    });
 
     $(document).on('click', "button[id^='detailSPBtn_']", e => {
         e.preventDefault();
@@ -1819,6 +1985,7 @@
     const addBtn = document.querySelectorAll('#btnAdd');
     const editSPCTBtn = document.querySelectorAll('#editSPCTBtn');
     const saveEditBtn = document.querySelectorAll('#saveEditBtn');
+    const saveEditAllBtn = document.querySelector('#saveEditAllBtn');
     const saveAddBtn = document.querySelectorAll('#saveAddBtn');
     addBtn.forEach(button => {
         button.addEventListener('click', function (e) {
@@ -2414,6 +2581,86 @@
             }
         });
     });
+
+    //continue
+    saveEditAllBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("test check btn");
+        console.log("id spct local: ", idSPCTLocal);
+        console.log("=============================================t=====est display switch: ",document.getElementById("trangThaiContainer").style.display);
+        let trangThaiValue = "";
+        if (document.getElementById("trangThaiContainer").style.display === "none") {
+            console.log("=============================================test display switch: ");
+            trangThaiValue = "";
+        }
+        else{
+            if (trangThaiModalEditAll.checked) {
+                trangThaiValue = 1;
+            } else if (!trangThaiModalEditAll.checked) {
+                trangThaiValue = 0;
+            }
+        }
+        if (1 > 0) {
+            Swal.fire({
+                title: 'Xác nhận?',
+                text: "Dữ liệu sẽ được lưu lại!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ok!',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = {
+                        moTa: moTaModalEditAll ? moTaModalEditAll.value : "",
+                        soLuong: soLuongModalEditAll ? soLuongModalEditAll.value : "",
+                        giaNhap: giaNhapModalEditAll ? giaNhapModalEditAll.value : "",
+                        giaBan: giaBanModalEditAll ? giaBanModalEditAll.value : "",
+                        trangThai: trangThaiValue,
+                        hinhAnh1: !(fileHinhAnh1ModalEditAll.value == "") ? getFileName(fileHinhAnh1ModalEditAll.value) : getFileName(fileHinhAnh1ModalEditAll.src),
+                        hinhAnh2: !(fileHinhAnh2ModalEditAll.value == "") ? getFileName(fileHinhAnh2ModalEditAll.value) : getFileName(fileHinhAnh1ModalEditAll.src),
+                        hinhAnh3: !(fileHinhAnh3ModalEditAll.value == "") ? getFileName(fileHinhAnh3ModalEditAll.value) : getFileName(fileHinhAnh3ModalEditAll.src),
+                    };
+                    console.log("data json: ", data);
+                    console.log("id mau sac holder:", idMauSacHolder);
+                    console.log("data params file: ", formData);
+                    fetch(`/chi-tiet-sp/update-dynamic` + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSacHolder + "&moTa=" + data.moTa + "&soLuong=" + data.soLuong + "&giaNhap=" + data.giaNhap + "&giaBan=" + data.giaBan + "&trangThai=" + data.trangThai + "&hinhAnh1=" + data.hinhAnh1 + "&hinhAnh2=" + data.hinhAnh2 + "&hinhAnh3=" + data.hinhAnh3, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(() => {
+                        Swal.fire(
+                            'Đã thanh toán!',
+                            'Dữ liệu đã được ghi nhận.',
+                            'success'
+                        ).then(() => {
+                            loadDSSPCT(currentPage);
+                        });
+                    });
+                    if(fileHinhAnh1ModalEditAll.value != ""|| fileHinhAnh2ModalEditAll != "" || fileHinhAnh3ModalEditAll.value !=""){
+                        var formData = new FormData($('#uploadFormEditAll')[0]);
+                        $.ajax({
+                            url: '/uploads',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                console.log("save image success ");
+                            },
+                            error: function (xhr, status, error) {
+                                console.log("save image =error");
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+        }
+    });
+
 </script>
 <script>
     $(document).ready(function () {

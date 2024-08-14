@@ -196,7 +196,7 @@ public class TrangChuController {
             @RequestParam("idCTSP") String idCTSP,
             @RequestParam("mauSac") String tenMauSac,
             @RequestParam("kichThuoc") String tenKichThuoc,
-            @RequestParam("soLuong") Integer soLuong,
+            @RequestParam("soLuong") String soLuongText,
             RedirectAttributes redirectAttributes
     ) {
 
@@ -224,20 +224,38 @@ public class TrangChuController {
         } else {
             //Mã tự động hóa đơn
             int count = hoaDonRepo.countHD();
-            //Kiểm tra số lượng khách thêm giỏ hàng có nhiều hơn số lượng tồn của SPCT không
-            if (soLuong > chiTietSanPham.getSoLuong()) {
-                redirectAttributes.addFlashAttribute("error", "Số lượng sản phẩm còn lại trong kho không đủ!");
+
+            // Kiểm tra số lượng không được để trống, không được nhập ký tự khác ngoài số, phải là số nguyên dương
+            if (soLuongText == null || soLuongText.trim().isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Số lượng không được để trống!");
                 return "redirect:/cua-hang/detail-san-pham/" + idCTSP;
             }
 
-            if (soLuong < 1) {
-                redirectAttributes.addFlashAttribute("error", "Số lượng sản phẩm không được nhỏ hơn 1!");
-                return "redirect:/cua-hang/detail-san-pham/" + idCTSP;
-            }
+            int soLuong;
+            try {
+                soLuong = Integer.parseInt(soLuongText);
 
-            //Check không được thêm GH quá 10 sản phẩm
-            if (soLuong > 10) {
-                redirectAttributes.addFlashAttribute("error", "Sản phẩm này chỉ được thêm tối đa là 10!");
+                // Kiểm tra số lượng không được nhỏ hơn 1
+                if (soLuong < 1) {
+                    redirectAttributes.addFlashAttribute("error", "Số lượng sản phẩm không được nhỏ hơn 1!");
+                    return "redirect:/cua-hang/detail-san-pham/" + idCTSP;
+                }
+
+                // Kiểm tra số lượng không được lớn hơn số lượng tồn kho
+                if (soLuong > chiTietSanPham.getSoLuong()) {
+                    redirectAttributes.addFlashAttribute("error", "Số lượng sản phẩm còn lại trong kho không đủ!");
+                    return "redirect:/cua-hang/detail-san-pham/" + idCTSP;
+                }
+
+                // Kiểm tra không được thêm quá 10 sản phẩm
+                if (soLuong > 10) {
+                    redirectAttributes.addFlashAttribute("error", "Sản phẩm này chỉ được thêm tối đa là 10!");
+                    return "redirect:/cua-hang/detail-san-pham/" + idCTSP;
+                }
+
+            } catch (NumberFormatException e) {
+                // Nếu nhập không phải là số
+                redirectAttributes.addFlashAttribute("error", "Số lượng phải là một số nguyên dương hợp lệ!");
                 return "redirect:/cua-hang/detail-san-pham/" + idCTSP;
             }
 
@@ -417,7 +435,7 @@ public class TrangChuController {
         listSanPham = sanPhamRepo.findAll();
         DiaChi diaChi = diaChiRepo.getDiaChiByIdKhachHangAndTrangThai(UserInfor.idKhachHang, DiaChiRepository.MAC_DINH);
         listDiaChi = diaChiRepo.getAllDiaChi(UserInfor.idKhachHang);
-        listKhuyenMai = khuyenMaiRepo.findAll();
+        listKhuyenMai = khuyenMaiRepo.findByTrangThai(1);
         HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
         model.addAttribute("listKhachHang", khachHangRepo.findAll());
         boolean check = false;
@@ -682,7 +700,8 @@ public class TrangChuController {
 
             redirectAttributes.addFlashAttribute("successMessage", "Đặt hàng thành công");
             createLichSuHoaDon(hoaDon);
-            return "redirect:/cua-hang/gio-hang";
+//            return "redirect:/cua-hang/gio-hang";
+            return "redirect:/cua-hang/don-mua/" + hoaDon.getId();
         } else {
             System.out.println("===========================================" + tongTien);
 
@@ -715,19 +734,19 @@ public class TrangChuController {
                     khuyenMaiRepo.save(khuyenMai);
                 }
             }
-            createLichSuHoaDon(hoaDon);
+//            createLichSuHoaDon(hoaDon);
             return "redirect:/cua-hang/pay/" + tongTien;
         }
     }
 
     @PostMapping("/khuyen-mai/{id}")
-    public String findKhuyenMai(@PathVariable String id) {
+    public String findKhuyenMai(@PathVariable String id, RedirectAttributes redirectAttributes) {
         HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
         KhuyenMai khuyenMai = khuyenMaiRepo.findByIdKM(id);
         khuyenMai.setId(id);
         hoaDon.setIdKhuyenMai(khuyenMai);
         hoaDonRepo.save(hoaDon);
-
+        redirectAttributes.addFlashAttribute("successMessage", "Thêm phiếu giảm giá thành công");
         return "redirect:/cua-hang/gio-hang";
     }
 
@@ -737,7 +756,7 @@ public class TrangChuController {
         HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
         hoaDon.setIdKhuyenMai(null);
         hoaDonRepo.save(hoaDon);
-
+        redirectAttributes.addFlashAttribute("successMessage", "Xóa phiếu giảm giá thành công");
         return "redirect:/cua-hang/gio-hang";
     }
 
@@ -987,7 +1006,8 @@ public class TrangChuController {
             @RequestParam(value = "vnp_BankCode") String bankCode,
             @RequestParam(value = "vnp_ResponseCode") String responseCode,
             @RequestParam(value = "vnp_OrderInfo") String orderInfo,
-            @RequestParam(value = "vnp_CardType") String cardType, Model model
+            @RequestParam(value = "vnp_CardType") String cardType, Model model,
+            RedirectAttributes redirectAttributes
     ) {
 
         int tt = Integer.valueOf(amount) / 100;
@@ -997,10 +1017,10 @@ public class TrangChuController {
         System.out.println("----------------------------------" + orderInfo);
         System.out.println("----------------------------------" + cardType);
 
-        if (responseCode.equals("00")) {
-            model.addAttribute("message", "Thanh toán thành công");
+        if (responseCode.equalsIgnoreCase("00")) {
+            redirectAttributes.addFlashAttribute("message", "Thanh toán thành công");
         } else {
-            model.addAttribute("message", "Thanh toán thất bại");
+            redirectAttributes.addFlashAttribute("message", "Thanh toán thất bại");
         }
 
         LocalDateTime now = LocalDateTime.now();
@@ -1016,8 +1036,13 @@ public class TrangChuController {
         model.addAttribute("ngayTao", now);
         model.addAttribute("maHD", orderInfo);
 
+        System.out.println("===========================" + responseCode);
+
+
         return "redirect:/cua-hang/don-mua/" + hoaDon.getId();
     }
 
 }
+
+
 

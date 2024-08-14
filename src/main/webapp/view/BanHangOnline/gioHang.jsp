@@ -246,7 +246,8 @@
                         <c:otherwise>
                             <!-- Hiển thị nút đăng xuất khi đã đăng nhập -->
                             <li><a class="dropdown-item" href="/cua-hang/don-mua">Đơn mua</a></li>
-                            <li><a class="dropdown-item" href="/cua-hang/quan-ly-tai-khoan">Quản lý tài khoản</a></li>
+                            <li><a class="dropdown-item" href="/cua-hang/quan-ly-tai-khoan">Tài khoản của tôi</a>
+                            </li>
                             <li><a class="dropdown-item" href="/cua-hang/logout">Đăng xuất</a></li>
                         </c:otherwise>
                     </c:choose>
@@ -283,7 +284,8 @@
             </div>
             <div class="modal-body">
                 <div class="login-form-wrapper">
-                    <form id="login-form" class="form" action="/cua-hang/login" method="post" modelAttribute="khachHangDTO">
+                    <form id="login-form" class="form" action="/cua-hang/login" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="taiKhoan" class="text-info">Username:</label><br>
                             <input placeholder="Username" type="text" id="taiKhoan" name="taiKhoan"
@@ -297,8 +299,6 @@
                             <small id="matKhauError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="remember-me" class="text-info"><span>Remember me</span> <span><input
-                                    id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                             <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Submit">
                         </div>
                         <div id="register-link" class="text-right">
@@ -327,7 +327,8 @@
             </div>
             <div class="modal-body">
                 <div class="register-form-wrapper">
-                    <form id="register-form" class="form" action="/cua-hang/register" method="post" modelAttribute="khachHangDTO">
+                    <form id="register-form" class="form" action="/cua-hang/register" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="registerUsername" class="text-info">Username:</label><br>
                             <input placeholder="Username" type="text" id="registerUsername" name="taiKhoan"
@@ -354,7 +355,8 @@
                         </div>
                         <div class="form-group">
                             <label for="registerPassword" class="text-info">Confirm Password:</label><br>
-                            <input placeholder="Confirm password" type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau"
+                            <input placeholder="Confirm password" type="password" id="nhapLaiMatKhau"
+                                   name="nhapLaiMatKhau"
                                    class="form-control" value="">
                             <small id="nhapLaiMatKhauError" class="text-danger"></small>
                         </div>
@@ -456,7 +458,7 @@
                                         </a>
                                     </div>
                                     <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                           value="${i.soLuong}">
+                                           value="${i.soLuong}" readonly>
                                     <div class="input-group-btn">
                                         <a href="/cua-hang/tang-so-luong/${i.idHDCT}">
                                             <button type="button" class="btn btn-sm btn-primary btn-plus">
@@ -662,7 +664,7 @@
                         <div class="col-md-4 form-group">
                             <label><b>Tỉnh/Thành phố</b></label>
                             <select class="custom-select" id="tinh" name="tinh" title="Chọn Tỉnh Thành" disabled
-                                    style="background-color: #f1f1f1; border: 1px solid #e4e4e4;" >
+                                    style="background-color: #f1f1f1; border: 1px solid #e4e4e4;">
                                 <option value="${diaChi.idTinhThanh}">${diaChi.idTinhThanh}</option>
                             </select>
                             <span id="tinhError" class="text-danger"></span>
@@ -783,7 +785,7 @@
                         </div>
 
                         <div class="card-footer border-secondary bg-transparent">
-                            <button type="submit" style="font-size: 26px"
+                            <button type="submit" style="font-size: 26px" id="datHang"
                                     class="btn btn-block btn-primary my-3 py-3">
                                 <b>Đặt hàng ngay</b></button>
                         </div>
@@ -808,21 +810,21 @@
                                     <div class="voucher-discount">Giảm <fmt:formatNumber
                                             value="${i.soTienGiam}" type="currency"
                                             currencySymbol="₫"/></div>
-                                    <div class="voucher-expiry">Hết hạn:  ${i.ngayKetThuc}</div>
+                                    <div class="voucher-expiry">Hết hạn: ${i.ngayKetThuc}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6 voucher-code">Mã: ${i.ma}</div>
                                     <c:if test="${i.apDung != null}">
                                         <div class="col-6 voucher-expiry"
                                              style="position: relative; text-align: end; top: 14px;">
-                                            <strong>Áp dụng:  <fmt:formatNumber value="${i.apDung}" type="currency"
-                                                                                  currencySymbol="₫"/></strong></div>
+                                            <strong>Áp dụng: <fmt:formatNumber value="${i.apDung}" type="currency"
+                                                                                 currencySymbol="₫"/></strong></div>
                                     </c:if>
                                     <c:if test="${i.apDung == null}">
                                         <div class="col-6 voucher-expiry"
                                              style="position: relative; text-align: end; top: 14px;">
-                                            <strong>Áp dụng:  <fmt:formatNumber value="0" type="currency"
-                                                                                  currencySymbol="₫"/></strong></div>
+                                            <strong>Áp dụng: <fmt:formatNumber value="0" type="currency"
+                                                                                 currencySymbol="₫"/></strong></div>
                                     </c:if>
                                 </div>
                                 <div class="voucher-button">
@@ -1069,7 +1071,7 @@
                 $('#registerUsernameError').text('Vui lòng nhập username.');
                 $('#registerUsername').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.taiKhoan == username)){
+            } else if (listKhachHang.some(kh => kh.taiKhoan == username)) {
                 $('#registerUsernameError').text('Tên tài khoản đã tồn tại');
                 $('#registerUsername').addClass('border-danger');
                 hasError = true;
@@ -1082,7 +1084,7 @@
                 $('#registerEmailError').text('Email không hợp lệ.');
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.email == email)){
+            } else if (listKhachHang.some(kh => kh.email == email)) {
                 $('#registerEmailError').text('Email đã tồn tại.');
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
@@ -1095,7 +1097,7 @@
                 $('#registerPhoneError').text('Số điện thoại không hợp lệ');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.sdt == phone)){
+            } else if (listKhachHang.some(kh => kh.sdt == phone)) {
                 $('#registerPhoneError').text('Số điện thoại đã tồn tại');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
@@ -1303,6 +1305,7 @@
     //Thêm địa chỉ
     $(document).ready(function () {
         var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+        var phoneNumbers = [];
 
         // Function to get JSON with token
         function getJSONWithToken(url, callback) {
@@ -1318,9 +1321,19 @@
             });
         }
 
-        //Lấy tỉnh thành
+        // Function to check if the phone number is valid (Vietnam format)
+        function isValidPhoneNumber(phone) {
+            var regex = /^(03|05|07|08|09)[0-9]{8}$/;
+            return regex.test(phone);
+        }
+
+        // Function to check if the phone number is unique
+        function isPhoneNumberUnique(phone) {
+            return phoneNumbers.indexOf(phone) === -1;
+        }
+
+        // Lấy tỉnh thành
         getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', function (data_tinh) {
-            // Sắp xếp theo ProvinceID tăng dần
             data_tinh.data.sort(function (a, b) {
                 return a.ProvinceID - b.ProvinceID;
             });
@@ -1359,6 +1372,7 @@
             $(".text-danger").text("");
 
             var isValid = true;
+            var phoneNumber = $("#sdtNguoiNhan1").val().trim();
 
             // Kiểm tra Tên người nhận
             if ($("#tenNguoiNhan1").val().trim() === "") {
@@ -1367,9 +1381,17 @@
             }
 
             // Kiểm tra SĐT người nhận
-            if ($("#sdtNguoiNhan1").val().trim() === "") {
+            if (phoneNumber === "") {
                 $("#sdtNguoiNhan1Error").text("Vui lòng nhập số điện thoại");
                 isValid = false;
+            } else if (!isValidPhoneNumber(phoneNumber)) {
+                $("#sdtNguoiNhan1Error").text("Số điện thoại không hợp lệ.");
+                isValid = false;
+            } else if (!isPhoneNumberUnique(phoneNumber)) {
+                $("#sdtNguoiNhan1Error").text("Số điện thoại đã tồn tại.");
+                isValid = false;
+            } else {
+                phoneNumbers.push(phoneNumber);
             }
 
             // Kiểm tra Địa chỉ
@@ -1413,7 +1435,7 @@
                 console.log("id qh: " + idQuanHuyen);
                 console.log("id px: " + idPX);
 
-                //test thêm mới
+                // Thêm dữ liệu ẩn vào form
                 $("<input>").attr({
                     type: "hidden",
                     name: "idTinhThanh",
@@ -1431,7 +1453,6 @@
                     name: "idPX",
                     value: idPX
                 }).appendTo("#themDiaChi");
-                //
 
                 $("<input>").attr({
                     type: "hidden",
@@ -1455,6 +1476,7 @@
             }
         });
     });
+
 
     //Sửa địa chỉ
     $(document).ready(function () {
@@ -1713,20 +1735,20 @@
 
 
 // Function to get JSON with token
-            function getJSONWithToken1(url, callback) {
-                $.ajax({
-                    url: url,
-                    headers: {
-                        'Token': token
-                    },
-                    success: callback,
-                    error: function (xhr, status, error) {
-                        console.error("Request Error: " + error);
-                        console.error("Status: " + status);
-                        console.error("Response: " + xhr.responseText);
-                    }
-                });
-            }
+                function getJSONWithToken1(url, callback) {
+                    $.ajax({
+                        url: url,
+                        headers: {
+                            'Token': token
+                        },
+                        success: callback,
+                        error: function (xhr, status, error) {
+                            console.error("Request Error: " + error);
+                            console.error("Status: " + status);
+                            console.error("Response: " + xhr.responseText);
+                        }
+                    });
+                }
 
             function getJSONWithToken(url, callback) {
                 $.ajax({
@@ -1751,16 +1773,16 @@
 
                 console.log("Tổng tiền: ", tongTien);
 
-                console.log("Tổng sl: ",soLuongGioHang);
+                console.log("Tổng sl: ", soLuongGioHang);
 
-                var khoiLuong = soLuongGioHang*200;
-                console.log("Tổng kl: ",khoiLuong);
+                var khoiLuong = soLuongGioHang * 200;
+                console.log("Tổng kl: ", khoiLuong);
 
-                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id='+service_id+'&insurance_value='+tongTien+'&from_district_id=3440&to_district_id='+idQuanHuyenTest+'&to_ward_code='+idPhuongXaTest+'&height=15&length=15&weight='+khoiLuong+'&width=15', function(data_total) {
+                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
 
                     console.log("API Response: ", data_total.data.total); // Log the entire response
 
-                    console.log("test data : ",data_total.data);
+                    console.log("test data : ", data_total.data);
 
                     function formatVND(number) {
                         return number.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
@@ -1786,7 +1808,6 @@
                 });
             });
         }
-
         // Đóng modal
         $('#addAddressModal').modal('hide');
     }
@@ -1828,6 +1849,56 @@
 
     window.onload = checkDiscountCode;
 </script>
+
+<script>
+    // document.getElementById('diaChiForm').addEventListener('click', function (e) {
+    //     e.preventDefault(); // Ngăn chặn hành vi mặc định của nút Xác nhận
+    //
+    //     Swal.fire({
+    //         title: "Bạn đăt không?",
+    //         text: "Bạn sẽ không thể hoàn tác hành động này!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         cancelButtonText: "Hủy",
+    //         confirmButtonText: "Thêm"
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             Swal.fire({
+    //                 title: "Đã thêm!",
+    //                 text: "Bạn đã thêm chức vụ thành công.",
+    //                 icon: "success"
+    //             }).then(() => {
+    //                 document.getElementById('diaChiForm').submit();
+    //             });
+    //         }
+    //     });
+    // });
+
+    $(document).ready(function () {
+        $('#datHang').click(function (e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của nút Xác nhận
+
+            Swal.fire({
+                title: 'Bạn chắc chắn đặt hàng chứ ?',
+                text: 'Xác nhận đơn hàng ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#datHang').off('diaChiForm').submit();
+                }
+            });
+        });
+    });
+
+</script>
+
 </body>
 
 </html>

@@ -2,12 +2,14 @@ package com.example.java4.controller.QLSP;
 
 import com.example.java4.controller.ATrangChu.SanPhamCard;
 import com.example.java4.entities.ChiTietSanPham;
+import com.example.java4.entities.HinhAnh;
 import com.example.java4.entities.noMap.ChiTietSanPhamNoMap;
 import com.example.java4.repositories.*;
 import com.example.java4.repositories.NoMap.SPCTRepoNoMap;
 import com.example.java4.request.QLSP.Store.SPCTStore;
 import com.example.java4.request.QLSP.Update.SPCTUpdate;
 import com.example.java4.response.SPCTResponse;
+import com.example.java4.response.SPCTView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -53,19 +55,31 @@ public class SPCTController {
     }
 
     @CrossOrigin
-    @GetMapping("/detail-byidsp-stt1/{idSP}")
-    public ResponseEntity<List<ChiTietSanPham>> GetIndexByIdSP1(@PathVariable(value = "idSP") String idSP, @RequestParam("page") Optional<Integer> pageParam) {
-        int page = pageParam.orElse(1);
-        Pageable pageable = PageRequest.of(page - 1, 20);
-        return ResponseEntity.ok(chiTietSPRepository.findByIdSP(1, idSP, pageable).getContent());
-    }
-
-    @CrossOrigin
     @GetMapping("/detail-byidsp-all/{idSP}")
-    public ResponseEntity<List<ChiTietSanPham>> GetIndexByIdSPAll(@PathVariable(value = "idSP") String idSP, @RequestParam("page") Optional<Integer> pageParam) {
+    public ResponseEntity<List<SPCTView>> GetIndexByIdSPAll(@PathVariable(value = "idSP") String idSP, @RequestParam("page") Optional<Integer> pageParam) {
         int page = pageParam.orElse(1);
         Pageable pageable = PageRequest.of(page - 1, 20);
-        return ResponseEntity.ok(chiTietSPRepository.findByIdSPAll(idSP, pageable).getContent());
+        List<ChiTietSanPham> lstChiTietSP = chiTietSPRepository.findByIdSPAll(idSP, pageable).getContent();
+        List<SPCTView> lstSPCTView =  new ArrayList<>();
+        for (ChiTietSanPham chiTietSanPham : lstChiTietSP) {
+             SPCTView spctView = new SPCTView();
+             spctView.setId(chiTietSanPham.getId());
+             spctView.setSoLuong(chiTietSanPham.getSoLuong());
+             spctView.setMoTa(chiTietSanPham.getMoTa());
+             spctView.setGiaNhap(chiTietSanPham.getGiaNhap());
+             spctView.setGiaBan(chiTietSanPham.getGiaBan());
+             spctView.setNgayTao(chiTietSanPham.getNgayTao());
+             spctView.setTrangThai(chiTietSanPham.getTrangThai());
+             spctView.setIdMauSac(chiTietSanPham.getIdMauSac());
+             spctView.setIdKichThuoc(chiTietSanPham.getIdKichThuoc());
+             spctView.setIdChatLieu(chiTietSanPham.getIdChatLieu());
+             spctView.setIdKieuTay(chiTietSanPham.getIdKieuTay());
+             spctView.setIdSanPham(chiTietSanPham.getIdSanPham());
+             spctView.setHinhAnh(chiTietSPRepository.getHinhAnhOfSPCT(chiTietSanPham.getId()));
+             lstSPCTView.add(spctView);
+            System.out.println("==========================================hinh anh: "+ spctView.getHinhAnh());
+        }
+        return ResponseEntity.ok(lstSPCTView);
     }
 
     @CrossOrigin
@@ -151,9 +165,65 @@ public class SPCTController {
     @CrossOrigin
     @PostMapping("/update-all-KieuTay")
     public ResponseEntity<Integer> doUpdateAllKieuTay(@RequestParam(value = "idSanPham") String idSanPham,
-                                                       @RequestParam(value = "idKieuTay") String idKieuTay) {
+                                                      @RequestParam(value = "idKieuTay") String idKieuTay) {
         return ResponseEntity.ok(chiTietSPRepository.updateAllKieuTay(idSanPham,idKieuTay));
     }
+
+    @CrossOrigin
+    @PostMapping("/update-dynamic")
+    public ResponseEntity<Integer> doUpdateAllKieuTay(@RequestParam Map<String, Object> params){
+        System.out.println("==================================do update all");
+        Map<String,Object> searchParams = new HashMap<>();
+        searchParams.put("idSanPham", params.get("idSanPham"));
+        searchParams.put("idMauSac", params.get("idMauSac"));
+        for (String string : params.keySet()) {
+            System.out.println("test keyset: "+string);
+            System.out.println("test object: " + params.get(string));
+        }
+        for (String string : searchParams.keySet()) {
+            System.out.println("test keyset search parsm: "+string);
+            System.out.println("test object search params: " + searchParams.get(string));
+        }
+        List<ChiTietSanPham> lstChiTietSP = search.searchChiTietSanPham(searchParams);
+        for (ChiTietSanPham chiTietSanPham : lstChiTietSP) {
+            System.out.println("test spct: "+ chiTietSanPham.getIdSanPham().getTen());
+            if(!params.get("soLuong").equals("")){
+                System.out.println("=======================do set so luong: " + params.get("soLuong"));
+                chiTietSanPham.setSoLuong(Integer.valueOf(params.get("soLuong").toString()));
+            }
+            if(!params.get("giaNhap").equals("")){
+                System.out.println("=======================do set gia nhap: "+ params.get("giaNhap"));
+                chiTietSanPham.setGiaNhap(BigDecimal.valueOf(Long.valueOf(params.get("giaNhap").toString())));
+            }
+            if(!params.get("giaBan").equals("")){
+                System.out.println("====================== do set gia ban: "+ params.get("giaBan"));
+                chiTietSanPham.setGiaBan(BigDecimal.valueOf(Long.valueOf(params.get("giaBan").toString())));
+            }
+
+            if(!params.get("moTa").equals("")){
+                System.out.println("====================== do set mo ta: "+ params.get("moTa"));
+                chiTietSanPham.setMoTa(params.get("moTa").toString());
+            }
+            if(!params.get("trangThai").equals("")){
+                System.out.println("===================== do set trang thai: "+ params.get("trangThai"));
+                chiTietSanPham.setTrangThai(Integer.valueOf(params.get("trangThai").toString()));
+            }
+            if(!params.get("hinhAnh1").equals("")||!params.get("hinhAnh2").equals("")||!params.get("hinhAnh3").equals("")){
+                System.out.println("======= do set hinh anh");
+                HinhAnh newHinhAnh = hinhAnhRepo.findByIdCTSP(chiTietSanPham.getId());
+                newHinhAnh.setHinhAnh1(params.get("hinhAnh1").toString());
+                newHinhAnh.setHinhAnh2(params.get("hinhAnh2").toString());
+                newHinhAnh.setHinhAnh3(params.get("hinhAnh3").toString());
+                hinhAnhRepo.save(newHinhAnh);
+            }
+        }
+        chiTietSPRepository.saveAll(lstChiTietSP);
+        for (ChiTietSanPham chiTietSanPham : lstChiTietSP) {
+            System.out.println("new data:  "+chiTietSanPham);
+        }
+        return ResponseEntity.ok(1);
+    }
+
 
     @CrossOrigin
     @PostMapping("/enable-status/{id}")
