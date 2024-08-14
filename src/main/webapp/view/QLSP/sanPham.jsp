@@ -1616,7 +1616,7 @@
     //Conduct
     const loadKichThuocWrapper = () => {
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
-        htmlKichThuocWrapper.innerHTML = '';
+        htmlKichThuocWrapper.innerHTML = ''; // Clear the wrapper
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
         for (let i = 0; i < lstDataSet.length; i++) {
             newHtmlContent +=
@@ -1626,17 +1626,17 @@
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
-                'id="iconHotAddKichThuoc" ' +
+                'id="iconHotAddKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
@@ -1644,7 +1644,32 @@
         }
         // Adding the new HTML content to the DOM
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
+
+        // Rebinding the event listeners after the DOM is updated
+        setEventIconAddnRemoveKichThuoc();
+    };
+
+    function setEventIconAddnRemoveKichThuoc() {
+        console.log("check lstDataSet: ", lstDataSet);
+
+        // Handling dynamically generated elements using event delegation
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('icon-add-more')) {
+                e.preventDefault();
+                const mauSacArea = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
+                console.log("Add Kich Thuoc for: ", mauSacArea);
+                // Add your logic to handle the addition here
+            }
+
+            if (e.target && e.target.classList.contains('icon-remove-more')) {
+                e.preventDefault();
+                const mauSacArea = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
+                console.log("Remove Kich Thuoc for: ", mauSacArea);
+                // Add your logic to handle the removal here
+            }
+        });
     }
+
 
     const loadTotalCboKichThuoc = () => {
         const htmlDropdown = document.getElementById("kichThuocBox");
