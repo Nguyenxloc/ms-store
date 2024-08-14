@@ -823,7 +823,7 @@
                         '<button id="detailSPBtn_' + sp.id + '" class="btn btn-danger">Chi tiết</button>' +
                         '</div>' +
                         '</td>' +
-                         '</tr>';
+                        '</tr>';
                 });
                 $("#tbl_ds_sp").html(html)
             });
@@ -1393,8 +1393,10 @@
     let howManyCboKichThuoc = 0;
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
-    let msMemo = 0;
-    let lstMauSac = [];
+    size =[];
+    let dataCell = {name:"",size:size};
+    let lstDataSet = [];
+    let checkChooseDropdown = "";
     function refresh(e) {
         e.preventDefault();
         idMauSacAdd = "";
@@ -1414,9 +1416,15 @@
         document.getElementById("lblMauSacAdd"+indx).textContent = ms.ten;
         console.log('Selected mau sac ID:', idMauSacAdd);
         console.log('data set index: ', indx);
-        msMemo = lstMauSac.length;
-        lstMauSac.push(ms.ten);
-        console.log("test lst mausac: ",lstMauSac);
+        ///conduct lstDataSet
+        if(howManyCboMauSac>lstDataSet.length){
+            size = [];
+            dataCell = {name:ms.ten,size:size}
+            lstDataSet.push(dataCell);
+        }
+        lstDataSet[indx].name = ms.ten;
+        console.log("test lst mausac: ",lstDataSet);
+        checkChooseDropdown  = ms.ten;
         loadKichThuocWrapper();
         //do load cbo kich thuoc wrapper
         // You can add more logic here to handle the selected value
@@ -1581,6 +1589,7 @@
                 }
             });
     }
+
     const loadTotalCboMauSac = () => {
         const htmlDropdown = document.getElementById("mauSacBox");
         let newHtmlContent = '';
@@ -1607,27 +1616,27 @@
     //Conduct
     const loadKichThuocWrapper = () => {
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
+        htmlKichThuocWrapper.innerHTML = ''; // Clear the wrapper
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
-
-        for (let i = msMemo; i < lstMauSac.length; i++) {
+        for (let i = 0; i < lstDataSet.length; i++) {
             newHtmlContent +=
                 '<div class="col col-md-12">' +
                 '<div class="d-flex">' +
-                '<p class="mt-2" style="width: 80px;">' + lstMauSac.at(i) + '</p>' +
+                '<p class="mt-2" style="width: 80px;">' + lstDataSet.at(i).name + '</p>' +
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
-                'id="iconHotAddKichThuoc" ' +
+                'id="iconHotAddKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
-                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox">' +
+                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc" ' +
+                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc" ' +
+                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
@@ -1635,8 +1644,32 @@
         }
         // Adding the new HTML content to the DOM
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
+
+        // Rebinding the event listeners after the DOM is updated
+        setEventIconAddnRemoveKichThuoc();
+    };
+
+    function setEventIconAddnRemoveKichThuoc() {
+        console.log("check lstDataSet: ", lstDataSet);
+
+        // Handling dynamically generated elements using event delegation
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('icon-add-more')) {
+                e.preventDefault();
+                const mauSacArea = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
+                console.log("Add Kich Thuoc for: ", mauSacArea);
+                // Add your logic to handle the addition here
+            }
+
+            if (e.target && e.target.classList.contains('icon-remove-more')) {
+                e.preventDefault();
+                const mauSacArea = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
+                console.log("Remove Kich Thuoc for: ", mauSacArea);
+                // Add your logic to handle the removal here
+            }
+        });
     }
-    loadKichThuocWrapper();
+
 
     const loadTotalCboKichThuoc = () => {
         const htmlDropdown = document.getElementById("kichThuocBox");
@@ -1662,31 +1695,54 @@
     // iconAdd
     iconAddMoreCboMauSac.addEventListener('click', function (e) {
         e.preventDefault();
-        console.log("icon add more");
-        howManyCboMauSac++;
-        loadTotalCboMauSac();
-        loadCboMauSac();
+        if(checkChooseDropdown != ""){
+            console.log("add more at: ", checkChooseDropdown );
+            console.log("icon add more");
+            howManyCboMauSac++;
+            loadTotalCboMauSac();
+            loadCboMauSac();
+            checkChooseDropdown = "";
+        }
+        else{
+            Swal.fire({
+                title: 'Xác nhận?',
+                text: "Vui lòng chọn trước khi thêm mới !",
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok!',
+            })
+        }
     });
-    iconAddMoreCboKichThuoc.addEventListener('click', function (e) {
-        e.preventDefault();
-        console.log("icon add more");
-        howManyCboKichThuoc++;
-        loadTotalCboKichThuoc();
-        loadCboKichThuoc();
-    });
+    // iconAddMoreCboKichThuoc.addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     console.log("icon add more");
+    //     howManyCboKichThuoc++;
+    //     loadTotalCboKichThuoc();
+    //     loadCboKichThuoc();
+    // });
     // iconRemove
     iconRemoveMoreCboMauSac.addEventListener('click', function (e) {
         e.preventDefault();
         const htmlDropdown = document.getElementById("mauSacBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
+        if(checkChooseDropdown !=""){
+            lstDataSet.pop();
+            loadKichThuocWrapper();
+        }
+        else{
+            checkChooseDropdown = "hold";
+        }
         howManyCboMauSacMemo--;
         howManyCboMauSac--;
+        loadTotalCboMauSac();
         loadCboMauSac();
     });
+
     iconRemoveMoreCboKichThuoc.addEventListener('click', function (e) {
         e.preventDefault();
         const htmlDropdown = document.getElementById("kichThuocBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
+        console.log("lst mau sac :", lstDataSet);
         howManyCboKichThuocMemo--;
         howManyCboKichThuoc--;
         loadCboKichThuoc();
