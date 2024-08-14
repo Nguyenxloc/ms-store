@@ -113,8 +113,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -148,7 +148,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm/quan-ly-km" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -172,8 +172,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->

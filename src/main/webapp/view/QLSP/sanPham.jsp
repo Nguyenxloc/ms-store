@@ -1393,10 +1393,8 @@
     let howManyCboKichThuoc = 0;
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
-    size =[];
-    let dataCell = {name:"",size:size};
-    let lstDataSet = [];
-    let checkChooseDropdown = "";
+    let msMemo = 0;
+    let lstMauSac = [];
     function refresh(e) {
         e.preventDefault();
         idMauSacAdd = "";
@@ -1416,15 +1414,9 @@
         document.getElementById("lblMauSacAdd"+indx).textContent = ms.ten;
         console.log('Selected mau sac ID:', idMauSacAdd);
         console.log('data set index: ', indx);
-        ///conduct lstDataSet
-        if(howManyCboMauSac>lstDataSet.length){
-            size = [];
-            dataCell = {name:ms.ten,size:size}
-            lstDataSet.push(dataCell);
-        }
-            lstDataSet[indx].name = ms.ten;
-        console.log("test lst mausac: ",lstDataSet);
-        checkChooseDropdown  = ms.ten;
+        msMemo = lstMauSac.length;
+        lstMauSac.push(ms.ten);
+        console.log("test lst mausac: ",lstMauSac);
         loadKichThuocWrapper();
         //do load cbo kich thuoc wrapper
         // You can add more logic here to handle the selected value
@@ -1616,27 +1608,27 @@
     //Conduct
     const loadKichThuocWrapper = () => {
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
-        htmlKichThuocWrapper.innerHTML = '';
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
-        for (let i = 0; i < lstDataSet.length; i++) {
+
+        for (let i = msMemo; i < lstMauSac.length; i++) {
             newHtmlContent +=
                 '<div class="col col-md-12">' +
                 '<div class="d-flex">' +
-                '<p class="mt-2" style="width: 80px;">' + lstDataSet.at(i).name + '</p>' +
+                '<p class="mt-2" style="width: 80px;">' + lstMauSac.at(i) + '</p>' +
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
                 'id="iconHotAddKichThuoc" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
-                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
+                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox">' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
@@ -1670,23 +1662,10 @@
     // iconAdd
     iconAddMoreCboMauSac.addEventListener('click', function (e) {
         e.preventDefault();
-        if(checkChooseDropdown != ""){
-            console.log("add more at: ", checkChooseDropdown );
-            console.log("icon add more");
-            howManyCboMauSac++;
-            loadTotalCboMauSac();
-            loadCboMauSac();
-            checkChooseDropdown = "";
-        }
-        else{
-            Swal.fire({
-                title: 'Xác nhận?',
-                text: "Vui lòng chọn trước khi thêm mới !",
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Ok!',
-            })
-        }
+        console.log("icon add more");
+        howManyCboMauSac++;
+        loadTotalCboMauSac();
+        loadCboMauSac();
     });
     // iconAddMoreCboKichThuoc.addEventListener('click', function (e) {
     //     e.preventDefault();
@@ -1698,15 +1677,9 @@
     // iconRemove
     iconRemoveMoreCboMauSac.addEventListener('click', function (e) {
         e.preventDefault();
+        console.log("remove")
         const htmlDropdown = document.getElementById("mauSacBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
-        if(checkChooseDropdown !=""){
-            lstDataSet.pop();
-            loadKichThuocWrapper();
-        }
-        else{
-             checkChooseDropdown = "hold";
-        }
         howManyCboMauSacMemo--;
         howManyCboMauSac--;
         loadTotalCboMauSac();
@@ -1717,7 +1690,6 @@
         e.preventDefault();
         const htmlDropdown = document.getElementById("kichThuocBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
-        console.log("lst mau sac :", lstDataSet);
         howManyCboKichThuocMemo--;
         howManyCboKichThuoc--;
         loadCboKichThuoc();
