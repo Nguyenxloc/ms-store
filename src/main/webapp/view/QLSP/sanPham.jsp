@@ -86,7 +86,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
+    <!-- Sidebar  Menu bên tay trái-->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -101,71 +101,98 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Thống kê doanh thu</span></a>
-        </li>
+        <c:choose>
+            <c:when test="${sessionScope.userRole == 'Quản lý'}">
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/ban-hang-tai-quay/admin/ban-tai-quay">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Bán hàng tại quầy</span></a>
-        </li>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý đơn hàng</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item" >
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý hóa đơn</span></a>
-        </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Quản lý sản phẩm</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
+                            <a class="collapse-item" href="cards.html">Cards</a>
+                        </div>
+                    </div>
+                </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Quản lý sản phẩm</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                    <a class="collapse-item" href="cards.html">Cards</a>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item" >
+                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
+                </li>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                        <i class="bi bi-gift" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
-            </div>
-        </li>
+            </c:when>
+            <c:otherwise>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý nhân viên</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý khách hàng</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
+            </c:otherwise>
+        </c:choose>
     </ul>
+    <!-- End of Sidebar -->
 
     <!--   -----------   -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -1618,72 +1645,84 @@
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
         htmlKichThuocWrapper.innerHTML = ''; // Clear the wrapper
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
+
         for (let i = 0; i < lstDataSet.length; i++) {
             newHtmlContent +=
                 '<div class="col col-md-12">' +
                 '<div class="d-flex">' +
-                '<p class="mt-2" style="width: 80px;">' + lstDataSet.at(i).name + '</p>' +
+                '<p class="mt-2" style="width: 80px;">' + lstDataSet[i].name + '</p>' +
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
-                'id="iconHotAddKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                'id="iconHotAddKichThuoc_' + lstDataSet[i].name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
-                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
+                '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet[i].name + '">';
+
+            // Inner loop for amountCBO
+            for (let a = 0; a < lstDataSet[i].amountCBO; a++) {
+                newHtmlContent +=
+                    '<div class="dropdown">' +
+                    '<button class="btn btn-outline-secondary dropdown-toggle" ' +
+                    'type="button" ' +
+                    'id="lblKichThuocAdd_' + lstDataSet[i].name + i + '" style="width: 150px;" ' +
+                    'data-bs-toggle="dropdown" ' +
+                    'aria-expanded="false">' +
+                    'Chọn kích thước' +
+                    '</button>' +
+                    '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].name + '_' + a + '" ' +
+                    'aria-labelledby="dropdownMenuButton2">' +
+                    '</ul>' +
+                    '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].name + a + '"></p>' +
+                    '</div>';
+            }
+
+            newHtmlContent +=
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet[i].name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet[i].name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
         }
+
         // Adding the new HTML content to the DOM
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
-
         // Rebinding the event listeners after the DOM is updated
         setEventIconAddnRemoveKichThuoc();
     };
 
+
+    let isEventListenerAttached = false;
+
     function setEventIconAddnRemoveKichThuoc() {
+        if (isEventListenerAttached) return;  // Prevent attaching the event listener more than once
+
         console.log("check lstDataSet: ", lstDataSet);
+
         // Handling dynamically generated elements using event delegation
         document.addEventListener('click', function(e) {
             if (e.target && e.target.classList.contains('icon-add-more')) {
+                console.log("================================");
+                console.log("how many button");
                 e.preventDefault();
                 const mauSacArea = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
                 console.log("Add Kich Thuoc for: ", mauSacArea);
                 for (let i = 0; i < lstDataSet.length; i++) {
+                    console.log("loop : ", lstDataSet[i].name );
                     if(lstDataSet[i].name == mauSacArea){
-                        //logic add data to size array
-                        //increase cbo kich
-                        const htmlDropdown = document.getElementById("kichThuocBox_"+lstDataSet[i].name);
-                        let newHtmlContent = '';
+                        // logic add data to size array
                         lstDataSet[i].size.push("x");
-                        lstDataSet[i].amountCBO = 1;
-                        for (let a = 0; a < lstDataSet[i].amountCBO; a++) {
-                            newHtmlContent += '<div class="dropdown">' +
-                                '<button class="btn btn-outline-secondary dropdown-toggle" ' +
-                                'type="button" ' +
-                                'id="lblKichThuocAdd_' + lstDataSet[i].name + i + '" style="width: 150px;" ' +
-                                'data-bs-toggle="dropdown" ' +
-                                'aria-expanded="false">' +
-                                'Chọn kích thước' +
-                                '</button>' +
-                                '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].name + '_' + a + '" ' +
-                                'aria-labelledby="dropdownMenuButton2">' +
-                                '</ul>' +
-                                '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].name  + a + '"></p>' +
-                                '</div>';
-                        }
-                        htmlDropdown.insertAdjacentHTML('beforeend', newHtmlContent); // Add the new HTML content
+                        lstDataSet[i].amountCBO++;
+                        console.log("check how many +:");
+                        loadKichThuocWrapper();
                     }
                 }
-                // Add your logic to handle the addition here
                 console.log("lst data set: ", lstDataSet);
             }
             if (e.target && e.target.classList.contains('icon-remove-more')) {
@@ -1693,7 +1732,9 @@
                 // Add your logic to handle the removal here
             }
         });
+        isEventListenerAttached = true;  // Set flag to true after attaching the event listener
     }
+
 
     const loadTotalCboKichThuoc = () => {
         const htmlDropdown = document.getElementById("kichThuocBox");
