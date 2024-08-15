@@ -2,6 +2,7 @@
 <%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--    Thêm thư viện SweetAlert2 để thiển thị thông báo--%>
 <!-- SweetAlert2 CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -155,10 +156,10 @@
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                <li class="nav-item">
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -384,19 +385,20 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
                             <img class="img-profile rounded-circle"
                                  src="/imageUser/${nv.anhDaiDien}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/store/tai-khoan-cua-toi">
+                            <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Tài khoản của tôi
+                                Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/ban-hang-tai-quay/dang-xuat">
+                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat" data-toggle="modal"
+                               data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
                             </a>
@@ -434,20 +436,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach varStatus="i" items="${listHoaDon}" var="hoaDon">
-                                    <tr data-id="${hoaDon.id}" class="${hoaDon.id == highlightId ? 'highlight' : ''}">
+                                <c:forEach varStatus="i" items="${listHoaDon}" var="hd">
+                                    <tr data-id="${hd.id}" class="${hoaDon.ma == hd.ma ? 'highlight' : ''}">
                                         <td>${i.index+1}</td>
-                                        <td>${hoaDon.ma}</td>
-                                        <td>${hoaDon.idNhanVien.hoTen}</td>
+                                        <td>${hd.ma}</td>
+                                        <td>${hd.idNhanVien.hoTen}</td>
                                         <td>
-                                            <c:if test="${hoaDon.idKhachHang.id == null}">Khách lẻ</c:if>
-                                            <c:if test="${hoaDon.idKhachHang.id != null}">${hoaDon.idKhachHang.hoTen}</c:if>
+                                            <c:if test="${hd.idKhachHang.id == null}">Khách lẻ</c:if>
+                                            <c:if test="${hd.idKhachHang.id != null}">${hd.idKhachHang.hoTen}</c:if>
                                         </td>
-<%--                                        <td class="original-date">${hoaDon.ngayTao}</td>--%>
-                                        <td>${hoaDon.ngayTao}</td>
-                                        <td>${hoaDon.trangThai == 0 ? "Chưa thanh toán" : "Đã thanh toán"}</td>
+                                        <c:set var="ngayThanhToanFormatted" value="${fn:substring(fn:replace(hd.ngayTao, 'T', ' '), 0, 19)}" />
+                                        <td>${ngayThanhToanFormatted}</td>
+                                        <td>${hd.trangThai == 0 ? "Chưa thanh toán" : "Đã thanh toán"}</td>
                                         <td>
-                                            <a href="/ban-hang-tai-quay/detail-hoa-don/${hoaDon.id}?highlightId=${hoaDon.id}"
+                                            <a href="/ban-hang-tai-quay/detail-hoa-don/${hd.id}"
                                                class="btn btn-primary">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
@@ -518,7 +520,7 @@
                                         </td>
                                         <td class="price">${hdct.donGia}</td>
                                         <td>
-                                            <form class="delete-form" action="/ban-hang-tai-quay/delete-hdct/${hdct.id}/${hdct.idCTSP.id}" method="post">
+                                            <form class="delete-form" action="/ban-hang-tai-quay/delete-hdct/${hdct.id}/${hdct.idCTSP.id}?highlightId=${hoaDon.id}" method="post">
                                                 <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                                 <button class="delete-button2 btn btn-danger" type="button" ><i class="bi bi-trash"></i></button>
                                             </form>
@@ -617,10 +619,10 @@
                                             <input type="hidden" class="form-control"
                                                    id="tongTien" value="${total-hoaDon.idKhuyenMai.soTienGiam}" readonly/>
                                         </c:if>
-<%--                                        <c:if test="${total==null}">--%>
-<%--                                            <input type="number" class="form-control" value="0"--%>
-<%--                                                   readonly/>--%>
-<%--                                        </c:if>--%>
+                                        <%--                                        <c:if test="${total==null}">--%>
+                                        <%--                                            <input type="number" class="form-control" value="0"--%>
+                                        <%--                                                   readonly/>--%>
+                                        <%--                                        </c:if>--%>
                                         <c:if test="${total-hoaDon.idKhuyenMai.soTienGiam<=0}">
                                             <input type="number" class="form-control" value="0"
                                                    readonly/>

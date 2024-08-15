@@ -184,8 +184,7 @@ public class BanTaiQuayController {
     }
     @GetMapping("detail-hoa-don/{idHD}")
     public String detailHoaDon(@PathVariable String idHD, @RequestParam Optional<Integer> pageParam,
-                               @RequestParam("page") Optional<Integer> pageParam2, Model model,
-                               @RequestParam(value = "highlightId", required = false) String highlightId) {
+                               @RequestParam("page") Optional<Integer> pageParam2, Model model) {
         Optional<HoaDon> hoaDon = hoaDonRepository.findById(idHD);
         idHoaDon = idHD;
 //        ChiTietHoaDon chiTietHoaDon = hoaDonChiTietRepository.findByIdHoaDon(idHoaDon);
@@ -223,7 +222,6 @@ public class BanTaiQuayController {
         model.addAttribute("listKM",listKhuyenMai);
         BigDecimal tongTien2 = hoaDonChiTietRepository.tinhGiaTriHD(idHoaDon);
         model.addAttribute("total",tongTien2);
-        model.addAttribute("highlightId", highlightId);
         return "/view/BanHangTaiQuay/banHangTaiQuay.jsp";
     }
 
