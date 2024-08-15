@@ -299,9 +299,9 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="color: white; margin-left: 2px">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -358,9 +358,9 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="color: white; margin-left: 2px">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
