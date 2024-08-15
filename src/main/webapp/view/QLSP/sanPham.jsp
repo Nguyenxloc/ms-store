@@ -1394,7 +1394,7 @@
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
     size =[];
-    let dataCell = {name:"",size:size};
+    let dataCell = {name:"",size:size,amount:0};
     let lstDataSet = [];
     let checkChooseDropdown = "";
     function refresh(e) {
@@ -1419,7 +1419,7 @@
         ///conduct lstDataSet
         if(howManyCboMauSac>lstDataSet.length){
             size = [];
-            dataCell = {name:ms.ten,size:size}
+            dataCell = {name:ms.ten,size:size,amountCBO: 0}
             lstDataSet.push(dataCell);
         }
         lstDataSet[indx].name = ms.ten;
@@ -1651,16 +1651,41 @@
 
     function setEventIconAddnRemoveKichThuoc() {
         console.log("check lstDataSet: ", lstDataSet);
-
         // Handling dynamically generated elements using event delegation
         document.addEventListener('click', function(e) {
             if (e.target && e.target.classList.contains('icon-add-more')) {
                 e.preventDefault();
                 const mauSacArea = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
                 console.log("Add Kich Thuoc for: ", mauSacArea);
+                for (let i = 0; i < lstDataSet.length; i++) {
+                    if(lstDataSet[i].name == mauSacArea){
+                        //logic add data to size array
+                        //increase cbo kich
+                        const htmlDropdown = document.getElementById("kichThuocBox_"+lstDataSet[i].name);
+                        let newHtmlContent = '';
+                        lstDataSet[i].size.push("x");
+                        lstDataSet[i].amountCBO ++;
+                        for (let a = 0; a < lstDataSet[i].amountCBO; a++) {
+                            newHtmlContent += '<div class="dropdown">' +
+                                '<button class="btn btn-outline-secondary dropdown-toggle" ' +
+                                'type="button" ' +
+                                'id="lblKichThuocAdd_' + lstDataSet[i].name + i + '" style="width: 150px;" ' +
+                                'data-bs-toggle="dropdown" ' +
+                                'aria-expanded="false">' +
+                                'Chọn kích thước' +
+                                '</button>' +
+                                '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].name + '_' + a + '" ' +
+                                'aria-labelledby="dropdownMenuButton2">' +
+                                '</ul>' +
+                                '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].name  + a + '"></p>' +
+                                '</div>';
+                        }
+                        htmlDropdown.insertAdjacentHTML('beforeend', newHtmlContent); // Add the new HTML content
+                    }
+                }
                 // Add your logic to handle the addition here
+                console.log("lst data set: ", lstDataSet);
             }
-
             if (e.target && e.target.classList.contains('icon-remove-more')) {
                 e.preventDefault();
                 const mauSacArea = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
@@ -1669,7 +1694,6 @@
             }
         });
     }
-
 
     const loadTotalCboKichThuoc = () => {
         const htmlDropdown = document.getElementById("kichThuocBox");
