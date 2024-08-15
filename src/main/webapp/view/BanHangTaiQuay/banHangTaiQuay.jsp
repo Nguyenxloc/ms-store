@@ -447,6 +447,7 @@
                                         </td>
                                         <c:set var="ngayThanhToanFormatted" value="${fn:substring(fn:replace(hd.ngayTao, 'T', ' '), 0, 19)}" />
                                         <td>${ngayThanhToanFormatted}</td>
+                                        
                                         <td>${hd.trangThai == 0 ? "Chưa thanh toán" : "Đã thanh toán"}</td>
                                         <td>
                                             <a href="/ban-hang-tai-quay/detail-hoa-don/${hd.id}"
