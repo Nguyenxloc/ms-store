@@ -1664,7 +1664,7 @@
                         const htmlDropdown = document.getElementById("kichThuocBox_"+lstDataSet[i].name);
                         let newHtmlContent = '';
                         lstDataSet[i].size.push("x");
-                        lstDataSet[i].amountCBO ++;
+                        lstDataSet[i].amountCBO = 1;
                         for (let a = 0; a < lstDataSet[i].amountCBO; a++) {
                             newHtmlContent += '<div class="dropdown">' +
                                 '<button class="btn btn-outline-secondary dropdown-toggle" ' +
