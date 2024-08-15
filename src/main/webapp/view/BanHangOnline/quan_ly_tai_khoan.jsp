@@ -347,7 +347,7 @@
                         </div>
                         <div class="form-group">
                             <label for="registerEmail" class="text-info">Email:</label><br>
-                            <input placeholder="Email" type="email" id="registerEmail" name="email"
+                            <input placeholder="Email" type="text" id="registerEmail" name="email"
                                    class="form-control" value="${khachHangDTO.email}">
                             <small id="registerEmailError" class="text-danger"></small>
                         </div>
@@ -421,7 +421,7 @@
                 </div>
                 <ul class="menu-list">
                     <li class="menu-item">
-                        <a href="#">Tài Khoản Của Tôi</a>
+                        <a href="#">Tài Khoản Của Tôi <i class="bi bi-chevron-down"></i></a>
                         <ul class="submenu-list">
                             <li class="submenu-item"><a href="/cua-hang/quan-ly-tai-khoan">Hồ Sơ</a></li>
                             <li class="submenu-item"><a href="/cua-hang/dia-chi">Địa Chỉ</a></li>
@@ -644,7 +644,10 @@
     </c:if>
 
 
-
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
     <%--Validate Form hồ sơ cá nhân--%>
     $(document).ready(function () {
         $('#updateProfileForm').submit(function (event) {
@@ -660,7 +663,6 @@
 
             var hasError = false;
 
-            // Clear previous errors
             $('.text-danger').text('');
             $('.form-control').removeClass('border-danger');
 
@@ -668,10 +670,22 @@
                 $('#fullNameError').text('Vui lòng nhập họ và tên.');
                 $('#fullName').addClass('border-danger');
                 hasError = true;
+            } else if (fullName.length > 30) {
+                $('#fullNameError').text('Họ và tên không được vượt quá 30 ký tự.');
+                $('#fullName').addClass('border-danger');
+                hasError = true;
+            } else if (!isValidFullName(fullName)) {
+                $('#fullNameError').text('Họ và tên không chứa số hoặc ký tự đặc biệt.');
+                $('#fullName').addClass('border-danger');
+                hasError = true;
             }
 
             if (!email) {
                 $('#emailError').text('Vui lòng nhập email.');
+                $('#email').addClass('border-danger');
+                hasError = true;
+            } else if (email.length > 40) {
+                $('#emailError').text('Email không được vượt quá 40 ký tự.');
                 $('#email').addClass('border-danger');
                 hasError = true;
             } else if (!isValidEmail(email)) {
@@ -692,6 +706,10 @@
 
             if (!dob) {
                 $('#dobError').text('Vui lòng nhập ngày sinh.');
+                $('#dob').addClass('border-danger');
+                hasError = true;
+            } else if (!isValidDOB(dob)) {
+                $('#dobError').text('Ngày sinh không hợp lệ.');
                 $('#dob').addClass('border-danger');
                 hasError = true;
             }
@@ -723,6 +741,12 @@
             $(this).removeClass('border-danger');
         });
 
+        // Hàm kiểm tra định dạng họ tên
+        function isValidFullName(fullName) {
+            var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+            return regex.test(fullName);
+        }
+
         // Hàm kiểm tra định dạng email
         function isValidEmail(email) {
             var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -734,7 +758,16 @@
             var regex = /^(0|\+84)\d{9,10}$/;
             return regex.test(phoneNumber);
         }
+
+        // Hàm kiểm tra ngày sinh không ở trong tương lai
+        function isValidDOB(dob) {
+            var dobDate = new Date(dob);
+            var today = new Date();
+            return dobDate <= today;
+        }
     });
+
+
 
 
     // Hàm hiển thị hình ảnh khi chọn ảnh ở trang tài khoản của tôi
