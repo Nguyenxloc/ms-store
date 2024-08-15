@@ -437,7 +437,7 @@
                 </div>
                 <ul class="menu-list">
                     <li class="menu-item">
-                        <a href="#">Tài Khoản Của Tôi</a>
+                        <a href="#">Tài Khoản Của Tôi <i class="bi bi-chevron-down"></i></a>
                         <ul class="submenu-list">
                             <li class="submenu-item"><a href="/cua-hang/quan-ly-tai-khoan">Hồ Sơ</a></li>
                             <li class="submenu-item"><a href="/cua-hang/dia-chi">Địa Chỉ</a></li>

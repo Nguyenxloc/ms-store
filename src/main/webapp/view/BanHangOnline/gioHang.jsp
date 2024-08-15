@@ -341,6 +341,7 @@
                                    class="form-control" value="${khachHangDTO.email}">
                             <small id="registerEmailError" class="text-danger"></small>
                         </div>
+                        <input type="hidden" name="checkDangKy" id="checkDangKy" value="1">
                         <div class="form-group">
                             <label for="registerPhone" class="text-info">Phone:</label><br>
                             <input placeholder="Phone" type="text" id="registerPhone" name="sdt"
@@ -1097,11 +1098,17 @@
                 $('#registerPhoneError').text('Số điện thoại không hợp lệ');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.sdt == phone)) {
-                $('#registerPhoneError').text('Số điện thoại đã tồn tại');
-                $('#registerPhone').addClass('border-danger');
-                hasError = true;
-            }
+            } else if (listKhachHang.find(kh => {
+                if (kh.sdt == phone){
+                    if (kh.taiKhoan != ""){
+                        $('#registerPhoneError').text('Số điện thoại đã được sử dụng đăng ký tài khoản!');
+                        $('#registerPhone').addClass('border-danger');
+                        hasError = true;
+                    }else {
+                        $('#checkDangKy').val(0);
+                    }
+                }
+            })){}
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
                 $('#registerPassword').addClass('border-danger');
@@ -1730,8 +1737,11 @@
 
 
             var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
-            var tongTien = parseFloat('${tongTien - hoaDon.idKhuyenMai.soTienGiam}');
+            var tongTien1 = parseFloat('${tongTien - hoaDon.idKhuyenMai.soTienGiam}');
+            var tongTien2 = parseFloat('${tongTien}');
             var soLuongGioHang = ${soLuongGioHang}
+                console.log("tongTien2: ", tongTien2);
+                console.log("tongTien1: ", tongTien1);
 
 
 // Function to get JSON with token
@@ -1771,14 +1781,12 @@
                 var service_id = data_maDV.data[0].service_id;
                 console.log("API maDV: ", service_id);
 
-                console.log("Tổng tiền: ", tongTien);
-
                 console.log("Tổng sl: ", soLuongGioHang);
 
                 var khoiLuong = soLuongGioHang * 200;
                 console.log("Tổng kl: ", khoiLuong);
 
-                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
+                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien2 + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
 
                     console.log("API Response: ", data_total.data.total); // Log the entire response
 
@@ -1791,7 +1799,7 @@
                     var firstFee = data_total.data.total
 
                     // Calculate the new total
-                    var newTotal = tongTien + firstFee;
+                    var newTotal = tongTien1 + firstFee;
 
                     // Update the total amount in the DOM
                     $('#total-amount').text(newTotal.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}));
@@ -1851,30 +1859,6 @@
 </script>
 
 <script>
-    // document.getElementById('diaChiForm').addEventListener('click', function (e) {
-    //     e.preventDefault(); // Ngăn chặn hành vi mặc định của nút Xác nhận
-    //
-    //     Swal.fire({
-    //         title: "Bạn đăt không?",
-    //         text: "Bạn sẽ không thể hoàn tác hành động này!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         cancelButtonText: "Hủy",
-    //         confirmButtonText: "Thêm"
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             Swal.fire({
-    //                 title: "Đã thêm!",
-    //                 text: "Bạn đã thêm chức vụ thành công.",
-    //                 icon: "success"
-    //             }).then(() => {
-    //                 document.getElementById('diaChiForm').submit();
-    //             });
-    //         }
-    //     });
-    // });
 
     $(document).ready(function () {
         $('#datHang').click(function (e) {

@@ -396,6 +396,7 @@
                                    class="form-control" value="${khachHangDTO.email}">
                             <small id="registerEmailError" class="text-danger"></small>
                         </div>
+                        <input type="hidden" name="checkDangKy" id="checkDangKy" value="1">
                         <div class="form-group">
                             <label for="registerPhone" class="text-info">Phone:</label><br>
                             <input placeholder="Phone" type="text" id="registerPhone" name="sdt"
@@ -1037,11 +1038,17 @@
                 $('#registerPhoneError').text('Số điện thoại không hợp lệ');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.sdt == phone)){
-                $('#registerPhoneError').text('Số điện thoại đã tồn tại');
-                $('#registerPhone').addClass('border-danger');
-                hasError = true;
-            }
+            } else if (listKhachHang.find(kh => {
+                if (kh.sdt == phone){
+                    if (kh.taiKhoan != ""){
+                        $('#registerPhoneError').text('Số điện thoại đã được sử dụng đăng ký tài khoản!');
+                        $('#registerPhone').addClass('border-danger');
+                        hasError = true;
+                    }else {
+                        $('#checkDangKy').val(0);
+                    }
+                }
+            })){}
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
                 $('#registerPassword').addClass('border-danger');
