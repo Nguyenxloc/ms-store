@@ -1469,7 +1469,7 @@
                 if (indx >= lstDataSet.length) {
                     // If the index is beyond the current length, push a new entry
                     const size = [];
-                    const dataCell = { id: ms.id, name: ms.ten, size: size, amountCBO: 0 };
+                    const dataCell = { id: ms.id, name: ms.ten, size: size, amountCBO: 1 };
                     lstDataSet.push(dataCell);
                 } else {
                     // Update existing entry in lstDataSet
@@ -1751,20 +1751,35 @@
         // Handling dynamically generated elements using event delegation
         document.addEventListener('click', function(e) {
             if (e.target && e.target.classList.contains('icon-add-more')) {
-                console.log("================================");
-                console.log("how many button");
                 e.preventDefault();
                 const mauSacID = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
-                console.log("Add Kich Thuoc for: ", mauSacID);
+                let obj = [];
                 for (let i = 0; i < lstDataSet.length; i++) {
-                    console.log("loop : ", lstDataSet[i].name );
-                    if(lstDataSet[i].id == mauSacID){
-                        // logic add data to size array
-                        lstDataSet[i].size.push("x");
-                        lstDataSet[i].amountCBO++;
-                        console.log("check how many +:");
-                        loadKichThuocWrapper();
+                    if(lstDataSet[i].id === mauSacID){
+                        obj = lstDataSet[i];
                     }
+                }
+                if(obj.size.length<obj.amount){
+                    console.log("Add Kich Thuoc for: ", mauSacID);
+                    for (let i = 0; i < lstDataSet.length; i++) {
+                        console.log("loop : ", lstDataSet[i].name );
+                        if(lstDataSet[i].id == mauSacID){
+                            // logic add data to size array
+                            lstDataSet[i].size.push("x");
+                            lstDataSet[i].amountCBO++;
+                            console.log("check how many +:");
+                            loadKichThuocWrapper();
+                        }
+                    }
+                }
+                else{
+                    Swal.fire({
+                        title: 'Xác nhận?',
+                        text: "Kích thước đã tồn tại !",
+                        icon: 'warning',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok!',
+                    })
                 }
                 console.log("lst data set: ", lstDataSet);
             }
