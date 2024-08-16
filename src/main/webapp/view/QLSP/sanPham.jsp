@@ -1391,6 +1391,7 @@
     const iconAddMoreCboKichThuoc = document.getElementById("iconAddMoreCboKichThuoc");
     const iconRemoveMoreCboMauSac = document.getElementById("iconRemoveMoreCboMauSac");
     const iconRemoveMoreCboKichThuoc = document.getElementById("iconRemoveMoreCboKichThuoc");
+    let lstKichThuoc = [];
     let idMauSacAdd = "";
     let idKichThuocAdd = "";
     let idChatLieuAdd = "";
@@ -1415,6 +1416,29 @@
         lblKieuTayAdd.textContent = "Chọn kiểu tay";
         loadDSSPCT(currentPage);
     }
+
+    const loadLstKichThuoc = () => {
+        let datatest = "data testing";
+        fetch("/kich-thuoc/index", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(resp => {
+                let htmlSearch = '';
+                let htmlCboModalEdit = '';
+                let htmlSet = {indx: 0, html: ""};
+                let htmlCboAdd = [];
+                resp.map((kt, i) => {
+                    const ktString = JSON.stringify(kt).replace(/"/g, '&quot;');
+                    // htmlSearch += '<li><a class="dropdown-item" onclick="setKichThuoc(\'' + ktString + '\')">' + kt.ten + '</a></li>';
+                    // htmlCboModalEdit += '<li><a class="dropdown-item" onclick="setKichThuocModalEdit(\'' + ktString + '\')">' + kt.ten + '</a></li>';
+                    lstKichThuoc.push(kt);
+                });
+            });
+    }
+    loadLstKichThuoc();
 
     function setMauSacAdd(msString, indx) {
         const ms = JSON.parse(msString.replace(/&quot;/g, '"'));
@@ -1555,47 +1579,6 @@
     }
     loadCboMauSac();
 
-    const loadCboKichThuoc = () => {
-        let datatest = "data testing";
-        fetch("/kich-thuoc/index", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(resp => {
-                let htmlSearch = '';
-                let htmlCboModalEdit = '';
-                let htmlSet = {indx: 0, html: ""};
-                let htmlCboAdd = [];
-                resp.map((kt, i) => {
-                    const ktString = JSON.stringify(kt).replace(/"/g, '&quot;');
-                    // htmlSearch += '<li><a class="dropdown-item" onclick="setKichThuoc(\'' + ktString + '\')">' + kt.ten + '</a></li>';
-                    // htmlCboModalEdit += '<li><a class="dropdown-item" onclick="setKichThuocModalEdit(\'' + ktString + '\')">' + kt.ten + '</a></li>';
-                    if (i == 0) {
-                        console.log("just one time")
-                        for (let a = 0; a < howManyCboKichThuoc; a++) {
-                            console.log("test index: ", a);
-                            htmlSet = {indx: 0, html: ""};
-                            htmlSet.html = '<li><a class="dropdown-item" onclick="setKichThuocAdd(\'' + ktString + '\', ' + a + ')">' + kt.ten + '</a></li>';
-                            htmlSet.indx = a;
-                            htmlCboAdd.push(htmlSet);
-                            console.log("test array :", htmlCboAdd)
-                        }
-                    } else {
-                        for (let b = 0; b < htmlCboAdd.length; b++) {
-                            console.log("count loop: ", b);
-                            htmlCboAdd[b].html += '<li><a class="dropdown-item" onclick="setKichThuocAdd(\'' + ktString + '\', ' + htmlCboAdd[b].indx + ')">' + kt.ten + '</a></li>';
-                        }
-                    }
-                });
-                // $("#cboKichThuocModalEdit").html(htmlCboModalEdit);
-                for (let i = 0; i < htmlCboAdd.length; i++) {
-                    $("#cboKichThuocAdd" + i).html(htmlCboAdd.at(i).html);
-                }
-            });
-    }
-
     const loadTotalCboMauSac = () => {
         const htmlDropdown = document.getElementById("mauSacBox");
         let newHtmlContent = '';
@@ -1650,7 +1633,15 @@
                     'Chọn kích thước' +
                     '</button>' +
                     '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].name + '_' + a + '" ' +
-                    'aria-labelledby="dropdownMenuButton2">' +
+                    'aria-labelledby="dropdownMenuButton2">';
+
+                // Generate dropdown items for each kichThuoc
+                lstKichThuoc.forEach((kt, index) => {
+                    const ktString = JSON.stringify(kt).replace(/"/g, '&quot;');
+                    newHtmlContent += '<li><a class="dropdown-item" onclick="setKichThuocAdd(\'' + ktString + '\', ' + a + ')">' + kt.ten + '</a></li>';
+                });
+
+                newHtmlContent +=
                     '</ul>' +
                     '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].name + a + '"></p>' +
                     '</div>';
@@ -1675,6 +1666,7 @@
         // Rebinding the event listeners after the DOM is updated
         setEventIconAddnRemoveKichThuoc();
     };
+
 
 
     let isEventListenerAttached = false;
