@@ -104,6 +104,10 @@
         <c:choose>
             <c:when test="${sessionScope.userRole == 'Quản lý'}">
                 <!-- Nav Item - Charts -->
+
+            </c:when>
+            <c:otherwise>
+                <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
                         <i class="bi bi-graph-up" style="margin-left: 2px"></i>
@@ -120,8 +124,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" >
                     <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -142,8 +146,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" >
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
-                        <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -164,31 +168,6 @@
                 <hr class="sidebar-divider d-none d-md-block">
 
                 <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
-                        <i class="bi bi-shop" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
-                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
-                </li>
             </c:otherwise>
         </c:choose>
     </ul>
@@ -1702,9 +1681,7 @@
 
     function setEventIconAddnRemoveKichThuoc() {
         if (isEventListenerAttached) return;  // Prevent attaching the event listener more than once
-
         console.log("check lstDataSet: ", lstDataSet);
-
         // Handling dynamically generated elements using event delegation
         document.addEventListener('click', function(e) {
             if (e.target && e.target.classList.contains('icon-add-more')) {
