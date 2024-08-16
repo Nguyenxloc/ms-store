@@ -1392,6 +1392,8 @@
     const iconRemoveMoreCboMauSac = document.getElementById("iconRemoveMoreCboMauSac");
     const iconRemoveMoreCboKichThuoc = document.getElementById("iconRemoveMoreCboKichThuoc");
     let lstKichThuoc = [];
+    let lstMauSac = [];
+    let lstMauSacShadow = [];
     let idMauSacAdd = "";
     let idKichThuocAdd = "";
     let idChatLieuAdd = "";
@@ -1440,25 +1442,59 @@
     }
     loadLstKichThuoc();
 
-    function setMauSacAdd(msString, indx) {
-        const ms = JSON.parse(msString.replace(/&quot;/g, '"'));
-        idMauSacAdd = ms.id;
-        document.getElementById("lblMauSacAdd"+indx).textContent = ms.ten;
-        console.log('Selected mau sac ID:', idMauSacAdd);
-        console.log('data set index: ', indx);
-        ///conduct lstDataSet
-        if(howManyCboMauSac>lstDataSet.length){
-            size = [];
-            dataCell = {id:ms.id,name:ms.ten,size:size,amountCBO: 0}
-            lstDataSet.push(dataCell);
+    function checkColorExist(colorID) {
+        for (let i = 0; i < lstDataSet.length; i++) {
+            if (lstDataSet[i].id === colorID) {
+                return true;
+            }
         }
-        lstDataSet[indx].name = ms.ten;
-        console.log("test lst mausac: ",lstDataSet);
-        checkChooseDropdown  = ms.ten;
-        loadKichThuocWrapper();
-        //do load cbo kich thuoc wrapper
-        // You can add more logic here to handle the selected value
+        return false;
     }
+
+
+
+    function setMauSacAdd(msString, indx) {
+        try {
+            const ms = JSON.parse(msString.replace(/&quot;/g, '"'));
+            const idMauSacAdd = ms.id;
+            console.log("test existing :", checkColorExist(idMauSacAdd));
+            if(!checkColorExist(idMauSacAdd)){
+                const labelElement = document.getElementById("lblMauSacAdd" + indx);
+                if (labelElement) {
+                    labelElement.textContent = ms.ten;
+                } else {
+                    console.error('Label element not found for index:', indx);
+                }
+                // Handle lstDataSet logic
+                if (indx >= lstDataSet.length) {
+                    // If the index is beyond the current length, push a new entry
+                    const size = [];
+                    const dataCell = { id: ms.id, name: ms.ten, size: size, amountCBO: 0 };
+                    lstDataSet.push(dataCell);
+                } else {
+                    // Update existing entry in lstDataSet
+                    lstDataSet[indx].name = ms.ten;
+                }
+                checkChooseDropdown  = ms.ten;
+                loadTotalCboMauSac();
+                loadCboMauSac();
+                loadKichThuocWrapper();
+            }
+            else{
+                Swal.fire({
+                    title: 'Xác nhận?',
+                    text: "Màu sắc đã tồn tại !",
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                })
+            }
+
+        } catch (error) {
+            console.error('Error in setMauSacAdd:', error);
+        }
+    }
+
 
     function setKichThuocAdd(ktString, index, dataSetID) {
         try {
@@ -1493,7 +1529,6 @@
             console.error('Error parsing kichThuoc:', error);
         }
     }
-
 
 
     function setChatLieuAdd(clString) {
@@ -1562,49 +1597,62 @@
     }
     loadCboKieuTay();
 
-    const loadCboMauSac = () => {
-        let datatest = "data testing";
-        let data = [];
-        fetch("/mau-sac/index", {
+    const fetchMauSac = () => {
+        return fetch("/mau-sac/index", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(response => response.json())
+        })
+            .then(response => response.json())
             .then(resp => {
-                let htmlSearch = '';
-                let htmlCboModalEdit = '';
-                let htmlSet = {indx: 0, html: ""};
-                let htmlCboAdd = [];
-                resp.map((ms, i) => {
-                    const msString = JSON.stringify(ms).replace(/"/g, '&quot;');
-                    // htmlSearch += '<li><a class="dropdown-item"  onclick="setMauSac(\'' + msString + '\')">' + ms.ten + '</a></li>';
-                    // htmlCboModalEdit += '<li><a class="dropdown-item"  onclick="setMauSacModalEdit(\'' + msString + '\')">' + ms.ten + '</a></li>'
-                    if (i == 0) {
-                        console.log("just one time")
-                        for (let a = 0; a < howManyCboMauSac; a++) {
-                            console.log("test index: ", a);
-                            htmlSet = {indx: 0, html: ""};
-                            htmlSet.html = '<li><a class="dropdown-item"  onclick="setMauSacAdd(\'' + msString + '\', ' + a + ')">' + ms.ten + '</a></li>';
-                            htmlSet.indx = a;
-                            htmlCboAdd.push(htmlSet);
-                            console.log("test array :", htmlCboAdd)
-                        }
-                    } else {
-                        for (let b = 0; b < htmlCboAdd.length; b++) {
-                            console.log("count loop: ", b);
-                            htmlCboAdd[b].html += '<li><a class="dropdown-item" onclick="setMauSacAdd(\'' + msString + '\', ' + htmlCboAdd[b].indx + ')">' + ms.ten + '</a></li>';
-                        }
-                    }
+                lstMauSac = [];
+                lstMauSacShadow = [];
+                resp.forEach(ms => {
+                    lstMauSac.push(ms); // Populate lstMauSac array
+                    lstMauSacShadow.push(ms);
                 });
-                // $("#cboMauSac").html(htmlSearch);
-                for (let i = 0; i < htmlCboAdd.length; i++) {
-                    console.log("test render mausac cbo");
-                    $("#cboMauSacAdd" + i).html(htmlCboAdd.at(i).html);
+            })
+            .catch(error => console.error('Error loading data:', error));
+    };
+
+    const loadCboMauSac = () => {
+        let htmlCboAdd = [];
+
+        // Clear existing dropdown content
+        for (let i = 0; i < howManyCboMauSac; i++) {
+            $("#cboMauSacAdd" + i).html('');
+        }
+        // Ensure lstMauSacShadow has data before processing
+        lstMauSacShadow.forEach((ms, i) => {
+            const msString = JSON.stringify(ms).replace(/"/g, '&quot;');
+            if (i === 0) {
+                // Initialize htmlCboAdd with the first element
+                for (let a = 0; a < howManyCboMauSac; a++) {
+                    let htmlSet = { indx: a, html: "" };
+                    htmlSet.html = '<li><a class="dropdown-item" onclick="setMauSacAdd(\'' + msString + '\', ' + a + ')">' + ms.ten + '</a></li>';
+                    htmlCboAdd.push(htmlSet);
                 }
-            }).catch(error => console.error('Error loading data:', error));
-    }
-    loadCboMauSac();
+            } else {
+                // Append to existing htmlCboAdd entries
+                htmlCboAdd.forEach((item, b) => {
+                    item.html += '<li><a class="dropdown-item" onclick="setMauSacAdd(\'' + msString + '\', ' + item.indx + ')">' + ms.ten + '</a></li>';
+                });
+            }
+        });
+
+        // Render new dropdown content for each cboMauSacAdd element
+        htmlCboAdd.forEach((item, i) => {
+            $("#cboMauSacAdd" + i).html(item.html);
+        });
+    };
+
+
+    // Fetch data and then load CboMauSac after the data is ready
+    fetchMauSac().then(() => {
+        loadCboMauSac();
+        // Create a deep copy of lstMauSac and assign it to lstMauSacShadow
+    });
 
     const loadTotalCboMauSac = () => {
         const htmlDropdown = document.getElementById("mauSacBox");
@@ -1693,7 +1741,6 @@
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
         // Rebinding the event listeners after the DOM is updated
         setEventIconAddnRemoveKichThuoc();
-
     };
 
     let isEventListenerAttached = false;
