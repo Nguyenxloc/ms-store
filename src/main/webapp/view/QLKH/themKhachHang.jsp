@@ -649,6 +649,17 @@
         });
     }
 
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
+
+    function isValidDOB(dob) {
+        var dobDate = new Date(dob);
+        var today = new Date();
+        return dobDate <= today;
+    }
+
     //Thêm khách hàng
     document.getElementById('khachHangForm').addEventListener('submit', function (event) {
         event.preventDefault();
@@ -664,12 +675,21 @@
         let hasError = false;
 
         if (!tenKhachHang) {
-            document.getElementById('error-tenKhachHang').textContent = 'Tên khách hàng không được để trống';
+            document.getElementById('error-tenKhachHang').textContent = 'Họ tên khách hàng không được để trống';
+            hasError = true;
+        }else if (!isValidFullName(tenKhachHang)){
+            document.getElementById('error-tenKhachHang').textContent = 'Họ tên khách hàng chỉ được nhập chữ';
+            hasError = true;
+        }else if (tenKhachHang.length > 30){
+            document.getElementById('error-tenKhachHang').textContent = 'Họ tên khách hàng không được quá 30 ký tự';
             hasError = true;
         }
 
         if (!ngaySinh) {
             document.getElementById('error-ngaySinh').textContent = 'Ngày sinh không được để trống';
+            hasError = true;
+        } else if (!isValidDOB(ngaySinh)){
+            document.getElementById('error-ngaySinh').textContent = 'Ngày sinh không hợp lệ';
             hasError = true;
         }
 

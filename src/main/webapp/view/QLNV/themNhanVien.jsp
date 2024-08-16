@@ -771,6 +771,17 @@
         });
     }
 
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
+
+    function isValidDOB(dob) {
+        var dobDate = new Date(dob);
+        var today = new Date();
+        return dobDate <= today;
+    }
+
     //Thêm nhân viên
     document.getElementById('nhanVienForm').addEventListener('submit', function (event) {
         event.preventDefault();
@@ -787,12 +798,21 @@
         let hasError = false;
 
         if (!tenNhanVien) {
-            document.getElementById('error-tenNhanVien').textContent = 'Tên nhân viên không được để trống';
+            document.getElementById('error-tenNhanVien').textContent = 'Họ tên nhân viên không được để trống';
+            hasError = true;
+        }else if (!isValidFullName(tenNhanVien)){
+            document.getElementById('error-tenNhanVien').textContent = 'Họ tên nhân viên chỉ được nhập chữ';
+            hasError = true;
+        }else if (tenNhanVien.length > 30){
+            document.getElementById('error-tenNhanVien').textContent = 'Họ tên nhân viên không được quá 30 ký tự';
             hasError = true;
         }
 
         if (!ngaySinh) {
             document.getElementById('error-ngaySinh').textContent = 'Ngày sinh không được để trống';
+            hasError = true;
+        } else if (!isValidDOB(ngaySinh)){
+            document.getElementById('error-ngaySinh').textContent = 'Ngày sinh không hợp lệ';
             hasError = true;
         }
 
@@ -806,6 +826,9 @@
             hasError = true;
         } else if (listNV.some(nhanVien => nhanVien.taiKhoan === taiKhoan)) {
             document.getElementById('error-taiKhoan').textContent = 'Tài khoản đã tồn tại';
+            hasError = true;
+        } else if (taiKhoan.length > 30){
+            document.getElementById('error-taiKhoan').textContent = 'Tài khoản nhập không được quá 30 ký tự';
             hasError = true;
         }
 
@@ -883,6 +906,10 @@
     listCV.push(ChucVu);
     </c:forEach>
 
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
     // Thêm chức vụ
     document.getElementById('chucVuForm').addEventListener('submit', function (event) {
         event.preventDefault();
@@ -894,6 +921,12 @@
             hasError = true;
         } else if (listCV.some(chucVu => chucVu.ten === tenChucVu)) {
             document.getElementById('error-tenChucVu').textContent = 'Tên chức vụ đã tồn tại';
+            hasError = true;
+        } else if (!isValidFullName(tenChucVu)) {
+            document.getElementById('error-tenChucVu').textContent = 'Tên chức vụ nhập vào phải là chữ';
+            hasError = true;
+        } else if (tenChucVu.length > 30) {
+            document.getElementById('error-tenChucVu').textContent = 'Tên chức vụ nhập vào không được quá 30 ký tự';
             hasError = true;
         } else {
             document.getElementById('error-tenChucVu').textContent = '';
@@ -929,7 +962,20 @@
 
 
 <script>
-    var list = [];
+    //Chuyển list chức vụ java -> js
+    var listCV = []
+    <c:forEach items="${listChucVu}" var="chucVu">
+    var ChucVu = {};
+    ChucVu.id = "${chucVu.id}";
+    ChucVu.ten = "${chucVu.ten}";
+    listCV.push(ChucVu);
+    </c:forEach>
+
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
+
     //Sửa chức vụ
     document.addEventListener('DOMContentLoaded', function () {
         const forms = document.querySelectorAll('form[id^="suaCVForm"]');
@@ -941,16 +987,24 @@
                 const tenCV = document.getElementById('tenCV' + idCV).value.trim();
 
                 let hasError = false;
+
                 if (!tenCV) {
                     document.getElementById('error-tenCV' + idCV).textContent = 'Tên chức vụ không được để trống';
+                    hasError = true;
+                } else if (!isValidFullName(tenCV)){
+                    document.getElementById('error-tenCV' + idCV).textContent = 'Tên chức vụ nhập vào phải là chữ';
+                    hasError = true;
+                }else if (tenCV.length > 30){
+                    document.getElementById('error-tenCV' + idCV).textContent = 'Tên chức vụ nhập vào không được quá 30 ký tự';
                     hasError = true;
                 } else {
                     document.getElementById('error-tenCV' + idCV).textContent = '';
                 }
+
                 const tenCVs = document.querySelectorAll('input[id^="tenCV"]');
                 tenCVs.forEach(input => {
                     if (input.id !== 'tenCV' + idCV && input.value.trim() === tenCV) {
-                        document.getElementById('error-tenCV' + idCV).textContent = 'Tên chức vụ bị trùng';
+                        document.getElementById('error-tenCV' + idCV).textContent = 'Tên chức vụ đã tồn tại';
                         hasError = true;
                     }
                 });
