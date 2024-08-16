@@ -1401,7 +1401,7 @@
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
     size =[];
-    let dataCell = {name:"",size:size,amount:0};
+    let dataCell = {id:"", name:"", size:size, amount:0};
     let lstDataSet = [];
     let checkChooseDropdown = "";
     function refresh(e) {
@@ -1449,7 +1449,7 @@
         ///conduct lstDataSet
         if(howManyCboMauSac>lstDataSet.length){
             size = [];
-            dataCell = {name:ms.ten,size:size,amountCBO: 0}
+            dataCell = {id:ms.id,name:ms.ten,size:size,amountCBO: 0}
             lstDataSet.push(dataCell);
         }
         lstDataSet[indx].name = ms.ten;
@@ -1460,14 +1460,41 @@
         // You can add more logic here to handle the selected value
     }
 
-    function setKichThuocAdd(ktString, indx) {
-        const kt = JSON.parse(ktString.replace(/&quot;/g, '"'));
-        idKichThuocAdd = kt.id;
-        document.getElementById("lblKichThuocAdd"+indx).textContent = kt.ten;
-        console.log('Selected kich thuoc ID:', idKichThuocAdd);
-        console.log("test data set:", indx);
-        // You can add more logic here to handle the selected value
+    function setKichThuocAdd(ktString, index, dataSetID) {
+        try {
+            const kichThuoc = JSON.parse(ktString.replace(/&quot;/g, '"'));
+            const idKichThuocAdd = kichThuoc.id;
+
+            // Debugging: Check if dataSetID and index are correct
+            console.log('DataSetID:', dataSetID, 'Index:', index);
+
+            // Update the label with the selected kich thuoc name
+            const labelElement = document.getElementById("lblKichThuocAdd_" + dataSetID + "_" + index);
+            if (labelElement) {
+                labelElement.textContent = kichThuoc.ten;
+            } else {
+                console.error('Label element not found for dataSetName:', dataSetID, 'index:', index);
+            }
+
+            for (let i = 0; i < lstDataSet.length; i++) {
+                if (lstDataSet[i].id == dataSetID) {
+                    // Logic to add data to the size array
+                    lstDataSet[i].size[index] = kichThuoc;
+                    console.log("Size updated for dataSetID:", dataSetID, "Index:", index);
+                    // Optionally call loadKichThuocWrapper, but avoid if unnecessary
+                }
+            }
+
+            // Debugging: Log the selected kich thuoc ID
+            console.log('Selected kich thuoc ID:', idKichThuocAdd);
+            console.log('Dataset name:', dataSetID, 'Dataset index:', index);
+
+        } catch (error) {
+            console.error('Error parsing kichThuoc:', error);
+        }
     }
+
+
 
     function setChatLieuAdd(clString) {
         const cl = JSON.parse(clString.replace(/&quot;/g, '"'));
@@ -1627,47 +1654,47 @@
                     '<div class="dropdown">' +
                     '<button class="btn btn-outline-secondary dropdown-toggle" ' +
                     'type="button" ' +
-                    'id="lblKichThuocAdd_' + lstDataSet[i].name + a + '" style="width: 150px;" ' +
+                    'id="lblKichThuocAdd_' + lstDataSet[i].id+"_"+ a + '" style="width: 150px;" ' +
                     'data-bs-toggle="dropdown" ' +
                     'aria-expanded="false">' +
                     'Chọn kích thước' +
                     '</button>' +
-                    '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].name + '_' + a + '" ' +
+                    '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].id + '_' + a + '" ' +
                     'aria-labelledby="dropdownMenuButton2">';
-
+                document.getElementById("lblKichThuocAdd_")
                 // Generate dropdown items for each kichThuoc
                 lstKichThuoc.forEach((kt, index) => {
                     const ktString = JSON.stringify(kt).replace(/"/g, '&quot;');
-                    newHtmlContent += '<li><a class="dropdown-item" onclick="setKichThuocAdd(\'' + ktString + '\', ' + a + ')">' + kt.ten + '</a></li>';
+                    const escapedName = lstDataSet[i].id.replace(/'/g, "\\'"); // Escape single quotes
+                    newHtmlContent += '<li><a class="dropdown-item" onclick="setKichThuocAdd(\'' + ktString + '\', ' + a + ', \'' + escapedName + '\')">' + kt.ten + '</a></li>';
                 });
 
                 newHtmlContent +=
                     '</ul>' +
-                    '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].name + a + '"></p>' +
+                    '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].id + "_" + a + '"></p>' +
                     '</div>';
             }
 
             newHtmlContent +=
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet[i].name + '" ' +
+                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet[i].id + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet[i].name + '" ' +
+                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet[i].id + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
-        }
 
+        }
         // Adding the new HTML content to the DOM
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
         // Rebinding the event listeners after the DOM is updated
         setEventIconAddnRemoveKichThuoc();
+
     };
-
-
 
     let isEventListenerAttached = false;
 
@@ -1680,11 +1707,11 @@
                 console.log("================================");
                 console.log("how many button");
                 e.preventDefault();
-                const mauSacArea = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
-                console.log("Add Kich Thuoc for: ", mauSacArea);
+                const mauSacID = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
+                console.log("Add Kich Thuoc for: ", mauSacID);
                 for (let i = 0; i < lstDataSet.length; i++) {
                     console.log("loop : ", lstDataSet[i].name );
-                    if(lstDataSet[i].name == mauSacArea){
+                    if(lstDataSet[i].id == mauSacID){
                         // logic add data to size array
                         lstDataSet[i].size.push("x");
                         lstDataSet[i].amountCBO++;
