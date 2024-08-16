@@ -1644,7 +1644,7 @@
                     '<div class="dropdown">' +
                     '<button class="btn btn-outline-secondary dropdown-toggle" ' +
                     'type="button" ' +
-                    'id="lblKichThuocAdd_' + lstDataSet[i].name + i + '" style="width: 150px;" ' +
+                    'id="lblKichThuocAdd_' + lstDataSet[i].name + a + '" style="width: 150px;" ' +
                     'data-bs-toggle="dropdown" ' +
                     'aria-expanded="false">' +
                     'Chọn kích thước' +
