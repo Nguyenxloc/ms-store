@@ -1775,7 +1775,7 @@
                 else{
                     Swal.fire({
                         title: 'Xác nhận?',
-                        text: "Kích thước đã tồn tại !",
+                        text: "Vui lòng chọn kích thước !",
                         icon: 'warning',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Ok!',
