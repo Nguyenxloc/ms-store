@@ -1520,11 +1520,10 @@
                     // Optionally call loadKichThuocWrapper, but avoid if unnecessary
                 }
             }
-
+            loadKichThuocWrapper();
             // Debugging: Log the selected kich thuoc ID
             console.log('Selected kich thuoc ID:', idKichThuocAdd);
             console.log('Dataset name:', dataSetID, 'Dataset index:', index);
-
         } catch (error) {
             console.error('Error parsing kichThuoc:', error);
         }
@@ -1682,7 +1681,6 @@
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
         htmlKichThuocWrapper.innerHTML = ''; // Clear the wrapper
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
-
         for (let i = 0; i < lstDataSet.length; i++) {
             newHtmlContent +=
                 '<div class="col col-md-12">' +
@@ -1709,7 +1707,7 @@
                     '</button>' +
                     '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].id + '_' + a + '" ' +
                     'aria-labelledby="dropdownMenuButton2">';
-                document.getElementById("lblKichThuocAdd_")
+
                 // Generate dropdown items for each kichThuoc
                 lstKichThuoc.forEach((kt, index) => {
                     const ktString = JSON.stringify(kt).replace(/"/g, '&quot;');
@@ -1735,12 +1733,33 @@
                 '</div>' +
                 '</div>' +
                 '</div>';
-
         }
         // Adding the new HTML content to the DOM
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
         // Rebinding the event listeners after the DOM is updated
         setEventIconAddnRemoveKichThuoc();
+        for (let i = 0; i < lstDataSet.length; i++) {
+            const sizes = lstDataSet[i].size;
+            const amountCBO = lstDataSet[i].amountCBO;
+
+            // Loop through amountCBO and map them directly to sizes
+            for (let a = 0; a < amountCBO; a++) {
+                const elementId = "lblKichThuocAdd_" + lstDataSet[i].id + "_" + a;
+                const element = document.getElementById(elementId);
+
+                if (element) {
+                    // Check if there is a corresponding size for this button
+                    if (sizes[a]) {
+                        element.textContent = sizes[a].ten;
+                    } else {
+                        element.textContent = 'Chọn kích thước'; // Default text if no size exists
+                    }
+                } else {
+                    console.error('Element not found with ID:', elementId);
+                }
+            }
+        }
+
     };
 
     let isEventListenerAttached = false;
@@ -1759,13 +1778,14 @@
                         obj = lstDataSet[i];
                     }
                 }
-                if(obj.size.length<obj.amount){
+
+                if(1>0){
                     console.log("Add Kich Thuoc for: ", mauSacID);
                     for (let i = 0; i < lstDataSet.length; i++) {
                         console.log("loop : ", lstDataSet[i].name );
                         if(lstDataSet[i].id == mauSacID){
                             // logic add data to size array
-                            lstDataSet[i].size.push("x");
+                            lstDataSet[i].size.push("");
                             lstDataSet[i].amountCBO++;
                             console.log("check how many +:");
                             loadKichThuocWrapper();
