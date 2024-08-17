@@ -1799,7 +1799,6 @@
                         obj = lstDataSet[i];
                     }
                 }
-
                 if(obj.size[obj.size.length-1] !== "" && obj.size.length > 0){
                     console.log("Add Kich Thuoc for: ", mauSacID);
                     for (let i = 0; i < lstDataSet.length; i++) {
@@ -1813,7 +1812,6 @@
                         }
                     }
                 }
-
                 else{
                     Swal.fire({
                         title: 'Xác nhận?',

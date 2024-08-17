@@ -133,4 +133,36 @@ public class SanPhamController {
             return ResponseEntity.ok(true);
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/check-tenSP-exist")
+    public ResponseEntity<Integer> checkTenSPExist(@RequestParam(value = "tenSP") String tenSP){
+        System.out.println("ten sp :"+tenSP);
+        return ResponseEntity.ok(spRepo.checkTenSPIsExist(tenSP));
+    }
+
+    @CrossOrigin
+    @PostMapping("multiple-save/")
+    public ResponseEntity<Boolean> multipleSave(
+            @RequestBody @Valid SanPhamStore newSanPham,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            System.out.println("error temp: " + result);
+            return ResponseEntity.ok(false);
+        }
+        else{
+            LocalDateTime localNow = LocalDateTime.now();
+            String ma = "SPHMSS"+(spRepo.getCount()+1);
+            SanPham sp = new SanPham();
+            sp.setTen(newSanPham.getTen());
+            sp.setMa(ma);
+            sp.setTrangThai(Integer.valueOf(newSanPham.getTrangThai()));
+            sp.setNgayTao(localNow);
+            sp.setHinhAnh(newSanPham.getHinhAnh());
+            spRepo.save(sp);
+            return ResponseEntity.ok(true);
+        }
+    }
+
 }
