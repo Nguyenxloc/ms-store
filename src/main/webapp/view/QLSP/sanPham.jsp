@@ -1506,28 +1506,49 @@
 
             // Update the label with the selected kich thuoc name
             const labelElement = document.getElementById("lblKichThuocAdd_" + dataSetID + "_" + index);
-            if (labelElement) {
-                labelElement.textContent = kichThuoc.ten;
-            } else {
-                console.error('Label element not found for dataSetName:', dataSetID, 'index:', index);
+
+            let obj = lstDataSet.find(item => item.id === dataSetID);
+
+            if (!obj) {
+                console.error("No matching object found for dataSetID:", dataSetID);
+                return;
             }
 
-            for (let i = 0; i < lstDataSet.length; i++) {
-                if (lstDataSet[i].id == dataSetID) {
-                    // Logic to add data to the size array
-                    lstDataSet[i].size[index] = kichThuoc;
-                    console.log("Size updated for dataSetID:", dataSetID, "Index:", index);
-                    // Optionally call loadKichThuocWrapper, but avoid if unnecessary
+            let sizeExists = obj.size.some(size => size.id === idKichThuocAdd);
+
+            if (!sizeExists) {
+                // If the size doesn't already exist, update the label and the dataset
+                if (labelElement) {
+                    labelElement.textContent = kichThuoc.ten;
+                } else {
+                    console.error('Label element not found for dataSetID:', dataSetID, 'index:', index);
                 }
+
+                // Update the size in the lstDataSet array
+                obj.size[index] = kichThuoc;
+                console.log("Size updated for dataSetID:", dataSetID, "Index:", index);
+
+                // Re-render the UI after updating
+                loadKichThuocWrapper();
+
+                // Debugging: Log the selected kich thuoc ID
+                console.log('Selected kich thuoc ID:', idKichThuocAdd);
+                console.log('Dataset name:', dataSetID, 'Dataset index:', index);
+            } else {
+                // If the size already exists, show a warning
+                Swal.fire({
+                    title: 'Xác nhận?',
+                    text: "Kích thước đã tồn tại!",
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                });
             }
-            loadKichThuocWrapper();
-            // Debugging: Log the selected kich thuoc ID
-            console.log('Selected kich thuoc ID:', idKichThuocAdd);
-            console.log('Dataset name:', dataSetID, 'Dataset index:', index);
         } catch (error) {
             console.error('Error parsing kichThuoc:', error);
         }
     }
+
 
 
     function setChatLieuAdd(clString) {
@@ -1779,7 +1800,7 @@
                     }
                 }
 
-                if(1>0){
+                if(obj.size[obj.size.length-1] !== "" && obj.size.length > 0){
                     console.log("Add Kich Thuoc for: ", mauSacID);
                     for (let i = 0; i < lstDataSet.length; i++) {
                         console.log("loop : ", lstDataSet[i].name );
@@ -1792,6 +1813,7 @@
                         }
                     }
                 }
+
                 else{
                     Swal.fire({
                         title: 'Xác nhận?',
@@ -1805,8 +1827,18 @@
             }
             if (e.target && e.target.classList.contains('icon-remove-more')) {
                 e.preventDefault();
-                const mauSacArea = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
-                console.log("Remove Kich Thuoc for: ", mauSacArea);
+                const mauSacIDAtRemove = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
+                console.log("Remove Kich Thuoc for: ", mauSacIDAtRemove);
+                for (let i = 0; i < lstDataSet.length; i++) {
+                    console.log("loop : ", lstDataSet[i].name );
+                    if(lstDataSet[i].id == mauSacIDAtRemove){
+                        // logic add data to size array
+                        lstDataSet[i].size.pop();
+                        lstDataSet[i].amountCBO--;
+                        console.log("check how many +:");
+                        loadKichThuocWrapper();
+                    }
+                }
                 // Add your logic to handle the removal here
             }
         });
