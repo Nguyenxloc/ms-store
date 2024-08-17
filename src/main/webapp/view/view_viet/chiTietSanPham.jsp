@@ -280,6 +280,7 @@
                                    class="form-control" value="">
                             <small id="nhapLaiMatKhauError" class="text-danger"></small>
                         </div>
+                        <input type="hidden" name="checkDangKy" id="checkDangKy" value="1">
                         <div class="form-group">
                             <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Register">
                         </div>
@@ -937,11 +938,11 @@
     //Lấy ra danh sách khách hàng
     const listKhachHang = [];
     <c:forEach items="${listKhachHang}" var="kh">
-    listKhachHang.push({
-        taiKhoan: '${kh.taiKhoan}',
-        email: '${kh.email}',
-        sdt: '${kh.sdt}',
-    });
+    var KhachHang = {};
+    KhachHang.taiKhoan = '${kh.taiKhoan}';
+    KhachHang.email = '${kh.email}';
+    KhachHang.sdt = '${kh.sdt}';
+    listKhachHang.push(KhachHang);
     </c:forEach>
     <%--Validate Form đăng nhặp--%>
     $(document).ready(function () {
@@ -1056,11 +1057,18 @@
                 $('#registerPhoneError').text('Số điện thoại không hợp lệ');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.sdt == phone)){
-                $('#registerPhoneError').text('Số điện thoại đã tồn tại');
-                $('#registerPhone').addClass('border-danger');
-                hasError = true;
-            }
+            } else if (listKhachHang.find(kh => {
+                if (kh.sdt == phone){
+                    if (kh.taiKhoan != ""){
+                        $('#registerPhoneError').text('Số điện thoại đã được sử dụng đăng ký tài khoản!');
+                        $('#registerPhone').addClass('border-danger');
+                        hasError = true;
+                    }else {
+                        $('#checkDangKy').val(0);
+                    }
+                }
+            })){}
+
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
                 $('#registerPassword').addClass('border-danger');

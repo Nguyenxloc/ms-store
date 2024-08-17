@@ -116,20 +116,35 @@ public class FilterTrangChuController {
     @PostMapping("/register")
     public String register(@ModelAttribute("khachHangDTO") KhachHangDTO khachHangDTO,
                            BindingResult result,
+                           @RequestParam("checkDangKy") Integer checkDangKy,
                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerErrors", result.getAllErrors());
             return "redirect:/store/trang-chu";
         }
         // Save the new user
-        KhachHang newUser = new KhachHang();
-        newUser.setTaiKhoan(khachHangDTO.getTaiKhoan());
-        newUser.setEmail(khachHangDTO.getEmail());
-        newUser.setSdt(khachHangDTO.getSdt());
-        newUser.setMatKhau(khachHangDTO.getMatKhau());
-        newUser.setNgayTao(LocalDateTime.now());
-        newUser.setTrangThai(khachHangRepository.ACTIVE);
-        khachHangRepository.save(newUser);
+        if (checkDangKy == 1){
+            //Thêm mới khách hàng
+            KhachHang newUser = new KhachHang();
+            newUser.setTaiKhoan(khachHangDTO.getTaiKhoan());
+            newUser.setEmail(khachHangDTO.getEmail());
+            newUser.setSdt(khachHangDTO.getSdt());
+            newUser.setMatKhau(khachHangDTO.getMatKhau());
+            newUser.setNgayTao(LocalDateTime.now());
+            newUser.setTrangThai(khachHangRepository.ACTIVE);
+            khachHangRepository.save(newUser);
+        }else {
+            //Sửa khách hàng
+            KhachHang khachHang = khachHangRepo.findBySdt(khachHangDTO.getSdt());
+            khachHang.setTaiKhoan(khachHangDTO.getTaiKhoan());
+            khachHang.setEmail(khachHangDTO.getEmail());
+            khachHang.setSdt(khachHangDTO.getSdt());
+            khachHang.setMatKhau(khachHangDTO.getMatKhau());
+            khachHang.setNgayTao(LocalDateTime.now());
+            khachHang.setTrangThai(khachHangRepository.ACTIVE);
+            khachHangRepository.save(khachHang);
+        }
+
         redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
         return "redirect:/store/trang-chu";
     }

@@ -700,6 +700,17 @@
         });
     }
 
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
+
+    function isValidDOB(dob) {
+        var dobDate = new Date(dob);
+        var today = new Date();
+        return dobDate <= today;
+    }
+
     document.getElementById('employeeForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -714,12 +725,21 @@
         let hasError = false;
 
         if (!tenNhanVien) {
-            document.getElementById('error-tenNhanVien').textContent = 'Tên nhân viên không được để trống';
+            document.getElementById('error-tenNhanVien').textContent = 'Họ tên nhân viên không được để trống';
+            hasError = true;
+        }else if (!isValidFullName(tenNhanVien)){
+            document.getElementById('error-tenNhanVien').textContent = 'Họ tên nhân viên chỉ được nhập chữ';
+            hasError = true;
+        }else if (tenNhanVien.length > 30){
+            document.getElementById('error-tenNhanVien').textContent = 'Họ tên nhân viên không được quá 30 ký tự';
             hasError = true;
         }
 
         if (!ngaySinh) {
             document.getElementById('error-ngaySinh').textContent = 'Ngày sinh không được để trống';
+            hasError = true;
+        } else if (!isValidDOB(ngaySinh)){
+            document.getElementById('error-ngaySinh').textContent = 'Ngày sinh không hợp lệ';
             hasError = true;
         }
 
@@ -733,6 +753,9 @@
             hasError = true;
         } else if (listNV.some(nhanVien => nhanVien.taiKhoan === taiKhoan)) {
             document.getElementById('error-taiKhoan').textContent = 'Tài khoản đã tồn tại';
+            hasError = true;
+        } else if (taiKhoan.length > 30){
+            document.getElementById('error-taiKhoan').textContent = 'Tài khoản nhập không được quá 30 ký tự';
             hasError = true;
         }
 
