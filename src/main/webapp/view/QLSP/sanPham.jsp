@@ -487,7 +487,7 @@
                 </button>
             </div>
             <div class="d-flex flex-row-reverse">
-                <button onclick="testDataMaping(event)" class="btn btn-success me-2">test</button>
+                <button class="btn btn-success me-2">test</button>
             </div>
             <div class="d-flex flex-row-reverse">
                 <button id="btnOpenModalMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalMultipleAdd">Thêm sản phẩm</button>
@@ -521,7 +521,7 @@
                     <div class="modal-body d-flex gap-2">
                         <div>
                             <form id="uploadFormAdd" method="post" enctype="multipart/form-data" action="/upload">
-                                <div class="mb-3">
+                                <div class="mb-3 border">
                                     <label for="tenSPAdd" class="form-label">Tên sản phẩm</label>
                                     <input style="width: 300px" type="text" class="form-control" id="tenSPAdd">
                                     <p style="color: red;" id="tenSPAddErr"></p>
@@ -559,9 +559,12 @@
                                     <div class="col col-md-12">
                                         <div class="d-flex" style="gap: 10px;">
                                             <p style="width: 80px;">Tên SP:</p>
-                                            <input type="text" id="tensp"
-                                                   class="w-full p-2 ms-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                   placeholder="Nhập tên sản phẩm">
+                                            <div>
+                                                <input type="text" id="tensp"
+                                                       class="w-full p-2 ms-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Nhập tên sản phẩm">
+                                                <p style="color: red;" class="ms-4" id="tenSPErr"></p>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -646,7 +649,7 @@
                                     </div>
 
                                 </div>
-                                <button id="saveMultipleAddBtn" class="btn btn-primary me-5">Lưu</button>
+                                <button  id="saveMultipleAddBtn" class="btn btn-primary me-5">Lưu</button>
                             </div>
                         </div>
                     </div>
@@ -654,7 +657,6 @@
             </div>
         </div>
         <%--End modal --%>
-
         <!-- ModalSPEdit-->
         <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true"
              data-bs-backdrop="static" data-bs-keyboard="false">
@@ -667,11 +669,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex gap-2">
-                        <div class="border">
-                            <img id="hinhAnhEditDisplay" width="150" height="200" alt="">
-                        </div>
                         <div>
-                            <form id="uploadFormEdit" method="post" enctype="multipart/form-data" action="/upload">
                                 <div class="mb-3">
                                     <label for="tenSPEdit" class="form-label">Tên sản phẩm</label>
                                     <input type="text" style="width: 300px;" class="form-control" id="tenSPEdit" value="">
@@ -683,8 +681,7 @@
                                     <label class="form-check-label" for="trangThaiEdit" id="trangThaiLabeledit">Trạng
                                         thái</label>
                                 </div>
-                                <button id="saveEditBtn" type="submit" class="btn btn-primary">Lưu</button>
-                            </form>
+                                <button id="saveEditBtn"  class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -897,6 +894,7 @@
             // Handle fetch error
         });
     }
+
     loadDSSP(currentPage);
     loadTotalPagination(currentPage);
     let tenSpEdit = document.getElementById("tenSPEdit");
@@ -917,8 +915,6 @@
         }).then(response => response.json())
             .then(resp => {
                 tenSpEdit.value = resp.ten;
-                console.log("test link image: " + resp.hinhAnh);
-                hinhAnhDisplay.src = "/image/" + resp.hinhAnh;
                 if (resp.trangThai == 1) {
                     trangThaiEdit.checked = true;
                     labelElementedit.textContent = "Đang hoạt động";
@@ -928,270 +924,15 @@
                 }
             });
     });
-    $(document).on('click', "button[id^='detailSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
-        console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
-        // fetch(apiGet, {
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // }).then(response => response.json())
-        //     .then(resp => {
-        //         console.log("test response spct: ", resp);
-        //         spctLocal =resp;
-        //         const apiAdd = "/san-pham/update/"+spid;
-        //         fetch(apiAdd, {
-        //             method: "post",
-        //             headers: {
-        //                 'Accept': 'application/json',
-        //                 'Content-Type': 'application/json'
-        //             }
-        //         }).then( (response) => {
-        //             console.log(response);
-        //             loadDSSP();
-        //         });
-        //     });
-    });
-    $(document).on('click', "button[id^='detailSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
-        console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
-        // fetch(apiGet, {
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // }).then(response => response.json())
-        //     .then(resp => {
-        //         console.log("test response spct: ", resp);
-        //         spctLocal =resp;
-        //         const apiAdd = "/san-pham/update/"+spid;
-        //         fetch(apiAdd, {
-        //             method: "post",
-        //             headers: {
-        //                 'Accept': 'application/json',
-        //                 'Content-Type': 'application/json'
-        //             }
-        //         }).then( (response) => {
-        //             console.log(response);
-        //             loadDSSP();
-        //         });
-        //     });
-    });
-    var btnAddEncap = document.getElementById("btnAddEncap")
-    btnAddEncap.addEventListener('click', function (e) {
-        e.preventDefault();
-        window.location.href = '/qlsp/add-sp';
-    });
-
-    const addBtn = document.querySelectorAll('#addBtn');
-    const editSPBtn = document.querySelectorAll('#editSPBtn');
-    const saveEditBtn = document.querySelectorAll('#saveEditBtn');
-    const saveAddBtn = document.querySelectorAll('#saveAddBtn');
-    addBtn.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("test check btn");
-            var idHD = document.getElementsByName("idHD")[0].value;
-            var idKH = document.getElementsByName("idKH")[0].value;
-            var idKhuyenMai = document.getElementsByName("idKhuyenMai")[0].value;
-            var tongTien = document.getElementsByName("tongTien")[0].value;
-            var thongBao = document.getElementById("errTraLai");
-            var moneyGiven = parseInt(document.getElementById("tienKhachDua").value);
-            var thongBao = document.getElementById("errTraLai");
-            console.log("====================== id hd:", idHD);
-            console.log("====================== id kh:", idKH);
-            console.log("====================== id khuyen mai:", idKhuyenMai);
-            console.log("====================== tong tien:", tongTien);
-            console.log("====================== money given:", moneyGiven);
-            if (tongTien <= moneyGiven && !isNaN(tongTien)) {
-                Swal.fire({
-                    title: 'Xác nhận?',
-                    text: "Dữ liệu sẽ được lưu lại!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok!',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            idHD: idHD,
-                            idKhuyenMai: idKhuyenMai,
-                            idKH: idKH,
-                            tongTien: tongTien
-                        };
-                        fetch(`/san-pham/save/`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        }).then(() => {
-                            Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then(() => {
-                                window.location.href = '/ban-hang-tai-quay';
-                            });
-                            button.closest('tr').remove();
-                        });
-                        button.closest('tr').remove();
-                        thongBao.textContent = "";
-                    }
-                });
-            } else {
-                thongBao.textContent = "Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
-            }
-        });
-    });
-
-    function getFileName(fullPath) {
-        // Check for the last occurrence of the backslash or forward slash
-        var startIndex = Math.max(fullPath.lastIndexOf('\\'), fullPath.lastIndexOf('/'));
-        // Extract the file name
-        var fileName = fullPath.substring(startIndex + 1);
-        return fileName;
-    }
-
-    saveAddBtn.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("test check btn");
-            var tenSP = document.getElementById('tenSPAdd').value;
-            var hinhAnh = document.getElementById('hinhAnhAdd').value;
-            var trangThairaw = document.getElementById('trangThaiAdd').checked;
-            var tenSperr = document.getElementById("tenSPAddErr");
-            var hinhAnhErr = document.getElementById("hinhAnhAddErr");
-            let trangThai = 0;
-            let sttCheck = 0;
-            console.log("====================== ten sp:", tenSP);
-            console.log("====================== hinh anh:", getFileName(hinhAnh));
-            console.log("====================== trang thai:", trangThairaw);
-            if (trangThairaw == true) {
-                trangThai = 1;
-            } else {
-                trangThai = 0;
-            }
-            if (validateNull(tenSP)) {
-                tenSperr.textContent = "Vui lòng nhập tên sản phẩm";
-                sttCheck = 0;
-            } else {
-                tenSperr.textContent = "";
-                sttCheck++;
-            }
-            if (validateNull(hinhAnh)) {
-                hinhAnhErr.textContent = "Vui lòng chọn hình ảnh";
-                sttCheck = 0;
-            } else {
-                hinhAnhErr.textContent = "";
-                sttCheck++;
-            }
-
-            if (sttCheck == 2) {
-                Swal.fire({
-                    title: 'Xác nhận?',
-                    text: "Dữ liệu sẽ được lưu lại!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok!',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            ten: tenSP,
-                            trangThai: trangThai,
-                            hinhAnh: getFileName(hinhAnh)
-                        };
-                        var formData = new FormData($('#uploadFormAdd')[0]); // Use FormData to get all form data
-                        // Handle file upload via AJAX
-
-                        $.ajax({
-                            url: '/upload',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                console.log("save image success ");
-                            },
-                            error: function (xhr, status, error) {
-                                console.log("save image =error");
-                            }
-                        });
-                        fetch(`/san-pham/save`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        }).then(() => {
-                            Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then(() => {
-                                fetch("/san-pham/count", {
-                                    headers: {
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json'
-                                    }
-                                }).then(response => response.json())
-                                    .then(resp => {
-                                        loadDSSP(Math.ceil(resp / 20));
-                                        currentPage = Math.ceil(resp / 20);
-                                        loadTotalPagination(currentPage);
-                                    }).catch(error => {
-                                    console.error('Error fetching pagination data:', error);
-                                    // Handle fetch error
-                                });
-                            });
-                            button.closest('tr').remove();
-                        });
-                        button.closest('tr').remove();
-                    }
-                });
-            } else {
-
-            }
-        });
-    });
-    function validateNull(param) {
-        if (param === "" || param === undefined) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    saveEditBtn.forEach(button => {
-        button.addEventListener('click', function (e) {
+        saveEditBtn.addEventListener('click', function (e) {
             e.preventDefault();
             console.log("test check btn");
             var tenSP = document.getElementById('tenSPEdit').value;
-            var hinhAnh = document.getElementById('hinhAnhEdit').value;
             var trangThaiRaw = document.getElementById('trangThaiEdit').checked;
             var tenSperr = document.getElementById("tenSPEditErr");
-            var hinhAnhErr = document.getElementById("hinhAnhEditErr");
             let trangThai = 0;
             let sttCheck = 0;
             console.log("====================== ten sp:", tenSP);
-            console.log("====================== hinh anh:", hinhAnh);
-
             if (trangThaiRaw == true) {
                 trangThai = 1;
             } else {
@@ -1204,14 +945,7 @@
                 tenSperr.textContent = "";
                 sttCheck++;
             }
-            if (validateNull(hinhAnh)) {
-                hinhAnhErr.textContent = "Vui lòng chọn hình ảnh";
-                sttCheck = 0;
-            } else {
-                hinhAnhErr.textContent = "";
-                sttCheck++;
-            }
-            if (sttCheck == 2) {
+            if (sttCheck == 1) {
                 Swal.fire({
                     title: 'Xác nhận?',
                     text: "Dữ liệu sẽ được lưu lại!",
@@ -1225,25 +959,9 @@
                     if (result.isConfirmed) {
                         const data = {
                             ten: tenSP,
-                            hinhAnh: getFileName(hinhAnh),
+                            hinhAnh: "pendingIMG",
                             trangThai: trangThai
                         };
-                        var formData = new FormData($('#uploadFormEdit')[0]); // Use FormData to get all form data
-                        // Handle file upload via AJAX
-                        console.log("form data: ", $('#uploadFormEdit')[0]);
-                        $.ajax({
-                            url: '/upload',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                console.log("save image success ");
-                            },
-                            error: function (xhr, status, error) {
-                                console.log("save image =error");
-                            }
-                        });
                         fetch(`/san-pham/update/` + idSPLocal, {
                             method: 'POST',
                             headers: {
@@ -1262,10 +980,47 @@
                     }
                 });
             } else {
-                thongBao.textContent = "Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
+
             }
         });
+
+
+
+    $(document).on('click', "button[id^='detailSPBtn_']", e => {
+        e.preventDefault();
+        const queryString = window.location.pathname;
+        const pathParts = queryString.split('/');
+        const pathVariable = pathParts[pathParts.length - 1];
+        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
+        console.log("====================test id button detail: ", spid);
+        window.location.href = '/qlsp/' + spid;
     });
+    $(document).on('click', "button[id^='detailSPBtn_']", e => {
+        e.preventDefault();
+        const queryString = window.location.pathname;
+        const pathParts = queryString.split('/');
+        const pathVariable = pathParts[pathParts.length - 1];
+        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
+        console.log("====================test id button detail: ", spid);
+        window.location.href = '/qlsp/' + spid;
+    });
+
+    function getFileName(fullPath) {
+        // Check for the last occurrence of the backslash or forward slash
+        var startIndex = Math.max(fullPath.lastIndexOf('\\'), fullPath.lastIndexOf('/'));
+        // Extract the file name
+        var fileName = fullPath.substring(startIndex + 1);
+        return fileName;
+    }
+
+    function validateNull(param) {
+        if (param === "" || param === undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 </script>
 <script>
@@ -1315,8 +1070,6 @@
 <script>
 
     // change sttlbl addl
-    const inputElementadd = document.getElementById("trangThaiAdd");
-    const labelElementadd = document.getElementById("trangThaiLabeladd");
 
     function updateLabeladd() {
         if (inputElementadd.checked) {
@@ -1329,8 +1082,6 @@
     inputElementadd.addEventListener("change", updateLabeladd);
     updateLabeladd();
     // change sttlbl edit
-    const inputElementedit = document.getElementById("trangThaiEdit");
-    const labelElementedit = document.getElementById("trangThaiLabeledit");
 
     function updateLabeledit() {
         if (inputElementedit.checked) {
@@ -1924,44 +1675,6 @@
 </script>
 <%--end loadingcbo--%>
 <script>
-    let idSPLocal = "";
-    let currentPage = 1;
-    let totalPage = 0;
-    const loadDSSP = (pageParams) => {
-        // get api + scpt.id
-        let datatest = "data testing";
-        fetch("/san-pham/index" + "?page=" + pageParams, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(resp => {
-                let html = '';
-                resp.map((sp, i) => {
-                    const maSanPham = sp.ma || 'N/A';
-                    const tenSanPham = sp.ten || 'N/A';
-                    const hinhAnh = sp.hinhAnh || 'N/A';
-                    const ngayTao = sp.ngayTao || 'N/A';
-                    const trangThai = sp.trangThai == 1 ? "Hoạt động" : "Dừng hđ";
-                    html += '<tr>' +
-                        '<td>' + (i + 1) + '</td>' +
-                        '<td><img src="' + hinhAnh + '" alt="Image" class="img-fluid" /></td>' +
-                        '<td>' + maSanPham + '</td>' +
-                        '<td>' + tenSanPham + '</td>' +
-                        '<td>' + ngayTao + '</td>' +
-                        '<td>' + trangThai + '</td>' +
-                        '<td>' +
-                        '<div class="d-inline">' +
-                        '<button id="editSPBtn_' + sp.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Chỉnh sửa</button>' +
-                        '<button id="detailSPBtn_' + sp.id + '" class="btn btn-danger">Chi tiết</button>' +
-                        '</div>' +
-                        '</td>' +
-                        '</tr>';
-                });
-                $("#tbl_ds_sp").html(html)
-            });
-    }
 
     function testDataMapping() {
 
@@ -1999,63 +1712,8 @@
     }
 
     updateButtons();
-    const loadTotalPagination = (currentPage) => {
-        fetch("/san-pham/count", {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(resp => {
-                let html = '';
-                // Check if resp is a number and greater than 0
-                if (typeof resp === 'number' && resp > 0) {
-                    totalPage = Math.ceil(resp / 20);
-                    for (let i = 1; i <= Math.ceil(resp / 20); i++) {
-                        const activeClass = (i === currentPage) ? 'active' : '';
-                        html += '<li class="page-item ' + activeClass + '"><a class="page-link" href="#" onclick="setActive(this, ' + i + ')">' + i + '</a></li>';
-                    }
-                } else {
-                    // Handle case where resp is not a valid number or is <= 0
-                    html = '<li class="page-item"><a class="page-link" href="#">No pages found</a></li>';
-                }
-                $("#paginationBody").html(html);
-            }).catch(error => {
-            console.error('Error fetching pagination data:', error);
-            // Handle fetch error
-        });
-    }
     loadDSSP(currentPage);
     loadTotalPagination(currentPage);
-    let tenSpEdit = document.getElementById("tenSPEdit");
-    let hinhAnhDisplay = document.getElementById("hinhAnhEditDisplay");
-    let trangThaiEdit = document.getElementById("trangThaiEdit");
-    $(document).on('click', "button[id^='editSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("editSPBtn_", "");
-        idSPLocal = spid;
-        fetch("/san-pham/detail/" + spid, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(response => response.json())
-            .then(resp => {
-                tenSpEdit.value = resp.ten;
-                console.log("test link image: " + resp.hinhAnh);
-                hinhAnhDisplay.src = "/image/" + resp.hinhAnh;
-                if (resp.trangThai == 1) {
-                    trangThaiEdit.checked = true;
-                    labelElementedit.textContent = "Đang hoạt động";
-                } else {
-                    trangThaiEdit.checked = false;
-                    labelElementedit.textContent = "Dừng hoạt động";
-                }
-            });
-    });
 
     $(document).on('click', "button[id^='detailSPBtn_']", e => {
         e.preventDefault();
@@ -2087,69 +1745,9 @@
         //         });
         //     });
     });
-    const addBtn = document.querySelectorAll('#addBtn');
     const editSPBtn = document.querySelectorAll('#editSPBtn');
     const saveEditBtn = document.querySelectorAll('#saveEditBtn');
-    const saveMultipleAddBtn = document.querySelectorAll('#saveMultipleAddBtn');
-    addBtn.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("test check btn");
-            var idHD = document.getElementsByName("idHD")[0].value;
-            var idKH = document.getElementsByName("idKH")[0].value;
-            var idKhuyenMai = document.getElementsByName("idKhuyenMai")[0].value;
-            var tongTien = document.getElementsByName("tongTien")[0].value;
-            var thongBao = document.getElementById("errTraLai");
-            var moneyGiven = parseInt(document.getElementById("tienKhachDua").value);
-            var thongBao = document.getElementById("errTraLai");
-            console.log("====================== id hd:", idHD);
-            console.log("====================== id kh:", idKH);
-            console.log("====================== id khuyen mai:", idKhuyenMai);
-            console.log("====================== tong tien:", tongTien);
-            console.log("====================== money given:", moneyGiven);
-            if (tongTien <= moneyGiven && !isNaN(tongTien)) {
-                Swal.fire({
-                    title: 'Xác nhận?',
-                    text: "Dữ liệu sẽ được lưu lại!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok!',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            idHD: idHD,
-                            idKhuyenMai: idKhuyenMai,
-                            idKH: idKH,
-                            tongTien: tongTien
-                        };
-                        fetch(`/san-pham/save/`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        }).then(() => {
-                            Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then(() => {
-                                window.location.href = '/ban-hang-tai-quay';
-                            });
-                            button.closest('tr').remove();
-                        });
-                        button.closest('tr').remove();
-                        thongBao.textContent = "";
-                    }
-                });
-            } else {
-                thongBao.textContent = "Số tiền khách đưa phải lớn hơn hoặc bằng tổng tiền.";
-            }
-        });
-    });
+
 
     function getFileName(fullPath) {
         // Check for the last occurrence of the backslash or forward slash
@@ -2158,118 +1756,187 @@
         var fileName = fullPath.substring(startIndex + 1);
         return fileName;
     }
+    function fetchData(url, method = "GET", bodyData = null) {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
 
-    saveMultipleAddBtn.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("test check btn");
-            var tenSP = document.getElementById('tenSPAdd').value;
-            var hinhAnh = document.getElementById('hinhAnhAdd').value;
-            var trangThairaw = document.getElementById('trangThaiAdd').checked;
-            var tenSperr = document.getElementById("tenSPAddErr");
-            var hinhAnhErr = document.getElementById("hinhAnhAddErr");
-            let trangThai = 0;
-            let sttCheck = 0;
-            console.log("====================== ten sp:", tenSP);
-            console.log("====================== hinh anh:", getFileName(hinhAnh));
-            console.log("====================== trang thai:", trangThairaw);
-            if (trangThairaw == true) {
-                trangThai = 1;
+        const options = {
+            method: method,
+            headers: headers,
+        };
+
+        if (bodyData) {
+            options.body = JSON.stringify(bodyData);
+        }
+
+        return fetch(url, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json(); // Parses JSON response into native JavaScript objects
+            })
+            .then(data => {
+                console.log('Success:', data);
+                return data; // Returns the data for further processing
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    }
+    function validateModalAdd() {
+        let checkCount = 0;
+        var cboMauSacModalAddErr = document.getElementById("cboMauSacModalAddErr");
+        var cboKichThuocModalAddErr = document.getElementById("cboKichThuocModalAddErr");
+        var cboChatLieuModalAddErr = document.getElementById("cboChatLieuModalAddErr");
+        var cboKieuTayModalAddErr = document.getElementById("cboKieuTayModalAddErr");
+        var soLuongModalAddErr = document.getElementById("soLuongModalAddErr");
+        var giaNhapModalAddErr = document.getElementById("giaNhapModalAddErr");
+        var giaBanModalAddErr = document.getElementById("giaBanModalAddErr");
+        console.log("so luong test:", soLuongModalAdd.value);
+        console.log("so luong test:", giaBanModalAdd.value);
+        console.log("so luong test:", giaNhapModalAdd.value);
+
+        if (idMauSacModalAdd == "") {
+            cboMauSacModalAddErr.textContent = "Vui lòng chọn màu sắc ";
+            checkCount = 0;
+        } else {
+            cboMauSacModalAddErr.textContent = "";
+            checkCount++;
+        }
+        if (idKichThuocModalAdd == "") {
+            cboKichThuocModalAddErr.textContent = "Vui lòng chọn kích thước";
+            checkCount = 0
+        } else {
+            cboKichThuocModalAddErr.textContent = "";
+            checkCount++;
+        }
+        if (idChatLieuModalAdd == "") {
+            cboChatLieuModalAddErr.textContent = "Vui lòng chọn chất liệu";
+            checkCount = 0;
+        } else {
+            cboChatLieuModalAddErr.textContent = "";
+            checkCount++;
+        }
+        if (idKieuTayModalAdd == "") {
+            cboKieuTayModalAddErr.textContent = "Vui lòng chọn kiểu tay";
+            checkCount = 0;
+        } else {
+            cboKieuTayModalAddErr.textContent = "";
+            checkCount++;
+        }
+        if (validateNull(soLuongModalAdd.value)) {
+            soLuongModalAddErr.textContent = "Vui lòng nhập số lượng";
+            checkCount = 0;
+        } else {
+            if (soLuongModalAdd.value <= 0) {
+                soLuongModalAddErr.textContent = "Số lượng phải lơn hơn 0";
+                checkCount = 0
             } else {
-                trangThai = 0;
+                soLuongModalAddErr.textContent = "";
+                checkCount++;
             }
-            if (validateNull(tenSP)) {
-                tenSperr.textContent = "Vui lòng nhập tên sản phẩm";
-                sttCheck = 0;
+        }
+        if (validateNull(giaNhapModalAdd.value)) {
+            giaNhapModalAddErr.textContent = "Vui lòng nhập giá nhập";
+            checkCount = 0;
+        } else {
+            if (giaNhapModalAdd.value <= 0) {
+                giaNhapModalAddErr.textContent = "Giá nhập phải lớn hơn 0";
+                checkCount = 0;
             } else {
-                tenSperr.textContent = "";
-                sttCheck++;
+                giaNhapModalAddErr.textContent = "";
+                checkCount++;
             }
+        }
+        if (validateNull(giaBanModalAdd.value)) {
+            giaBanModalAddErr.textContent = "Vui lòng nhập giá bán";
+            checkCount = 0;
+        } else {
+            if (giaBanModalAdd.value <= 0) {
+                giaBanModalAddErr.textContent = "Giá bán phải lớn hơn 0";
+                checkCount = 0;
+            } else {
+                giaBanModalAddErr.textContent = "";
+                checkCount++;
+            }
+        }
+        console.log("check count: ", checkCount);
+        return checkCount;
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const saveMultipleAddBtn = document.getElementById('saveMultipleAddBtn');
+        document.getElementById("tenSPErr").textContent = "";
+        if (saveMultipleAddBtn) {
+            saveMultipleAddBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log("test check btn");
+                let tenSP = document.getElementById("tensp");
+                console.log("test tensp: ", tenSP.value);
+                if (tenSP.value !=="") {
+                    Swal.fire({
+                        title: 'Xác nhận?',
+                        text: "Dữ liệu sẽ được lưu lại!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ok!',
+                        cancelButtonText: 'Hủy'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetchData('http://localhost:8080/san-pham/multiple-save'+"?tenSP=" +tenSP.value+ "&idChatLieu="+idChatLieuAdd + "&idKieuTay="+idKieuTayAdd, 'POST',lstDataSet)
+                                .then(responseData => {
+                                    // Handle successful post response
+                                    console.log('Post Success:', responseData);
+                                    Swal.fire(
+                                        'Đã lưu!',
+                                        'Dữ liệu đã được ghi nhận.',
+                                        'success'
+                                    ).then(() => {
+                                        // Fetch the total count of products and update pagination
+                                        fetch("/san-pham/count", {
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json'
+                                            }
+                                        })
+                                            .then(response => response.json())
+                                            .then(resp => {
+                                                const totalPages = Math.ceil(resp / 20);
+                                                loadDSSP(totalPages); // Load the product list
+                                                currentPage = totalPages;
+                                                loadTotalPagination(currentPage); // Update pagination UI
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching pagination data:', error);
+                                                // Handle fetch error
+                                            });
+                                    });
 
-            if (sttCheck == 1) {
-                Swal.fire({
-                    title: 'Xác nhận?',
-                    text: "Dữ liệu sẽ được lưu lại!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok!',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            ten: tenSP,
-                            trangThai: trangThai,
-                            hinhAnh: getFileName(hinhAnh)
-                        };
-                        const dataTypeSPCT = {
-                            idSp: "",
-                            idMauSac: "",
-                            idKichThuoc: "",
-                            idChatLieu: "",
-                            idKieuTay: "",
-                            moTa: "",
-                            soLuong: "",
-                            giaNhap: "",
-                            giaBan: "",
-                            trangThai: 0
-                        }
-                        const lstSPCT = [];
-
-                        // var formData = new FormData($('#uploadFormAdd')[0]); // Use FormData to get all form data
-                        // // Handle file upload via AJAX
-                        //
-                        // $.ajax({
-                        //     url: '/upload',
-                        //     type: 'POST',
-                        //     data: formData,
-                        //     processData: false,
-                        //     contentType: false,
-                        //     success: function (response) {
-                        //         console.log("save image success ");
-                        //     },
-                        //     error: function (xhr, status, error) {
-                        //         console.log("save image =error");
-                        //     }
-                        // });
-                        fetch(`/san-pham/save`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        }).then(() => {
-                            Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then(() => {
-                                fetch("/san-pham/count", {
-                                    headers: {
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json'
+                                    // Remove the row after saving (if applicable)
+                                    const button = e.target.closest('tr'); // Ensure `button` refers to the correct element
+                                    if (button) {
+                                        button.remove();
                                     }
-                                }).then(response => response.json())
-                                    .then(resp => {
-                                        loadDSSP(Math.ceil(resp / 20));
-                                        currentPage = Math.ceil(resp / 20);
-                                        loadTotalPagination(currentPage);
-                                    }).catch(error => {
-                                    console.error('Error fetching pagination data:', error);
-                                    // Handle fetch error
+                                })
+                                .catch(error => {
+                                    console.error('Error during save operation:', error);
+                                    // Handle post error
                                 });
-                            });
-                            button.closest('tr').remove();
-                        });
-                        button.closest('tr').remove();
-                    }
-                });
-            } else {
-
-            }
-        });
+                        }
+                    });
+                } else {
+                    // Handle the case where validation fails
+                    document.getElementById("tenSPErr").textContent = "Không để trống";
+                }
+            });
+        } else {
+            console.error('Save button not found!');
+        }
     });
+
 
     function validateNull(param) {
         if (param === "" || param === undefined) {
@@ -2283,45 +1950,12 @@
 <script>
     $(document).ready(function () {
         $('#saveAddBtn').on('click', function (event) {
-
             // Optionally, submit the form normally after AJAX request (if needed)
         });
     });
 </script>
 <script>
     // Hiển thị thông báo thêm thành công hoặc thất bại sử dụng thư viện Sweet Alert2
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-
-    <c:if test="${not empty success}">
-    Toast.fire({
-        icon: "success",
-        title: "${success}"
-    });
-    </c:if>
-
-    <c:if test="${not empty error}">
-    Toast.fire({
-        icon: "error",
-        title: "${error}"
-    });
-    </c:if>
-
-    <c:if test="${not empty errorBillMax}">
-    Toast.fire({
-        icon: "warning",
-        title: "${errorBillMax}"
-    });
-    </c:if>
 </script>
 
 </html>

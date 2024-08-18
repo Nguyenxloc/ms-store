@@ -90,6 +90,24 @@ public class ChiTietSanPham {
     }
 
     @Override
+    public String toString() {
+        return "ChiTietSanPham{" +
+                "id='" + id + '\'' +
+                ", soLuong=" + soLuong +
+                ", moTa='" + moTa + '\'' +
+                ", giaNhap=" + giaNhap +
+                ", giaBan=" + giaBan +
+                ", ngayTao=" + ngayTao +
+                ", trangThai=" + trangThai +
+                ", idMauSac=" + idMauSac +
+                ", idKichThuoc=" + idKichThuoc +
+                ", idChatLieu=" + idChatLieu +
+                ", idKieuTay=" + idKieuTay +
+                ", idSanPham=" + idSanPham +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

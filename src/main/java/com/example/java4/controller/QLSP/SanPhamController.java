@@ -1,6 +1,8 @@
 package com.example.java4.controller.QLSP;
+import com.example.java4.entities.ChiTietSanPham;
 import com.example.java4.entities.SanPham;
-import com.example.java4.repositories.SanPhamRepository;
+import com.example.java4.repositories.*;
+import com.example.java4.request.QLSP.Store.KichThuocMulStore;
 import com.example.java4.request.QLSP.Store.SanPhamMulStore;
 import com.example.java4.request.QLSP.Store.SanPhamStore;
 import com.example.java4.request.QLSP.Update.SanPhamUpdate;
@@ -14,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,17 @@ public class SanPhamController {
     //    @RequestMapping(name="login", method = RequestMethod.POST)
     @Autowired
     SanPhamRepository spRepo;
+    @Autowired
+    MauSacRepository msRepo;
+    @Autowired
+    ChatLieuRepository clRepo;
+    @Autowired
+    KieuTayRepository ktRepo;
+    @Autowired
+    KichThuocRepository sizeRepo;
+    @Autowired
+    SPCTRepository spctRepository;
+
     public SanPhamController() {
     }
 
@@ -145,17 +160,48 @@ public class SanPhamController {
 
     @CrossOrigin
     @PostMapping("/multiple-save")
-    public ResponseEntity<String> saveMultipleSanPham(@RequestBody List<SanPhamMulStore> sanPhamMulStoreList) {
+    public ResponseEntity<SanPham> saveMultipleSanPham(@RequestBody List<SanPhamMulStore> sanPhamMulStoreList,@RequestParam("tenSP") String tenSP, @RequestParam("idChatLieu") String idChatLieu, @RequestParam("idKieuTay") String idKieuTay) {
+        System.out.println("ten sp check: "+ tenSP);
+        System.out.println("id chat lieu check: "+ idChatLieu);
+        System.out.println("ten kieu tay check: "+ idKieuTay);
         try {
-            // Process the list of products here
+            SanPham sp = new SanPham();
+            String ma = "SPHMSS"+(spRepo.getCount()+1);
+            LocalDateTime localNow = LocalDateTime.now();
+            sp.setTen(tenSP);
+            sp.setMa(ma);
+            sp.setTrangThai(0);
+            sp.setNgayTao(localNow);
+            SanPham newSP = spRepo.save(sp);
+            List<ChiTietSanPham> lstSPCT = new ArrayList<>();
             for (SanPhamMulStore sanPhamMulStore : sanPhamMulStoreList) {
                 // Save each product, handle the logic as needed
                 System.out.println("Saving product: " + sanPhamMulStore.getName());
+                for (KichThuocMulStore kichThuocMulStore : sanPhamMulStore.getSize()) {
+                    System.out.println("check size: "+ kichThuocMulStore.getTen());
+                    ChiTietSanPham newSPCT = new ChiTietSanPham();
+                    newSPCT.setIdSanPham(newSP);
+                    newSPCT.setIdMauSac(msRepo.findById(sanPhamMulStore.getId()).get());
+                    newSPCT.setIdKichThuoc(sizeRepo.findById(kichThuocMulStore.getId()).get());
+                    newSPCT.setIdChatLieu(clRepo.findById(idChatLieu).get());
+                    newSPCT.setIdKieuTay(ktRepo.findById(idKieuTay).get());
+                    newSPCT.setMoTa("");
+                    newSPCT.setSoLuong(0);
+                    newSPCT.setGiaNhap(new BigDecimal(0));
+                    newSPCT.setGiaBan(new BigDecimal(0));
+                    newSPCT.setTrangThai(1);
+                    newSPCT.setNgayTao(localNow);
+                    lstSPCT.add(newSPCT);
+                }
             }
-            return ResponseEntity.ok("Products saved successfully");
+            for (ChiTietSanPham chiTietSanPham : lstSPCT) {
+                System.out.println("test lst spct: "+chiTietSanPham);
+            }
+            spctRepository.saveAll(lstSPCT);
+            System.out.println("save success");
+            return ResponseEntity.ok(newSP);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving products");
+            return ResponseEntity.ok(null);
         }
     }
-
 }
