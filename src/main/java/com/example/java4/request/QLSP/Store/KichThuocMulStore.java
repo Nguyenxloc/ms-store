@@ -1,5 +1,5 @@
 package com.example.java4.request.QLSP.Store;
-import jakarta.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,12 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MultipleSanPhamStore {
+public class KichThuocMulStore {
     private String id;
-    @NotEmpty
+    private String ma;
     private String ten;
-    @NotEmpty
-    private String trangThai;
-    @NotEmpty
-    private String hinhAnh;
+    private String ngayTao;
+    private int trangThai;
 }

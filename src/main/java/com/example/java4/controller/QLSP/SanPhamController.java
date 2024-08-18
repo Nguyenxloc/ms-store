@@ -1,6 +1,7 @@
 package com.example.java4.controller.QLSP;
 import com.example.java4.entities.SanPham;
 import com.example.java4.repositories.SanPhamRepository;
+import com.example.java4.request.QLSP.Store.SanPhamMulStore;
 import com.example.java4.request.QLSP.Store.SanPhamStore;
 import com.example.java4.request.QLSP.Update.SanPhamUpdate;
 import com.example.java4.response.SanPhamView;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -142,26 +144,17 @@ public class SanPhamController {
     }
 
     @CrossOrigin
-    @PostMapping("multiple-save/")
-    public ResponseEntity<Boolean> multipleSave(
-            @RequestBody @Valid SanPhamStore newSanPham,
-            BindingResult result
-    ) {
-        if (result.hasErrors()) {
-            System.out.println("error temp: " + result);
-            return ResponseEntity.ok(false);
-        }
-        else{
-            LocalDateTime localNow = LocalDateTime.now();
-            String ma = "SPHMSS"+(spRepo.getCount()+1);
-            SanPham sp = new SanPham();
-            sp.setTen(newSanPham.getTen());
-            sp.setMa(ma);
-            sp.setTrangThai(Integer.valueOf(newSanPham.getTrangThai()));
-            sp.setNgayTao(localNow);
-            sp.setHinhAnh(newSanPham.getHinhAnh());
-            spRepo.save(sp);
-            return ResponseEntity.ok(true);
+    @PostMapping("/multiple-save")
+    public ResponseEntity<String> saveMultipleSanPham(@RequestBody List<SanPhamMulStore> sanPhamMulStoreList) {
+        try {
+            // Process the list of products here
+            for (SanPhamMulStore sanPhamMulStore : sanPhamMulStoreList) {
+                // Save each product, handle the logic as needed
+                System.out.println("Saving product: " + sanPhamMulStore.getName());
+            }
+            return ResponseEntity.ok("Products saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving products");
         }
     }
 
