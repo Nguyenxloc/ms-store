@@ -184,10 +184,11 @@ public class BanTaiQuayController {
     }
     @GetMapping("detail-hoa-don/{idHD}")
     public String detailHoaDon(@PathVariable String idHD, @RequestParam Optional<Integer> pageParam,
-                               @RequestParam("page") Optional<Integer> pageParam2, Model model,
-                               @RequestParam(value = "highlightId", required = false) String highlightId) {
+                               @RequestParam("page") Optional<Integer> pageParam2, Model model) {
         Optional<HoaDon> hoaDon = hoaDonRepository.findById(idHD);
         idHoaDon = idHD;
+//        ChiTietHoaDon chiTietHoaDon = hoaDonChiTietRepository.findByIdHoaDon(idHoaDon);
+//        model.addAttribute("hoaDonCT",chiTietHoaDon);
         NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
         model.addAttribute("nv", nhanVien);
         model.addAttribute("hoaDon", hoaDon.get());
@@ -221,7 +222,6 @@ public class BanTaiQuayController {
         model.addAttribute("listKM",listKhuyenMai);
         BigDecimal tongTien2 = hoaDonChiTietRepository.tinhGiaTriHD(idHoaDon);
         model.addAttribute("total",tongTien2);
-        model.addAttribute("highlightId", highlightId);
         return "/view/BanHangTaiQuay/banHangTaiQuay.jsp";
     }
 
@@ -991,16 +991,27 @@ public class BanTaiQuayController {
     @PostMapping("create")
     public String createKhachHang(@RequestParam String idHoaDon,
                                   @RequestParam String hoTen,
-                                  @RequestParam String sdt){
+                                  @RequestParam Integer gioiTinh,
+                                  @RequestParam String sdt,Model model){
 
-        KhachHang khachHang = new KhachHang();
-        khachHang.setHoTen(hoTen);
-        khachHang.setSdt(sdt);
-        khachHang.setTaiKhoan(hoTen);
-        khachHang.setMatKhau("12345");
-        khachHang.setTrangThai(1);
-        khachHangRepository.save(khachHang);
-        return "redirect:/ban-hang-tai-quay/detail-hoa-don/" + idHoaDon;
+        if (idHoaDon.equals("")){
+            KhachHang khachHang = new KhachHang();
+            khachHang.setHoTen(hoTen);
+            khachHang.setSdt(sdt);
+            khachHang.setGioiTinh(gioiTinh);
+            khachHang.setTrangThai(1);
+            khachHangRepository.save(khachHang);
+            return "redirect:/ban-hang-tai-quay";
+        }else {
+            KhachHang khachHang = new KhachHang();
+            khachHang.setHoTen(hoTen);
+            khachHang.setSdt(sdt);
+            khachHang.setGioiTinh(gioiTinh);
+            khachHang.setTrangThai(1);
+            khachHangRepository.save(khachHang);
+            return "redirect:/ban-hang-tai-quay/detail-hoa-don/" + idHoaDon;
+        }
+
     }
 
     @CrossOrigin
@@ -1273,7 +1284,7 @@ public class BanTaiQuayController {
             @RequestParam(value = "vnp_BankCode") String bankCode,
             @RequestParam(value = "vnp_ResponseCode") String responseCode,
             @RequestParam(value = "vnp_OrderInfo") String orderInfo,
-            @RequestParam(value = "vnp_CardType") String cardType, Model model
+            @RequestParam(value = "vnp_CardType") String cardType, Model model,RedirectAttributes redirectAttributes
     ){
 
         int tt = Integer.valueOf(amount)/100;
@@ -1298,7 +1309,15 @@ public class BanTaiQuayController {
             hoaDon.setLoaiHoaDon(0);
             hoaDon.setTrangThai(6);
             hoaDon.setPhuongThucThanhToan(1);
-            hoaDonRepository.save(hoaDon);
+//            hoaDonRepository.save(hoaDon);
+
+            try {
+                //gửi dữ liệu success từ Controller sang View(file.jsp)
+                hoaDonRepository.save(hoaDon);
+                redirectAttributes.addFlashAttribute("success", "Thanh toán thành công!");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi khi thanh toán.");
+            }
         }
 
         model.addAttribute("amount",amount);

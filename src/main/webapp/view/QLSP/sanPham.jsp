@@ -823,7 +823,7 @@
                         '<button id="detailSPBtn_' + sp.id + '" class="btn btn-danger">Chi tiết</button>' +
                         '</div>' +
                         '</td>' +
-                         '</tr>';
+                        '</tr>';
                 });
                 $("#tbl_ds_sp").html(html)
             });
@@ -1394,7 +1394,7 @@
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
     size =[];
-    let dataCell = {name:"",size:size};
+    let dataCell = {name:"",size:size,amount:0};
     let lstDataSet = [];
     let checkChooseDropdown = "";
     function refresh(e) {
@@ -1419,10 +1419,10 @@
         ///conduct lstDataSet
         if(howManyCboMauSac>lstDataSet.length){
             size = [];
-            dataCell = {name:ms.ten,size:size}
+            dataCell = {name:ms.ten,size:size,amountCBO: 0}
             lstDataSet.push(dataCell);
         }
-            lstDataSet[indx].name = ms.ten;
+        lstDataSet[indx].name = ms.ten;
         console.log("test lst mausac: ",lstDataSet);
         checkChooseDropdown  = ms.ten;
         loadKichThuocWrapper();
@@ -1616,7 +1616,7 @@
     //Conduct
     const loadKichThuocWrapper = () => {
         const htmlKichThuocWrapper = document.getElementById("kichThuocWrapper");
-        htmlKichThuocWrapper.innerHTML = '';
+        htmlKichThuocWrapper.innerHTML = ''; // Clear the wrapper
         let newHtmlContent = ''; // Temporary variable to hold new HTML content
         for (let i = 0; i < lstDataSet.length; i++) {
             newHtmlContent +=
@@ -1626,17 +1626,17 @@
                 '<div class="icon-container">' +
                 '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
                 'data-bs-target="#ModalHotAddKT" ' +
-                'id="iconHotAddKichThuoc" ' +
+                'id="iconHotAddKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet.at(i).name + '">' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-plus col-3" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-plus col-3 icon-add-more" id="iconAddMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-dash col-3" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
+                '<i class="bi bi-dash col-3 icon-remove-more" id="iconRemoveMoreCboKichThuoc_' + lstDataSet.at(i).name + '" ' +
                 'style="font-size: 25px"></i>' +
                 '</div>' +
                 '</div>' +
@@ -1644,6 +1644,55 @@
         }
         // Adding the new HTML content to the DOM
         htmlKichThuocWrapper.insertAdjacentHTML('beforeend', newHtmlContent);
+
+        // Rebinding the event listeners after the DOM is updated
+        setEventIconAddnRemoveKichThuoc();
+    };
+
+    function setEventIconAddnRemoveKichThuoc() {
+        console.log("check lstDataSet: ", lstDataSet);
+        // Handling dynamically generated elements using event delegation
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('icon-add-more')) {
+                e.preventDefault();
+                const mauSacArea = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
+                console.log("Add Kich Thuoc for: ", mauSacArea);
+                for (let i = 0; i < lstDataSet.length; i++) {
+                    if(lstDataSet[i].name == mauSacArea){
+                        //logic add data to size array
+                        //increase cbo kich
+                        const htmlDropdown = document.getElementById("kichThuocBox_"+lstDataSet[i].name);
+                        let newHtmlContent = '';
+                        lstDataSet[i].size.push("x");
+                        lstDataSet[i].amountCBO = 1;
+                        for (let a = 0; a < lstDataSet[i].amountCBO; a++) {
+                            newHtmlContent += '<div class="dropdown">' +
+                                '<button class="btn btn-outline-secondary dropdown-toggle" ' +
+                                'type="button" ' +
+                                'id="lblKichThuocAdd_' + lstDataSet[i].name + i + '" style="width: 150px;" ' +
+                                'data-bs-toggle="dropdown" ' +
+                                'aria-expanded="false">' +
+                                'Chọn kích thước' +
+                                '</button>' +
+                                '<ul class="dropdown-menu" id="cboKichThuocAdd_' + lstDataSet[i].name + '_' + a + '" ' +
+                                'aria-labelledby="dropdownMenuButton2">' +
+                                '</ul>' +
+                                '<p style="color: red;" id="cboKichThuocAddErr_' + lstDataSet[i].name  + a + '"></p>' +
+                                '</div>';
+                        }
+                        htmlDropdown.insertAdjacentHTML('beforeend', newHtmlContent); // Add the new HTML content
+                    }
+                }
+                // Add your logic to handle the addition here
+                console.log("lst data set: ", lstDataSet);
+            }
+            if (e.target && e.target.classList.contains('icon-remove-more')) {
+                e.preventDefault();
+                const mauSacArea = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
+                console.log("Remove Kich Thuoc for: ", mauSacArea);
+                // Add your logic to handle the removal here
+            }
+        });
     }
 
     const loadTotalCboKichThuoc = () => {
@@ -1705,7 +1754,7 @@
             loadKichThuocWrapper();
         }
         else{
-             checkChooseDropdown = "hold";
+            checkChooseDropdown = "hold";
         }
         howManyCboMauSacMemo--;
         howManyCboMauSac--;
