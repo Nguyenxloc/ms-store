@@ -100,11 +100,11 @@ public class QuanLyNhanVienController {
     ) {
         ChucVu chucVu = chucVuRepo.findById(nvReq.getIdCV()).get();
         NhanVien nhanVien = new NhanVien();
-        nhanVien.setHoTen(nvReq.getHoTen());
+        nhanVien.setHoTen(nvReq.getHoTen().trim());
         nhanVien.setSdt(nvReq.getSdt());
         nhanVien.setNgaySinh(nvReq.getNgaySinh());
         nhanVien.setGioiTinh(nvReq.getGioiTinh());
-        nhanVien.setTaiKhoan(nvReq.getTaiKhoan());
+        nhanVien.setTaiKhoan(nvReq.getTaiKhoan().trim());
         nhanVien.setMatKhau(nvReq.getMatKhau());
         nhanVien.setIdCV(chucVu);
 
@@ -136,7 +136,7 @@ public class QuanLyNhanVienController {
             @Valid @ModelAttribute("chucVu") ChucVuRequest cvReq
     ) {
         ChucVu chucVu = new ChucVu();
-        chucVu.setTen(cvReq.getTen());
+        chucVu.setTen(cvReq.getTen().trim());
         chucVu.setNgayTao(LocalDateTime.now());
         chucVu.setTrangThai(ChucVuRepository.ACTIVE);
         chucVuRepo.save(chucVu);
@@ -151,7 +151,7 @@ public class QuanLyNhanVienController {
             @RequestParam("trangThai") Integer trangThai
     ) {
         chucVu.setId(chucVu.getId());
-        chucVu.setTen(ten);
+        chucVu.setTen(ten.trim());
         chucVu.setNgaySua(LocalDateTime.now());
         chucVu.setTrangThai(trangThai);
         chucVuRepo.save(chucVu);
@@ -185,11 +185,11 @@ public class QuanLyNhanVienController {
 
         ChucVu chucVu = chucVuRepo.findById(nvReq.getIdCV()).get();
         nhanVien.setId(nhanVien.getId());
-        nhanVien.setHoTen(nvReq.getHoTen());
+        nhanVien.setHoTen(nvReq.getHoTen().trim());
         nhanVien.setSdt(nvReq.getSdt());
         nhanVien.setNgaySinh(nvReq.getNgaySinh());
         nhanVien.setGioiTinh(nvReq.getGioiTinh());
-        nhanVien.setTaiKhoan(nvReq.getTaiKhoan());
+        nhanVien.setTaiKhoan(nvReq.getTaiKhoan().trim());
         nhanVien.setMatKhau(nvReq.getMatKhau());
         nhanVien.setIdCV(chucVu);
 
@@ -230,11 +230,11 @@ public class QuanLyNhanVienController {
         List<NhanVien> listNhanVien = nhanVienRepo.findAll();
 
         if ((key != null || !key.isEmpty()) && idCV.isEmpty()) {
-            listNhanVien = nhanVienRepo.findByHoTenOrSdt(key);
+            listNhanVien = nhanVienRepo.findByHoTenOrSdt(key.trim());
         } else if (key.isEmpty()) {
             listNhanVien = nhanVienRepo.findByChucVu(idCV);
         } else if (!key.isEmpty() && !idCV.isEmpty()) {
-            listNhanVien = nhanVienRepo.findByHoTenOrSdtAndChucVu(key, idCV);
+            listNhanVien = nhanVienRepo.findByHoTenOrSdtAndChucVu(key.trim(), idCV);
         }
 
         List<ChucVu> listChucVuByTrangThai = chucVuRepo.findByTrangThai(ChucVuRepository.ACTIVE);
@@ -270,11 +270,11 @@ public class QuanLyNhanVienController {
 
         ChucVu chucVu = chucVuRepo.findById(nvReq.getIdCV()).get();
         nhanVien.setId(nhanVien.getId());
-        nhanVien.setHoTen(nvReq.getHoTen());
+        nhanVien.setHoTen(nvReq.getHoTen().trim());
         nhanVien.setSdt(nvReq.getSdt());
         nhanVien.setNgaySinh(nvReq.getNgaySinh());
         nhanVien.setGioiTinh(nvReq.getGioiTinh());
-        nhanVien.setTaiKhoan(nvReq.getTaiKhoan());
+        nhanVien.setTaiKhoan(nvReq.getTaiKhoan().trim());
         nhanVien.setMatKhau(nvReq.getMatKhau());
         nhanVien.setIdCV(chucVu);
 

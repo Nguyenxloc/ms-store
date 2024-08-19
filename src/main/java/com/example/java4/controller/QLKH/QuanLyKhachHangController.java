@@ -88,9 +88,9 @@ public class QuanLyKhachHangController {
             @Valid @ModelAttribute("khachHang") KhachHangRequest khReq
     ) {
         KhachHang khachHang = new KhachHang();
-        khachHang.setHoTen(khReq.getHoTen());
+        khachHang.setHoTen(khReq.getHoTen().trim());
         khachHang.setSdt(khReq.getSdt());
-        khachHang.setEmail(khReq.getEmail());
+        khachHang.setEmail(khReq.getEmail().trim());
         khachHang.setNgaySinh(khReq.getNgaySinh());
         khachHang.setGioiTinh(khReq.getGioiTinh());
 
@@ -141,9 +141,9 @@ public class QuanLyKhachHangController {
             @Valid @ModelAttribute("khachHang") KhachHangRequest khReq
     ) {
         khachHang.setId(khachHang.getId());
-        khachHang.setHoTen(khReq.getHoTen());
+        khachHang.setHoTen(khReq.getHoTen().trim());
         khachHang.setSdt(khReq.getSdt());
-        khachHang.setEmail(khReq.getEmail());
+        khachHang.setEmail(khReq.getEmail().trim());
         khachHang.setNgaySinh(khReq.getNgaySinh());
         khachHang.setGioiTinh(khReq.getGioiTinh());
 
@@ -216,7 +216,7 @@ public class QuanLyKhachHangController {
         List<KhachHang> listKhachHang = khachHangRepo.findAll();
 
         if ((key != null || !key.isEmpty()) && (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty())) {
-            listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail(key);
+            listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail(key.trim());
         } else if (key.isEmpty() && (ngayBatDau != null && ngayKetThuc != null)) {
             try {
                 listKhachHang = khachHangRepo.findByKhoangNgaySinh(sdf.parse(ngayBatDau), sdf.parse(ngayKetThuc));
@@ -225,7 +225,7 @@ public class QuanLyKhachHangController {
             }
         } else if (!key.isEmpty() && (!ngayBatDau.isEmpty() && !ngayKetThuc.isEmpty())) {
             try {
-                listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail_NgaySinh(key, sdf.parse(ngayBatDau), sdf.parse(ngayKetThuc));
+                listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail_NgaySinh(key.trim(), sdf.parse(ngayBatDau), sdf.parse(ngayKetThuc));
             }catch (Exception e){
                 e.printStackTrace();
             }
