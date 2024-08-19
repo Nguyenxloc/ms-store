@@ -41,7 +41,8 @@ public interface CTSPRepository extends JpaRepository<ChiTietSanPham, String>, J
             "join MauSac ms on ms.id = ctsp.idMauSac.id " +
             "join KichThuoc kth on kth.id = ctsp.idKichThuoc.id " +
             "join KieuTay kta on kta.id = ctsp.idKieuTay.id " +
-            "join HinhAnh ha on ha.idCTSP.id = ctsp.id ")
+            "join HinhAnh ha on ha.idCTSP.id = ctsp.id " +
+            "where sp.trangThai = 1")
     List<ChiTietSanPhamResponse> getCTSPRes();
 
 }
