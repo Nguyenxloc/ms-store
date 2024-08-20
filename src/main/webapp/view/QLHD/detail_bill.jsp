@@ -249,12 +249,12 @@
             justify-content: center;
             align-items: center;
         }
+
         #printFrame {
             width: 0;
             height: 0;
             border: none;
         }
-
 
 
     </style>
@@ -299,7 +299,8 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/hoa-don/hien-thi"
+                       style="display: flex; color: white; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
@@ -320,7 +321,7 @@
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" >
+                <li class="nav-item">
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
@@ -556,18 +557,21 @@
 
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
                             <img class="img-profile rounded-circle" src="/imageUser/${nv.anhDaiDien}">
                         </a>
                         <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat" data-toggle="modal" data-target="#logoutModal">
+                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat" data-toggle="modal"
+                               data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
                             </a>
@@ -728,12 +732,12 @@
                                         </button>
                                     </c:if>
 
-<%--                                    <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 6}">--%>
-<%--                                        <button type="button" class="btn btn-warning ml-1" data-bs-toggle="modal"--%>
-<%--                                                data-bs-target="#undoModal">--%>
-<%--                                            Hoàn tác--%>
-<%--                                        </button>--%>
-<%--                                    </c:if>--%>
+                                        <%--                                    <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 6}">--%>
+                                        <%--                                        <button type="button" class="btn btn-warning ml-1" data-bs-toggle="modal"--%>
+                                        <%--                                                data-bs-target="#undoModal">--%>
+                                        <%--                                            Hoàn tác--%>
+                                        <%--                                        </button>--%>
+                                        <%--                                    </c:if>--%>
                                 </div>
                             </c:if>
 
@@ -1201,28 +1205,32 @@
                                 <h5 class="card-title">Chi phí đơn hàng</h5>
                             </div>
                             <div class="card-body">
-                                <c:set var="giamGia" value="${hoaDonDTO.khuyenMai.soTienGiam != null ? hoaDonDTO.khuyenMai.soTienGiam : 0}"/>
+                                <c:set var="giamGia"
+                                       value="${hoaDonDTO.khuyenMai.soTienGiam != null ? hoaDonDTO.khuyenMai.soTienGiam : 0}"/>
                                 <c:set var="tongTien" value="${tongTienDonHang != null ? tongTienDonHang : 0}"/>
-                                <c:set var="phiVanChuyen" value="${giaoHangDTO.phiShip != null ? giaoHangDTO.phiShip : 0}"/>
+                                <c:set var="phiVanChuyen"
+                                       value="${giaoHangDTO.phiShip != null ? giaoHangDTO.phiShip : 0}"/>
                                 <div class="row">
                                     <div class="col-12">
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Tổng tiền đơn hàng:</span>
-                                            <span class="text-danger" id="tongTienValue">
-                            <fmt:formatNumber value="${tongTien}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                                            <span class="text-danger" id="tongTienValue" data-tongtien="${tongTien}">
+                            <fmt:formatNumber value="${tongTien}" type="currency" currencySymbol="₫"
+                                              groupingUsed="true"/>
                         </span>
                                         </p>
 
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Phí vận chuyển:</span>
-                                            <span class="fw-normal" id="phiVanChuyen">
-                            <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                                            <span class="fw-normal" id="phiVanChuyen" data-phiship="${phiVanChuyen}">
+                            <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫"
+                                              groupingUsed="true"/>
                         </span>
                                         </p>
 
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Phiếu giảm giá:</span>
-                                            <span class="fw-normal" id="phieuGiamGia">
+                                            <span class="fw-normal" id="phieuGiamGia" data-giamgia="${giamGia}">
                                                 ${hoaDonDTO.khuyenMai.ma == null ? "N/A" : hoaDonDTO.khuyenMai.ma}
                                             </span>
                                         </p>
@@ -1230,7 +1238,8 @@
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Giảm giá:</span>
                                             <span class="fw-normal" id="giamGia">
-                            <fmt:formatNumber value="${giamGia}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                            <fmt:formatNumber value="${giamGia}" type="currency" currencySymbol="₫"
+                                              groupingUsed="true"/>
                         </span>
                                         </p>
                                     </div>
@@ -1239,15 +1248,15 @@
                             <div class="card-footer">
                                 <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                     <span>Tổng tiền thanh toán:</span>
-                                    <span class="text-danger" id="tongTienThanhToanValue">
+                                    <span class="text-danger" id="tongTienThanhToanValue" >
                     <c:set var="tongTienThanhToan" value="${tongTienThanhToan}"/>
-                    <fmt:formatNumber value="${tongTienThanhToan}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                    <fmt:formatNumber value="${tongTienThanhToan}" type="currency" currencySymbol="₫"
+                                      groupingUsed="true"/>
                 </span>
                                 </p>
                             </div>
                         </div>
                     </div>
-
 
 
                     <!-- End Recent Activity -->
@@ -1290,8 +1299,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
-                                        <label for="idTinhThanh" class="form-label">Tỉnh/Thành Phố:</label>
-                                        <select class="form-select" id="idTinhThanh" name="idTinhThanh"
+                                        <label for="tinh" class="form-label">Tỉnh/Thành Phố:</label>
+                                        <select class="form-select" id="tinh" name="idTinhThanh"
                                                 title="Chọn tỉnh thành">
                                             <!-- Options populated dynamically -->
                                             <option value="${giaoHangDTO.idTinhThanh}">${giaoHangDTO.idTinhThanh}</option>
@@ -1299,8 +1308,8 @@
                                         <div id="tinhError" class="text-danger"></div>
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label for="idQuanHuyen" class="form-label">Quận/Huyện:</label>
-                                        <select class="form-select" id="idQuanHuyen" name="idQuanHuyen"
+                                        <label for="huyen" class="form-label">Quận/Huyện:</label>
+                                        <select class="form-select" id="huyen" name="idQuanHuyen"
                                                 title="Chọn quận huyện">
                                             <!-- Options populated dynamically -->
                                             <option value="${giaoHangDTO.idQuanHuyen}">${giaoHangDTO.idQuanHuyen}</option>
@@ -1308,8 +1317,8 @@
                                         <div id="huyenError" class="text-danger"></div>
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label for="idPhuongXa" class="form-label">Phường/Xã:</label>
-                                        <select class="form-select" id="idPhuongXa" name="idPhuongXa" title="Chọn phường xã">
+                                        <label for="xa" class="form-label">Phường/Xã:</label>
+                                        <select class="form-select" id="xa" name="idPhuongXa" title="Chọn phường xã">
                                             <!-- Options populated dynamically -->
                                             <%--                                            <option value="" selected>Chọn phường xã</option>--%>
                                             <option value="${giaoHangDTO.idPhuongXa}">${giaoHangDTO.idPhuongXa}</option>
@@ -1319,7 +1328,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="phiShip" class="form-label">Phí ship</label>
-                                    <input type="text" class="form-control" id="phiShip" name="phiShip"
+                                    <input type="number" class="form-control" id="phiShip" name="phiShip"
                                            value="${giaoHangDTO.phiShip}">
                                     <div id="phiShipError" class="text-danger"></div>
                                 </div>
@@ -1415,15 +1424,19 @@
                                                     <c:when test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 3}">
                                                         <input type="number" id="soLuong-${chiTiet.idCTSP.id}"
                                                                value="${chiTiet.soLuong}"
-                                                               data-id="${chiTiet.idCTSP.id}" data-hoadon="${hoaDonDTO.id}"
-                                                               class="form-control form-control-sm" style="width: 100px;"
+                                                               data-id="${chiTiet.idCTSP.id}"
+                                                               data-hoadon="${hoaDonDTO.id}"
+                                                               class="form-control form-control-sm"
+                                                               style="width: 100px;"
                                                                min="1" disabled>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <input type="number" id="soLuong-${chiTiet.idCTSP.id}"
                                                                value="${chiTiet.soLuong}"
-                                                               data-id="${chiTiet.idCTSP.id}" data-hoadon="${hoaDonDTO.id}"
-                                                               class="form-control form-control-sm" style="width: 100px;"
+                                                               data-id="${chiTiet.idCTSP.id}"
+                                                               data-hoadon="${hoaDonDTO.id}"
+                                                               class="form-control form-control-sm"
+                                                               style="width: 100px;"
                                                                min="1">
                                                     </c:otherwise>
                                                 </c:choose>
@@ -1594,17 +1607,17 @@
                                     <td data-quantity="${product.soLuong}">${product.soLuong}</td>
 
                                     <td>
-                                    <fmt:formatNumber value="${product.giaBan}"
+                                        <fmt:formatNumber value="${product.giaBan}"
                                                           type="currency"
                                                           currencySymbol="₫"
                                                           groupingUsed="true"
-                                    />
+                                        />
                                     </td>
                                     <td>
                                         <span
-                                            class=" fw-normal badge rounded-pill ${product.trangThai == 0 ? 'bg-danger' : 'bg-success'}">
-                                            ${product.trangThai == 0 ? "Hết hàng" : "Còn hàng"}
-                                    </span>
+                                                class=" fw-normal badge rounded-pill ${product.trangThai == 0 ? 'bg-danger' : 'bg-success'}">
+                                                ${product.trangThai == 0 ? "Hết hàng" : "Còn hàng"}
+                                        </span>
                                     </td>
                                     <td>
                                         <!-- Thao tác, ví dụ như nút sửa, xóa -->
@@ -1649,7 +1662,7 @@
             </div>
         </div>
 
-<%--        In phiếu giao hàng--%>
+        <%--        In phiếu giao hàng--%>
         <div id="printOverlay">
             <iframe id="printFrame"></iframe>
         </div>
@@ -1776,7 +1789,7 @@
     });
     </c:if>
 
-<%--    Thong báo trường hợp Duplicate đơn hàng--%>
+    <%--    Thong báo trường hợp Duplicate đơn hàng--%>
     <c:if test="${not empty confirmError}">
     Toast.fire({
         icon: "error",
@@ -1931,10 +1944,25 @@
     });
 
 
-    // Validate form  Thay đổi thông tin khách hàng
+    // Validate form thay đổi thông tin khách hàng
     $(document).ready(function () {
-        var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
 
+        // Hàm cập nhật giá trị vào các trường hiển thị
+        function updateValues() {
+            // Lấy giá trị từ các phần tử HTML
+            var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
+            var phiVanChuyen = parseFloat($('#phiVanChuyen').data('phiship')) || 0;
+            var giamGia = parseFloat($('#giamGia').data('giamgia')) || 0;
+
+            // Tính tổng tiền thanh toán
+            var tongTienThanhToan = tongTien + phiVanChuyen - giamGia;
+            // Cập nhật giá trị vào các phần tử trong HTML
+            $('#tongTienValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTien));
+            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTienThanhToan));
+        }
+
+        var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+        var shopId = '1244'
         function getJSONWithToken(url, callback) {
             $.ajax({
                 url: url,
@@ -1948,11 +1976,55 @@
             });
         }
 
+
         $('#updateModal').on('show.bs.modal', function () {
             var modalId = $(this).attr('id');
             var provinceSelect = $("#" + modalId + " select[name='idTinhThanh']");
             var districtSelect = $("#" + modalId + " select[name='idQuanHuyen']");
             var wardSelect = $("#" + modalId + " select[name='idPhuongXa']");
+            var addressInput = $("#" + modalId + " input[name='diaChiChiTiet']");
+
+
+            // Sự kiện khi click vào ô input địa chỉ cụ thể
+            addressInput.on('click', function() {
+                // Xóa các giá trị đã chọn trước đó
+                provinceSelect.html('<option value="">Chọn Tỉnh/Thành Phố</option>');
+                districtSelect.html('<option value="">Chọn Quận/Huyện</option>');
+                wardSelect.html('<option value="">Chọn Phường/Xã</option>');
+
+                // Yêu cầu người dùng chọn lại Tỉnh/Thành Phố
+                getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', function (data_tinh) {
+                    data_tinh.data.sort(function (a, b) {
+                        return a.ProvinceID - b.ProvinceID;
+                    });
+                    $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                        provinceSelect.append('<option value="' + val_tinh.ProvinceID + '">' + val_tinh.ProvinceName + '</option>');
+                    });
+
+                    provinceSelect.change(function () {
+                        var idtinh = $(this).val();
+
+                        // Lấy quận/huyện dựa trên tỉnh thành đã chọn
+                        getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=' + idtinh, function (data_quan) {
+                            districtSelect.html('<option value="">Chọn Quận/Huyện</option>');
+                            wardSelect.html('<option value="">Chọn Phường/Xã</option>');
+                            $.each(data_quan.data, function (key_quan, val_quan) {
+                                districtSelect.append('<option value="' + val_quan.DistrictID + '">' + val_quan.DistrictName + '</option>');
+                            });
+
+                            districtSelect.change(function () {
+                                var idquan = $(this).val();
+                                getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idquan, function (data_phuong) {
+                                    wardSelect.html('<option value="">Chọn Phường/Xã</option>');
+                                    $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                                        wardSelect.append('<option value="' + val_phuong.WardCode + '">' + val_phuong.WardName + '</option>');
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
 
             // Gọi API để lấy danh sách tỉnh/thành phố
             getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', function (data_tinh) {
@@ -1994,19 +2066,249 @@
             $('#updateForm').submit();
         });
 
-        // $('#updateForm').submit(function (e) {
-        //     var modalId = $(this).closest('.modal').attr('id');
-        //     var tenTinh = $("#" + modalId + " select[name='idTinhThanh'] option:selected").text();
-        //     var tenQuan = $("#" + modalId + " select[name='idQuanHuyen'] option:selected").text();
-        //     var tenPhuong = $("#" + modalId + " select[name='idPhuongXa'] option:selected").text();
-        //
-        //     var idTinh = $("#" + modalId + " select[name='idTinhThanh']").val();
-        //     var idQuan = $("#" + modalId + " select[name='idQuanHuyen']").val();
-        //     var idPhuong = $("#" + modalId + " select[name='idPhuongXa']").val();
-        //
-        //     $('#updateForm').submit();
-        // });
+        $('#updateForm').submit(function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Clear previous error messages
+            $('.text-danger').text('');
+            $('.form-control, .form-select').removeClass('border-danger');
+
+            // Example validation
+            var isValid = true;
+            var hoTen = $('#hoTen');
+            var hoTenValue = hoTen.val().trim();
+            var hoTenError = $('#hoTenError');
+
+
+            if (hoTenValue === '') {
+                hoTen.addClass('border-danger');
+                hoTenError.text('Vui lòng nhập vào trường họ tên').addClass('text-danger');
+                isValid = false;
+            } else if (hoTenValue.length < 5) {
+                hoTen.addClass('border-danger');
+                hoTenError.text('Họ tên phải có độ dài trên 5 ký tự').addClass('text-danger');
+                isValid = false;
+            } else if (hoTenValue.length > 50) {
+                hoTen.addClass('border-danger');
+                hoTenError.text('Họ tên không được vượt quá độ dài 50 ký tự').addClass('text-danger');
+                isValid = false;
+            }
+            else if (/[0-9]/.test(hoTenValue)) {  // Kiểm tra ký tự số
+                hoTen.addClass('border-danger');
+                hoTenError.text('Họ tên không được chứa số').addClass('text-danger');
+                isValid = false;
+            }else if(!isValidFullName(hoTenValue)){
+                hoTen.addClass('border-danger');
+                hoTenError.text('Họ tên không được chứa ký tự đặc biệt').addClass('text-danger');
+                isValid = false;
+            }
+
+            // Hàm kiểm tra định dạng họ tên
+            function isValidFullName(fullName) {
+                var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+                return regex.test(fullName);
+            }
+
+
+            // Validate trường dữ liệu điện thoại
+            if ($('#sdt').val().trim() === '') {
+                isValid = false;
+                $('#sdt').addClass('border-danger');
+                $('#sdtError').text('Vui lòng nhập số điện thoại').addClass('text-danger');
+            } else {
+                var phonePattern = /^(03|05|07|08|09)+([0-9]{8})$/;
+                if (!phonePattern.test($('#sdt').val().trim())) {
+                    isValid = false;
+                    $('#sdt').addClass('border-danger');
+                    $('#sdtError').text('Số điện thoại không hợp lệ').addClass('text-danger');
+                }
+            }
+
+            // Kiểm tra địa chỉ cụ thể
+            var diaChiChiTiet = $('#diaChiChiTiet');
+            var diaChiChiTietValue = diaChiChiTiet.val().trim();
+            var diaChiChiTietError = $('#diaChiChiTietError');
+
+            // Validate trường dữ liệu địa chỉ cụ thể
+            diaChiChiTiet.removeClass('border-danger');
+            diaChiChiTietError.text('');
+
+            if (diaChiChiTietValue === '') {
+                isValid = false;
+                diaChiChiTiet.addClass('border-danger');
+                diaChiChiTietError.text('Vui lòng nhập địa chỉ cụ thể').addClass('text-danger');
+            } else if (diaChiChiTietValue.length < 5) {
+                isValid = false;
+                diaChiChiTiet.addClass('border-danger');
+                diaChiChiTietError.text('Địa chỉ cụ thể phải có độ dài trên 5 ký tự').addClass('text-danger');
+            } else if (diaChiChiTietValue.length > 100) {
+                isValid = false;
+                diaChiChiTiet.addClass('border-danger');
+                diaChiChiTietError.text('Địa chỉ cụ thể không được vượt quá 100 ký tự').addClass('text-danger');
+            } else if (/^[0-9\s]+$/.test(diaChiChiTietValue)) {
+                isValid = false;
+                diaChiChiTiet.addClass('border-danger');
+                diaChiChiTietError.text('Địa chỉ cụ thể phải chứa cả ký tự chữ và ký tự số').addClass('text-danger');
+
+            }
+            else if (!isValidAddress(diaChiChiTietValue)) {
+                isValid = false;
+                diaChiChiTiet.addClass('border-danger');
+                diaChiChiTietError.text('Địa chỉ cụ thể không được chứa ký tự đặc biệt').addClass('text-danger');
+            }
+
+            else if (!/[a-zA-Z]/.test(diaChiChiTietValue) || !/[0-9]/.test(diaChiChiTietValue)) {
+                isValid = false;
+                diaChiChiTiet.addClass('border-danger');
+                diaChiChiTietError.text('Địa chỉ cụ thể phải chứa cả ký tự chữ và ký tự số').addClass('text-danger');
+            }
+
+            else {
+                // If all conditions are passed, the input is valid
+                diaChiChiTiet.removeClass('border-danger');
+                diaChiChiTietError.text('').removeClass('text-danger');
+            }
+
+            // Hàm kiểm tra định dạng họ tên
+            function isValidAddress(address) {
+                var regex = /^[a-zA-ZÀ-ỹ0-9\s]+$/;
+                return regex.test(address);
+            }
+
+            // Validate phí ship
+            var phiShip = $('#phiShip');
+            var phiShipValue = phiShip.val().trim();
+            var phiShipError = $('#phiShipError');
+            // Mức phí ship tối đa (200.000 VNĐ)
+            var maxShipFee = 200000;
+
+            if (phiShipValue === '') {
+                isValid = false;
+                phiShip.addClass('border-danger');
+                phiShipError.text('Vui lòng nhập phí ship').addClass('text-danger');
+            }
+            else if (!/^\d+$/.test(phiShipValue)) {
+                isValid = false;
+                phiShip.addClass('border-danger');
+                phiShipError.text('Phí ship phải là số hợp lệ. Không được chứa ký tự chữ hoặc ký tự đặc biệt').addClass('text-danger');
+            }
+            else if (parseInt(phiShipValue, 10) <= 0) {
+                isValid = false;
+                phiShip.addClass('border-danger');
+                phiShipError.text('Phí ship phải là số dương và lớn hơn 0').addClass('text-danger');
+            }
+            else if (parseInt(phiShipValue, 10) > maxShipFee) {
+                isValid = false;
+                phiShip.addClass('border-danger');
+                phiShipError.text('Phí ship không được vượt quá 200.000 VNĐ').addClass('text-danger');
+            } else {
+                phiShip.removeClass('border-danger');
+                phiShipError.text('').removeClass('text-danger');
+            }
+
+            //Validate trường dữ liệu ghi chú
+            var ghiChu = $('#ghiChu');
+            var ghiChuValue = ghiChu.val().trim();
+            var ghiChuError = $('#ghiChuError');
+
+            if (ghiChuValue !== '') {
+                // Kiểm tra độ dài tối thiểu (ít nhất 5 ký tự)
+                if (ghiChuValue.length < 5) {
+                    isValid = false;
+                    ghiChu.addClass('border-danger');
+                    ghiChuError.text('Ghi chú phải có độ dài ít nhất 5 ký tự').addClass('text-danger');
+                }
+                // Kiểm tra độ dài tối đa (không quá 200 ký tự)
+                else if (ghiChuValue.length > 200) {
+                    isValid = false;
+                    ghiChu.addClass('border-danger');
+                    ghiChuError.text('Ghi chú không được vượt quá 200 ký tự').addClass('text-danger');
+                }
+                // Kiểm tra nếu chứa ký tự đặc biệt
+                else if (!/^[a-zA-ZÀ-ỹ0-9\s]+$/.test(ghiChuValue)) {
+                    isValid = false;
+                    ghiChu.addClass('border-danger');
+                    ghiChuError.text('Ghi chú không được chứa ký tự đặc biệt').addClass('text-danger');
+                }
+
+                // Kiểm tra nếu ghi chú chứa toàn số
+                else if (/^[0-9\s]+$/.test(ghiChuValue)) {
+                    isValid = false;
+                    ghiChu.addClass('border-danger');
+                    ghiChuError.text('Ghi chú không được phép chứa toàn số').addClass('text-danger');
+                }
+                // Kiểm tra nếu ghi chú không chứa số
+                else if (!/[a-zA-Z]/.test(ghiChuValue) && /[0-9]/.test(ghiChuValue)) {
+                    isValid = false;
+                    ghiChu.addClass('border-danger');
+                    ghiChuError.text('Ghi chú phải chứa ký tự chữ').addClass('text-danger');
+                }
+            }
+
+            // Validate tỉnh huyện xã
+            const tinh = $("#tinh").val().trim();
+            const huyen = $("#huyen").val().trim();
+            const xa = $("#xa").val().trim();
+
+            // Validate Tỉnh/Thành Phố
+            if (!tinh) {
+                isValid = false;
+                $("#tinhError").text("Vui lòng chọn tỉnh/thành phố");
+            } else {
+                $("#tinhError").text("");
+            }
+
+            // Validate Quận/Huyện
+            if (!huyen) {
+                isValid = false;
+                $("#huyenError").text("Vui lòng chọn quận/huyện");
+            } else {
+                $("#huyenError").text("");
+            }
+
+            // Validate Phường/Xã
+            if (!xa) {
+                isValid = false;
+                $("#xaError").text("Vui lòng chọn phường/xã");
+            } else {
+                $("#xaError").text("");
+            }
+
+
+
+            $('#tenTinhThanh').val($('#tinh option:selected').text());
+            $('#tenQuanHuyen').val($('#huyen option:selected').text());
+            $('#tenPhuongXa').val($('#xa option:selected').text());
+
+            if (isValid) {
+                // Store the updated data in the updatedData object
+                updatedData = {
+                    idTinhThanh: $('#tinh').val(),
+                    idQuanHuyen: $('#huyen').val(),
+                    idPhuongXa: $('#xa').val(),
+                };
+                updateValues();
+                // Submit the form via AJAX or standard form submission
+                this.submit();
+            } else {
+                $(".modal-body").scrollTop(0);
+                updateValues();
+            }
+        });
+
+        // Clear errors when input/select value changes
+        $('#hoTen, #sdt, #diaChiChiTiet, #tinh, #huyen, #xa, #phiShip,#ghiChu').on('input click change', function () {
+            var errorId = '#' + $(this).attr('id') + 'Error';
+            $(this).removeClass('border-danger');
+            $(errorId).text('');
+        });
+
+
     });
+
+
+
+
 
 
 
@@ -2052,7 +2354,7 @@
                     if (result.isConfirmed) {
                         // $('#confirmModal').modal('hide'); // Đóng modal
                         // Sau khi đóng modal, gửi form
-                            $('#confirmForm').off('submit').submit();
+                        $('#confirmForm').off('submit').submit();
                     }
                 });
             }
@@ -2290,8 +2592,6 @@
     });
 
 
-
-
     <%--$(document).ready(function () {--%>
     <%--    console.log('Document ready');--%>
 
@@ -2457,17 +2757,7 @@
     <%--});--%>
 
 
-
-
-
-
-
-
-
-
 </script>
-
-
 
 
 <%--Chức năng lọc và tìm kiếm và phân trang trong Modal thêm sản phẩm--%>

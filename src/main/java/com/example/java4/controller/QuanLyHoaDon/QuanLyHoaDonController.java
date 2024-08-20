@@ -836,9 +836,9 @@ public class QuanLyHoaDonController {
                                    @Param("tenTinhThanh") String tenTinhThanh,
                                    @Param("tenQuanHuyen") String tenQuanHuyen,
                                    @Param("tenPhuongXa") String tenPhuongXa,
-                                   @RequestParam("idTinhThanh") Integer idTinhThanh,
-                                   @RequestParam("idQuanHuyen") Integer idQuanHuyen,
-                                   @RequestParam("idPhuongXa") Integer idPhuongXa,
+                                   @RequestParam(value = "idTinhThanh", required = false) Integer idTinhThanh,
+                                   @RequestParam(value = "idQuanHuyen",required = false) Integer idQuanHuyen,
+                                   @RequestParam(value = "idPhuongXa",required = false) Integer idPhuongXa,
                                    RedirectAttributes redirectAttributes) {
 
             HoaDon hoaDon = hoaDonRepository.findById(hoaDonId).get();
@@ -863,8 +863,8 @@ public class QuanLyHoaDonController {
             giaoHang.setGhiChu(giaoHangDTO.getGhiChu());
 
             // Cập nhập địa chỉ khách hàng
-            KhachHang khachHang = _khachHangRepo.findByIdKH(UserInfor.idKhachHang);
-            DiaChi diaChi = _diaChiRepo.findDiaChiByKhachHangId(UserInfor.idKhachHang);
+            KhachHang khachHang = _khachHangRepo.findByIdKH(hoaDon.getIdKhachHang().getId());
+            DiaChi diaChi = _diaChiRepo.findDiaChiByKhachHangId(hoaDon.getIdKhachHang().getId());
             diaChi.setTenNguoiNhan(giaoHangDTO.getTenNguoiNhan());
             diaChi.setSdtNguoiNhan(giaoHangDTO.getSdtNguoiNhan());
             diaChi.setDiaChiChiTiet(giaoHangDTO.getDiaChiChiTiet());
