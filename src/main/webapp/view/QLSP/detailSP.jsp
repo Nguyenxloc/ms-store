@@ -441,7 +441,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="mt-3">
-                            <h4 class="border-bottom">Quản lý sản phẩm chi tiết</h4>
+                            <h4 class="">Quản lý sản phẩm chi tiết</h4>
                             <div class="d-flex gap-5 mt-3">
                                 <img id="hinhAnhSP" src="path_to_your_image.jpg" class="rounded border"
                                      width="150" height="200" alt="Product Image">
@@ -453,9 +453,9 @@
 
                                     <div class="d-flex">
                                         <h5 class="">Chất liệu:&nbsp&nbsp</h5>
-                                        <div class="dropdown">
+                                        <div class="dropdown" >
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                    id="lblChatLieuModalEdit" style="width: 150px;"
+                                                    id="lblChatLieuModalEdit" style="width: 150px"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                 Chọn chất liệu
@@ -517,6 +517,17 @@
                                                 aria-labelledby="dropdownMenuButton3">
                                             </ul>
                                         </div>
+                                    </div>
+
+                                    <div class="border-bottom mb-4 pb-4 col col-md-4">
+                                        <section class="range-slider container">
+                                            <span class="output outputOne"></span>
+                                            <span class="output outputTwo"></span>
+                                            <span class="full-range"></span>
+                                            <span class="incl-range"></span>
+                                            <input id="minGiaBan" name="rangeOne" type="range">
+                                            <input id="maxGiaBan" name="rangeTwo" type="range">
+                                        </section>
                                     </div>
 
                                     <div class="col col-md-3 d-flex gap-3">
@@ -595,11 +606,11 @@
                         <div class="mb-3">
                             <form id="uploadFormAdd" method="post" enctype="multipart/form-data" action="/uploads">
                                 <div class="row">
-                                    <div class="d-flex" style="gap: 500px;">
-                                        <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                    <div class="d-flex mb-2" style="gap: 20px;">
+                                        <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
                                                 id="tenSPModalAdd"></span>
                                         </h5>
-                                        <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalAdd"></span>
+                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalAdd"></span>
                                         </h5>
                                     </div>
                                     <div class="col col-md-3">
@@ -644,48 +655,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblChatLieuModalAdd" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn chất liệu
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboChatLieuModalAdd"
-                                                    aria-labelledby="dropdownMenuButton4">
-                                                </ul>
-                                                <p style="color: red;" id="cboChatLieuModalAddErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddCL" id="iconHotAddCLModalAdd"
-                                                   style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblKieuTayModalAdd" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn kiểu tay
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboKieuTayModalAdd"
-                                                    aria-labelledby="dropdownMenuButton5">
-                                                </ul>
-                                                <p style="color: red;" id="cboKieuTayModalAddErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddKTA" id="iconHotAddKTAModalAdd"
-                                                   style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
@@ -708,12 +677,23 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col col-md-3">
-                                        <label for="moTaModalAdd" class="form-label">Ghi chú</label>
+                                    <div class="col col-md-6">
+                                        <label for="moTaModalAdd" class="form-label">Mô tả</label>
                                         <textarea class="form-control custom-textarea" style="width: 550px;"
                                                   id="moTaModalAdd" name="moTa"></textarea>
                                         <p style="color: red;" id="moTaModalAddErr"></p>
                                     </div>
+                                    <div class="col col-md-3 d-flex justify-content-center align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                   id="trangThaiModalAdd"
+                                                   checked>
+                                            <label class="form-check-label" for="trangThaiLabelModalEdit"
+                                                   id="trangThaiLabelModalAdd">Trạng
+                                                thái</label>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-3 hover-effect click-effect image-container">
@@ -743,14 +723,8 @@
                                                accept="image/*"/>
                                     </div>
                                 </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="trangThaiModalAdd"
-                                           checked>
-                                    <label class="form-check-label" for="trangThaiLabelModalAdd"
-                                           id="trangThaiLabelModalAdd">Trạng
-                                        thái</label>
-                                </div>
-                                <button id="saveAddBtn" class="btn btn-primary me-5">Lưu</button>
+
+                                <button id="saveAddBtn" class="btn btn-primary me-5 mt-5" style="width: 100px">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -774,11 +748,11 @@
                             <form id="uploadFormEdit" method="post" enctype="multipart/form-data"
                                   action="/hinh-anh/upload">
                                 <div class="row">
-                                    <div class="d-flex" style="gap: 500px;">
-                                        <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                    <div class="d-flex mb-2" style="gap: 20px;">
+                                        <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
                                                 id="tenSPModalEdit"></span>
                                         </h5>
-                                        <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEdit"></span>
+                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEdit"></span>
                                         </h5>
                                     </div>
                                     <div class="col col-md-3">
@@ -843,7 +817,7 @@
                                         <p style="color: red;" id="giaBanModalEditErr"></p>
                                     </div>
                                     <div class="col col-md-6">
-                                        <label for="moTaModalEdit" class="form-label">Ghi chú</label>
+                                        <label for="moTaModalEdit" class="form-label">Mô tả</label>
                                         <textarea class="form-control custom-textarea" style="width: 550px;"
                                                   id="moTaModalEdit" name="moTa"></textarea>
                                         <p style="color: red;" id="moTaModalEditErr"></p>
@@ -885,7 +859,7 @@
                                                class="file-input-overlay"/>
                                     </div>
                                 </div>
-                                <button id="saveEditBtn" class="btn btn-primary">Lưu</button>
+                                <button id="saveEditBtn" class="btn btn-primary mt-5" style="width: 100px">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -911,15 +885,15 @@
                                 <form id="uploadFormEditAll" method="post" enctype="multipart/form-data"
                                       action="/hinh-anh/upload">
                                     <div class="row">
-                                        <div class="d-flex" style="gap: 500px;">
-                                            <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                        <div class="d-flex mb-2" style="gap: 20px;">
+                                            <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
                                                     id="tenSPModalEditAll"></span>
                                             </h5>
-                                            <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span
-                                                    id="ngayTaoModalEditAll"></span>
+                                            <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEditAll"></span>
                                             </h5>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col col-md-4 border" id="soLuongContainer">
                                             <label id="lblSoLuongModalEditAll" for="soLuongModalEdit"
@@ -993,7 +967,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <button id="saveEditAllBtn" class="btn btn-primary">Lưu</button>
+                            <button id="saveEditAllBtn" class="btn btn-primary" style="width: 100px">Lưu</button>
                         </div>
                     </div>
                 </div>
