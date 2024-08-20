@@ -122,7 +122,7 @@
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" >
+                <li class="nav-item">
                     <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
@@ -144,7 +144,7 @@
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" >
+                <li class="nav-item">
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý nhân viên</span></a>
@@ -362,124 +362,74 @@
                 </ul>
             </nav>
 
-
-            <!-- Bán hàng tại quầy -->
-            <div class="container-fluid">
-                <div class="container">
-                    <div class="row">
-                        <div class="">
-                            <div>
-                                <form method="post" action="/ban-hang-tai-quay/filter">
-                                    <div class="row">
-                                        <div class="col col-md-2">
-                                            <div class="input-group mb-3">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-outline-secondary dropdown-toggle"
-                                                            type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                        Chọn sản phẩm
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <c:forEach items="${listSanPham}" var="sanPham">
-                                                            <li><a class="dropdown-item"
-                                                                   href="/ban-hang-tai-quay/locSPCTBySanPham/${sanPham.id}">${sanPham.ten}</a>
-                                                            </li>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="dropdownMenuButton2" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn màu sắc
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                    <c:forEach items="${listMauSac}" var="mauSac">
-                                                        <li><a class="dropdown-item"
-                                                               href="/ban-hang-tai-quay/locSPCTByMauSac/${mauSac.id}">${mauSac.ten}</a>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn kích thước
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                                    <c:forEach items="${listKichThuoc}" var="kichThuoc">
-                                                        <li><a class="dropdown-item"
-                                                               href="/ban-hang-tai-quay/locSPCTByKichThuoc/${kichThuoc.id}">${kichThuoc.ten}</a>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="dropdownMenuButton4" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn chất liệu
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                                                    <c:forEach items="${listChatLieu}" var="chatLieu">
-                                                        <li><a class="dropdown-item"
-                                                               href="/ban-hang-tai-quay/locSPCTByChatLieu/${chatLieu.id}">${chatLieu.ten}</a>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="dropdownMenuButton5" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn kiểu tay
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-                                                    <c:forEach items="${listKieuTay}" var="kieuTay">
-                                                        <li><a class="dropdown-item"
-                                                               href="/ban-hang-tai-quay/locSPCTByKieuTay/${kieuTay.id}">${kieuTay.ten}</a>
-                                                        </li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+            <!-- start searchsp -->
+            <div class="container-fluid bg-white">
+                    <h2>Quản lý sản phẩm</h2>
+                    <div class="row mt-3 ms-2">
+                        <div class="col col-md-3">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                   aria-label="Search" aria-describedby="basic-addon2">
+                        </div>
+                        <div class="col col-md-2">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton4" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    Chọn chất liệu
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                                </ul>
                             </div>
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Mã</th>
-                                    <th>Tên</th>
-                                    <th>Ngày tạo</th>
-                                    <th>Trạng thái</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                                </thead>
-                                <tbody id="tbl_ds_sp">
+                        </div>
+                        <div class="col col-md-2">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton5" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    Chọn kiểu tay
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+                                </ul>
+                            </div>
+                        </div>
 
-                                </tbody>
-                            </table>
+                        <div class="col col-md-2">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    Chọn trạng thái
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col col-md-3 d-flex gap-3">
+                            <button id="btnSearch" class="btn btn-success me-2" onclick="search(event)">
+                                Tìm kiếm
+                            </button>
+                            <button id="btnRef" class="btn btn-success me-2" onclick="refresh(event)">
+                                Refresh
+                            </button>
                         </div>
                     </div>
-                </div>
+                    <table class="table table-hover mt-2">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Hình ảnh</th>
+                            <th>Mã</th>
+                            <th>Tên</th>
+                            <th>Ngày tạo</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbl_ds_sp">
+
+                        </tbody>
+                    </table>
             </div>
             <div class="d-flex flex-row-reverse">
                 <button id="btnAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">Thêm
@@ -490,7 +440,9 @@
                 <button class="btn btn-success me-2">test</button>
             </div>
             <div class="d-flex flex-row-reverse">
-                <button id="btnOpenModalMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalMultipleAdd">Thêm sản phẩm</button>
+                <button id="btnOpenModalMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal"
+                        data-bs-target="#ModalMultipleAdd">Thêm sản phẩm
+                </button>
             </div>
             <div class="col-12 pb-1">
                 <nav aria-label="Page navigation">
@@ -649,7 +601,7 @@
                                     </div>
 
                                 </div>
-                                <button  id="saveMultipleAddBtn" class="btn btn-primary me-5">Lưu</button>
+                                <button id="saveMultipleAddBtn" class="btn btn-primary me-5">Lưu</button>
                             </div>
                         </div>
                     </div>
@@ -670,18 +622,18 @@
                     </div>
                     <div class="modal-body d-flex gap-2">
                         <div>
-                                <div class="mb-3">
-                                    <label for="tenSPEdit" class="form-label">Tên sản phẩm</label>
-                                    <input type="text" style="width: 300px;" class="form-control" id="tenSPEdit" value="">
-                                    <p style="color: red;" id="tenSPEditErr"></p>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="trangThaiEdit"
-                                           checked>
-                                    <label class="form-check-label" for="trangThaiEdit" id="trangThaiLabeledit">Trạng
-                                        thái</label>
-                                </div>
-                                <button id="saveEditBtn"  class="btn btn-primary">Lưu</button>
+                            <div class="mb-3">
+                                <label for="tenSPEdit" class="form-label">Tên sản phẩm</label>
+                                <input type="text" style="width: 300px;" class="form-control" id="tenSPEdit" value="">
+                                <p style="color: red;" id="tenSPEditErr"></p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="trangThaiEdit"
+                                       checked>
+                                <label class="form-check-label" for="trangThaiEdit" id="trangThaiLabeledit">Trạng
+                                    thái</label>
+                            </div>
+                            <button id="saveEditBtn" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -795,27 +747,36 @@
     let currentPage = 1;
     let totalPage = 0;
     const loadDSSP = (pageParams) => {
-        // get api + scpt.id
-        let datatest = "data testing";
-        fetch("/san-pham/index" + "?page=" + pageParams, {
+        // Fetch data from the API with the given page parameter
+        fetch("/san-pham/index?page=" + pageParams, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(response => response.json())
+        })
+            .then(response => response.json())
             .then(resp => {
                 let html = '';
-                resp.map((sp, i) => {
+
+                // Iterate over the response data
+                resp.forEach(function (sp, i) {
                     const maSanPham = sp.ma || 'N/A';
                     const tenSanPham = sp.ten || 'N/A';
-                    const hinhAnh = sp.hinhAnh || 'N/A';
+                    const hinhAnh = sp.hinhAnh || null;
                     const ngayTao = sp.ngayTao || 'N/A';
-                    const trangThai = sp.trangThai == 1
+                    const trangThai = sp.trangThai === 1
                         ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
                         : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
+
+                    // Build the HTML row for each product using string concatenation
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
-                        '<td><img src="' + "/image/" + hinhAnh + '" alt="Image" style="width: 50px ; height: 60px" class="img-fluid rounded border" /></td>' +
+                        '<td>' +
+                        '<img src="' + (hinhAnh ? "/image/" + hinhAnh : "/image-icon/placeholder.jpg") + '" ' +
+                        'alt="Image" ' +
+                        'style="width: 50px; height: 60px" ' +
+                        'class="img-fluid rounded border" />' +
+                        '</td>' +
                         '<td>' + maSanPham + '</td>' +
                         '<td>' + tenSanPham + '</td>' +
                         '<td>' + ngayTao + '</td>' +
@@ -828,9 +789,16 @@
                         '</td>' +
                         '</tr>';
                 });
-                $("#tbl_ds_sp").html(html)
+
+                // Insert the generated HTML into the table body
+                document.getElementById("tbl_ds_sp").innerHTML = html;
+            })
+            .catch(function (error) {
+                console.error("Error loading products:", error);
+                // You can add additional error handling here if needed
             });
-    }
+    };
+
 
     function testDataMapping() {
 
@@ -924,66 +892,65 @@
                 }
             });
     });
-        saveEditBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            console.log("test check btn");
-            var tenSP = document.getElementById('tenSPEdit').value;
-            var trangThaiRaw = document.getElementById('trangThaiEdit').checked;
-            var tenSperr = document.getElementById("tenSPEditErr");
-            let trangThai = 0;
-            let sttCheck = 0;
-            console.log("====================== ten sp:", tenSP);
-            if (trangThaiRaw == true) {
-                trangThai = 1;
-            } else {
-                trangThai = 0;
-            }
-            if (validateNull(tenSP)) {
-                tenSperr.textContent = "Vui lòng nhập tên sản phẩm";
-                sttCheck = 0;
-            } else {
-                tenSperr.textContent = "";
-                sttCheck++;
-            }
-            if (sttCheck == 1) {
-                Swal.fire({
-                    title: 'Xác nhận?',
-                    text: "Dữ liệu sẽ được lưu lại!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok!',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            ten: tenSP,
-                            hinhAnh: "pendingIMG",
-                            trangThai: trangThai
-                        };
-                        fetch(`/san-pham/update/` + idSPLocal, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        }).then(() => {
-                            Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then(() => {
-                                loadDSSP(currentPage);
-                            });
+    saveEditBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("test check btn");
+        var tenSP = document.getElementById('tenSPEdit').value;
+        var trangThaiRaw = document.getElementById('trangThaiEdit').checked;
+        var tenSperr = document.getElementById("tenSPEditErr");
+        let trangThai = 0;
+        let sttCheck = 0;
+        console.log("====================== ten sp:", tenSP);
+        if (trangThaiRaw == true) {
+            trangThai = 1;
+        } else {
+            trangThai = 0;
+        }
+        if (validateNull(tenSP)) {
+            tenSperr.textContent = "Vui lòng nhập tên sản phẩm";
+            sttCheck = 0;
+        } else {
+            tenSperr.textContent = "";
+            sttCheck++;
+        }
+        if (sttCheck == 1) {
+            Swal.fire({
+                title: 'Xác nhận?',
+                text: "Dữ liệu sẽ được lưu lại!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ok!',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = {
+                        ten: tenSP,
+                        hinhAnh: "pendingIMG",
+                        trangThai: trangThai
+                    };
+                    fetch(`/san-pham/update/` + idSPLocal, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }).then(() => {
+                        Swal.fire(
+                            'Đã thanh toán!',
+                            'Dữ liệu đã được ghi nhận.',
+                            'success'
+                        ).then(() => {
+                            loadDSSP(currentPage);
                         });
-                    }
-                });
-            } else {
+                    });
+                }
+            });
+        } else {
 
-            }
-        });
-
+        }
+    });
 
 
     $(document).on('click', "button[id^='detailSPBtn_']", e => {
@@ -1081,6 +1048,7 @@
 
     inputElementadd.addEventListener("change", updateLabeladd);
     updateLabeladd();
+
     // change sttlbl edit
 
     function updateLabeledit() {
@@ -1116,17 +1084,17 @@
 </script>
 <%--pooldata--%>
 <script>
-    let spct ={
-        idSp:"",
-        idMauSac:"",
-        idKichThuoc:"",
-        idChatLieu:"",
-        idKieuTay:"",
-        moTa:"",
-        soLuong:"",
-        giaNhap:"",
-        giaBan:"",
-        trangThai:""
+    let spct = {
+        idSp: "",
+        idMauSac: "",
+        idKichThuoc: "",
+        idChatLieu: "",
+        idKieuTay: "",
+        moTa: "",
+        soLuong: "",
+        giaNhap: "",
+        giaBan: "",
+        trangThai: ""
     };
     let dataPending = [];
 
@@ -1153,10 +1121,11 @@
     let howManyCboKichThuoc = 0;
     let howManyCboMauSacMemo = 0;
     let howManyCboKichThuocMemo = 0;
-    size =[];
-    let dataCell = {id:"", name:"", size:size, amount:0};
+    size = [];
+    let dataCell = {id: "", name: "", size: size, amount: 0};
     let lstDataSet = [];
     let checkChooseDropdown = "";
+
     function refresh(e) {
         e.preventDefault();
         idMauSacAdd = "";
@@ -1203,13 +1172,12 @@
     }
 
 
-
     function setMauSacAdd(msString, indx) {
         try {
             const ms = JSON.parse(msString.replace(/&quot;/g, '"'));
             const idMauSacAdd = ms.id;
             console.log("test existing :", checkColorExist(idMauSacAdd));
-            if(!checkColorExist(idMauSacAdd)){
+            if (!checkColorExist(idMauSacAdd)) {
                 const labelElement = document.getElementById("lblMauSacAdd" + indx);
                 if (labelElement) {
                     labelElement.textContent = ms.ten;
@@ -1220,18 +1188,17 @@
                 if (indx >= lstDataSet.length) {
                     // If the index is beyond the current length, push a new entry
                     const size = [];
-                    const dataCell = { id: ms.id, name: ms.ten, size: size, amountCBO: 1 };
+                    const dataCell = {id: ms.id, name: ms.ten, size: size, amountCBO: 1};
                     lstDataSet.push(dataCell);
                 } else {
                     // Update existing entry in lstDataSet
                     lstDataSet[indx].name = ms.ten;
                 }
-                checkChooseDropdown  = ms.ten;
+                checkChooseDropdown = ms.ten;
                 loadTotalCboMauSac();
                 loadCboMauSac();
                 loadKichThuocWrapper();
-            }
-            else{
+            } else {
                 Swal.fire({
                     title: 'Xác nhận?',
                     text: "Màu sắc đã tồn tại !",
@@ -1301,7 +1268,6 @@
     }
 
 
-
     function setChatLieuAdd(clString) {
         const cl = JSON.parse(clString.replace(/&quot;/g, '"'));
         idChatLieuAdd = cl.id;
@@ -1315,7 +1281,7 @@
         const kt = JSON.parse(ktString.replace(/&quot;/g, '"'));
         idKieuTayAdd = kt.id;
         lblKieuTayAdd.textContent = kt.ten;
-        console.log('Selected kieu tay ID modal:', idKieuTay);
+        console.log('Selected kieu tay ID modal:', idKieuTayAdd);
         //concathtml here
         // You can add more logic here to handle the selected value
     }
@@ -1400,7 +1366,7 @@
             if (i === 0) {
                 // Initialize htmlCboAdd with the first element
                 for (let a = 0; a < howManyCboMauSac; a++) {
-                    let htmlSet = { indx: a, html: "" };
+                    let htmlSet = {indx: a, html: ""};
                     htmlSet.html = '<li><a class="dropdown-item" onclick="setMauSacAdd(\'' + msString + '\', ' + a + ')">' + ms.ten + '</a></li>';
                     htmlCboAdd.push(htmlSet);
                 }
@@ -1444,7 +1410,7 @@
                 '</div>';
         }
         howManyCboMauSacMemo = howManyCboMauSac;
-        htmlDropdown.insertAdjacentHTML('beforeend',newHtmlContent);
+        htmlDropdown.insertAdjacentHTML('beforeend', newHtmlContent);
     }
     loadTotalCboMauSac();
     ///work
@@ -1472,7 +1438,7 @@
                     '<div class="dropdown">' +
                     '<button class="btn btn-outline-secondary dropdown-toggle" ' +
                     'type="button" ' +
-                    'id="lblKichThuocAdd_' + lstDataSet[i].id+"_"+ a + '" style="width: 150px;" ' +
+                    'id="lblKichThuocAdd_' + lstDataSet[i].id + "_" + a + '" style="width: 150px;" ' +
                     'data-bs-toggle="dropdown" ' +
                     'aria-expanded="false">' +
                     'Chọn kích thước' +
@@ -1540,21 +1506,21 @@
         if (isEventListenerAttached) return;  // Prevent attaching the event listener more than once
         console.log("check lstDataSet: ", lstDataSet);
         // Handling dynamically generated elements using event delegation
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('icon-add-more')) {
                 e.preventDefault();
                 const mauSacID = e.target.id.replace("iconAddMoreCboKichThuoc_", "");
                 let obj = [];
                 for (let i = 0; i < lstDataSet.length; i++) {
-                    if(lstDataSet[i].id === mauSacID){
+                    if (lstDataSet[i].id === mauSacID) {
                         obj = lstDataSet[i];
                     }
                 }
-                if(obj.size[obj.size.length-1] !== "" && obj.size.length > 0){
+                if (obj.size[obj.size.length - 1] !== "" && obj.size.length > 0) {
                     console.log("Add Kich Thuoc for: ", mauSacID);
                     for (let i = 0; i < lstDataSet.length; i++) {
-                        console.log("loop : ", lstDataSet[i].name );
-                        if(lstDataSet[i].id == mauSacID){
+                        console.log("loop : ", lstDataSet[i].name);
+                        if (lstDataSet[i].id == mauSacID) {
                             // logic add data to size array
                             lstDataSet[i].size.push("");
                             lstDataSet[i].amountCBO++;
@@ -1562,8 +1528,7 @@
                             loadKichThuocWrapper();
                         }
                     }
-                }
-                else{
+                } else {
                     Swal.fire({
                         title: 'Xác nhận?',
                         text: "Vui lòng chọn kích thước !",
@@ -1579,8 +1544,8 @@
                 const mauSacIDAtRemove = e.target.id.replace("iconRemoveMoreCboKichThuoc_", "");
                 console.log("Remove Kich Thuoc for: ", mauSacIDAtRemove);
                 for (let i = 0; i < lstDataSet.length; i++) {
-                    console.log("loop : ", lstDataSet[i].name );
-                    if(lstDataSet[i].id == mauSacIDAtRemove){
+                    console.log("loop : ", lstDataSet[i].name);
+                    if (lstDataSet[i].id == mauSacIDAtRemove) {
                         // logic add data to size array
                         lstDataSet[i].size.pop();
                         lstDataSet[i].amountCBO--;
@@ -1619,15 +1584,14 @@
     // iconAdd
     iconAddMoreCboMauSac.addEventListener('click', function (e) {
         e.preventDefault();
-        if(checkChooseDropdown != ""){
-            console.log("add more at: ", checkChooseDropdown );
+        if (checkChooseDropdown != "") {
+            console.log("add more at: ", checkChooseDropdown);
             console.log("icon add more");
             howManyCboMauSac++;
             loadTotalCboMauSac();
             loadCboMauSac();
             checkChooseDropdown = "";
-        }
-        else{
+        } else {
             Swal.fire({
                 title: 'Xác nhận?',
                 text: "Vui lòng chọn trước khi thêm mới !",
@@ -1649,11 +1613,10 @@
         e.preventDefault();
         const htmlDropdown = document.getElementById("mauSacBox");
         htmlDropdown.removeChild(htmlDropdown.lastChild);
-        if(checkChooseDropdown !=""){
+        if (checkChooseDropdown != "") {
             lstDataSet.pop();
             loadKichThuocWrapper();
-        }
-        else{
+        } else {
             checkChooseDropdown = "hold";
         }
         howManyCboMauSacMemo--;
@@ -1756,35 +1719,40 @@
         var fileName = fullPath.substring(startIndex + 1);
         return fileName;
     }
-    function fetchData(url, method = "GET", bodyData = null) {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
 
+    async function fetchData(url, method = 'GET', data = null) {
         const options = {
             method: method,
-            headers: headers,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         };
 
-        if (bodyData) {
-            options.body = JSON.stringify(bodyData);
+        if (data) {
+            options.body = JSON.stringify(data);
         }
 
-        return fetch(url, options)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                return response.json(); // Parses JSON response into native JavaScript objects
-            })
-            .then(data => {
-                console.log('Success:', data);
-                return data; // Returns the data for further processing
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Log the raw response text for debugging
+        const responseText = await response.text();
+        console.log("Raw Response Text:", responseText);
+
+        // Try to parse as JSON, if applicable
+        try {
+            const jsonResponse = JSON.parse(responseText);
+            return jsonResponse;
+        } catch (e) {
+            // If parsing fails, return the raw text
+            return responseText;
+        }
     }
+
     function validateModalAdd() {
         let checkCount = 0;
         var cboMauSacModalAddErr = document.getElementById("cboMauSacModalAddErr");
@@ -1865,16 +1833,15 @@
         console.log("check count: ", checkCount);
         return checkCount;
     }
+
     document.addEventListener('DOMContentLoaded', function () {
         const saveMultipleAddBtn = document.getElementById('saveMultipleAddBtn');
         document.getElementById("tenSPErr").textContent = "";
         if (saveMultipleAddBtn) {
             saveMultipleAddBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                console.log("test check btn");
                 let tenSP = document.getElementById("tensp");
-                console.log("test tensp: ", tenSP.value);
-                if (tenSP.value !=="") {
+                if (tenSP.value !== "") {
                     Swal.fire({
                         title: 'Xác nhận?',
                         text: "Dữ liệu sẽ được lưu lại!",
@@ -1886,49 +1853,48 @@
                         cancelButtonText: 'Hủy'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            fetchData('http://localhost:8080/san-pham/multiple-save'+"?tenSP=" +tenSP.value+ "&idChatLieu="+idChatLieuAdd + "&idKieuTay="+idKieuTayAdd, 'POST',lstDataSet)
+                            fetchData('http://localhost:8080/san-pham/multiple-save' + "?tenSP=" + tenSP.value + "&idChatLieu=" + idChatLieuAdd + "&idKieuTay=" + idKieuTayAdd, 'POST', lstDataSet)
                                 .then(responseData => {
-                                    // Handle successful post response
-                                    console.log('Post Success:', responseData);
-                                    Swal.fire(
-                                        'Đã lưu!',
-                                        'Dữ liệu đã được ghi nhận.',
-                                        'success'
-                                    ).then(() => {
-                                        // Fetch the total count of products and update pagination
-                                        fetch("/san-pham/count", {
-                                            headers: {
-                                                'Accept': 'application/json',
-                                                'Content-Type': 'application/json'
-                                            }
-                                        })
-                                            .then(response => response.json())
-                                            .then(resp => {
-                                                const totalPages = Math.ceil(resp / 20);
-                                                loadDSSP(totalPages); // Load the product list
-                                                currentPage = totalPages;
-                                                loadTotalPagination(currentPage); // Update pagination UI
-                                            })
-                                            .catch(error => {
-                                                console.error('Error fetching pagination data:', error);
-                                                // Handle fetch error
-                                            });
-                                    });
+                                    // Log the response to see what was returned
+                                    console.log("Response Data:", responseData);
 
-                                    // Remove the row after saving (if applicable)
-                                    const button = e.target.closest('tr'); // Ensure `button` refers to the correct element
-                                    if (button) {
-                                        button.remove();
+                                    // Redirect to the product detail page
+                                    if (responseData && typeof responseData === 'string') {
+                                        console.log('Post Success, ID:', responseData);
+                                        Swal.fire(
+                                            'Đã lưu!',
+                                            'Dữ liệu đã được ghi nhận.',
+                                            'success'
+                                        ).then(() => {
+                                            fetch("/san-pham/count", {
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            })
+                                                .then(response => response.json())
+                                                .then(resp => {
+                                                    const totalPages = Math.ceil(resp / 20);
+                                                    loadDSSP(totalPages); // Load the product list
+                                                    currentPage = totalPages;
+                                                    loadTotalPagination(currentPage); // Update pagination UI
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching pagination data:', error);
+                                                });
+                                        });
+
+                                        window.location.href = `http://localhost:8080/qlsp/` + responseData;
+                                    } else {
+                                        console.error('Unexpected response format:', responseData);
                                     }
                                 })
                                 .catch(error => {
                                     console.error('Error during save operation:', error);
-                                    // Handle post error
                                 });
                         }
                     });
                 } else {
-                    // Handle the case where validation fails
                     document.getElementById("tenSPErr").textContent = "Không để trống";
                 }
             });

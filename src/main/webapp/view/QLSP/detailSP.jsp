@@ -160,6 +160,177 @@
             opacity: 1;
         }
     </style>
+
+    <style>
+        .range-slider {
+            position: relative;
+            width: 200px;
+            height: 35px;
+            text-align: center;
+        }
+
+        .range-slider input {
+            pointer-events: none;
+            position: absolute;
+            overflow: hidden;
+            left: 0;
+            top: 15px;
+            width: 200px;
+            outline: none;
+            height: 18px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .range-slider input::-webkit-slider-thumb {
+            pointer-events: all;
+            position: relative;
+            z-index: 1;
+            outline: 0;
+        }
+
+        .range-slider input::-moz-range-thumb {
+            pointer-events: all;
+            position: relative;
+            z-index: 10;
+            -moz-appearance: none;
+            width: 9px;
+        }
+
+        .range-slider input::-moz-range-track {
+            position: relative;
+            z-index: -1;
+            background-color: red;
+            border: 0;
+        }
+
+        .range-slider input:last-of-type::-moz-range-track {
+            -moz-appearance: none;
+            background: none transparent;
+            border: 0;
+        }
+
+        .range-slider input[type=range]::-moz-focus-outer {
+            border: 0;
+        }
+
+        .rangeValue {
+            width: 30px;
+        }
+
+        .output {
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            color: #999;
+            border-radius: 4px;
+            display: inline-block;
+            font: bold 15px/30px Helvetica, Arial;
+            bottom: 75%;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        .output.outputTwo {
+            left: 100%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            background: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 5px;
+            border: none;
+            border-radius: 3px;
+            background: transparent;
+        }
+
+        input[type=range]::-ms-track {
+            height: 5px;
+            background: transparent;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-moz-range-track {
+            height: 5px;
+            background: transparent;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #555;
+            margin-top: -5px;
+            position: relative;
+            z-index: 10000;
+        }
+
+        input[type=range]::-ms-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #555;
+            margin-top: -5px;
+            position: relative;
+            z-index: 10000;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #555;
+            margin-top: -5px;
+            position: relative;
+            z-index: 10000;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        .full-range,
+        .incl-range {
+            width: 100%;
+            height: 5px;
+            left: 0;
+            top: 21px;
+            position: absolute;
+            background: #DDD;
+        }
+
+        .incl-range {
+            background: #D19C97;
+        }
+
+        .custom-col {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+        .pagination li.active a {
+            background-color: #007bff;
+            color: white;
+        }
+        .pagination li a {
+            cursor: pointer;
+        }
+    </style>
+
+
+
 </head>
 
 <body id="page-top">
@@ -441,7 +612,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="mt-3">
-                            <h4 class="border-bottom">Quản lý sản phẩm chi tiết</h4>
+                            <h4 class="">Quản lý sản phẩm chi tiết</h4>
                             <div class="d-flex gap-5 mt-3">
                                 <img id="hinhAnhSP" src="path_to_your_image.jpg" class="rounded border"
                                      width="150" height="200" alt="Product Image">
@@ -453,9 +624,9 @@
 
                                     <div class="d-flex">
                                         <h5 class="">Chất liệu:&nbsp&nbsp</h5>
-                                        <div class="dropdown">
+                                        <div class="dropdown" >
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                    id="lblChatLieuModalEdit" style="width: 150px;"
+                                                    id="lblChatLieuModalEdit" style="width: 150px"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                 Chọn chất liệu
@@ -493,7 +664,7 @@
                             </div>
                             <h5 class="mt-3 border-bottom">Danh sách sản phẩm chi tiết: </h5>
                             <div class="mt-3">
-                                <div class="row">
+                                <div class="row ms-2">
                                     <div class="col col-md-2">
                                         <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -518,8 +689,20 @@
                                             </ul>
                                         </div>
                                     </div>
-
-                                    <div class="col col-md-3 d-flex gap-3">
+                                    <div class="col col-md-1">
+                                        <h5 class="mt-2">Đơn giá: </h5>
+                                    </div>
+                                    <div class="mb-4 pb-4 col col-md-2" style="height: 20px">
+                                        <section class="range-slider container">
+                                            <span class="output outputOne"></span>
+                                            <span class="output outputTwo"></span>
+                                            <span class="full-range"></span>
+                                            <span class="incl-range"></span>
+                                            <input  name="rangeOne" type="range">
+                                            <input  name="rangeTwo" type="range">
+                                        </section>
+                                    </div>
+                                    <div class="col col-md-3 d-flex gap-3 ms-5">
                                         <button id="btnSearch" class="btn btn-success me-2" onclick="search(event)">
                                             Tìm kiếm
                                         </button>
@@ -595,11 +778,11 @@
                         <div class="mb-3">
                             <form id="uploadFormAdd" method="post" enctype="multipart/form-data" action="/uploads">
                                 <div class="row">
-                                    <div class="d-flex" style="gap: 500px;">
-                                        <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                    <div class="d-flex mb-2" style="gap: 20px;">
+                                        <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
                                                 id="tenSPModalAdd"></span>
                                         </h5>
-                                        <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalAdd"></span>
+                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalAdd"></span>
                                         </h5>
                                     </div>
                                     <div class="col col-md-3">
@@ -644,48 +827,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblChatLieuModalAdd" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn chất liệu
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboChatLieuModalAdd"
-                                                    aria-labelledby="dropdownMenuButton4">
-                                                </ul>
-                                                <p style="color: red;" id="cboChatLieuModalAddErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddCL" id="iconHotAddCLModalAdd"
-                                                   style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblKieuTayModalAdd" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn kiểu tay
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboKieuTayModalAdd"
-                                                    aria-labelledby="dropdownMenuButton5">
-                                                </ul>
-                                                <p style="color: red;" id="cboKieuTayModalAddErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddKTA" id="iconHotAddKTAModalAdd"
-                                                   style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-4">
@@ -708,12 +849,23 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col col-md-3">
-                                        <label for="moTaModalAdd" class="form-label">Ghi chú</label>
+                                    <div class="col col-md-6">
+                                        <label for="moTaModalAdd" class="form-label">Mô tả</label>
                                         <textarea class="form-control custom-textarea" style="width: 550px;"
                                                   id="moTaModalAdd" name="moTa"></textarea>
                                         <p style="color: red;" id="moTaModalAddErr"></p>
                                     </div>
+                                    <div class="col col-md-3 d-flex justify-content-center align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                   id="trangThaiModalAdd"
+                                                   checked>
+                                            <label class="form-check-label" for="trangThaiLabelModalEdit"
+                                                   id="trangThaiLabelModalAdd">Trạng
+                                                thái</label>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-3 hover-effect click-effect image-container">
@@ -743,14 +895,8 @@
                                                accept="image/*"/>
                                     </div>
                                 </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="trangThaiModalAdd"
-                                           checked>
-                                    <label class="form-check-label" for="trangThaiLabelModalAdd"
-                                           id="trangThaiLabelModalAdd">Trạng
-                                        thái</label>
-                                </div>
-                                <button id="saveAddBtn" class="btn btn-primary me-5">Lưu</button>
+
+                                <button id="saveAddBtn" class="btn btn-primary me-5 mt-5" style="width: 100px">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -774,11 +920,11 @@
                             <form id="uploadFormEdit" method="post" enctype="multipart/form-data"
                                   action="/hinh-anh/upload">
                                 <div class="row">
-                                    <div class="d-flex" style="gap: 500px;">
-                                        <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                    <div class="d-flex mb-2" style="gap: 20px;">
+                                        <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
                                                 id="tenSPModalEdit"></span>
                                         </h5>
-                                        <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEdit"></span>
+                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEdit"></span>
                                         </h5>
                                     </div>
                                     <div class="col col-md-3">
@@ -843,7 +989,7 @@
                                         <p style="color: red;" id="giaBanModalEditErr"></p>
                                     </div>
                                     <div class="col col-md-6">
-                                        <label for="moTaModalEdit" class="form-label">Ghi chú</label>
+                                        <label for="moTaModalEdit" class="form-label">Mô tả</label>
                                         <textarea class="form-control custom-textarea" style="width: 550px;"
                                                   id="moTaModalEdit" name="moTa"></textarea>
                                         <p style="color: red;" id="moTaModalEditErr"></p>
@@ -885,7 +1031,7 @@
                                                class="file-input-overlay"/>
                                     </div>
                                 </div>
-                                <button id="saveEditBtn" class="btn btn-primary">Lưu</button>
+                                <button id="saveEditBtn" class="btn btn-primary mt-5" style="width: 100px">Lưu</button>
                             </form>
                         </div>
                     </div>
@@ -911,15 +1057,15 @@
                                 <form id="uploadFormEditAll" method="post" enctype="multipart/form-data"
                                       action="/hinh-anh/upload">
                                     <div class="row">
-                                        <div class="d-flex" style="gap: 500px;">
-                                            <h5 class="border-bottom">Tên sản phẩm:&nbsp&nbsp<span
+                                        <div class="d-flex mb-2" style="gap: 20px;">
+                                            <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
                                                     id="tenSPModalEditAll"></span>
                                             </h5>
-                                            <h5 class="border-bottom">Ngày tạo:&nbsp&nbsp<span
-                                                    id="ngayTaoModalEditAll"></span>
+                                            <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEditAll"></span>
                                             </h5>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col col-md-4 border" id="soLuongContainer">
                                             <label id="lblSoLuongModalEditAll" for="soLuongModalEdit"
@@ -993,7 +1139,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <button id="saveEditAllBtn" class="btn btn-primary">Lưu</button>
+                            <button id="saveEditAllBtn" class="btn btn-primary" style="width: 100px">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -1162,6 +1308,8 @@
     let idKichThuoc = "";
     let idChatLieu = "";
     let idKieuTay = "";
+    let tenSPLocal = "";
+    let ngayTaoSPLocal = "";
     const lblMauSac = document.getElementById("lblMauSac");
     const lblKichThuoc = document.getElementById("lblKichThuoc");
     const lblChatLieu = document.getElementById("lblChatLieu");
@@ -1538,13 +1686,23 @@
             }
         }).then(response => response.json())
             .then(resp => {
+                tenSPLocal = resp.ten;
+                ngayTaoSPLocal = resp.ngayTao;
+                document.getElementById("tenSPModalEdit").textContent = tenSPLocal;
+                document.getElementById("tenSPModalAdd").textContent = tenSPLocal;
+                document.getElementById("tenSPModalEditAll").textContent = tenSPLocal;
+                document.getElementById("ngayTaoModalAdd").textContent = ngayTaoSPLocal;
+                document.getElementById("ngayTaoModalEdit").textContent = ngayTaoSPLocal;
+                document.getElementById("ngayTaoModalEditAll").textContent = ngayTaoSPLocal;
                 let trangThaiSP = "";
+                var imagePath = resp.hinhAnh;
+                var defaultImage = '/image-icon/placeholder.jpg';
                 if (resp.trangThai == 1) {
                     trangThaiSP = "Đang hoạt động";
                 } else {
                     trangThaiSP = "Dừng hoạt động";
                 }
-                $('#hinhAnhSP').attr('src', "/image/" + resp.hinhAnh);
+                $('#hinhAnhSP').attr('src', imagePath ? '/image/' + imagePath : defaultImage);
                 $('#tenSP').text(resp.ten);
                 $('#maSP').text(resp.ma);
                 $('#ngayTaoSP').text(resp.ngayTao);
@@ -1672,7 +1830,8 @@
                     const giaBan = spct.giaBan || 'N/A';
                     const giaNhap = spct.giaNhap || 'N/A';
                     const moTa = spct.moTa || 'N/A';
-                    const hinhAnh = spct.hinhAnh || 'N/A';
+                    var hinhAnh = spct.hinhAnh;
+                    var fallbackImage = '/image-icon/placeholder.jpg';
                     if (spct.idMauSac.ten != mauSacMemo) {
                         let labelms = spct.idMauSac.ten;
                         console.log("Mau sac memo: ", spct.idMauSac.ten);
@@ -1700,7 +1859,8 @@
                     }
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
-                        '<td><img src="' + "/image/" + hinhAnh + '" alt="Image" style="width: 50px ; height: 60px" class="img-fluid rounded border" /></td>' +
+                        '<td><img src="' + (hinhAnh ? "/image/" + hinhAnh : fallbackImage) +
+                        '" alt="Image" style="width: 50px; height: 60px" class="img-fluid rounded border" /></td>' +
                         '<td>' + mauSac + '</td>' +
                         '<td>' + kichThuoc + '</td>' +
                         '<td>' + soLuong + '</td>' +
@@ -1731,7 +1891,7 @@
         console.log('data chat lieu ID:', idChatLieu);
         console.log('data kieu tay ID:', idKieuTay);
         console.log('data sp local ID:', idSPCTLocal);
-        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay, {
+        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin="+minGiaBanSearch + "&giaBanMax="+maxGiaBanSearch, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -1771,6 +1931,8 @@
         idKichThuoc = "";
         idChatLieu = "";
         idKieuTay = "";
+        minGiaBanSearch = "";
+        maxGiaBanSearch = "";
         lblMauSac.textContent = "Chọn màu sắc"
         lblKichThuoc.textContent = "Chọn kích thước";
         loadDSSPCT(currentPage);
@@ -2662,6 +2824,90 @@
     });
 
 </script>
+<%--handle range slider--%>
+<script>
+    // Giả sử sliderConfig được lấy từ controller
+    let minGiaBanSearch = "";
+    let maxGiaBanSearch = "";
+     const sliderConfig = {
+        min: 100000,
+        max: 1000000
+    };
+
+    var rangeOne = document.querySelector('input[name="rangeOne"]');
+    var rangeTwo = document.querySelector('input[name="rangeTwo"]');
+    var outputOne = document.querySelector('.outputOne');
+    var outputTwo = document.querySelector('.outputTwo');
+    var inclRange = document.querySelector('.incl-range');
+    // Gán giá trị min và max cho các slider
+    rangeOne.min = sliderConfig.min;
+    rangeOne.max = sliderConfig.max;
+    rangeTwo.min = sliderConfig.min;
+    rangeTwo.max = sliderConfig.max;
+
+    rangeOne.value = sliderConfig.min;
+    rangeTwo.value = sliderConfig.max;
+
+    function formatCurrency(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function updateView() {
+        // Định dạng giá trị hiển thị
+        outputOne.innerHTML = formatCurrency(rangeOne.value);
+        outputTwo.innerHTML = formatCurrency(rangeTwo.value);
+
+        // Cập nhật vị trí của các chỉ số giá trị
+        outputOne.style.left = (rangeOne.value - rangeOne.min) / (rangeOne.max - rangeOne.min) * 100 + '%';
+        outputTwo.style.left = (rangeTwo.value - rangeTwo.min) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+
+        // Cập nhật chiều rộng và vị trí của phần tử incl-range
+        if (parseInt(rangeOne.value) > parseInt(rangeTwo.value)) {
+            inclRange.style.width = (rangeOne.value - rangeTwo.value) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+            inclRange.style.left = (rangeTwo.value - rangeOne.min) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+        } else {
+            inclRange.style.width = (rangeTwo.value - rangeOne.value) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+            inclRange.style.left = (rangeOne.value - rangeOne.min) / (rangeTwo.max - rangeOne.min) * 100 + '%';
+        }
+        console.log("min value : ", minGiaBanSearch);
+        console.log("max value : ", maxGiaBanSearch);
+    }
+
+    function syncSliders() {
+        let minValue = parseInt(rangeOne.value);
+        let maxValue = parseInt(rangeTwo.value);
+
+        if (minValue > maxValue) {
+            rangeOne.value = maxValue;
+            minValue = maxValue;
+        }
+
+        if (maxValue < minValue) {
+            rangeTwo.value = minValue;
+            maxValue = minValue;
+        }
+        // Cập nhật lại giá trị sau khi điều chỉnh
+        updateView();
+        minGiaBanSearch = rangeOne.value;
+        maxGiaBanSearch = rangeTwo.value;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateView();
+
+        rangeOne.addEventListener('input', function () {
+            syncSliders();
+        });
+
+        rangeTwo.addEventListener('input', function () {
+            syncSliders();
+        });
+    });
+</script>
+
+
+
+
 <script>
     $(document).ready(function () {
         $('#saveAddBtn').on('click', function (event) {

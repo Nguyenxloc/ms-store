@@ -160,7 +160,7 @@ public class SanPhamController {
 
     @CrossOrigin
     @PostMapping("/multiple-save")
-    public ResponseEntity<SanPham> saveMultipleSanPham(@RequestBody List<SanPhamMulStore> sanPhamMulStoreList,@RequestParam("tenSP") String tenSP, @RequestParam("idChatLieu") String idChatLieu, @RequestParam("idKieuTay") String idKieuTay) {
+    public ResponseEntity<String> saveMultipleSanPham(@RequestBody List<SanPhamMulStore> sanPhamMulStoreList,@RequestParam("tenSP") String tenSP, @RequestParam("idChatLieu") String idChatLieu, @RequestParam("idKieuTay") String idKieuTay) {
         System.out.println("ten sp check: "+ tenSP);
         System.out.println("id chat lieu check: "+ idChatLieu);
         System.out.println("ten kieu tay check: "+ idKieuTay);
@@ -199,7 +199,8 @@ public class SanPhamController {
             }
             spctRepository.saveAll(lstSPCT);
             System.out.println("save success");
-            return ResponseEntity.ok(newSP);
+            System.out.println("test return object: "+newSP.getId());
+            return ResponseEntity.ok(newSP.getId());
         } catch (Exception e) {
             return ResponseEntity.ok(null);
         }
