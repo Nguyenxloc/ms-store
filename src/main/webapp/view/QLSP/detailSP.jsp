@@ -1162,6 +1162,8 @@
     let idKichThuoc = "";
     let idChatLieu = "";
     let idKieuTay = "";
+    let tenSPLocal = "";
+    let ngayTaoSPLocal = "";
     const lblMauSac = document.getElementById("lblMauSac");
     const lblKichThuoc = document.getElementById("lblKichThuoc");
     const lblChatLieu = document.getElementById("lblChatLieu");
@@ -1538,13 +1540,23 @@
             }
         }).then(response => response.json())
             .then(resp => {
+                tenSPLocal = resp.ten;
+                ngayTaoSPLocal = resp.ngayTao;
+                document.getElementById("tenSPModalEdit").textContent = tenSPLocal;
+                document.getElementById("tenSPModalAdd").textContent = tenSPLocal;
+                document.getElementById("tenSPModalEditAll").textContent = tenSPLocal;
+                document.getElementById("ngayTaoModalAdd").textContent = ngayTaoSPLocal;
+                document.getElementById("ngayTaoModalEdit").textContent = ngayTaoSPLocal;
+                document.getElementById("ngayTaoModalEditAll").textContent = ngayTaoSPLocal;
                 let trangThaiSP = "";
+                var imagePath = resp.hinhAnh;
+                var defaultImage = '/image-icon/placeholder.jpg';
                 if (resp.trangThai == 1) {
                     trangThaiSP = "Đang hoạt động";
                 } else {
                     trangThaiSP = "Dừng hoạt động";
                 }
-                $('#hinhAnhSP').attr('src', "/image/" + resp.hinhAnh);
+                $('#hinhAnhSP').attr('src', imagePath ? '/image/' + imagePath : defaultImage);
                 $('#tenSP').text(resp.ten);
                 $('#maSP').text(resp.ma);
                 $('#ngayTaoSP').text(resp.ngayTao);
@@ -1672,7 +1684,8 @@
                     const giaBan = spct.giaBan || 'N/A';
                     const giaNhap = spct.giaNhap || 'N/A';
                     const moTa = spct.moTa || 'N/A';
-                    const hinhAnh = spct.hinhAnh || 'N/A';
+                    var hinhAnh = spct.hinhAnh;
+                    var fallbackImage = '/image-icon/placeholder.jpg';
                     if (spct.idMauSac.ten != mauSacMemo) {
                         let labelms = spct.idMauSac.ten;
                         console.log("Mau sac memo: ", spct.idMauSac.ten);
@@ -1700,7 +1713,8 @@
                     }
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
-                        '<td><img src="' + "/image/" + hinhAnh + '" alt="Image" style="width: 50px ; height: 60px" class="img-fluid rounded border" /></td>' +
+                        '<td><img src="' + (hinhAnh ? "/image/" + hinhAnh : fallbackImage) +
+                        '" alt="Image" style="width: 50px; height: 60px" class="img-fluid rounded border" /></td>' +
                         '<td>' + mauSac + '</td>' +
                         '<td>' + kichThuoc + '</td>' +
                         '<td>' + soLuong + '</td>' +

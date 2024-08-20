@@ -795,27 +795,36 @@
     let currentPage = 1;
     let totalPage = 0;
     const loadDSSP = (pageParams) => {
-        // get api + scpt.id
-        let datatest = "data testing";
-        fetch("/san-pham/index" + "?page=" + pageParams, {
+        // Fetch data from the API with the given page parameter
+        fetch("/san-pham/index?page=" + pageParams, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(response => response.json())
+        })
+            .then(response => response.json())
             .then(resp => {
                 let html = '';
-                resp.map((sp, i) => {
+
+                // Iterate over the response data
+                resp.forEach(function(sp, i) {
                     const maSanPham = sp.ma || 'N/A';
                     const tenSanPham = sp.ten || 'N/A';
-                    const hinhAnh = sp.hinhAnh || 'N/A';
+                    const hinhAnh = sp.hinhAnh || null;
                     const ngayTao = sp.ngayTao || 'N/A';
-                    const trangThai = sp.trangThai == 1
+                    const trangThai = sp.trangThai === 1
                         ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
                         : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
+
+                    // Build the HTML row for each product using string concatenation
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
-                        '<td><img src="' + "/image/" + hinhAnh + '" alt="Image" style="width: 50px ; height: 60px" class="img-fluid rounded border" /></td>' +
+                        '<td>' +
+                        '<img src="' + (hinhAnh ? "/image/" + hinhAnh : "/image-icon/placeholder.jpg") + '" ' +
+                        'alt="Image" ' +
+                        'style="width: 50px; height: 60px" ' +
+                        'class="img-fluid rounded border" />' +
+                        '</td>' +
                         '<td>' + maSanPham + '</td>' +
                         '<td>' + tenSanPham + '</td>' +
                         '<td>' + ngayTao + '</td>' +
@@ -828,9 +837,16 @@
                         '</td>' +
                         '</tr>';
                 });
-                $("#tbl_ds_sp").html(html)
+
+                // Insert the generated HTML into the table body
+                document.getElementById("tbl_ds_sp").innerHTML = html;
+            })
+            .catch(function(error) {
+                console.error("Error loading products:", error);
+                // You can add additional error handling here if needed
             });
-    }
+    };
+
 
     function testDataMapping() {
 
@@ -1315,7 +1331,7 @@
         const kt = JSON.parse(ktString.replace(/&quot;/g, '"'));
         idKieuTayAdd = kt.id;
         lblKieuTayAdd.textContent = kt.ten;
-        console.log('Selected kieu tay ID modal:', idKieuTay);
+        console.log('Selected kieu tay ID modal:', idKieuTayAdd);
         //concathtml here
         // You can add more logic here to handle the selected value
     }
@@ -1756,35 +1772,39 @@
         var fileName = fullPath.substring(startIndex + 1);
         return fileName;
     }
-    function fetchData(url, method = "GET", bodyData = null) {
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-
+    async function fetchData(url, method = 'GET', data = null) {
         const options = {
             method: method,
-            headers: headers,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         };
 
-        if (bodyData) {
-            options.body = JSON.stringify(bodyData);
+        if (data) {
+            options.body = JSON.stringify(data);
         }
 
-        return fetch(url, options)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                return response.json(); // Parses JSON response into native JavaScript objects
-            })
-            .then(data => {
-                console.log('Success:', data);
-                return data; // Returns the data for further processing
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
+        const response = await fetch(url, options);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Log the raw response text for debugging
+        const responseText = await response.text();
+        console.log("Raw Response Text:", responseText);
+
+        // Try to parse as JSON, if applicable
+        try {
+            const jsonResponse = JSON.parse(responseText);
+            return jsonResponse;
+        } catch (e) {
+            // If parsing fails, return the raw text
+            return responseText;
+        }
     }
+
     function validateModalAdd() {
         let checkCount = 0;
         var cboMauSacModalAddErr = document.getElementById("cboMauSacModalAddErr");
@@ -1871,10 +1891,8 @@
         if (saveMultipleAddBtn) {
             saveMultipleAddBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                console.log("test check btn");
                 let tenSP = document.getElementById("tensp");
-                console.log("test tensp: ", tenSP.value);
-                if (tenSP.value !=="") {
+                if (tenSP.value !== "") {
                     Swal.fire({
                         title: 'Xác nhận?',
                         text: "Dữ liệu sẽ được lưu lại!",
@@ -1886,49 +1904,48 @@
                         cancelButtonText: 'Hủy'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            fetchData('http://localhost:8080/san-pham/multiple-save'+"?tenSP=" +tenSP.value+ "&idChatLieu="+idChatLieuAdd + "&idKieuTay="+idKieuTayAdd, 'POST',lstDataSet)
+                            fetchData('http://localhost:8080/san-pham/multiple-save' + "?tenSP=" + tenSP.value + "&idChatLieu=" + idChatLieuAdd + "&idKieuTay=" + idKieuTayAdd, 'POST', lstDataSet)
                                 .then(responseData => {
-                                    // Handle successful post response
-                                    console.log('Post Success:', responseData);
-                                    Swal.fire(
-                                        'Đã lưu!',
-                                        'Dữ liệu đã được ghi nhận.',
-                                        'success'
-                                    ).then(() => {
-                                        // Fetch the total count of products and update pagination
-                                        fetch("/san-pham/count", {
-                                            headers: {
-                                                'Accept': 'application/json',
-                                                'Content-Type': 'application/json'
-                                            }
-                                        })
-                                            .then(response => response.json())
-                                            .then(resp => {
-                                                const totalPages = Math.ceil(resp / 20);
-                                                loadDSSP(totalPages); // Load the product list
-                                                currentPage = totalPages;
-                                                loadTotalPagination(currentPage); // Update pagination UI
-                                            })
-                                            .catch(error => {
-                                                console.error('Error fetching pagination data:', error);
-                                                // Handle fetch error
-                                            });
-                                    });
+                                    // Log the response to see what was returned
+                                    console.log("Response Data:", responseData);
 
-                                    // Remove the row after saving (if applicable)
-                                    const button = e.target.closest('tr'); // Ensure `button` refers to the correct element
-                                    if (button) {
-                                        button.remove();
+                                    // Redirect to the product detail page
+                                    if (responseData && typeof responseData === 'string') {
+                                        console.log('Post Success, ID:', responseData);
+                                        Swal.fire(
+                                            'Đã lưu!',
+                                            'Dữ liệu đã được ghi nhận.',
+                                            'success'
+                                        ).then(() => {
+                                            fetch("/san-pham/count", {
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            })
+                                                .then(response => response.json())
+                                                .then(resp => {
+                                                    const totalPages = Math.ceil(resp / 20);
+                                                    loadDSSP(totalPages); // Load the product list
+                                                    currentPage = totalPages;
+                                                    loadTotalPagination(currentPage); // Update pagination UI
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching pagination data:', error);
+                                                });
+                                        });
+
+                                        window.location.href = `http://localhost:8080/qlsp/`+responseData;
+                                    } else {
+                                        console.error('Unexpected response format:', responseData);
                                     }
                                 })
                                 .catch(error => {
                                     console.error('Error during save operation:', error);
-                                    // Handle post error
                                 });
                         }
                     });
                 } else {
-                    // Handle the case where validation fails
                     document.getElementById("tenSPErr").textContent = "Không để trống";
                 }
             });
@@ -1936,6 +1953,9 @@
             console.error('Save button not found!');
         }
     });
+
+
+
 
 
     function validateNull(param) {
