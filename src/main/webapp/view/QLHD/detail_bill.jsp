@@ -1155,7 +1155,7 @@
                                                         <c:choose>
                                                             <c:when test="${hoaDonDTO.loaiHoaDon == 1}">
                                                                 <p class="fw-bold mb-1 small">Phí vận chuyển:
-                                                                    <span class="fw-normal">
+                                                                    <span class="fw-normal" id="phiShipHoaDon">
                                                              <fmt:formatNumber
                                                                      value="${giaoHangDTO.phiShip == null ? 0 : giaoHangDTO.phiShip }"
                                                                      type="currency"
@@ -1222,10 +1222,12 @@
 
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Phí vận chuyển:</span>
-                                            <span class="fw-normal" id="phiVanChuyen" data-phiship="${phiVanChuyen}">
-                            <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫"
-                                              groupingUsed="true"/>
-                        </span>
+                                            <span class="fw-normal " name="phiShip" id="phiVanChuyen"  data-phiship="${phiVanChuyen}">
+                                                <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫"
+                                                                  groupingUsed="true"/>
+                                            </span>
+                                            <input type="text" hidden value="${phiVanChuyen}" name="phiShip">
+
                                         </p>
 
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
@@ -1514,6 +1516,7 @@
                     <div class="modal-body">
 
                         <input type="text" hidden value="${hoaDonDTO.id}" name="idHoaDon">
+                        <input type="text" hidden value="${giaoHangDTO.phiShip}" name="phiShip">
 
 
                         <!-- Phần input tìm kiếm và các select -->
@@ -1725,7 +1728,13 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
 <script>
+
+    //Bến phí ship toàn cục
+    var firstFee = 0;
 
     // Hiển thị thông báo thành công nếu xác nhận đơn hàng thành công
     const Toast = Swal.mixin({
@@ -1962,7 +1971,6 @@
         }
 
         var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
-        var shopId = '1244'
         function getJSONWithToken(url, callback) {
             $.ajax({
                 url: url,
@@ -2296,6 +2304,7 @@
             }
         });
 
+
         // Clear errors when input/select value changes
         $('#hoTen, #sdt, #diaChiChiTiet, #tinh, #huyen, #xa, #phiShip,#ghiChu').on('input click change', function () {
             var errorId = '#' + $(this).attr('id') + 'Error';
@@ -2304,12 +2313,8 @@
         });
 
 
+
     });
-
-
-
-
-
 
 
     // Nút hoàn tác
@@ -2446,17 +2451,26 @@
 
                                 $('#tongTienValue').text(formatCurrency(newTotalPrice));
 
+                                alert(newTotalPrice)
+                                alert()
+
+                                // calculateShippingAndTotal();
+                                //Cập nhật lại phí ship và tổng tiền
+
+
                                 // const giamGia = parseFloat($('#giamGia').text().replace(/[^0-9.-]+/g, ""));
-                                const giamGia = response.giamGia;
-                                const phieuGiamGia = response.phieuGiamGia;
-                                const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
-                                const tongTienThanhToan = response.tongTienThanhToan;
+                                // const giamGia = response.giamGia;
+                                // const phieuGiamGia = response.phieuGiamGia;
+                                // const phiVanChuyen = parseFloat($('#phiVanChuyen').text());
+                                // const tongTienThanhToan = ;
+
+                                // $('#phieuGiamGia').text(phieuGiamGia);
+                                // $('#giamGia').text(formatCurrency(giamGia));
+                                // $('#phiVanChuyen').text(formatCurrency(firstFee));
+                                // $('#phiShipHoaDon').text(formatCurrency(firstFee));
+                                // $('#tongTienThanhToanValue').text(formatCurrency(response.tongTienThanhToan));
 
 
-                                $('#phieuGiamGia').text(phieuGiamGia);
-                                $('#giamGia').text(formatCurrency(giamGia));
-                                // $('#phiVanChuyen').text(formatCurrency(phiVanChuyen));
-                                $('#tongTienThanhToanValue').text(formatCurrency(tongTienThanhToan));
 
                                 // Show success message
                                 Toast.fire({
@@ -2485,6 +2499,7 @@
 
 <%--Chức năng cập nhat so luong chi tiet san pham trong hoa don chi tiet--%>
 <script>
+
     $(document).ready(function () {
         console.log('Document ready');
 
@@ -2542,17 +2557,18 @@
 
                         const parseCurrency = (value) => parseFloat(value.replace(/[^\d.-]+/g, ''));
 
-                        const tongTienGiam = response.tongTienThanhToan;
-                        const giamGia = response.giamGia;
-                        const phieuGiamGia = response.phieuGiamGia;
-                        const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
-                        const tongTienThanhToan = response.tongTienThanhToan;
-
-
-                        $('#phieuGiamGia').text(phieuGiamGia);
-                        $('#giamGia').text(formatCurrency(giamGia));
+                        // const tongTienGiam = response.tongTienThanhToan;
+                        // const giamGia = response.giamGia;
+                        // const phieuGiamGia = response.phieuGiamGia;
+                        // const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
+                        // const tongTienThanhToan = response.tongTienThanhToan;
+                        //
+                        //
+                        // $('#phieuGiamGia').text(phieuGiamGia);
+                        // $('#giamGia').text(formatCurrency(giamGia));
                         // $('#phiVanChuyen').text(formatCurrency(phiVanChuyen));
-                        $('#tongTienThanhToanValue').text(formatCurrency(tongTienThanhToan));
+                        // $('#phiShipHoaDon').text(formatCurrency(phiVanChuyen));
+                        // $('#tongTienThanhToanValue').text(formatCurrency(tongTienThanhToan));
 
                         // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền
                         response.listHDCT.forEach(item => {
@@ -2591,170 +2607,6 @@
         });
     });
 
-
-    <%--$(document).ready(function () {--%>
-    <%--    console.log('Document ready');--%>
-
-    <%--    // Hàm tính phí vận chuyển--%>
-    <%--    function calculateShippingFee(idCTSP, tongTien) {--%>
-    <%--        const idQuanHuyen = '1442'; // Mã quận/huyện cố định ở Hà Nội--%>
-    <%--        const idPhuongXa = '9067'; // Mã phường/xã cố định ở Hà Nội--%>
-    <%--        const token = '108bdaef-8395-11ee-af43-6ead57e9219a';--%>
-
-    <%--        const soLuongGioHang = parseInt($('#soLuong-' + idCTSP).val().trim(), 10) || 0;--%>
-    <%--        const khoiLuong = soLuongGioHang * 200;--%>
-
-    <%--        $.ajax({--%>
-    <%--            url: `https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=${idQuanHuyen}&from_district=3440`,--%>
-    <%--            headers: {--%>
-    <%--                'Token': token--%>
-    <%--            },--%>
-    <%--            success: function (data_maDV) {--%>
-    <%--                var service_id = data_maDV.data[0].service_id;--%>
-
-    <%--                $.ajax({--%>
-    <%--                    url: 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',--%>
-    <%--                    method: 'GET',--%>
-    <%--                    headers: {--%>
-    <%--                        'Token': token--%>
-    <%--                    },--%>
-    <%--                    data: {--%>
-    <%--                        service_id: service_id,--%>
-    <%--                        insurance_value: tongTien,--%>
-    <%--                        from_district_id: 3440,--%>
-    <%--                        to_district_id: idQuanHuyen,--%>
-    <%--                        to_ward_code: idPhuongXa,--%>
-    <%--                        height: 15,--%>
-    <%--                        length: 15,--%>
-    <%--                        weight: khoiLuong,--%>
-    <%--                        width: 15--%>
-    <%--                    },--%>
-    <%--                    success: function (data_total) {--%>
-    <%--                        var firstFee = data_total.data.total;--%>
-
-    <%--                        // Tính lại tổng tiền sau khi cộng phí vận chuyển--%>
-    <%--                        var newTotal = tongTien + firstFee;--%>
-
-    <%--                        // Cập nhật tổng tiền và phí vận chuyển trên giao diện--%>
-    <%--                        $('#total-amount').text(newTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));--%>
-    <%--                        $('#phiShip').html(formatCurrency(firstFee));--%>
-    <%--                        $('#tongTienThanhToan').val(newTotal);--%>
-    <%--                        $('#phiVanChuyen').val(firstFee);--%>
-    <%--                    },--%>
-    <%--                    error: function (xhr) {--%>
-    <%--                        console.error("Phí vận chuyển Error: " + xhr.responseText);--%>
-    <%--                    }--%>
-    <%--                });--%>
-    <%--            },--%>
-    <%--            error: function (xhr) {--%>
-    <%--                console.error("Dịch vụ vận chuyển Error: " + xhr.responseText);--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    }--%>
-
-    <%--    // Hàm cập nhật số lượng sản phẩm--%>
-    <%--    function updateQuantity(idCTSP, idHoaDon, newQuantity) {--%>
-    <%--        console.log('idCTSP:', idCTSP, 'idHoaDon:', idHoaDon, 'newQuantity:', newQuantity);--%>
-
-    <%--        // Validate input--%>
-    <%--        if (isNaN(newQuantity) || newQuantity <= 0) {--%>
-    <%--            Toast.fire({--%>
-    <%--                title: 'Số lượng không hợp lệ',--%>
-    <%--                icon: 'error'--%>
-    <%--            });--%>
-    <%--            return;--%>
-    <%--        }--%>
-
-    <%--        // Gửi Ajax request để cập nhật số lượng--%>
-    <%--        $.ajax({--%>
-    <%--            type: 'GET',--%>
-    <%--            url: '/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,--%>
-    <%--            data: {--%>
-    <%--                idHoaDon: idHoaDon,--%>
-    <%--                soLuong: newQuantity--%>
-    <%--            },--%>
-    <%--            success: function (response) {--%>
-    <%--                if (response.error) {--%>
-    <%--                    Toast.fire({--%>
-    <%--                        title: response.error,--%>
-    <%--                        icon: 'error'--%>
-    <%--                    });--%>
-
-    <%--                    // Nếu có newQuantity trong response, cập nhật ô input với số lượng tối đa--%>
-    <%--                    if (response.newQuantity !== undefined) {--%>
-    <%--                        $('#soLuong-' + idCTSP).val(response.newQuantity);--%>
-    <%--                    }--%>
-    <%--                } else {--%>
-    <%--                    // Update the quantity and total amount in the UI--%>
-    <%--                    const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', {--%>
-    <%--                        style: 'currency',--%>
-    <%--                        currency: 'VND',--%>
-    <%--                        currencyDisplay: 'code'--%>
-    <%--                    }).format(amount).replace('VND', '₫');--%>
-
-    <%--                    let newTotalPrice = response.tongTien;--%>
-
-    <%--                    $('#tongTienValue').text(formatCurrency(newTotalPrice));--%>
-
-    <%--                    const parseCurrency = (value) => parseFloat(value.replace(/[^\d.-]+/g, ''));--%>
-
-    <%--                    const giamGia = parseCurrency($('#giamGia').text()) || 0;--%>
-    <%--                    const phiVanChuyen = parseCurrency($('#phiVanChuyen').text()) || 0;--%>
-    <%--                    const tongTienGiam = response.tongTienThanhToan;--%>
-
-    <%--                    $('#tongTienGiam').text(formatCurrency(tongTienGiam));--%>
-    <%--                    $('#tongTienThanhToanValue').text(formatCurrency(tongTienGiam));--%>
-
-    <%--                    // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền--%>
-    <%--                    response.listHDCT.forEach(item => {--%>
-    <%--                        const itemTotal = item.donGia * item.soLuong;--%>
-    <%--                        $('#soLuong-' + item.idCTSP.id).val(item.soLuong);--%>
-    <%--                        $('#total-' + item.idCTSP.id).text(formatCurrency(itemTotal));--%>
-    <%--                        $('#tongTienSanPham-' + item.idCTSP.id).text(formatCurrency(itemTotal));--%>
-    <%--                    });--%>
-
-    <%--                    // Thêm class 'text-danger' và 'fw-bold' vào các giá trị tổng tiền--%>
-    <%--                    $('#tongTienValue, #tongTienThanhToanValue').addClass('text-danger fw-bold');--%>
-
-    <%--                    // Hiển thị thông báo cập nhật thành công--%>
-    <%--                    Toast.fire({--%>
-    <%--                        title: 'Cập nhật số lượng sản phẩm thành công',--%>
-    <%--                        icon: 'success'--%>
-    <%--                    });--%>
-
-    <%--                    // Cập nhật danh sách sản phẩm trong modal--%>
-    <%--                    $('#chiTietSanPhamTableBody tr').each(function () {--%>
-    <%--                        var rowProductId = $(this).data('id'); // Get the ID from the row--%>
-    <%--                        if (rowProductId === idCTSP) { // Compare with the deleted product ID--%>
-    <%--                            $(this).find('td[data-quantity]').text(response.newQuantity).attr('data-quantity', response.newQuantity);--%>
-    <%--                        }--%>
-    <%--                    });--%>
-
-    <%--                    // Tính lại phí vận chuyển sau khi cập nhật số lượng--%>
-    <%--                    calculateShippingFee(idCTSP, newTotalPrice);--%>
-    <%--                }--%>
-    <%--            },--%>
-    <%--            error: function (xhr) {--%>
-    <%--                let errorMsg = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : 'Đã xảy ra lỗi khi cập nhật số lượng';--%>
-    <%--                Toast.fire({--%>
-    <%--                    title: errorMsg,--%>
-    <%--                    icon: 'error'--%>
-    <%--                });--%>
-    <%--            }--%>
-    <%--        });--%>
-    <%--    }--%>
-
-    <%--    // Bắt sự kiện khi người dùng click vào nút cập nhật số lượng--%>
-    <%--    $('.update-sl').click(function () {--%>
-    <%--        console.log('Update button clicked');--%>
-
-    <%--        var idCTSP = $(this).data('id');--%>
-    <%--        var idHoaDon = $(this).data('hoadon');--%>
-    <%--        var newQuantity = parseInt($('#soLuong-' + idCTSP).val().trim(), 10);--%>
-
-    <%--        updateQuantity(idCTSP, idHoaDon, newQuantity);--%>
-    <%--    });--%>
-    <%--});--%>
 
 
 </script>
@@ -2884,6 +2736,72 @@
         });
     }
 
+
+</script>
+
+
+<script>
+    var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
+
+    // Function to get JSON with token
+    function getJSONWithToken(url, callback) {
+        $.ajax({
+            url: url,
+            headers: {
+                'Token': token
+            },
+            success: callback,
+            error: function (xhr, status, error) {
+                console.error("Request Error: " + error);
+                console.error("Status: " + status);
+                console.error("Response: " + xhr.responseText);
+            }
+        });
+    }
+
+    // Function to recalculate shipping fee and total payment
+    function calculateShippingAndTotal() {
+        // Get necessary values
+        var idQuanHuyenTest = ${diaChiKhachHang.idQH};
+        var idPhuongXaTest = ${diaChiKhachHang.idPX};
+        var soLuongGioHang = ${soLuongGioHang};
+        var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
+        var giamGia = ${giamGia};
+
+
+
+        // Calculate weight
+        var khoiLuong = soLuongGioHang * 200;
+        console.log("Tổng sl: ", soLuongGioHang);
+        console.log("Tổng kl: ", khoiLuong);
+
+        // Step 1: Get the service_id
+        getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=' + idQuanHuyenTest + '&from_district=3440', function (data_maDV) {
+            var service_id = data_maDV.data[0].service_id;
+            console.log("API maDV: ", service_id);
+
+            // Step 2: Calculate shipping fee based on service_id and other parameters
+            getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
+
+                var firstFee = data_total.data.total;
+                console.log("API Response: ", firstFee); // Log the shipping fee
+
+                // Calculate the new total
+                var newTotal = tongTien + firstFee - giamGia;
+
+                // Update the total amount in the DOM
+                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
+                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+
+
+            });
+        });
+    }
+
+    // Initial calculation on page load
+    calculateShippingAndTotal();
 
 </script>
 
