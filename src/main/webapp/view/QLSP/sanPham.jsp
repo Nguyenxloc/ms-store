@@ -79,6 +79,33 @@
 
     </style>
 
+    <style>
+        /* Base styles for the collapse items */
+        .collapse-item {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #333; /* Default text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 0.25rem; /* Optional: rounded corners */
+            transition: background-color 0.2s, color 0.2s; /* Smooth transition */
+        }
+
+        /* Hover effect */
+        .collapse-item:hover,
+        .collapse-item:focus {
+            background-color: #007bff; /* Change to your preferred hover color */
+            color: white; /* Change text color on hover */
+        }
+
+        /* Active state (when clicked) */
+        .collapse-item.active,
+        .collapse-item:active {
+            background-color: #0056b3; /* Darker shade for active state */
+            color: white; /* Ensure text color contrasts with background */
+        }
+
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -132,16 +159,17 @@
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Quản lý sản phẩm</span>
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
+                        <span style="color: #fff;">Quản lý sản phẩm</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Thuộc tính</a>
                         </div>
                     </div>
                 </li>
+
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
@@ -960,17 +988,9 @@
         const pathVariable = pathParts[pathParts.length - 1];
         const spid = e.currentTarget.id.replace("detailSPBtn_", "");
         console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
+        window.location.href = '/admin/quan-ly-san-pham/' + spid;
     });
-    $(document).on('click', "button[id^='detailSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
-        console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
-    });
+
 
     function getFileName(fullPath) {
         // Check for the last occurrence of the backslash or forward slash
@@ -1678,36 +1698,7 @@
     loadDSSP(currentPage);
     loadTotalPagination(currentPage);
 
-    $(document).on('click', "button[id^='detailSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
-        console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
-        // fetch(apiGet, {
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // }).then(response => response.json())
-        //     .then(resp => {
-        //         console.log("test response spct: ", resp);
-        //         spctLocal =resp;
-        //         const apiAdd = "/san-pham/update/"+spid;
-        //         fetch(apiAdd, {
-        //             method: "post",
-        //             headers: {
-        //                 'Accept': 'application/json',
-        //                 'Content-Type': 'application/json'
-        //             }
-        //         }).then( (response) => {
-        //             console.log(response);
-        //             loadDSSP();
-        //         });
-        //     });
-    });
+
     const editSPBtn = document.querySelectorAll('#editSPBtn');
     const saveEditBtn = document.querySelectorAll('#saveEditBtn');
 
@@ -1913,13 +1904,7 @@
     }
 
 </script>
-<script>
-    $(document).ready(function () {
-        $('#saveAddBtn').on('click', function (event) {
-            // Optionally, submit the form normally after AJAX request (if needed)
-        });
-    });
-</script>
+
 <script>
     // Hiển thị thông báo thêm thành công hoặc thất bại sử dụng thư viện Sweet Alert2
 </script>

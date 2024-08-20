@@ -271,7 +271,7 @@
             background: #555;
             margin-top: -5px;
             position: relative;
-            z-index: 10000;
+
         }
 
         input[type=range]::-ms-thumb {
@@ -283,7 +283,7 @@
             background: #555;
             margin-top: -5px;
             position: relative;
-            z-index: 10000;
+
         }
 
         input[type=range]::-moz-range-thumb {
@@ -295,7 +295,7 @@
             background: #555;
             margin-top: -5px;
             position: relative;
-            z-index: 10000;
+
         }
 
         input[type=range]:focus {
@@ -338,7 +338,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
+    <!-- Sidebar  Menu bên tay trái-->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -353,73 +353,78 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Thống kê doanh thu</span></a>
-        </li>
+        <c:choose>
+            <c:when test="${sessionScope.userRole == 'Quản lý'}">
+                <!-- Nav Item - Charts -->
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/ban-hang-tai-quay/admin/ban-tai-quay">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Bán hàng tại quầy</span></a>
-        </li>
+            </c:when>
+            <c:otherwise>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý đơn hàng</span></a>
-        </li>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý hóa đơn</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Quản lý sản phẩm</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                    <a class="collapse-item" href="cards.html">Cards</a>
-                </div>
-            </div>
-        </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
+                        <span style="color: #fff;">Quản lý sản phẩm</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Thuộc tính</a>
+                        </div>
+                    </div>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý nhân viên</span></a>
-        </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý khách hàng</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
+                </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                        <i class="bi bi-gift" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
+                </li>
 
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+            </c:otherwise>
+        </c:choose>
     </ul>
-
-    <!--   -----------   -->
+    <!-- End of Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -617,13 +622,13 @@
                                 <img id="hinhAnhSP" src="path_to_your_image.jpg" class="rounded border"
                                      width="150" height="200" alt="Product Image">
                                 <div id="product-details">
-                                    <h5 class="">Tên sản phẩm:&nbsp&nbsp<span id="tenSP"></span></h5>
-                                    <h5 class="">Mã sản phẩm:&nbsp&nbsp<span id="maSP"></span></h5>
-                                    <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoSP"></span></h5>
-                                    <h5 class="">Trạng thái:&nbsp&nbsp<span id="trangThaiSP"></span></h5>
+                                    <h5 class="" >Tên sản phẩm:&nbsp;&nbsp;<span class="" id="tenSP" style="font-weight: normal;"></span></h5>
+                                    <h5 class="">Mã sản phẩm:&nbsp;&nbsp;<span id="maSP" style="font-weight: normal;"></span></h5>
+                                    <h5 class="">Ngày tạo:&nbsp;&nbsp;<span id="ngayTaoSP" style="font-weight: normal;"></span></h5>
+                                    <h5 class="">Trạng thái:&nbsp;&nbsp;<span id="trangThaiSP" style="font-weight: normal;"></span></h5>
 
-                                    <div class="d-flex">
-                                        <h5 class="">Chất liệu:&nbsp&nbsp</h5>
+                                    <div class="d-flex mt-3">
+                                        <h5 class="" style="width: 100px">Chất liệu:&nbsp&nbsp</h5>
                                         <div class="dropdown" >
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                                     id="lblChatLieuModalEdit" style="width: 150px"
@@ -642,7 +647,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <h5 class="">Kiểu tay:&nbsp&nbsp</h5>
+                                        <h5 class="" style="width: 100px">Kiểu tay:&nbsp&nbsp</h5>
                                         <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                                     id="lblKieuTayModalEdit" style="width: 150px;"
@@ -1891,7 +1896,7 @@
         console.log('data chat lieu ID:', idChatLieu);
         console.log('data kieu tay ID:', idKieuTay);
         console.log('data sp local ID:', idSPCTLocal);
-        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin="+minGiaBanSearch + "&giaBanMax="+maxGiaBanSearch, {
+        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin="+minGiaBanSearch + "&giaBanMax="+maxGiaBanSearch + "&page=", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -1900,23 +1905,37 @@
             .then(resp => {
                 let html = '';
                 resp.map((spct, i) => {
-                    const trangThai = spct.trangThai == 1 ? "Hoạt động" : "Dừng hđ";
+                    const trangThai = spct.trangThai == 1
+                        ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
+                        : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
                     const mauSac = spct.idMauSac.ten || 'N/A';
                     const kichThuoc = spct.idKichThuoc.ten || 'N/A';
                     const chatLieu = spct.idChatLieu.ten || 'N/A';
                     const kieuTay = spct.idKieuTay.ten || 'N/A';
                     const soLuong = spct.soLuong || 'N/A';
+                    const giaBan = spct.giaBan || 'N/A';
+                    const giaNhap = spct.giaNhap || 'N/A';
+                    const moTa = spct.moTa || 'N/A';
+                    var hinhAnh = spct.hinhAnh;
+                    var fallbackImage = '/image-icon/placeholder.jpg';
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
+                        '<td><img src="' + (hinhAnh ? "/image/" + hinhAnh : fallbackImage) +
+                        '" alt="Image" style="width: 50px; height: 60px" class="img-fluid rounded border" /></td>' +
                         '<td>' + mauSac + '</td>' +
                         '<td>' + kichThuoc + '</td>' +
-                        '<td>' + chatLieu + '</td>' +
-                        '<td>' + kieuTay + '</td>' +
                         '<td>' + soLuong + '</td>' +
+                        '<td>' + giaNhap + '</td>' +
+                        '<td>' + giaBan + '</td>' +
+                        '<td>' +
+                        '<div  id="tooltip">Xem' +
+                        '<span id="tooltiptext">' + moTa + '</span>' +
+                        '</div>' +
+                        '</td>' +
                         '<td>' + trangThai + '</td>' +
                         '<td>' +
                         '<div class="d-inline">' +
-                        '<button id="editSPCTBtn_' + spct.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Chỉnh sửa</button>' +
+                        '<button id="editSPCTBtn_' + spct.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Sửa</button>' +
                         '</div>' +
                         '</td>' +
                         '</tr>';
