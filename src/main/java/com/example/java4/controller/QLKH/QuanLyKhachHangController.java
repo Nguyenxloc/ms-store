@@ -88,9 +88,9 @@ public class QuanLyKhachHangController {
             @Valid @ModelAttribute("khachHang") KhachHangRequest khReq
     ) {
         KhachHang khachHang = new KhachHang();
-        khachHang.setHoTen(khReq.getHoTen());
+        khachHang.setHoTen(khReq.getHoTen().trim());
         khachHang.setSdt(khReq.getSdt());
-        khachHang.setEmail(khReq.getEmail());
+        khachHang.setEmail(khReq.getEmail().trim());
         khachHang.setNgaySinh(khReq.getNgaySinh());
         khachHang.setGioiTinh(khReq.getGioiTinh());
 
@@ -106,7 +106,11 @@ public class QuanLyKhachHangController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        khachHang.setAnhDaiDien(imgName);
+        if (khReq.getAnhDaiDien().isEmpty()){
+            khachHang.setAnhDaiDien("png-clipart-user-computer-icons-avatar-miscellaneous-heroes.png");
+        }else {
+            khachHang.setAnhDaiDien(imgName);
+        }
 
         khachHang.setNgayTao(LocalDateTime.now());
         khachHang.setTrangThai(NhanVienRepository.ACTIVE);
@@ -137,9 +141,9 @@ public class QuanLyKhachHangController {
             @Valid @ModelAttribute("khachHang") KhachHangRequest khReq
     ) {
         khachHang.setId(khachHang.getId());
-        khachHang.setHoTen(khReq.getHoTen());
+        khachHang.setHoTen(khReq.getHoTen().trim());
         khachHang.setSdt(khReq.getSdt());
-        khachHang.setEmail(khReq.getEmail());
+        khachHang.setEmail(khReq.getEmail().trim());
         khachHang.setNgaySinh(khReq.getNgaySinh());
         khachHang.setGioiTinh(khReq.getGioiTinh());
 
@@ -199,8 +203,8 @@ public class QuanLyKhachHangController {
     public String timKiem(
             Model model,
             @RequestParam(value = "key", required = false) String key,
-            @RequestParam(value = "ngayBatDau", required = false) String ngayBatDau,
-            @RequestParam(value = "ngayKetThuc", required = false) String ngayKetThuc
+            @RequestParam(value = "ngaySinh1", required = false) String ngayBatDau,
+            @RequestParam(value = "ngaySinh2", required = false) String ngayKetThuc
     ) {
         //Hiển thị thông tin nhân viên đăng nhập
         if (UserInfor.idNhanVien != null) {
@@ -212,16 +216,16 @@ public class QuanLyKhachHangController {
         List<KhachHang> listKhachHang = khachHangRepo.findAll();
 
         if ((key != null || !key.isEmpty()) && (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty())) {
-            listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail(key);
-        } else if (key.isEmpty() && (!ngayBatDau.isEmpty() && !ngayKetThuc.isEmpty())) {
+            listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail(key.trim());
+        } else if (key.isEmpty() && (ngayBatDau != null && ngayKetThuc != null)) {
             try {
                 listKhachHang = khachHangRepo.findByKhoangNgaySinh(sdf.parse(ngayBatDau), sdf.parse(ngayKetThuc));
             }catch (Exception e){
                 e.printStackTrace();
             }
-        } else if (!key.isEmpty() && !ngayBatDau.isEmpty() && !ngayKetThuc.isEmpty()) {
+        } else if (!key.isEmpty() && (!ngayBatDau.isEmpty() && !ngayKetThuc.isEmpty())) {
             try {
-                listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail_NgaySinh(key, sdf.parse(ngayBatDau), sdf.parse(ngayKetThuc));
+                listKhachHang = khachHangRepo.findByHoTenOrSdtOrEmail_NgaySinh(key.trim(), sdf.parse(ngayBatDau), sdf.parse(ngayKetThuc));
             }catch (Exception e){
                 e.printStackTrace();
             }

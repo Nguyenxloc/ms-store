@@ -277,33 +277,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center text-info w-100">Login</h4>
+                <h4 class="modal-title text-center text-info w-100">ĐĂNG NHẬP</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="login-form-wrapper">
-                    <form id="login-form" class="form" action="/cua-hang/login" method="post"
-                          modelAttribute="khachHangDTO">
+                    <form id="login-form" class="form" action="/cua-hang/login" method="post" modelAttribute="khachHangDTO">
                         <div class="form-group">
-                            <label for="taiKhoan" class="text-info">Username:</label><br>
-                            <input placeholder="Username" type="text" id="taiKhoan" name="taiKhoan"
+                            <label for="taiKhoan" class="text-info">Tài khoản:</label><br>
+                            <input placeholder="Tài khoản" type="text" id="taiKhoan" name="taiKhoan"
                                    value="${khachHangDTO.taiKhoan}" class="form-control">
                             <small id="taiKhoanError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="matKhau" class="text-info">Password:</label><br>
-                            <input placeholder="Password" type="password" id="matKhau" name="matKhau"
+                            <label for="matKhau" class="text-info">Mật khẩu:</label><br>
+                            <input placeholder="Mật khẩu" type="password" id="matKhau" name="matKhau"
                                    value="${khachHangDTO.matKhau}" class="form-control">
                             <small id="matKhauError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Submit">
+                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Đăng nhập">
                         </div>
                         <div id="register-link" class="text-right">
                             <a href="#" class="text-info " data-toggle="modal" data-target="#registerModal"
-                               data-dismiss="modal">Register here</a>
+                               data-dismiss="modal">Đăng ký tài khoản</a>
                         </div>
                     </form>
                 </div>
@@ -320,18 +319,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center text-info w-100">Register</h4>
+                <h4 class="modal-title text-center text-info w-100">ĐĂNG KÝ TÀI KHOẢN</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="register-form-wrapper">
-                    <form id="register-form" class="form" action="/cua-hang/register" method="post"
-                          modelAttribute="khachHangDTO">
+                    <form id="register-form" class="form" action="/cua-hang/register" method="post" modelAttribute="khachHangDTO">
                         <div class="form-group">
-                            <label for="registerUsername" class="text-info">Username:</label><br>
-                            <input placeholder="Username" type="text" id="registerUsername" name="taiKhoan"
+                            <label for="registerUsername" class="text-info">Tài khoản:</label><br>
+                            <input placeholder="Tài khoản" type="text" id="registerUsername" name="taiKhoan"
                                    class="form-control" value="${khachHangDTO.taiKhoan}">
                             <small id="registerUsernameError" class="text-danger"></small>
                         </div>
@@ -341,31 +339,31 @@
                                    class="form-control" value="${khachHangDTO.email}">
                             <small id="registerEmailError" class="text-danger"></small>
                         </div>
+                        <input type="hidden" name="checkDangKy" id="checkDangKy" value="1">
                         <div class="form-group">
-                            <label for="registerPhone" class="text-info">Phone:</label><br>
-                            <input placeholder="Phone" type="text" id="registerPhone" name="sdt"
+                            <label for="registerPhone" class="text-info">Số điện thoại:</label><br>
+                            <input placeholder="Số điện thoại" type="text" id="registerPhone" name="sdt"
                                    class="form-control" value="${khachHangDTO.sdt}">
                             <small id="registerPhoneError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="registerPassword" class="text-info">Password:</label><br>
-                            <input placeholder="Password" type="password" id="registerPassword" name="matKhau"
+                            <label for="registerPassword" class="text-info">Mật khẩu:</label><br>
+                            <input placeholder="Mật khẩu" type="password" id="registerPassword" name="matKhau"
                                    class="form-control" value="${khachHangDTO.matKhau}">
                             <small id="registerPasswordError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="registerPassword" class="text-info">Confirm Password:</label><br>
-                            <input placeholder="Confirm password" type="password" id="nhapLaiMatKhau"
-                                   name="nhapLaiMatKhau"
+                            <label for="registerPassword" class="text-info">Nhập lại mật khẩu:</label><br>
+                            <input placeholder="Nhập lại mật khẩu" type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau"
                                    class="form-control" value="">
                             <small id="nhapLaiMatKhauError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Register">
+                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Đăng ký">
                         </div>
                         <div id="login-link" class="text-right">
                             <a href="#" class="text-info " data-toggle="modal" data-target="#loginModal"
-                               data-dismiss="modal">Back to Login</a>
+                               data-dismiss="modal">Quay về đăng nhập</a>
                         </div>
                     </form>
                 </div>
@@ -518,11 +516,10 @@
                                                data-id-tinh-thanh="${i.idTinhThanh}"
                                                data-id-quan-huyen="${i.idQuanHuyen}"
                                                data-id-phuong-xa="${i.idPhuongXa}"
-                                            <%--  --%>
                                                data-id-tinh-thanh-test="${i.idT}"
                                                data-id-quan-huyen-test="${i.idQH}"
                                                data-id-phuong-xa-test="${i.idPX}"
-                                               <c:if test="${i.trangThai == 1}">checked</c:if>>
+                                               <c:if test="${i.trangThai == 1}">checked</c:if> onchange="chonDiaChi()">
                                         <label>
                                             <b>${i.tenNguoiNhan}</b> | ${i.sdtNguoiNhan}
                                         </label>
@@ -538,7 +535,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class=" btn btn-primary" onclick="chonDiaChi()">Xác nhận</button>
+<%--                        <button type="submit" class=" btn btn-primary" id="chonDC" onclick="chonDiaChi()">Xác nhận</button>--%>
                     </div>
                 </div>
             </div>
@@ -551,8 +548,7 @@
         <i class="bi bi-plus-circle"></i>
     </button>
     <div class="modal fade" id="addAddressModal1" tabindex="-1" role="dialog"
-         aria-labelledby="addAddressModalLabel"
-         aria-hidden="true">
+         aria-labelledby="addAddressModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" style="width: 880px; left: -173px; top: 40px">
                 <div class="modal-header">
@@ -959,6 +955,13 @@
         }
     });
 
+    <c:if test="${not empty successMessage}">
+    Toast.fire({
+        icon: "success",
+        title: "${successMessage}"
+    });
+    </c:if>
+
     <%--    Hiển thị thông báo thành công khi đăng nhập thất bại--%>
     <c:if test="${not empty error}">
     Toast.fire({
@@ -968,12 +971,7 @@
     </c:if>
 
     <%--    Hiển thị thông báo thành công khi đăng nhập thành công--%>
-    <c:if test="${not empty successMessage}">
-    Toast.fire({
-        icon: "success",
-        title: "${successMessage}"
-    });
-    </c:if>
+
 
     //Lấy ra danh sách khách hàng
     const listKhachHang = [];
@@ -1067,8 +1065,13 @@
             $('.form-control').removeClass('border-danger');
 
             // Validate fields
+            var usernameRegex = /^[a-zA-Z0-9]{6,40}$/;
             if (!username) {
                 $('#registerUsernameError').text('Vui lòng nhập username.');
+                $('#registerUsername').addClass('border-danger');
+                hasError = true;
+            } else if (!usernameRegex.test(username)) {
+                $('#registerUsernameError').text('Tài khoản phải từ 6 đến 40 ký tự và không chứa ký tự đặc biệt.');
                 $('#registerUsername').addClass('border-danger');
                 hasError = true;
             } else if (listKhachHang.some(kh => kh.taiKhoan == username)) {
@@ -1076,11 +1079,13 @@
                 $('#registerUsername').addClass('border-danger');
                 hasError = true;
             }
+
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!email) {
                 $('#registerEmailError').text('Vui lòng nhập email.');
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
-            } else if (!isValidEmail(email)) {
+            } else if (!emailRegex.test(email)) {
                 $('#registerEmailError').text('Email không hợp lệ.');
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
@@ -1089,19 +1094,28 @@
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
             }
+
+            var phoneRegex = /^(0|\+84)[3-9][0-9]{8}$/;
             if (!phone) {
                 $('#registerPhoneError').text('Vui lòng nhập số điện thoại.');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (!isValidVietnamesePhoneNumber(phone)) {
-                $('#registerPhoneError').text('Số điện thoại không hợp lệ');
+            } else if (!phoneRegex.test(phone)) {
+                $('#registerPhoneError').text('Số điện thoại không hợp lệ. Định dạng hợp lệ: bắt đầu với +84 hoặc 0 và theo sau là 9-10 chữ số.');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.sdt == phone)) {
-                $('#registerPhoneError').text('Số điện thoại đã tồn tại');
-                $('#registerPhone').addClass('border-danger');
-                hasError = true;
-            }
+            } else if (listKhachHang.find(kh => {
+                if (kh.sdt == phone) {
+                    if (kh.taiKhoan != "") {
+                        $('#registerPhoneError').text('Số điện thoại đã được sử dụng đăng ký tài khoản!');
+                        $('#registerPhone').addClass('border-danger');
+                        hasError = true;
+                    } else {
+                        $('#checkDangKy').val(0);
+                    }
+                }
+            })) {}
+
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
                 $('#registerPassword').addClass('border-danger');
@@ -1111,6 +1125,7 @@
                 $('#registerPassword').addClass('border-danger');
                 hasError = true;
             }
+
             if (!confirmPassword) {
                 $('#nhapLaiMatKhauError').text('Vui lòng nhập lại mật khẩu.');
                 $('#nhapLaiMatKhau').addClass('border-danger');
@@ -1120,7 +1135,6 @@
                 $('#nhapLaiMatKhau').addClass('border-danger');
                 hasError = true;
             }
-
 
             // If any validation errors exist, prevent form submission
             if (hasError) {
@@ -1269,7 +1283,7 @@
             var isValid = true;
 
             // Kiểm tra định dạng số điện thoại
-            var phonePattern = /^(03|05|07|08|09)+([0-9]{8})$/; // Định dạng số điện thoại 10 số bắt đầu 03, 05, 07, 08, 09.
+            var phonePattern = /^(03|05|07|08|09)+([0-9]{8})$/;
 
             // Kiểm tra các trường bắt buộc
             if (!$("#tenNguoiNhan").val()) {
@@ -1321,15 +1335,9 @@
             });
         }
 
-        // Function to check if the phone number is valid (Vietnam format)
         function isValidPhoneNumber(phone) {
             var regex = /^(03|05|07|08|09)[0-9]{8}$/;
             return regex.test(phone);
-        }
-
-        // Function to check if the phone number is unique
-        function isPhoneNumberUnique(phone) {
-            return phoneNumbers.indexOf(phone) === -1;
         }
 
         // Lấy tỉnh thành
@@ -1373,46 +1381,47 @@
 
             var isValid = true;
             var phoneNumber = $("#sdtNguoiNhan1").val().trim();
+            var namePattern = /^[a-zA-ZÀ-ỹ\s]{1,40}$/;
+            var addressPattern = /^[a-zA-Z0-9À-ỹ\s]+$/;
 
-            // Kiểm tra Tên người nhận
-            if ($("#tenNguoiNhan1").val().trim() === "") {
+            var tenNguoiNhan = $("#tenNguoiNhan1").val().trim();
+            if (tenNguoiNhan === "") {
                 $("#tenNguoiNhan1Error").text("Vui lòng nhập họ tên");
+                isValid = false;
+            } else if (!namePattern.test(tenNguoiNhan)) {
+                $("#tenNguoiNhan1Error").text("Họ tên không hợp lệ.");
                 isValid = false;
             }
 
-            // Kiểm tra SĐT người nhận
             if (phoneNumber === "") {
                 $("#sdtNguoiNhan1Error").text("Vui lòng nhập số điện thoại");
                 isValid = false;
             } else if (!isValidPhoneNumber(phoneNumber)) {
                 $("#sdtNguoiNhan1Error").text("Số điện thoại không hợp lệ.");
                 isValid = false;
-            } else if (!isPhoneNumberUnique(phoneNumber)) {
-                $("#sdtNguoiNhan1Error").text("Số điện thoại đã tồn tại.");
-                isValid = false;
             } else {
                 phoneNumbers.push(phoneNumber);
             }
 
-            // Kiểm tra Địa chỉ
-            if ($("#diaChiChiTiet1").val().trim() === "") {
+            var diaChiChiTiet = $("#diaChiChiTiet1").val().trim();
+            if (diaChiChiTiet === "") {
                 $("#diaChiChiTiet1Error").text("Vui lòng nhập địa chỉ chi tiết");
+                isValid = false;
+            } else if (!addressPattern.test(diaChiChiTiet)) {
+                $("#diaChiChiTiet1Error").text("Địa chỉ không hợp lệ.");
                 isValid = false;
             }
 
-            // Kiểm tra Tỉnh/Thành phố
             if ($("#tinhThanh").val() === "0") {
                 $("#tinhThanhError").text("Vui lòng chọn Tỉnh/Thành phố.");
                 isValid = false;
             }
 
-            // Kiểm tra Quận/Huyện
             if ($("#quanHuyen").val() === "0") {
                 $("#quanHuyenError").text("Vui lòng chọn Quận/Huyện.");
                 isValid = false;
             }
 
-            // Kiểm tra Phường/Xã
             if ($("#phuongXa").val() === "0") {
                 $("#phuongXaError").text("Vui lòng chọn Phường/Xã.");
                 isValid = false;
@@ -1669,6 +1678,7 @@
             if (radio.checked) {
                 selectedRadio = radio;
             }
+
         });
 
         // Nếu có radio button được chọn, lấy thông tin và cập nhật form
@@ -1721,17 +1731,12 @@
             quanSelect.value = idQuanHuyen;
             phuongSelect.value = idPhuongXa;
 
-            console.log("tỉnh thành: ", idTinhThanh);
-            console.log("tỉnh quận huyện: ", idQuanHuyen);
-            console.log("tỉnh phường xã: ", idPhuongXa);
-            console.log("tỉnh thành test: ", idTinhThanhTest);
-            console.log("tỉnh quận huyện té: ", idQuanHuyenTest);
-            console.log("tỉnh phường xã: ", idPhuongXaTest);
-
-
             var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
-            var tongTien = parseFloat('${tongTien - hoaDon.idKhuyenMai.soTienGiam}');
+            var tongTien1 = parseFloat('${tongTien - hoaDon.idKhuyenMai.soTienGiam}');
+            var tongTien2 = parseFloat('${tongTien}');
             var soLuongGioHang = ${soLuongGioHang}
+                console.log("tongTien2: ", tongTien2);
+                console.log("tongTien1: ", tongTien1);
 
 
 // Function to get JSON with token
@@ -1771,14 +1776,12 @@
                 var service_id = data_maDV.data[0].service_id;
                 console.log("API maDV: ", service_id);
 
-                console.log("Tổng tiền: ", tongTien);
-
                 console.log("Tổng sl: ", soLuongGioHang);
 
                 var khoiLuong = soLuongGioHang * 200;
                 console.log("Tổng kl: ", khoiLuong);
 
-                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
+                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien2 + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
 
                     console.log("API Response: ", data_total.data.total); // Log the entire response
 
@@ -1791,7 +1794,7 @@
                     var firstFee = data_total.data.total
 
                     // Calculate the new total
-                    var newTotal = tongTien + firstFee;
+                    var newTotal = tongTien1 + firstFee;
 
                     // Update the total amount in the DOM
                     $('#total-amount').text(newTotal.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}));
@@ -1808,10 +1811,22 @@
                 });
             });
         }
-        // Đóng modal
-        $('#addAddressModal').modal('hide');
+        var listDC = document.getElementsByName('flexRadioDefault');
+        for(var i = 0 ; i < listDC.length ; i++) {
+            listDC[i].addEventListener('change', function() {
+                if (this.checked) {
+                    // Hàm hiển thị thông báo
+                    function showToast(type, message) {
+                        Toast.fire({
+                            icon: type,
+                            title: message
+                        });
+                    }
+                    showToast('success', 'Chọn địa chỉ thành công!');
+                }
+            });
+        }
     }
-
     chonDiaChi();
 
     function showModal() {
@@ -1851,30 +1866,6 @@
 </script>
 
 <script>
-    // document.getElementById('diaChiForm').addEventListener('click', function (e) {
-    //     e.preventDefault(); // Ngăn chặn hành vi mặc định của nút Xác nhận
-    //
-    //     Swal.fire({
-    //         title: "Bạn đăt không?",
-    //         text: "Bạn sẽ không thể hoàn tác hành động này!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         cancelButtonText: "Hủy",
-    //         confirmButtonText: "Thêm"
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             Swal.fire({
-    //                 title: "Đã thêm!",
-    //                 text: "Bạn đã thêm chức vụ thành công.",
-    //                 icon: "success"
-    //             }).then(() => {
-    //                 document.getElementById('diaChiForm').submit();
-    //             });
-    //         }
-    //     });
-    // });
 
     $(document).ready(function () {
         $('#datHang').click(function (e) {

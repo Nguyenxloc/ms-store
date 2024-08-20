@@ -1,6 +1,7 @@
 package com.example.java4.controller.ATrangChu;
 
 import com.example.java4.config.Config_Online;
+import com.example.java4.config.Config_ThanhToan;
 import com.example.java4.config.UserInfor;
 import com.example.java4.entities.*;
 import com.example.java4.repositories.*;
@@ -402,25 +403,35 @@ public class TrangChuController {
     @PostMapping("/register")
     public String register(@ModelAttribute("khachHangDTO") KhachHangDTO khachHangDTO,
                            BindingResult result,
+                           @RequestParam("checkDangKy") Integer checkDangKy,
                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerErrors", result.getAllErrors());
             return "redirect:/cua-hang/trang-chu";
         }
-        KhachHang existingUser = khachHangRepository.findByTaiKhoan(khachHangDTO.getTaiKhoan());
-        if (existingUser != null) {
-            redirectAttributes.addFlashAttribute("registerErrors", "Username already exists");
-            return "redirect:/cua-hang/trang-chu";
-        }
         // Save the new user
-        KhachHang newUser = new KhachHang();
-        newUser.setTaiKhoan(khachHangDTO.getTaiKhoan());
-        newUser.setEmail(khachHangDTO.getEmail());
-        newUser.setSdt(khachHangDTO.getSdt());
-        newUser.setMatKhau(khachHangDTO.getMatKhau());
-        newUser.setNgayTao(LocalDateTime.now());
-        newUser.setTrangThai(khachHangRepository.ACTIVE);
-        khachHangRepository.save(newUser);
+        if (checkDangKy == 1){
+            //Thêm mới khách hàng
+            KhachHang newUser = new KhachHang();
+            newUser.setTaiKhoan(khachHangDTO.getTaiKhoan().trim());
+            newUser.setEmail(khachHangDTO.getEmail().trim());
+            newUser.setSdt(khachHangDTO.getSdt().trim());
+            newUser.setMatKhau(khachHangDTO.getMatKhau().trim());
+            newUser.setNgayTao(LocalDateTime.now());
+            newUser.setTrangThai(khachHangRepository.ACTIVE);
+            khachHangRepository.save(newUser);
+        }else {
+            //Sửa khách hàng
+            KhachHang khachHang = khachHangRepo.findBySdt(khachHangDTO.getSdt());
+            khachHang.setTaiKhoan(khachHangDTO.getTaiKhoan());
+            khachHang.setEmail(khachHangDTO.getEmail());
+            khachHang.setSdt(khachHangDTO.getSdt());
+            khachHang.setMatKhau(khachHangDTO.getMatKhau());
+            khachHang.setNgayTao(LocalDateTime.now());
+            khachHang.setTrangThai(khachHangRepository.ACTIVE);
+            khachHangRepository.save(khachHang);
+        }
+
         redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
         return "redirect:/cua-hang/trang-chu";
     }
@@ -503,9 +514,9 @@ public class TrangChuController {
         listDiaChi = diaChiRepo.getAllDiaChi(UserInfor.idKhachHang);
 
         DiaChi diaChi = new DiaChi();
-        diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
-        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
-        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
+        diaChi.setTenNguoiNhan(request.getTenNguoiNhan().trim());
+        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan().trim());
+        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet().trim());
         diaChi.setIdTinhThanh(idTinh);
         diaChi.setIdQuanHuyen(idQuan);
         diaChi.setIdPhuongXa(idPhuong);
@@ -536,9 +547,9 @@ public class TrangChuController {
         listDiaChi = diaChiRepo.getAllDiaChi(UserInfor.idKhachHang);
 
         DiaChi diaChi = new DiaChi();
-        diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
-        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
-        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
+        diaChi.setTenNguoiNhan(request.getTenNguoiNhan().trim());
+        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan().trim());
+        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet().trim());
         diaChi.setIdTinhThanh(idTinh);
         diaChi.setIdQuanHuyen(idQuan);
         diaChi.setIdPhuongXa(idPhuong);
@@ -566,22 +577,21 @@ public class TrangChuController {
                                   @RequestParam("idPhuong") String idPX,
                                   RedirectAttributes redirectAttributes) {
         DiaChi diaChi = diaChiRepo.findById(id).get();
-        System.out.println(id);
-        System.out.println(idTinh);
-        System.out.println(idQuan);
-        System.out.println(idPhuong);
-        diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
-        diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
-        diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
-        diaChi.setIdTinhThanh(idTinh);
-        diaChi.setIdQuanHuyen(idQuan);
-        diaChi.setIdPhuongXa(idPhuong);
-        diaChi.setIdT(idT);
-        diaChi.setIdQH(idQH);
-        diaChi.setIdPX(idPX);
 
-        diaChiRepo.save(diaChi);
-        redirectAttributes.addFlashAttribute("successAccount", "Cập nhật địa chỉ thành công");
+        if (diaChi.getIdTinhThanh() != null) {
+            diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
+            diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
+            diaChi.setDiaChiChiTiet(request.getDiaChiChiTiet());
+            diaChi.setIdTinhThanh(idTinh);
+            diaChi.setIdQuanHuyen(idQuan);
+            diaChi.setIdPhuongXa(idPhuong);
+            diaChi.setIdT(idT);
+            diaChi.setIdQH(idQH);
+            diaChi.setIdPX(idPX);
+
+            diaChiRepo.save(diaChi);
+            redirectAttributes.addFlashAttribute("successAccount", "Cập nhật địa chỉ thành công");
+        }
         return "redirect:/cua-hang/dia-chi";
     }
 
@@ -700,41 +710,49 @@ public class TrangChuController {
 
             redirectAttributes.addFlashAttribute("successMessage", "Đặt hàng thành công");
             createLichSuHoaDon(hoaDon);
-//            return "redirect:/cua-hang/gio-hang";
             return "redirect:/cua-hang/don-mua/" + hoaDon.getId();
         } else {
-            System.out.println("===========================================" + tongTien);
 
-            HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
-            hoaDon.setPhuongThucThanhToan(phuongThucThanhToan);
-            hoaDon.setTongTien(tongTien);
+            Config_ThanhToan.phuongThucThanhToan = phuongThucThanhToan;
+            Config_ThanhToan.tongTien = tongTien;
+            Config_ThanhToan.tenNguoiNhan = request.getTenNguoiNhan();
+            Config_ThanhToan.sdtnguoiNhan = request.getSdtNguoiNhan();
+            Config_ThanhToan.diaChiChiTiet = request.getDiaChiChiTiet();
+            Config_ThanhToan.tinhThanh = idTinhThanh;
+            Config_ThanhToan.quanHuyen = idQuanHuyen;
+            Config_ThanhToan.phuongXa = idPhuongXa;
+            Config_ThanhToan.ghiChu = request.getGhiChu();
+            Config_ThanhToan.phiShip = phiVanChuyen;
 
-
-            hoaDonRepo.save(hoaDon);
-
-            if (giaoHangRepo.findByIdHoaDon(hoaDon.getId()) == 0) {
-                GiaoHang giaoHang = new GiaoHang();
-                giaoHang.setIdHoaDon(hoaDon);
-                giaoHang.setTenNguoiNhan(request.getTenNguoiNhan());
-                giaoHang.setSdtNguoiNhan(request.getSdtNguoiNhan());
-                giaoHang.setDiaChiChiTiet(request.getDiaChiChiTiet());
-                giaoHang.setIdTinhThanh(idTinhThanh);
-                giaoHang.setIdQuanHuyen(idQuanHuyen);
-                giaoHang.setIdPhuongXa(idPhuongXa);
-                giaoHang.setTrangThai(HoaDonRepository.CHO_XAC_NHAN);
-                giaoHang.setGhiChu(request.getGhiChu());
-                giaoHang.setPhiShip(phiVanChuyen);
-                giaoHangRepo.save(giaoHang);
-            }
-
-            if (hoaDon.getIdKhuyenMai() != null && hoaDon.getIdKhuyenMai().getId() != null) {
-                KhuyenMai khuyenMai = khuyenMaiRepo.findByIdKM(hoaDon.getIdKhuyenMai().getId());
-                if (khuyenMai != null) {
-                    khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
-                    khuyenMaiRepo.save(khuyenMai);
-                }
-            }
-//            createLichSuHoaDon(hoaDon);
+//            HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
+//            hoaDon.setPhuongThucThanhToan(phuongThucThanhToan);
+//            hoaDon.setTongTien(tongTien);
+//
+//
+//            hoaDonRepo.save(hoaDon);
+//
+//            if (giaoHangRepo.findByIdHoaDon(hoaDon.getId()) == 0) {
+//                GiaoHang giaoHang = new GiaoHang();
+//                giaoHang.setIdHoaDon(hoaDon);
+//                giaoHang.setTenNguoiNhan(request.getTenNguoiNhan());
+//                giaoHang.setSdtNguoiNhan(request.getSdtNguoiNhan());
+//                giaoHang.setDiaChiChiTiet(request.getDiaChiChiTiet());
+//                giaoHang.setIdTinhThanh(idTinhThanh);
+//                giaoHang.setIdQuanHuyen(idQuanHuyen);
+//                giaoHang.setIdPhuongXa(idPhuongXa);
+//                giaoHang.setTrangThai(HoaDonRepository.CHO_XAC_NHAN);
+//                giaoHang.setGhiChu(request.getGhiChu());
+//                giaoHang.setPhiShip(phiVanChuyen);
+//                giaoHangRepo.save(giaoHang);
+//            }
+//
+//            if (hoaDon.getIdKhuyenMai() != null && hoaDon.getIdKhuyenMai().getId() != null) {
+//                KhuyenMai khuyenMai = khuyenMaiRepo.findByIdKM(hoaDon.getIdKhuyenMai().getId());
+//                if (khuyenMai != null) {
+//                    khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+//                    khuyenMaiRepo.save(khuyenMai);
+//                }
+//            }
             return "redirect:/cua-hang/pay/" + tongTien;
         }
     }
@@ -884,9 +902,9 @@ public class TrangChuController {
         }
         KhachHang user = khachHangRepository.findByIdKH(UserInfor.idKhachHang);
         if (user != null) {
-            user.setHoTen(request.getHoTen());
-            user.setEmail(request.getEmail());
-            user.setSdt(request.getSdt());
+            user.setHoTen(request.getHoTen().trim());
+            user.setEmail(request.getEmail().trim());
+            user.setSdt(request.getSdt().trim());
             user.setGioiTinh(request.getGioiTinh());
             user.setNgaySinh(request.getNgaySinh());
             user.setNgayTao(LocalDateTime.now());
@@ -1018,30 +1036,66 @@ public class TrangChuController {
         System.out.println("----------------------------------" + cardType);
 
         if (responseCode.equalsIgnoreCase("00")) {
+            LocalDateTime now = LocalDateTime.now();
+
+            HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
+            hoaDon.setPhuongThucThanhToan(Config_ThanhToan.phuongThucThanhToan);
+            hoaDon.setTongTien(Config_ThanhToan.tongTien);
+            hoaDon.setNgayThanhToan(LocalDateTime.now().withNano(0));
+            hoaDon.setTrangThai(HoaDonRepository.CHO_XAC_NHAN);
+            hoaDon.setLoaiHoaDon(HoaDonRepository.HOA_DON_ONL);
+            hoaDon.setNgayThanhToan(LocalDateTime.now().withNano(0));
+            hoaDonRepo.save(hoaDon);
+
+            createLichSuHoaDon(hoaDon);
+
+            model.addAttribute("amount", amount);
+            model.addAttribute("ngayTao", now);
+            model.addAttribute("maHD", orderInfo);
+
+            hoaDonRepo.save(hoaDon);
+
+            if (giaoHangRepo.findByIdHoaDon(hoaDon.getId()) == 0) {
+                GiaoHang giaoHang = new GiaoHang();
+                giaoHang.setIdHoaDon(hoaDon);
+                giaoHang.setTenNguoiNhan(Config_ThanhToan.tenNguoiNhan);
+                giaoHang.setSdtNguoiNhan(Config_ThanhToan.sdtnguoiNhan);
+                giaoHang.setDiaChiChiTiet(Config_ThanhToan.diaChiChiTiet);
+                giaoHang.setIdTinhThanh(Config_ThanhToan.tinhThanh);
+                giaoHang.setIdQuanHuyen(Config_ThanhToan.quanHuyen);
+                giaoHang.setIdPhuongXa(Config_ThanhToan.phuongXa);
+                giaoHang.setTrangThai(HoaDonRepository.CHO_XAC_NHAN);
+                giaoHang.setGhiChu(Config_ThanhToan.ghiChu);
+                giaoHang.setPhiShip(Config_ThanhToan.phiShip);
+                giaoHangRepo.save(giaoHang);
+            }
+
+            if (hoaDon.getIdKhuyenMai() != null && hoaDon.getIdKhuyenMai().getId() != null) {
+                KhuyenMai khuyenMai = khuyenMaiRepo.findByIdKM(hoaDon.getIdKhuyenMai().getId());
+                if (khuyenMai != null) {
+                    khuyenMai.setSoLuong(khuyenMai.getSoLuong() - 1);
+                    khuyenMaiRepo.save(khuyenMai);
+                }
+            }
+
+//            HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
             redirectAttributes.addFlashAttribute("message", "Thanh toán thành công");
+            return "redirect:/cua-hang/don-mua/" + hoaDon.getId();
         } else {
-            redirectAttributes.addFlashAttribute("message", "Thanh toán thất bại");
+            Config_ThanhToan.phuongThucThanhToan = null;
+            Config_ThanhToan.tongTien = null;
+            Config_ThanhToan.tenNguoiNhan = null;
+            Config_ThanhToan.sdtnguoiNhan = null;
+            Config_ThanhToan.diaChiChiTiet = null;
+            Config_ThanhToan.tinhThanh = null;
+            Config_ThanhToan.quanHuyen = null;
+            Config_ThanhToan.phuongXa = null;
+            Config_ThanhToan.ghiChu = null;
+            Config_ThanhToan.phiShip = null;
+            redirectAttributes.addFlashAttribute("error", "Thanh toán thất bại");
+            return "redirect:/cua-hang/gio-hang";
         }
-
-        LocalDateTime now = LocalDateTime.now();
-
-        HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
-        hoaDon.setNgayThanhToan(LocalDateTime.now().withNano(0));
-        hoaDon.setTrangThai(HoaDonRepository.CHO_XAC_NHAN);
-        hoaDon.setLoaiHoaDon(HoaDonRepository.HOA_DON_ONL);
-        hoaDon.setNgayThanhToan(LocalDateTime.now().withNano(0));
-        hoaDonRepo.save(hoaDon);
-        createLichSuHoaDon(hoaDon);
-        model.addAttribute("amount", amount);
-        model.addAttribute("ngayTao", now);
-        model.addAttribute("maHD", orderInfo);
-
-        System.out.println("===========================" + responseCode);
-
-
-        return "redirect:/cua-hang/don-mua/" + hoaDon.getId();
     }
-
 }
 
 

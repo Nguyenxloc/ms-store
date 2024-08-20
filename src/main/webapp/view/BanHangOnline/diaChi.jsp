@@ -274,7 +274,8 @@
                         <c:otherwise>
                             <!-- Hiển thị nút đăng xuất khi đã đăng nhập -->
                             <li><a class="dropdown-item" href="/cua-hang/don-mua">Đơn mua</a></li>
-                            <li><a class="dropdown-item" href="/cua-hang/quan-ly-tai-khoan">Tài khoản của tôi</a></li>
+                            <li><a class="dropdown-item" href="/cua-hang/quan-ly-tai-khoan">Tài khoản của tôi</a>
+                            </li>
                             <li><a class="dropdown-item" href="/cua-hang/logout">Đăng xuất</a></li>
                         </c:otherwise>
                     </c:choose>
@@ -437,7 +438,7 @@
                 </div>
                 <ul class="menu-list">
                     <li class="menu-item">
-                        <a href="#">Tài Khoản Của Tôi</a>
+                        <a href="#">Tài Khoản Của Tôi <i class="bi bi-chevron-down"></i></a>
                         <ul class="submenu-list">
                             <li class="submenu-item"><a href="/cua-hang/quan-ly-tai-khoan">Hồ Sơ</a></li>
                             <li class="submenu-item"><a href="/cua-hang/dia-chi">Địa Chỉ</a></li>
@@ -453,16 +454,15 @@
             </div>
             <div>
                 <%--Thêm địa chỉ--%>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAddressModal1"
-                        style="position: relative; left: 657px; top: -27px">
-                    <i class="bi bi-plus-circle"></i> Thêm địa chỉ mới
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                        data-target="#addAddressModal1" style="position: relative; left: 657px; top: -27px">
+                    <i class="bi bi-plus-circle"></i> Thêm địa chỉ
                 </button>
-
-                <!-- Add Modal -->
                 <div class="modal fade" id="addAddressModal1" tabindex="-1" role="dialog"
-                     aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                     aria-labelledby="addAddressModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
+                        <div class="modal-content" style="width: 880px; left: -35px; top: 124px">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addAddressModalLabel">Thêm địa chỉ mới</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -498,7 +498,8 @@
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label><b>Tỉnh/Thành phố</b></label>
-                                            <select class="custom-select" id="tinhThanh" name="tinhThanh"
+                                            <select class="custom-select"
+                                                    id="tinhThanh" name="tinhThanh"
                                                     title="Chọn Tỉnh Thành"
                                                     style="background-color: #f1f1f1; border: 1px solid #e4e4e4;">
                                                 <option value="0">Chọn tỉnh thành</option>
@@ -507,7 +508,8 @@
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label><b>Quận/Huyện</b></label>
-                                            <select class="custom-select" id="quanHuyen" name="quanHuyen"
+                                            <select class="custom-select"
+                                                    id="quanHuyen" name="quanHuyen"
                                                     title="Chọn Quận Huyện"
                                                     style="background-color: #f1f1f1; border: 1px solid #e4e4e4;">
                                                 <option value="0">Chọn quận huyện</option>
@@ -516,7 +518,8 @@
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label><b>Phường/Xã</b></label>
-                                            <select class="custom-select" id="phuongXa" name="phuongXa"
+                                            <select class="custom-select"
+                                                    id="phuongXa" name="phuongXa"
                                                     title="Chọn Phường Xã"
                                                     style="background-color: #f1f1f1; border: 1px solid #e4e4e4;">
                                                 <option value="0">Chọn phường xã</option>
@@ -527,9 +530,8 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Quay lại
-                                </button>
-                                <button type="button" id="submitForm" class="btn btn-primary">Thêm</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Quay lại</button>
+                                <button type="button" id="submitForm" class=" btn btn-primary">Thêm</button>
                             </div>
                         </div>
                     </div>
@@ -561,14 +563,14 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <a href="" class="update-address-link" style="color: #1571ff;" data-toggle="modal"
+                            <a href="" style="color: #1571ff;" data-toggle="modal"
                                data-target="#updateAddressModal1${i.id}" data-address-id="1">
                                 Cập nhật
                             </a>
                             <div class="modal fade" id="updateAddressModal1${i.id}" tabindex="-1" role="dialog"
                                  aria-labelledby="updateAddressModalLabel1${i.id}" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
+                                    <div class="modal-content" style="width: 880px; left: -33px; top: 120px;">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="updateAddressModalLabel1">Cập nhật địa
                                                 chỉ</h5>
@@ -907,6 +909,7 @@
     //Thêm địa chỉ
     $(document).ready(function () {
         var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+        var phoneNumbers = [];
 
         // Function to get JSON with token
         function getJSONWithToken(url, callback) {
@@ -922,9 +925,13 @@
             });
         }
 
-        //Lấy tỉnh thành
+        function isValidPhoneNumber(phone) {
+            var regex = /^(03|05|07|08|09)[0-9]{8}$/;
+            return regex.test(phone);
+        }
+
+        // Lấy tỉnh thành
         getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', function (data_tinh) {
-            // Sắp xếp theo ProvinceID tăng dần
             data_tinh.data.sort(function (a, b) {
                 return a.ProvinceID - b.ProvinceID;
             });
@@ -963,38 +970,48 @@
             $(".text-danger").text("");
 
             var isValid = true;
+            var phoneNumber = $("#sdtNguoiNhan1").val().trim();
+            var namePattern = /^[a-zA-ZÀ-ỹ\s]{1,40}$/;
+            var addressPattern = /^[a-zA-Z0-9À-ỹ\s]+$/;
 
-            // Kiểm tra Tên người nhận
-            if ($("#tenNguoiNhan1").val().trim() === "") {
+            var tenNguoiNhan = $("#tenNguoiNhan1").val().trim();
+            if (tenNguoiNhan === "") {
                 $("#tenNguoiNhan1Error").text("Vui lòng nhập họ tên");
                 isValid = false;
+            } else if (!namePattern.test(tenNguoiNhan)) {
+                $("#tenNguoiNhan1Error").text("Họ tên không hợp lệ.");
+                isValid = false;
             }
 
-            // Kiểm tra SĐT người nhận
-            if ($("#sdtNguoiNhan1").val().trim() === "") {
+            if (phoneNumber === "") {
                 $("#sdtNguoiNhan1Error").text("Vui lòng nhập số điện thoại");
                 isValid = false;
+            } else if (!isValidPhoneNumber(phoneNumber)) {
+                $("#sdtNguoiNhan1Error").text("Số điện thoại không hợp lệ.");
+                isValid = false;
+            } else {
+                phoneNumbers.push(phoneNumber);
             }
 
-            // Kiểm tra Địa chỉ
-            if ($("#diaChiChiTiet1").val().trim() === "") {
+            var diaChiChiTiet = $("#diaChiChiTiet1").val().trim();
+            if (diaChiChiTiet === "") {
                 $("#diaChiChiTiet1Error").text("Vui lòng nhập địa chỉ chi tiết");
+                isValid = false;
+            } else if (!addressPattern.test(diaChiChiTiet)) {
+                $("#diaChiChiTiet1Error").text("Địa chỉ không hợp lệ.");
                 isValid = false;
             }
 
-            // Kiểm tra Tỉnh/Thành phố
             if ($("#tinhThanh").val() === "0") {
                 $("#tinhThanhError").text("Vui lòng chọn Tỉnh/Thành phố.");
                 isValid = false;
             }
 
-            // Kiểm tra Quận/Huyện
             if ($("#quanHuyen").val() === "0") {
                 $("#quanHuyenError").text("Vui lòng chọn Quận/Huyện.");
                 isValid = false;
             }
 
-            // Kiểm tra Phường/Xã
             if ($("#phuongXa").val() === "0") {
                 $("#phuongXaError").text("Vui lòng chọn Phường/Xã.");
                 isValid = false;
@@ -1017,7 +1034,7 @@
                 console.log("id qh: " + idQuanHuyen);
                 console.log("id px: " + idPX);
 
-                //test thêm mới
+                // Thêm dữ liệu ẩn vào form
                 $("<input>").attr({
                     type: "hidden",
                     name: "idTinhThanh",
@@ -1035,7 +1052,6 @@
                     name: "idPX",
                     value: idPX
                 }).appendTo("#themDiaChi");
-                //
 
                 $("<input>").attr({
                     type: "hidden",

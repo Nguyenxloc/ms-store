@@ -33,4 +33,6 @@ public interface SanPhamRepository
     @Query(value = "SELECT MIN(ha.hinhAnh1) FROM HinhAnh ha WHERE ha.idCTSP.id = " +
             "(SELECT MIN(ctsp.id) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP)")
     String getHinhAnhOfSP(@Param("idSP") String idSP);
+    @Query(value = "SELECT COUNT(*) FROM sanpham WHERE LOWER(ten) LIKE LOWER(CONCAT('%', :ten, '%'))", nativeQuery = true)
+    Integer checkTenSPIsExist(@Param("ten") String ten);
 };

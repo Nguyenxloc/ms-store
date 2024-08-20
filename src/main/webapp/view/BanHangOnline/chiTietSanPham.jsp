@@ -243,33 +243,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center text-info w-100">Login</h4>
+                <h4 class="modal-title text-center text-info w-100">ĐĂNG NHẬP</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="login-form-wrapper">
-                    <form id="login-form" class="form" action="/cua-hang/login" method="post"
-                          modelAttribute="khachHangDTO">
+                    <form id="login-form" class="form" action="/cua-hang/login" method="post" modelAttribute="khachHangDTO">
                         <div class="form-group">
-                            <label for="taiKhoan" class="text-info">Username:</label><br>
-                            <input placeholder="Username" type="text" id="taiKhoan" name="taiKhoan"
+                            <label for="taiKhoan" class="text-info">Tài khoản:</label><br>
+                            <input placeholder="Tài khoản" type="text" id="taiKhoan" name="taiKhoan"
                                    value="${khachHangDTO.taiKhoan}" class="form-control">
                             <small id="taiKhoanError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="matKhau" class="text-info">Password:</label><br>
-                            <input placeholder="Password" type="password" id="matKhau" name="matKhau"
+                            <label for="matKhau" class="text-info">Mật khẩu:</label><br>
+                            <input placeholder="Mật khẩu" type="password" id="matKhau" name="matKhau"
                                    value="${khachHangDTO.matKhau}" class="form-control">
                             <small id="matKhauError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Submit">
+                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Đăng nhập">
                         </div>
                         <div id="register-link" class="text-right">
                             <a href="#" class="text-info " data-toggle="modal" data-target="#registerModal"
-                               data-dismiss="modal">Register here</a>
+                               data-dismiss="modal">Đăng ký tài khoản</a>
                         </div>
                     </form>
                 </div>
@@ -286,18 +285,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center text-info w-100">Register</h4>
+                <h4 class="modal-title text-center text-info w-100">ĐĂNG KÝ TÀI KHOẢN</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="register-form-wrapper">
-                    <form id="register-form" class="form" action="/cua-hang/register" method="post"
-                          modelAttribute="khachHangDTO">
+                    <form id="register-form" class="form" action="/cua-hang/register" method="post" modelAttribute="khachHangDTO">
                         <div class="form-group">
-                            <label for="registerUsername" class="text-info">Username:</label><br>
-                            <input placeholder="Username" type="text" id="registerUsername" name="taiKhoan"
+                            <label for="registerUsername" class="text-info">Tài khoản:</label><br>
+                            <input placeholder="Tài khoản" type="text" id="registerUsername" name="taiKhoan"
                                    class="form-control" value="${khachHangDTO.taiKhoan}">
                             <small id="registerUsernameError" class="text-danger"></small>
                         </div>
@@ -307,31 +305,31 @@
                                    class="form-control" value="${khachHangDTO.email}">
                             <small id="registerEmailError" class="text-danger"></small>
                         </div>
+                        <input type="hidden" name="checkDangKy" id="checkDangKy" value="1">
                         <div class="form-group">
-                            <label for="registerPhone" class="text-info">Phone:</label><br>
-                            <input placeholder="Phone" type="text" id="registerPhone" name="sdt"
+                            <label for="registerPhone" class="text-info">Số điện thoại:</label><br>
+                            <input placeholder="Số điện thoại" type="text" id="registerPhone" name="sdt"
                                    class="form-control" value="${khachHangDTO.sdt}">
                             <small id="registerPhoneError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="registerPassword" class="text-info">Password:</label><br>
-                            <input placeholder="Password" type="password" id="registerPassword" name="matKhau"
+                            <label for="registerPassword" class="text-info">Mật khẩu:</label><br>
+                            <input placeholder="Mật khẩu" type="password" id="registerPassword" name="matKhau"
                                    class="form-control" value="${khachHangDTO.matKhau}">
                             <small id="registerPasswordError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <label for="registerPassword" class="text-info">Confirm Password:</label><br>
-                            <input placeholder="Confirm password" type="password" id="nhapLaiMatKhau"
-                                   name="nhapLaiMatKhau"
+                            <label for="registerPassword" class="text-info">Nhập lại mật khẩu:</label><br>
+                            <input placeholder="Nhập lại mật khẩu" type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau"
                                    class="form-control" value="">
                             <small id="nhapLaiMatKhauError" class="text-danger"></small>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Register">
+                            <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Đăng ký">
                         </div>
                         <div id="login-link" class="text-right">
                             <a href="#" class="text-info " data-toggle="modal" data-target="#loginModal"
-                               data-dismiss="modal">Back to Login</a>
+                               data-dismiss="modal">Quay về đăng nhập</a>
                         </div>
                     </form>
                 </div>
@@ -921,8 +919,13 @@
             $('.form-control').removeClass('border-danger');
 
             // Validate fields
+            var usernameRegex = /^[a-zA-Z0-9]{6,40}$/;
             if (!username) {
                 $('#registerUsernameError').text('Vui lòng nhập username.');
+                $('#registerUsername').addClass('border-danger');
+                hasError = true;
+            } else if (!usernameRegex.test(username)) {
+                $('#registerUsernameError').text('Tài khoản phải từ 6 đến 40 ký tự và không chứa ký tự đặc biệt.');
                 $('#registerUsername').addClass('border-danger');
                 hasError = true;
             } else if (listKhachHang.some(kh => kh.taiKhoan == username)) {
@@ -930,11 +933,13 @@
                 $('#registerUsername').addClass('border-danger');
                 hasError = true;
             }
+
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!email) {
                 $('#registerEmailError').text('Vui lòng nhập email.');
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
-            } else if (!isValidEmail(email)) {
+            } else if (!emailRegex.test(email)) {
                 $('#registerEmailError').text('Email không hợp lệ.');
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
@@ -943,19 +948,28 @@
                 $('#registerEmail').addClass('border-danger');
                 hasError = true;
             }
+
+            var phoneRegex = /^(0|\+84)[3-9][0-9]{8}$/;
             if (!phone) {
                 $('#registerPhoneError').text('Vui lòng nhập số điện thoại.');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (!isValidVietnamesePhoneNumber(phone)) {
-                $('#registerPhoneError').text('Số điện thoại không hợp lệ');
+            } else if (!phoneRegex.test(phone)) {
+                $('#registerPhoneError').text('Số điện thoại không hợp lệ. Định dạng hợp lệ: bắt đầu với +84 hoặc 0 và theo sau là 9-10 chữ số.');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
-            } else if (listKhachHang.some(kh => kh.sdt == phone)) {
-                $('#registerPhoneError').text('Số điện thoại đã tồn tại');
-                $('#registerPhone').addClass('border-danger');
-                hasError = true;
-            }
+            } else if (listKhachHang.find(kh => {
+                if (kh.sdt == phone) {
+                    if (kh.taiKhoan != "") {
+                        $('#registerPhoneError').text('Số điện thoại đã được sử dụng đăng ký tài khoản!');
+                        $('#registerPhone').addClass('border-danger');
+                        hasError = true;
+                    } else {
+                        $('#checkDangKy').val(0);
+                    }
+                }
+            })) {}
+
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
                 $('#registerPassword').addClass('border-danger');
@@ -965,6 +979,7 @@
                 $('#registerPassword').addClass('border-danger');
                 hasError = true;
             }
+
             if (!confirmPassword) {
                 $('#nhapLaiMatKhauError').text('Vui lòng nhập lại mật khẩu.');
                 $('#nhapLaiMatKhau').addClass('border-danger');
@@ -974,7 +989,6 @@
                 $('#nhapLaiMatKhau').addClass('border-danger');
                 hasError = true;
             }
-
 
             // If any validation errors exist, prevent form submission
             if (hasError) {

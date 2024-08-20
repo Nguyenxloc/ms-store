@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public interface MauSacRepository
-        extends JpaRepository<MauSac,Integer>
+        extends JpaRepository<MauSac,String>
 {
     public static final int ACTIVE  = 1;
     public static final int INACTIVE =0;
