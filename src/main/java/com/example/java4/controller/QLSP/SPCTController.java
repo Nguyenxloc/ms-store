@@ -299,12 +299,13 @@ public class SPCTController {
 
     @GetMapping("/search")
     public ResponseEntity<List<ChiTietSanPham>> searchChiTietSanPham(@RequestParam Map<String, Object> params) {
-        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSanPham(params);
+        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSanPham1(params);
         return ResponseEntity.ok(chiTietSanPhams);
     }
+
     @GetMapping("/search1")
     public ResponseEntity<List<SPCTResponse>> searchIdSP(@RequestParam Map<String, Object> params) {
-        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSPCT(params);
+        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSanPham1(params);
         Set<String> processedIds = new HashSet<>();
         List<SPCTResponse> lstSpct = new ArrayList<>();
         for (ChiTietSanPham chiTietSanPham : chiTietSanPhams) {

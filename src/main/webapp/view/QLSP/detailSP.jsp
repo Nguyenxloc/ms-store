@@ -160,6 +160,177 @@
             opacity: 1;
         }
     </style>
+
+    <style>
+        .range-slider {
+            position: relative;
+            width: 200px;
+            height: 35px;
+            text-align: center;
+        }
+
+        .range-slider input {
+            pointer-events: none;
+            position: absolute;
+            overflow: hidden;
+            left: 0;
+            top: 15px;
+            width: 200px;
+            outline: none;
+            height: 18px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .range-slider input::-webkit-slider-thumb {
+            pointer-events: all;
+            position: relative;
+            z-index: 1;
+            outline: 0;
+        }
+
+        .range-slider input::-moz-range-thumb {
+            pointer-events: all;
+            position: relative;
+            z-index: 10;
+            -moz-appearance: none;
+            width: 9px;
+        }
+
+        .range-slider input::-moz-range-track {
+            position: relative;
+            z-index: -1;
+            background-color: red;
+            border: 0;
+        }
+
+        .range-slider input:last-of-type::-moz-range-track {
+            -moz-appearance: none;
+            background: none transparent;
+            border: 0;
+        }
+
+        .range-slider input[type=range]::-moz-focus-outer {
+            border: 0;
+        }
+
+        .rangeValue {
+            width: 30px;
+        }
+
+        .output {
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            color: #999;
+            border-radius: 4px;
+            display: inline-block;
+            font: bold 15px/30px Helvetica, Arial;
+            bottom: 75%;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        .output.outputTwo {
+            left: 100%;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            background: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 5px;
+            border: none;
+            border-radius: 3px;
+            background: transparent;
+        }
+
+        input[type=range]::-ms-track {
+            height: 5px;
+            background: transparent;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-moz-range-track {
+            height: 5px;
+            background: transparent;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #555;
+            margin-top: -5px;
+            position: relative;
+            z-index: 10000;
+        }
+
+        input[type=range]::-ms-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #555;
+            margin-top: -5px;
+            position: relative;
+            z-index: 10000;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #555;
+            margin-top: -5px;
+            position: relative;
+            z-index: 10000;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        .full-range,
+        .incl-range {
+            width: 100%;
+            height: 5px;
+            left: 0;
+            top: 21px;
+            position: absolute;
+            background: #DDD;
+        }
+
+        .incl-range {
+            background: #D19C97;
+        }
+
+        .custom-col {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+        .pagination li.active a {
+            background-color: #007bff;
+            color: white;
+        }
+        .pagination li a {
+            cursor: pointer;
+        }
+    </style>
+
+
+
 </head>
 
 <body id="page-top">
@@ -493,7 +664,7 @@
                             </div>
                             <h5 class="mt-3 border-bottom">Danh sách sản phẩm chi tiết: </h5>
                             <div class="mt-3">
-                                <div class="row">
+                                <div class="row ms-2">
                                     <div class="col col-md-2">
                                         <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -518,19 +689,20 @@
                                             </ul>
                                         </div>
                                     </div>
-
-                                    <div class="border-bottom mb-4 pb-4 col col-md-4">
+                                    <div class="col col-md-1">
+                                        <h5 class="mt-2">Đơn giá: </h5>
+                                    </div>
+                                    <div class="mb-4 pb-4 col col-md-2" style="height: 20px">
                                         <section class="range-slider container">
                                             <span class="output outputOne"></span>
                                             <span class="output outputTwo"></span>
                                             <span class="full-range"></span>
                                             <span class="incl-range"></span>
-                                            <input id="minGiaBan" name="rangeOne" type="range">
-                                            <input id="maxGiaBan" name="rangeTwo" type="range">
+                                            <input  name="rangeOne" type="range">
+                                            <input  name="rangeTwo" type="range">
                                         </section>
                                     </div>
-
-                                    <div class="col col-md-3 d-flex gap-3">
+                                    <div class="col col-md-3 d-flex gap-3 ms-5">
                                         <button id="btnSearch" class="btn btn-success me-2" onclick="search(event)">
                                             Tìm kiếm
                                         </button>
@@ -1719,7 +1891,7 @@
         console.log('data chat lieu ID:', idChatLieu);
         console.log('data kieu tay ID:', idKieuTay);
         console.log('data sp local ID:', idSPCTLocal);
-        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay, {
+        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin="+minGiaBanSearch + "&giaBanMax="+maxGiaBanSearch, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -1759,6 +1931,8 @@
         idKichThuoc = "";
         idChatLieu = "";
         idKieuTay = "";
+        minGiaBanSearch = "";
+        maxGiaBanSearch = "";
         lblMauSac.textContent = "Chọn màu sắc"
         lblKichThuoc.textContent = "Chọn kích thước";
         loadDSSPCT(currentPage);
@@ -2650,6 +2824,90 @@
     });
 
 </script>
+<%--handle range slider--%>
+<script>
+    // Giả sử sliderConfig được lấy từ controller
+    let minGiaBanSearch = "";
+    let maxGiaBanSearch = "";
+     const sliderConfig = {
+        min: 100000,
+        max: 1000000
+    };
+
+    var rangeOne = document.querySelector('input[name="rangeOne"]');
+    var rangeTwo = document.querySelector('input[name="rangeTwo"]');
+    var outputOne = document.querySelector('.outputOne');
+    var outputTwo = document.querySelector('.outputTwo');
+    var inclRange = document.querySelector('.incl-range');
+    // Gán giá trị min và max cho các slider
+    rangeOne.min = sliderConfig.min;
+    rangeOne.max = sliderConfig.max;
+    rangeTwo.min = sliderConfig.min;
+    rangeTwo.max = sliderConfig.max;
+
+    rangeOne.value = sliderConfig.min;
+    rangeTwo.value = sliderConfig.max;
+
+    function formatCurrency(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function updateView() {
+        // Định dạng giá trị hiển thị
+        outputOne.innerHTML = formatCurrency(rangeOne.value);
+        outputTwo.innerHTML = formatCurrency(rangeTwo.value);
+
+        // Cập nhật vị trí của các chỉ số giá trị
+        outputOne.style.left = (rangeOne.value - rangeOne.min) / (rangeOne.max - rangeOne.min) * 100 + '%';
+        outputTwo.style.left = (rangeTwo.value - rangeTwo.min) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+
+        // Cập nhật chiều rộng và vị trí của phần tử incl-range
+        if (parseInt(rangeOne.value) > parseInt(rangeTwo.value)) {
+            inclRange.style.width = (rangeOne.value - rangeTwo.value) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+            inclRange.style.left = (rangeTwo.value - rangeOne.min) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+        } else {
+            inclRange.style.width = (rangeTwo.value - rangeOne.value) / (rangeTwo.max - rangeTwo.min) * 100 + '%';
+            inclRange.style.left = (rangeOne.value - rangeOne.min) / (rangeTwo.max - rangeOne.min) * 100 + '%';
+        }
+        console.log("min value : ", minGiaBanSearch);
+        console.log("max value : ", maxGiaBanSearch);
+    }
+
+    function syncSliders() {
+        let minValue = parseInt(rangeOne.value);
+        let maxValue = parseInt(rangeTwo.value);
+
+        if (minValue > maxValue) {
+            rangeOne.value = maxValue;
+            minValue = maxValue;
+        }
+
+        if (maxValue < minValue) {
+            rangeTwo.value = minValue;
+            maxValue = minValue;
+        }
+        // Cập nhật lại giá trị sau khi điều chỉnh
+        updateView();
+        minGiaBanSearch = rangeOne.value;
+        maxGiaBanSearch = rangeTwo.value;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateView();
+
+        rangeOne.addEventListener('input', function () {
+            syncSliders();
+        });
+
+        rangeTwo.addEventListener('input', function () {
+            syncSliders();
+        });
+    });
+</script>
+
+
+
+
 <script>
     $(document).ready(function () {
         $('#saveAddBtn').on('click', function (event) {
