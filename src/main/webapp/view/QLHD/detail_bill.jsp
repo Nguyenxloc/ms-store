@@ -47,6 +47,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
     <style>
 
@@ -307,7 +310,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    <a class="nav-link collapsed" href="/admin/quan-ly-san-pham" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Quản lý sản phẩm</span>
@@ -324,7 +327,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -336,7 +339,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -392,18 +395,7 @@
                 </form>
 
                 <!-- Topbar Search  -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -560,7 +552,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
-                            <img class="img-profile rounded-circle" src="/imageUser/${nv.anhDaiDien}">
+                            <img class="img-profile rounded-circle"
+                                 src="/imageUser/${nv.anhDaiDien}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -1690,46 +1683,73 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 <!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+    var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
 
+    // Function to get JSON with token
+    function getJSONWithToken(url, callback) {
+        $.ajax({
+            url: url,
+            headers: {
+                'Token': token
+            },
+            success: callback,
+            error: function (xhr, status, error) {
+                console.error("Request Error: " + error);
+                console.error("Status: " + status);
+                console.error("Response: " + xhr.responseText);
+            }
+        });
+    }
+
+    // Function to recalculate shipping fee and total payment
+    function calculateShippingAndTotal() {
+        // Get necessary values
+        var idQuanHuyenTest = ${diaChiKhachHang.idQH};
+        var idPhuongXaTest = ${diaChiKhachHang.idPX};
+        var soLuongGioHang = ${soLuongGioHang};
+        var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
+        var giamGia = ${giamGia};
+
+
+
+        // Calculate weight
+        var khoiLuong = soLuongGioHang * 200;
+        console.log("Tổng sl: ", soLuongGioHang);
+        console.log("Tổng kl: ", khoiLuong);
+
+        // Step 1: Get the service_id
+        getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=' + idQuanHuyenTest + '&from_district=3440', function (data_maDV) {
+            var service_id = data_maDV.data[0].service_id;
+            console.log("API maDV: ", service_id);
+
+            // Step 2: Calculate shipping fee based on service_id and other parameters
+            getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
+
+                var firstFee = data_total.data.total;
+                console.log("API Response: ", firstFee); // Log the shipping fee
+
+                // Calculate the new total
+                var newTotal = tongTien + firstFee - giamGia;
+
+                // Update the total amount in the DOM
+                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
+                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+
+
+            });
+        });
+    }
+
+    // Initial calculation on page load
+    calculateShippingAndTotal();
+
+</script>
 
 <script>
 
@@ -2451,8 +2471,7 @@
 
                                 $('#tongTienValue').text(formatCurrency(newTotalPrice));
 
-                                alert(newTotalPrice)
-                                alert()
+
 
                                 // calculateShippingAndTotal();
                                 //Cập nhật lại phí ship và tổng tiền
@@ -2737,73 +2756,38 @@
     }
 
 
-</script>
+    //Đăng xuất
+    document.getElementById('dang-xuat').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
 
-
-<script>
-    var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
-
-    // Function to get JSON with token
-    function getJSONWithToken(url, callback) {
-        $.ajax({
-            url: url,
-            headers: {
-                'Token': token
-            },
-            success: callback,
-            error: function (xhr, status, error) {
-                console.error("Request Error: " + error);
-                console.error("Status: " + status);
-                console.error("Response: " + xhr.responseText);
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng xuất!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã đăng xuất!",
+                    text: "Bạn đã đăng xuất thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // Điều hướng tới URL đăng xuất sau khi người dùng xác nhận
+                    window.location.href = "/admin/dang-nhap-view";
+                });
             }
         });
-    }
-
-    // Function to recalculate shipping fee and total payment
-    function calculateShippingAndTotal() {
-        // Get necessary values
-        var idQuanHuyenTest = ${diaChiKhachHang.idQH};
-        var idPhuongXaTest = ${diaChiKhachHang.idPX};
-        var soLuongGioHang = ${soLuongGioHang};
-        var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
-        var giamGia = ${giamGia};
+    });
 
 
-
-        // Calculate weight
-        var khoiLuong = soLuongGioHang * 200;
-        console.log("Tổng sl: ", soLuongGioHang);
-        console.log("Tổng kl: ", khoiLuong);
-
-        // Step 1: Get the service_id
-        getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=' + idQuanHuyenTest + '&from_district=3440', function (data_maDV) {
-            var service_id = data_maDV.data[0].service_id;
-            console.log("API maDV: ", service_id);
-
-            // Step 2: Calculate shipping fee based on service_id and other parameters
-            getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
-
-                var firstFee = data_total.data.total;
-                console.log("API Response: ", firstFee); // Log the shipping fee
-
-                // Calculate the new total
-                var newTotal = tongTien + firstFee - giamGia;
-
-                // Update the total amount in the DOM
-                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
-                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
-                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
-                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
-
-
-            });
-        });
-    }
-
-    // Initial calculation on page load
-    calculateShippingAndTotal();
 
 </script>
+
+
+
 
 
 </body>
