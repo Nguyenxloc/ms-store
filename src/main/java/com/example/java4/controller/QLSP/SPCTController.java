@@ -298,13 +298,35 @@ public class SPCTController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ChiTietSanPham>> searchChiTietSanPham(@RequestParam Map<String, Object> params) {
-        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSanPham(params);
-        return ResponseEntity.ok(chiTietSanPhams);
+    public ResponseEntity<List<SPCTView>> searchChiTietSanPham(@RequestParam Map<String, Object> params, @RequestParam("page") Optional<Integer> pageParam) {
+        List<ChiTietSanPham> lstChiTietSP = search.searchChiTietSanPham1(params);
+        int page = pageParam.orElse(1);
+        Pageable pageable = PageRequest.of(page - 1, 20);
+        List<SPCTView> lstSPCTView =  new ArrayList<>();
+        for (ChiTietSanPham chiTietSanPham : lstChiTietSP) {
+            SPCTView spctView = new SPCTView();
+            spctView.setId(chiTietSanPham.getId());
+            spctView.setSoLuong(chiTietSanPham.getSoLuong());
+            spctView.setMoTa(chiTietSanPham.getMoTa());
+            spctView.setGiaNhap(chiTietSanPham.getGiaNhap());
+            spctView.setGiaBan(chiTietSanPham.getGiaBan());
+            spctView.setNgayTao(chiTietSanPham.getNgayTao());
+            spctView.setTrangThai(chiTietSanPham.getTrangThai());
+            spctView.setIdMauSac(chiTietSanPham.getIdMauSac());
+            spctView.setIdKichThuoc(chiTietSanPham.getIdKichThuoc());
+            spctView.setIdChatLieu(chiTietSanPham.getIdChatLieu());
+            spctView.setIdKieuTay(chiTietSanPham.getIdKieuTay());
+            spctView.setIdSanPham(chiTietSanPham.getIdSanPham());
+            spctView.setHinhAnh(chiTietSPRepository.getHinhAnhOfSPCT(chiTietSanPham.getId()));
+            lstSPCTView.add(spctView);
+            System.out.println("==========================================hinh anh: "+ spctView.getHinhAnh());
+        }
+        return ResponseEntity.ok(lstSPCTView);
     }
+
     @GetMapping("/search1")
     public ResponseEntity<List<SPCTResponse>> searchIdSP(@RequestParam Map<String, Object> params) {
-        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSPCT(params);
+        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSanPham1(params);
         Set<String> processedIds = new HashSet<>();
         List<SPCTResponse> lstSpct = new ArrayList<>();
         for (ChiTietSanPham chiTietSanPham : chiTietSanPhams) {

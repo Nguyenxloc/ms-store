@@ -1,6 +1,7 @@
 package com.example.java4.controller.QLSP;
 import com.example.java4.entities.*;
 import com.example.java4.repositories.SPCTRepository;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 @Service
 public class SearchService {
     @Autowired
@@ -42,27 +45,36 @@ public class SearchService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
     }
-    public List<ChiTietSanPham> searchChiTietSPCT(Map<String, Object> params) {
+
+
+    public List<ChiTietSanPham> searchChiTietSanPham1(Map<String, Object> params) {
         return spctRepo.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            System.out.println("Params: " + params);
+
             params.forEach((key, value) -> {
                 if (value != null) {
+                    Predicate predicate = null;
+                    System.out.println("Processing key: " + key + ", value: " + value);
+
                     switch (key) {
                         case "moTa":
-                            predicates.add(criteriaBuilder.like(root.get(key), "%" + value + "%"));
+                            if (value instanceof String) {
+                                predicate = criteriaBuilder.like(root.get("moTa"), "%" + value + "%");
+                            }
                             break;
                         case "soLuong":
                             if (value instanceof Integer) {
-                                predicates.add(criteriaBuilder.equal(root.get(key), value));
+                                predicate = criteriaBuilder.equal(root.get("soLuong"), value);
                             }
                             break;
                         case "giaBanMin":
                             if (value instanceof String) {
                                 try {
                                     BigDecimal minPrice = new BigDecimal((String) value);
-                                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("giaBan"), minPrice));
+                                    predicate = criteriaBuilder.greaterThanOrEqualTo(root.get("giaBan"), minPrice);
                                 } catch (NumberFormatException e) {
-                                    // Handle the case where the string is not a valid BigDecimal
                                     e.printStackTrace();
                                 }
                             }
@@ -71,9 +83,8 @@ public class SearchService {
                             if (value instanceof String) {
                                 try {
                                     BigDecimal maxPrice = new BigDecimal((String) value);
-                                    predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("giaBan"), maxPrice));
+                                    predicate = criteriaBuilder.lessThanOrEqualTo(root.get("giaBan"), maxPrice);
                                 } catch (NumberFormatException e) {
-                                    // Handle the case where the string is not a valid BigDecimal
                                     e.printStackTrace();
                                 }
                             }
@@ -82,9 +93,8 @@ public class SearchService {
                             if (value instanceof String) {
                                 try {
                                     LocalDateTime dateTime = LocalDateTime.parse((String) value);
-                                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("ngayTao"), dateTime));
+                                    predicate = criteriaBuilder.greaterThanOrEqualTo(root.get("ngayTao"), dateTime);
                                 } catch (Exception e) {
-                                    // Handle the case where the string is not a valid LocalDateTime
                                     e.printStackTrace();
                                 }
                             }
@@ -93,43 +103,50 @@ public class SearchService {
                             if (value instanceof String) {
                                 try {
                                     LocalDateTime dateTime = LocalDateTime.parse((String) value);
-                                    predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("ngayTao"), dateTime));
+                                    predicate = criteriaBuilder.lessThanOrEqualTo(root.get("ngayTao"), dateTime);
                                 } catch (Exception e) {
-                                    // Handle the case where the string is not a valid LocalDateTime
                                     e.printStackTrace();
                                 }
                             }
                             break;
-                        case "mauSac":
-                            if (value instanceof MauSac) {
-                                predicates.add(criteriaBuilder.equal(root.get("idMauSac").get("id"), ((MauSac) value).getId()));
+                        case "idMauSac":
+                        case "idKichThuoc":
+                        case "idChatLieu":
+                        case "idKieuTay":
+                        case "idSanPham":
+                            if (value instanceof String && isValidGuid((String) value)) {
+                                Join<ChiTietSanPham, ?> join = root.join(key);
+                                predicate = criteriaBuilder.equal(join.get("id"), value);
                             }
                             break;
-                        case "kichThuoc":
-                            if (value instanceof KichThuoc) {
-                                predicates.add(criteriaBuilder.equal(root.get("idKichThuoc").get("id"), ((KichThuoc) value).getId()));
-                            }
-                            break;
-                        case "chatLieu":
-                            if (value instanceof ChatLieu) {
-                                predicates.add(criteriaBuilder.equal(root.get("idChatLieu").get("id"), ((ChatLieu) value).getId()));
-                            }
-                            break;
-                        case "kieuTay":
-                            if (value instanceof KieuTay) {
-                                predicates.add(criteriaBuilder.equal(root.get("idKieuTay").get("id"), ((KieuTay) value).getId()));
-                            }
-                            break;
-                        case "sanPham":
-                            if (value instanceof SanPham) {
-                                predicates.add(criteriaBuilder.equal(root.get("idSanPham").get("id"), ((SanPham) value).getId()));
-                            }
-                            break;
-                        // Add more cases as needed
+                    }
+
+                    if (predicate != null) {
+                        predicates.add(predicate);
+                        System.out.println("Added predicate: " + predicate);
+                    } else {
+                        System.out.println("No predicate added for key: " + key);
                     }
                 }
             });
+
+            System.out.println("Number of predicates: " + predicates.size());
+            predicates.forEach(p -> System.out.println("Predicate: " + p));
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
     }
+
+    // Helper method to check if a string is a valid GUID
+    private boolean isValidGuid(String guid) {
+        try {
+            UUID.fromString(guid);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+
+
 }
