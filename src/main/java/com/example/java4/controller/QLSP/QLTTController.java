@@ -1,4 +1,4 @@
-package com.example.java4.controller.QLKM;
+package com.example.java4.controller.QLSP;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("admin/quan-ly-khuyen-mai")
-public class QLKMController {
+@RequestMapping("admin/quan-ly-thuoc-tinh")
+public class QLTTController {
     @GetMapping("")
     public String hienThi(Model model, @RequestParam(value = "page", defaultValue = "0") String pageParam) {
-        return "/view/QLKM/khuyenMai.jsp";
+        return "/view/QLSP/sanPham.jsp";
     }
-    @GetMapping("{idKM}")
+    @GetMapping("{idSP}")
     public String detailSP(Model model, @PathVariable String idSP) {
-        return "/view/QLKM/detailKM.jsp";
+        return "/view/QLSP/detailSP.jsp";
+    }
+    @GetMapping("add-sp")
+    public String addSPView() {
+        return "/view/QLSP/addSP.jsp";
     }
 }
+

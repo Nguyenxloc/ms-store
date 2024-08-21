@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>MSStore_Tại quầy</title>
+    <title>Quản lý sản phẩm </title>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -42,7 +42,13 @@
             rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+            rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .table-scroll {
             height: 340px;
@@ -79,13 +85,39 @@
 
     </style>
 
+    <style>
+        /* Base styles for the collapse items */
+        .collapse-item {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #333; /* Default text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 0.25rem; /* Optional: rounded corners */
+            transition: background-color 0.2s, color 0.2s; /* Smooth transition */
+        }
+
+        /* Hover effect */
+        .collapse-item:hover,
+        .collapse-item:focus {
+            background-color: #007bff; /* Change to your preferred hover color */
+            color: white; /* Change text color on hover */
+        }
+
+        /* Active state (when clicked) */
+        .collapse-item.active,
+        .collapse-item:active {
+            background-color: #0056b3; /* Darker shade for active state */
+            color: white; /* Ensure text color contrasts with background */
+        }
+
+    </style>
+
 </head>
 
 <body id="page-top">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-
     <!-- Sidebar  Menu bên tay trái-->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -103,10 +135,6 @@
         <!-- Nav Item - Dashboard -->
         <c:choose>
             <c:when test="${sessionScope.userRole == 'Quản lý'}">
-                <!-- Nav Item - Charts -->
-
-            </c:when>
-            <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
@@ -127,22 +155,20 @@
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
-
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Quản lý sản phẩm</span>
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
+                        <span style="color: #fff;">Quản lý sản phẩm</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Thuộc tính</a>
                         </div>
                     </div>
                 </li>
-
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
@@ -163,6 +189,37 @@
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </c:when>
+            <c:otherwise>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
+
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
+
+                <!-- Nav Item - Charts -->
+                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Nav Item - Charts -->
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
+
+                <!-- Nav Item - Charts -->
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
@@ -340,19 +397,19 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
                             <img class="img-profile rounded-circle"
                                  src="/imageUser/${nv.anhDaiDien}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/store/tai-khoan-cua-toi">
+                            <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Tài khoản của tôi
+                                Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/store/dang-xuat" id="dang-xuat" data-toggle="modal"
+                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat" data-toggle="modal"
                                data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
@@ -658,24 +715,7 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- Bootstrap core JavaScript-->
 <script src="/view_admin/vendor/jquery/jquery.min.js"></script>
 <script src="/view_admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -960,17 +1000,9 @@
         const pathVariable = pathParts[pathParts.length - 1];
         const spid = e.currentTarget.id.replace("detailSPBtn_", "");
         console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
+        window.location.href = '/admin/quan-ly-san-pham/' + spid;
     });
-    $(document).on('click', "button[id^='detailSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
-        console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
-    });
+
 
     function getFileName(fullPath) {
         // Check for the last occurrence of the backslash or forward slash
@@ -1497,7 +1529,6 @@
                 }
             }
         }
-
     };
 
     let isEventListenerAttached = false;
@@ -1678,36 +1709,7 @@
     loadDSSP(currentPage);
     loadTotalPagination(currentPage);
 
-    $(document).on('click', "button[id^='detailSPBtn_']", e => {
-        e.preventDefault();
-        const queryString = window.location.pathname;
-        const pathParts = queryString.split('/');
-        const pathVariable = pathParts[pathParts.length - 1];
-        const spid = e.currentTarget.id.replace("detailSPBtn_", "");
-        console.log("====================test id button detail: ", spid);
-        window.location.href = '/qlsp/' + spid;
-        // fetch(apiGet, {
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // }).then(response => response.json())
-        //     .then(resp => {
-        //         console.log("test response spct: ", resp);
-        //         spctLocal =resp;
-        //         const apiAdd = "/san-pham/update/"+spid;
-        //         fetch(apiAdd, {
-        //             method: "post",
-        //             headers: {
-        //                 'Accept': 'application/json',
-        //                 'Content-Type': 'application/json'
-        //             }
-        //         }).then( (response) => {
-        //             console.log(response);
-        //             loadDSSP();
-        //         });
-        //     });
-    });
+
     const editSPBtn = document.querySelectorAll('#editSPBtn');
     const saveEditBtn = document.querySelectorAll('#saveEditBtn');
 
@@ -1884,7 +1886,7 @@
                                                 });
                                         });
 
-                                        window.location.href = `http://localhost:8080/qlsp/` + responseData;
+                                        window.location.href = `http://localhost:8080/admin/quan-ly-san-pham/` + responseData;
                                     } else {
                                         console.error('Unexpected response format:', responseData);
                                     }
@@ -1913,15 +1915,32 @@
     }
 
 </script>
+
 <script>
-    $(document).ready(function () {
-        $('#saveAddBtn').on('click', function (event) {
-            // Optionally, submit the form normally after AJAX request (if needed)
+    document.getElementById('dang-xuat').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng xuất!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã đăng xuất!",
+                    text: "Bạn đã đăng xuất thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // Điều hướng tới URL đăng xuất sau khi người dùng xác nhận
+                    window.location.href = "/admin/dang-nhap-view";
+                });
+            }
         });
     });
-</script>
-<script>
-    // Hiển thị thông báo thêm thành công hoặc thất bại sử dụng thư viện Sweet Alert2
 </script>
 
 </html>
