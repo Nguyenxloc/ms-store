@@ -94,6 +94,7 @@
             background-color: #f0f0f0; /* Optional: Adds a background color */
         }
 
+
     </style>
 
 </head>
@@ -869,13 +870,13 @@
                             <div class="mb-3 mt-3">
                                 <label class="form-label">Họ tên khách hàng:</label>
                                 <input type="text" class="form-control" id="tenKhachHang" name="hoTen">
-                                <p id="error-tenKhachHang" style="color: red"></p>
+                                <p id="error-tenKhachHang" class="error2" style="color: red"></p>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Số điện thoại:</label>
                                 <input type="text" class="form-control" id="soDienThoai" name="sdt">
-                                <p id="error-soDienThoai" style="color: red"></p>
+                                <p id="error-soDienThoai" class="error2" style="color: red"></p>
                             </div>
                             <div class="mb-3 mt-3">
                                 <label  class="form-label">Giới tính:</label>
@@ -887,7 +888,7 @@
                                     <input type="radio" class="form-check-input" id="gioiTinhNu" name="gioiTinh" value="0">Nữ
                                     <label class="form-check-label" for="radio2"></label>
                                 </div>
-                                <p id="error-gioiTinh" style="color: red"></p>
+                                <p id="error-gioiTinh" class="error2" style="color: red"></p>
                             </div>
 
                             <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
@@ -1201,50 +1202,88 @@
         });
     }
 
+    function isValidFullName(fullName) {
+        var regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        return regex.test(fullName);
+    }
+
+    function clearErrors() {
+        document.querySelectorAll('.error2').forEach(element => {
+            element.textContent = '';
+        });
+    }
+
     //Thêm khách hàng
     document.getElementById('khachHangForm').addEventListener('submit', function(event) {
+
+        event.preventDefault();
+        clearErrors();
         // Get the form fields
         const tenKhachHang = document.getElementById('tenKhachHang').value.trim();
         const soDienThoai = document.getElementById('soDienThoai').value.trim();
         const gioiTinhNam = document.getElementById('gioiTinhNam').checked;
         const gioiTinhNu = document.getElementById('gioiTinhNu').checked;
 
-        // Reset error messages
-        document.getElementById('error-tenKhachHang').innerText = '';
-        document.getElementById('error-soDienThoai').innerText = '';
-        document.getElementById('error-gioiTinh').innerText = '';
-
-        let isValid = true;
+        let hasError = false;
 
         // Validate name
-        if (tenKhachHang === '') {
-            document.getElementById('error-tenKhachHang').innerText = 'Họ tên khách hàng không được để trống.';
-            isValid = false;
+        if (!tenKhachHang) {
+            document.getElementById('error-tenKhachHang').textContent = 'Họ tên khách hàng không được để trống';
+            hasError = true;
+        }else if (!isValidFullName(tenKhachHang)){
+            document.getElementById('error-tenKhachHang').textContent = 'Họ tên khách hàng chỉ được nhập chữ';
+            hasError = true;
+        }else if (tenKhachHang.length > 30){
+            document.getElementById('error-tenKhachHang').textContent = 'Họ tên khách hàng không được quá 30 ký tự';
+            hasError = true;
         }
 
         // Validate sđt
-        console.log("Sdt c: ",${sdtC});
         if (!soDienThoai) {
             document.getElementById('error-soDienThoai').textContent = 'Số điện thoại không được để trống';
-            isValid = false;
+            hasError = true;
         } else if (!isVietnamesePhoneNumber(soDienThoai)) {
             document.getElementById('error-soDienThoai').textContent = 'Số điện thoại không hợp lệ';
-            isValid = false;
+            hasError = true;
         } else if (listKH.some(khachHang => khachHang.sdt === soDienThoai)) {
             document.getElementById('error-soDienThoai').textContent = 'Số điện thoại đã tồn tại';
-            isValid = false;
+            hasError = true;
         }
 
         // Validate gender
         if (!gioiTinhNam && !gioiTinhNu) {
-            document.getElementById('error-gioiTinh').innerText = 'Vui lòng chọn giới tính.';
-            isValid = false;
+            document.getElementById('error-gioiTinh').textContent = 'Giới tính không được để trống';
+            hasError = true;
         }
 
         // Prevent form submission if validation fails
-        if (!isValid) {
-            event.preventDefault();
+        if (hasError) {
+            return;
         }
+
+        event.preventDefault();
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn thêm không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Hủy",
+            confirmButtonText: "Thêm"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã thêm!",
+                    text: "Bạn đã thêm khách hàng thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // window.location.href = "/qlnv/quan-ly-nhan-vien";
+                    document.getElementById('khachHangForm').submit();
+                });
+            }
+        });
+
     });
 
 
@@ -1261,11 +1300,6 @@
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
-            return false;
-        }
-
-        if (isNaN(soLuong) || parseInt(soLuong) <= 0) {
-            alert("Số lượng phải là số dương và không được chứa chữ");
             return false;
         }
 
