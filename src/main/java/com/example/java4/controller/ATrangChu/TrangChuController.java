@@ -632,10 +632,21 @@ public class TrangChuController {
                 tongTienBigDecimal = tongTienBigDecimal.add(cthd.getDonGia().multiply(soLuongDecimal));
             }
             HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
-            if (tongTienBigDecimal.compareTo(hoaDon.getIdKhuyenMai().getApDung()) < 0) {
-                hoaDon.setIdKhuyenMai(null);
-                hoaDonRepo.save(hoaDon);
+            if (hoaDon != null && hoaDon.getIdKhuyenMai() != null) {
+                KhuyenMai khuyenMai = hoaDon.getIdKhuyenMai();
+                if (khuyenMai.getId() != null && !khuyenMai.getId().isEmpty()) {
+                    if (tongTienBigDecimal.compareTo(khuyenMai.getApDung()) < 0) {
+                        hoaDon.setIdKhuyenMai(null);
+                        hoaDonRepo.save(hoaDon);
+                    }
+                }
             }
+//            if (!hoaDon.getIdKhuyenMai().getId().isEmpty()  || hoaDon.getIdKhuyenMai() != null) {
+//                if (tongTienBigDecimal.compareTo(hoaDon.getIdKhuyenMai().getApDung()) < 0) {
+//                    hoaDon.setIdKhuyenMai(null);
+//                    hoaDonRepo.save(hoaDon);
+//                }
+//            }
         }
         return "redirect:/cua-hang/gio-hang";
     }
