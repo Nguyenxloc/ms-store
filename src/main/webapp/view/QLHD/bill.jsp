@@ -119,7 +119,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    <a class="nav-link collapsed" href="/admin/quan-ly-san-pham" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Quản lý sản phẩm</span>
@@ -135,8 +135,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" >
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
-                        <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
+                        <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -203,19 +203,7 @@
                     </button>
                 </form>
 
-                <!-- Topbar Search  -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -1035,24 +1023,7 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="/view_admin/vendor/jquery/jquery.min.js"></script>
@@ -1065,14 +1036,11 @@
 <script src="/view_admin/js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="/view_admin/vendor/chart.js/Chart.min.js"></script>
+
 
 <!-- Page level custom scripts -->
-<script src="/view_admin/js/demo/chart-area-demo.js"></script>
-<script src="/view_admin/js/demo/chart-pie-demo.js"></script>
-
 <!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
@@ -1103,10 +1071,6 @@
     // Hàm xử lý hiển thị bg-warning các tab
     document.addEventListener('DOMContentLoaded', function () {
 
-        // Hiển thị Drop dow
-        document.getElementById('userDropdown').addEventListener('click', function(event) {
-            event.preventDefault();
-        });
 
         // Function to get status from URL
         function getStatusFromUrl() {
@@ -1161,7 +1125,7 @@
         });
 
         // Handle data loading when tabs are clicked
-        document.querySelectorAll('.nav-link').forEach(button => {
+        document.querySelectorAll('#myTab .nav-link').forEach(button => {
             button.addEventListener('click', function () {
                 let status = this.getAttribute('data-status');
                 let url = new URL(window.location.href);
@@ -1181,7 +1145,7 @@
     });
 
     // Handle data loading when tabs are clicked
-    document.querySelectorAll('.nav-link').forEach(button => {
+    document.querySelectorAll('#myTab .nav-link').forEach(button => {
         button.addEventListener('click', function () {
             let status = this.getAttribute('data-status');
             let url = new URL(window.location.href);
@@ -1191,7 +1155,7 @@
     });
 
     // Xử lý load dữ liệu lên các tabs
-    document.querySelectorAll('.nav-link').forEach(button => {
+    document.querySelectorAll('#myTab .nav-link').forEach(button => {
         button.addEventListener('click', function () {
             let status = this.getAttribute('data-status');
             let url = new URL(window.location.href);
@@ -1299,6 +1263,33 @@
         this.classList.remove('border-danger');
         document.getElementById('endDateError').textContent = '';
     });
+
+    //Đăng xuất
+    document.getElementById('dang-xuat').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng xuất!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã đăng xuất!",
+                    text: "Bạn đã đăng xuất thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // Điều hướng tới URL đăng xuất sau khi người dùng xác nhận
+                    window.location.href = "/admin/dang-nhap-view";
+                });
+            }
+        });
+    });
+
 
 
 

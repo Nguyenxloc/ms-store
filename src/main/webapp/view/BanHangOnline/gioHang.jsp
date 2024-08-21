@@ -1732,6 +1732,7 @@
                         return number.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
                     }
 
+
                     var firstFee = data_total.data.total
 
                     // Calculate the new total
