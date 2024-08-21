@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 @Controller
@@ -213,8 +214,14 @@ public class SanPhamController {
     public ResponseEntity<List<Long>> getMinMaxPrice(@RequestParam("idSP") String idSP) {
         Long minValue = spctRepository.getMinGiaBan(idSP);
         Long maxValue = spctRepository.getMaxGiaBan(idSP);
-        System.out.println("============================test min api : "+minValue );
-        System.out.println("============================test max api : "+maxValue );
-        return  ResponseEntity.ok(null);
+
+        System.out.println("============================test min api : " + minValue);
+        System.out.println("============================test max api : " + maxValue);
+
+        // Create a list containing the min and max values
+        List<Long> minMaxPrices = Arrays.asList(minValue, maxValue);
+
+        // Return the list in the response
+        return ResponseEntity.ok(minMaxPrices);
     }
 }

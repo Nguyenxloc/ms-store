@@ -699,6 +699,8 @@
                                            data-bs-target="#ModalHotAddKTA" style="font-size: 25px"></i>
                                     </div>
                                 </div>
+                                <p style="display: none" id="kieuTayMemo"></p>
+                                <p style="display: none" id="chatLieuMemo"></p>
                             </div>
                         </div>
                     </div>
@@ -1883,6 +1885,8 @@
                         console.log("Mau sac memo: ", spct.idMauSac.ten);
                         $('#lblChatLieuModalEdit').text(chatLieu);
                         $('#lblKieuTayModalEdit').text(kieuTay);
+                        $('#chatLieuMemo').val(spct.idChatLieu.id);
+                        $('#kieuTayMemo').val(spct.idKieuTay.id);
                         idChatLieuModalEdit = spct.idChatLieu.id;
                         idKieuTayModalEdit = spct.idKieuTay.id;
                         html +=
@@ -2237,7 +2241,7 @@
             } else {
                 trangThaiModalAdd = 0;
             }
-            if (validateModalAdd() == 7) {
+            if (validateModalAdd() == 5) {
                 Swal.fire({
                     title: 'Xác nhận?',
                     text: "Dữ liệu sẽ được lưu lại!",
@@ -2253,17 +2257,17 @@
                             idSp: pathVariable,
                             idMauSac: idMauSacModalAdd,
                             idKichThuoc: idKichThuocModalAdd,
-                            idChatLieu: idChatLieuModalAdd,
-                            idKieuTay: idKieuTayModalAdd,
+                            idChatLieu: document.getElementById("chatLieuMemo").value,
+                            idKieuTay: document.getElementById("kieuTayMemo").value,
                             moTa: ghiChuModalAdd ? ghiChuModalAdd.value : null,
                             soLuong: soLuongModalAdd.value,
                             giaNhap: giaNhapModalAdd.value,
                             giaBan: giaBanModalAdd.value,
                             trangThai: trangThaiModalAdd
                         };
-
                         console.log("data json: ", data);
-                        var formData = new FormData($('#uploadFormEdit')[0]); // Use FormData to get all form data
+                        var formData = new FormData($('#uploadFormEdit')[0]);
+                        // Use FormData to get all form data
                         fetch(`/chi-tiet-sp/save`, {
                             method: 'POST',
                             headers: {
@@ -2271,35 +2275,39 @@
                             },
                             body: JSON.stringify(data)
                         }).then(response => response.json()).then(resp => {
-                            console.log("test resp: " + resp);
-                            const dataHinhAnh = {
-                                idSPCT: resp.id,
-                                hinhAnh1: !(fileHinhAnh1ModalAdd.value == "") ? getFileName(fileHinhAnh1ModalAdd.value) : "pendingIMG.png",
-                                hinhAnh2: !(fileHinhAnh2ModalAdd.value == "") ? getFileName(fileHinhAnh2ModalAdd.value) : "pendingIMG.png",
-                                hinhAnh3: !(fileHinhAnh3ModalAdd.value == "") ? getFileName(fileHinhAnh3ModalAdd.value) : "pendingIMG.png",
-                                trangThai: "1"
-                            }
-                            fetch(`/hinh-anh/save`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(dataHinhAnh)
-                            }).then(() => {
-                                Swal.fire(
-                                    'Đã thanh toán!',
-                                    'Dữ liệu đã được ghi nhận.',
-                                    'success'
-                                ).then(() => {
+                            console.log("test resp: ", resp);
+                            if (resp !== null){
+                                console.log("test resp: " + resp);
+                                const dataHinhAnh = {
+                                    idSPCT: resp.id,
+                                    hinhAnh1: !(fileHinhAnh1ModalAdd.value == "") ? getFileName(fileHinhAnh1ModalAdd.value) : "pendingIMG.png",
+                                    hinhAnh2: !(fileHinhAnh2ModalAdd.value == "") ? getFileName(fileHinhAnh2ModalAdd.value) : "pendingIMG.png",
+                                    hinhAnh3: !(fileHinhAnh3ModalAdd.value == "") ? getFileName(fileHinhAnh3ModalAdd.value) : "pendingIMG.png",
+                                    trangThai: "1"
+                                }
+                                fetch(`/hinh-anh/save`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(dataHinhAnh)
+                                }).then(() => {
+                                    Swal.fire(
+                                        'Đã thanh toán!',
+                                        'Dữ liệu đã được ghi nhận.',
+                                        'success'
+                                    ).then(() => {
+                                        loadDSSPCT(currentPage);
+                                    });
                                 });
-                            });
-                            Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then(() => {
-                                loadDSSPCT(currentPage);
-                            });
+                            }
+                            else{
+                                Swal.fire(
+                                    'Lỗi!',
+                                    'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
+                                    'error'
+                                );
+                            }
                         });
                         var formData = new FormData($('#uploadFormAdd')[0]);
                         $.ajax({
@@ -2322,6 +2330,8 @@
             }
         });
     });
+
+
 
     btnAddMS.addEventListener('click', function (e) {
         e.preventDefault();
@@ -2648,20 +2658,6 @@
             cboKichThuocModalAddErr.textContent = "";
             checkCount++;
         }
-        if (idChatLieuModalAdd == "") {
-            cboChatLieuModalAddErr.textContent = "Vui lòng chọn chất liệu";
-            checkCount = 0;
-        } else {
-            cboChatLieuModalAddErr.textContent = "";
-            checkCount++;
-        }
-        if (idKieuTayModalAdd == "") {
-            cboKieuTayModalAddErr.textContent = "Vui lòng chọn kiểu tay";
-            checkCount = 0;
-        } else {
-            cboKieuTayModalAddErr.textContent = "";
-            checkCount++;
-        }
         if (validateNull(soLuongModalAdd.value)) {
             soLuongModalAddErr.textContent = "Vui lòng nhập số lượng";
             checkCount = 0;
@@ -2888,25 +2884,58 @@
     // Giả sử sliderConfig được lấy từ controller
     let minGiaBanSearch = "";
     let maxGiaBanSearch = "";
-    const sliderConfig = {
-        min: 100000,
-        max: 1000000
-    };
-
+    let minValue = "";
+    let maxValue = "";
     var rangeOne = document.querySelector('input[name="rangeOne"]');
     var rangeTwo = document.querySelector('input[name="rangeTwo"]');
     var outputOne = document.querySelector('.outputOne');
     var outputTwo = document.querySelector('.outputTwo');
     var inclRange = document.querySelector('.incl-range');
+    const sliderConfig = {
+        min: "",
+        max: ""
+    };
+
+    fetch("/san-pham/min-max-price?idSP=" + pathVariable, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(resp => {
+            if (Array.isArray(resp) && resp.length === 2) {
+                if(resp[1]>resp[0]){
+                    sliderConfig.min = resp[0];
+                    sliderConfig.max = resp[1];
+                    rangeOne.min = sliderConfig.min;
+                    rangeOne.max = sliderConfig.max;
+                    rangeTwo.min = sliderConfig.min;
+                    rangeTwo.max = sliderConfig.max;
+                    rangeOne.value = sliderConfig.min;
+                    rangeTwo.value = sliderConfig.max;
+                }
+                else{
+                    sliderConfig.min = 0;
+                    sliderConfig.max = resp[1];
+                    rangeOne.min = sliderConfig.min;
+                    rangeOne.max = sliderConfig.max;
+                    rangeTwo.min = sliderConfig.min;
+                    rangeTwo.max = sliderConfig.max;
+                    rangeOne.value = sliderConfig.min;
+                    rangeTwo.value = sliderConfig.max;
+                }
+                updateView();
+                syncSliders();
+            } else {
+                console.error('Unexpected response format:', resp);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching min-max price data:', error);
+            // Handle fetch error, possibly show an alert or retry
+        });
     // Gán giá trị min và max cho các slider
-    rangeOne.min = sliderConfig.min;
-    rangeOne.max = sliderConfig.max;
-    rangeTwo.min = sliderConfig.min;
-    rangeTwo.max = sliderConfig.max;
-
-    rangeOne.value = sliderConfig.min;
-    rangeTwo.value = sliderConfig.max;
-
     function formatCurrency(value) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
