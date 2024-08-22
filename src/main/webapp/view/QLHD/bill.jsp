@@ -100,7 +100,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
                         <i class="bi bi-graph-up" style="margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Thống kê doanh thu</span></a>
+                        <span style=" margin-left: 6px">Thống kê doanh thu</span></a>
                 </li>
 
                 <!-- Nav Item - Dashboard -->
@@ -114,7 +114,7 @@
                 <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -173,7 +173,7 @@
                 <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->

@@ -290,7 +290,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
                         <i class="bi bi-graph-up" style="margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Thống kê doanh thu</span></a>
+                        <span style=" margin-left: 6px">Thống kê doanh thu</span></a>
                 </li>
 
                 <!-- Nav Item - Dashboard -->
@@ -304,7 +304,7 @@
                 <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -363,7 +363,7 @@
                 <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -748,7 +748,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="confirmForm" method="post" action="/hoa-don/xac-nhan/${hoaDonDTO.id}">
+                            <form id="confirmForm" method="post" action="/admin/hoa-don/xac-nhan/${hoaDonDTO.id}">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="confirmModalLabel">Xác nhận đơn hàng</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -815,7 +815,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="cancelForm" method="post" action="/hoa-don/huy/${hoaDonDTO.id}">
+                            <form id="cancelForm" method="post" action="/admin/hoa-don/huy/${hoaDonDTO.id}">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="cancelModalLabel">Hủy đơn hàng</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -979,7 +979,7 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="/hoa-don/xac-nhan-thanh-toan" method="post">
+                                <form action="/admin/hoa-don/xac-nhan-thanh-toan" method="post">
                                     <input type="hidden" name="id" value="${hoaDonDTO.id}">
                                     <div class="mb-3">
                                         <label for="totalAmountInput" class="form-label">Tổng tiền:</label>
@@ -1616,7 +1616,7 @@
                                     </td>
                                     <td>
                                         <!-- Thao tác, ví dụ như nút sửa, xóa -->
-                                        <a href="/hoa-don/them-san-pham/${product.id}?idHoaDon=${hoaDonDTO.id}">
+                                        <a href="/admin/hoa-don/them-san-pham/${product.id}?idHoaDon=${hoaDonDTO.id}">
                                             <button class="btn btn-primary btn-sm">Chọn</button>
                                         </a>
                                     </td>
@@ -1657,7 +1657,7 @@
             </div>
         </div>
 
-        <%--        In phiếu giao hàng--%>
+        <%--       In phiếu giao hàng--%>
         <div id="printOverlay">
             <iframe id="printFrame"></iframe>
         </div>
@@ -1843,6 +1843,13 @@
     });
     </c:if>
 
+    <c:if test="${not empty cancelSuccess}">
+    Toast.fire({
+        icon: "success",
+        title: "${cancelSuccess}"
+    });
+    </c:if>
+
     // $(document).ready(function () {
     //     $('#userDropdown .fas').on('click', function (e) {
     //         e.stopPropagation();
@@ -1868,7 +1875,7 @@
             overlay.style.display = 'none';
         };
 
-        iframe.src = '/hoa-don/in-phieu-giao-hang';
+        iframe.src = '/admin/hoa-don/in-phieu-giao-hang';
         // Xóa sessionStorage sau khi in
         sessionStorage.removeItem('printAfterReload');
     }
@@ -2003,11 +2010,18 @@
             // Tính tổng tiền thanh toán
             var tongTienThanhToan = tongTien + phiVanChuyen - giamGia;
             // Cập nhật giá trị vào các phần tử trong HTML
-            $('#tongTienValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTien));
-            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTienThanhToan));
+            $('#tongTienValue').text(new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(tongTien));
+            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(tongTienThanhToan));
         }
 
         var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+
         function getJSONWithToken(url, callback) {
             $.ajax({
                 url: url,
@@ -2031,7 +2045,7 @@
 
 
             // Sự kiện khi click vào ô input địa chỉ cụ thể
-            addressInput.on('click', function() {
+            addressInput.on('click', function () {
                 // Xóa các giá trị đã chọn trước đó
                 provinceSelect.html('<option value="">Chọn Tỉnh/Thành Phố</option>');
                 districtSelect.html('<option value="">Chọn Quận/Huyện</option>');
@@ -2137,12 +2151,11 @@
                 hoTen.addClass('border-danger');
                 hoTenError.text('Họ tên không được vượt quá độ dài 50 ký tự').addClass('text-danger');
                 isValid = false;
-            }
-            else if (/[0-9]/.test(hoTenValue)) {  // Kiểm tra ký tự số
+            } else if (/[0-9]/.test(hoTenValue)) {  // Kiểm tra ký tự số
                 hoTen.addClass('border-danger');
                 hoTenError.text('Họ tên không được chứa số').addClass('text-danger');
                 isValid = false;
-            }else if(!isValidFullName(hoTenValue)){
+            } else if (!isValidFullName(hoTenValue)) {
                 hoTen.addClass('border-danger');
                 hoTenError.text('Họ tên không được chứa ký tự đặc biệt').addClass('text-danger');
                 isValid = false;
@@ -2195,20 +2208,15 @@
                 diaChiChiTiet.addClass('border-danger');
                 diaChiChiTietError.text('Địa chỉ cụ thể phải chứa cả ký tự chữ và ký tự số').addClass('text-danger');
 
-            }
-            else if (!isValidAddress(diaChiChiTietValue)) {
+            } else if (!isValidAddress(diaChiChiTietValue)) {
                 isValid = false;
                 diaChiChiTiet.addClass('border-danger');
                 diaChiChiTietError.text('Địa chỉ cụ thể không được chứa ký tự đặc biệt').addClass('text-danger');
-            }
-
-            else if (!/[a-zA-Z]/.test(diaChiChiTietValue) || !/[0-9]/.test(diaChiChiTietValue)) {
+            } else if (!/[a-zA-Z]/.test(diaChiChiTietValue) || !/[0-9]/.test(diaChiChiTietValue)) {
                 isValid = false;
                 diaChiChiTiet.addClass('border-danger');
                 diaChiChiTietError.text('Địa chỉ cụ thể phải chứa cả ký tự chữ và ký tự số').addClass('text-danger');
-            }
-
-            else {
+            } else {
                 // If all conditions are passed, the input is valid
                 diaChiChiTiet.removeClass('border-danger');
                 diaChiChiTietError.text('').removeClass('text-danger');
@@ -2231,18 +2239,15 @@
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Vui lòng nhập phí ship').addClass('text-danger');
-            }
-            else if (!/^\d+$/.test(phiShipValue)) {
+            } else if (!/^\d+$/.test(phiShipValue)) {
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Phí ship phải là số hợp lệ. Không được chứa ký tự chữ hoặc ký tự đặc biệt').addClass('text-danger');
-            }
-            else if (parseInt(phiShipValue, 10) <= 0) {
+            } else if (parseInt(phiShipValue, 10) <= 0) {
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Phí ship phải là số dương và lớn hơn 0').addClass('text-danger');
-            }
-            else if (parseInt(phiShipValue, 10) > maxShipFee) {
+            } else if (parseInt(phiShipValue, 10) > maxShipFee) {
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Phí ship không được vượt quá 200.000 VNĐ').addClass('text-danger');
@@ -2320,7 +2325,6 @@
             }
 
 
-
             $('#tenTinhThanh').val($('#tinh option:selected').text());
             $('#tenQuanHuyen').val($('#huyen option:selected').text());
             $('#tenPhuongXa').val($('#xa option:selected').text());
@@ -2348,7 +2352,6 @@
             $(this).removeClass('border-danger');
             $(errorId).text('');
         });
-
 
 
     });
@@ -2456,7 +2459,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'GET',
-                        url: '/hoa-don/xoa-san-pham/' + idCTSP,
+                        url: '/admin/hoa-don/xoa-san-pham/' + idCTSP,
                         data: {
                             idHoaDon: idHoaDon
                         },
@@ -2561,7 +2564,7 @@
             // Gửi Ajax request để cập nhật số lượng
             $.ajax({
                 type: 'GET',
-                url: '/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,
+                url: '/admin/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,
                 data: {
                     idHoaDon: idHoaDon,
                     soLuong: newQuantity
