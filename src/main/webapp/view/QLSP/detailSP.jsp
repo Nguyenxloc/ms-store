@@ -648,21 +648,28 @@
                 <div class="row">
                     <div class="mt-3">
                         <h4 class="">Quản lý sản phẩm chi tiết</h4>
-                        <div class="d-flex gap-5 mt-3">
+                        <div class="d-flex gap-4 mt-3">
                             <img id="hinhAnhSP" src="path_to_your_image.jpg" class="rounded border"
                                  width="150" height="200" alt="Product Image">
                             <div id="product-details">
-                                <h5 class="">Tên sản phẩm:&nbsp;&nbsp;<span class="" id="tenSP"
-                                                                            style="font-weight: normal;"></span>
-                                </h5>
-                                <h5 class="">Mã sản phẩm:&nbsp;&nbsp;<span id="maSP"
-                                                                           style="font-weight: normal;"></span></h5>
-                                <h5 class="">Ngày tạo:&nbsp;&nbsp;<span id="ngayTaoSP"
-                                                                        style="font-weight: normal;"></span></h5>
-                                <h5 class="">Trạng thái:&nbsp;&nbsp;<span id="trangThaiSP"
-                                                                          style="font-weight: normal;"></span></h5>
-                                <div class="d-flex mt-3">
-                                    <h5 class="" style="width: 100px">Chất liệu:&nbsp&nbsp</h5>
+                                <div class="d-flex">
+                                    <h5 class="m-0" style="width: 150px;">Tên sản phẩm:</h5>
+                                    <h5 class="m-0 font-weight-normal" id="tenSP"></h5>
+                                </div>
+                                <div class="d-flex">
+                                    <h5 class="mt-3" style="width: 150px;">Mã sản phẩm:</h5>
+                                    <h5 class="mt-3 font-weight-normal" id="maSP"></h5>
+                                </div>
+                                <div class="d-flex">
+                                    <h5 class="mt-2" style="width: 150px;">Ngày tạo:</h5>
+                                    <h5 class="mt-2 font-weight-normal" id="ngayTaoSP"></h5>
+                                </div>
+                                <div class="d-flex">
+                                    <h5 class="mt-2" style="width: 150px;">Trạng thái:</h5>
+                                    <h5 class="mt-2 font-weight-normal" id="trangThaiSP"></h5>
+                                </div>
+                                <div class="d-flex mt-2" style="height: 40px">
+                                    <h5 class="mt-2" style="width: 150px">Chất liệu:&nbsp&nbsp</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                                 id="lblChatLieuModalEdit" style="width: 150px"
@@ -680,8 +687,8 @@
                                            data-bs-target="#ModalHotAddCL" style="font-size: 25px"></i>
                                     </div>
                                 </div>
-                                <div class="d-flex">
-                                    <h5 class="" style="width: 100px">Kiểu tay:&nbsp&nbsp</h5>
+                                <div class="d-flex mt-2" style="height: 40px">
+                                    <h5 class="mt-2" style="width: 150px">Kiểu tay:&nbsp&nbsp</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                                 id="lblKieuTayModalEdit" style="width: 150px;"
@@ -1746,9 +1753,11 @@
                 var imagePath = resp.hinhAnh;
                 var defaultImage = '/image-icon/placeholder.jpg';
                 if (resp.trangThai == 1) {
-                    trangThaiSP = "Đang hoạt động";
+                    trangThaiSP = "Hoạt động";
+                    document.getElementById("trangThaiSP").style.color = "blue";
                 } else {
                     trangThaiSP = "Dừng hoạt động";
+                    document.getElementById("trangThaiSP").style.color = "red";
                 }
                 $('#hinhAnhSP').attr('src', imagePath ? '/image/' + imagePath : defaultImage);
                 $('#tenSP').text(resp.ten);
@@ -2235,13 +2244,12 @@
             e.preventDefault();
             console.log("test check btn");
             console.log("id spct local: ", idSPCTLocal);
-            let trangThaiModalAdd = 0;
-            if (trangThaiModalAddRaw.checked == true) {
-                trangThaiModalAdd = 1;
-            } else {
-                trangThaiModalAdd = 0;
-            }
-            if (validateModalAdd() == 5) {
+
+            // Determine modal status
+            const trangThaiModalAdd = trangThaiModalAddRaw.checked ? 1 : 0;
+
+            // Validate form
+            if (validateModalAdd() === 5) {
                 Swal.fire({
                     title: 'Xác nhận?',
                     text: "Dữ liệu sẽ được lưu lại!",
@@ -2253,6 +2261,7 @@
                     cancelButtonText: 'Hủy'
                 }).then((result) => {
                     if (result.isConfirmed) {
+                        // Prepare data for saving
                         const data = {
                             idSp: pathVariable,
                             idMauSac: idMauSacModalAdd,
@@ -2265,72 +2274,83 @@
                             giaBan: giaBanModalAdd.value,
                             trangThai: trangThaiModalAdd
                         };
+
                         console.log("data json: ", data);
-                        var formData = new FormData($('#uploadFormEdit')[0]);
-                        // Use FormData to get all form data
+
                         fetch(`/chi-tiet-sp/save`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(data)
-                        }).then(response => response.json()).then(resp => {
-                            console.log("test resp: ", resp);
-                            if (resp !== null){
-                                console.log("test resp: " + resp);
-                                const dataHinhAnh = {
-                                    idSPCT: resp.id,
-                                    hinhAnh1: !(fileHinhAnh1ModalAdd.value == "") ? getFileName(fileHinhAnh1ModalAdd.value) : "pendingIMG.png",
-                                    hinhAnh2: !(fileHinhAnh2ModalAdd.value == "") ? getFileName(fileHinhAnh2ModalAdd.value) : "pendingIMG.png",
-                                    hinhAnh3: !(fileHinhAnh3ModalAdd.value == "") ? getFileName(fileHinhAnh3ModalAdd.value) : "pendingIMG.png",
-                                    trangThai: "1"
-                                }
-                                fetch(`/hinh-anh/save`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(dataHinhAnh)
-                                }).then(() => {
-                                    Swal.fire(
-                                        'Đã thanh toán!',
-                                        'Dữ liệu đã được ghi nhận.',
-                                        'success'
-                                    ).then(() => {
-                                        loadDSSPCT(currentPage);
+                        }).then(response => response.json())
+                            .then(resp => {
+                                console.log("test resp =================: ", resp);
+                                if (resp !== null && resp.id) {
+                                    // Prepare image data after successful response
+                                    const dataHinhAnh = {
+                                        idSPCT: resp.id,
+                                        hinhAnh1: fileHinhAnh1ModalAdd.value ? getFileName(fileHinhAnh1ModalAdd.value) : "",
+                                        hinhAnh2: fileHinhAnh2ModalAdd.value ? getFileName(fileHinhAnh2ModalAdd.value) : "",
+                                        hinhAnh3: fileHinhAnh3ModalAdd.value ? getFileName(fileHinhAnh3ModalAdd.value) : "",
+                                        trangThai: "1"
+                                    };
+                                    fetch(`/hinh-anh/save`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(dataHinhAnh)
+                                    }).then(() => {
+                                        // Success message after saving images
+                                        Swal.fire(
+                                            'Đã thanh toán!',
+                                            'Dữ liệu đã được ghi nhận.',
+                                            'success'
+                                        ).then(() => {
+                                            // Reload the data
+                                            loadDSSPCT(currentPage);
+
+                                            // Upload files using FormData
+                                            const formData = new FormData($('#uploadFormAdd')[0]);
+                                            $.ajax({
+                                                url: '/uploads',
+                                                type: 'POST',
+                                                data: formData,
+                                                processData: false,
+                                                contentType: false,
+                                                success: function (response) {
+                                                    console.log("save image success ");
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.log("save image error");
+                                                }
+                                            });
+                                        });
                                     });
-                                });
-                            }
-                            else{
-                                Swal.fire(
-                                    'Lỗi!',
-                                    'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
-                                    'error'
-                                );
-                            }
-                        });
-                        var formData = new FormData($('#uploadFormAdd')[0]);
-                        $.ajax({
-                            url: '/uploads',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function (response) {
-                                console.log("save image success ");
-                            },
-                            error: function (xhr, status, error) {
-                                console.log("save image =error");
-                            }
+                                } else {
+                                    // Handle failed response
+                                    Swal.fire(
+                                        'Lỗi!',
+                                        'Dữ liệu đã tồn tại',
+                                        'error'
+                                    );
+                                }
+                            }).catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire(
+                                'Lỗi!',
+                                'Dữ liệu đã tồn tại',
+                                'error'
+                            );
                         });
                     }
                 });
             } else {
-
+                console.log("validate failed");
             }
         });
     });
-
 
 
     btnAddMS.addEventListener('click', function (e) {
@@ -2905,7 +2925,7 @@
         .then(response => response.json())
         .then(resp => {
             if (Array.isArray(resp) && resp.length === 2) {
-                if(resp[1]>resp[0]){
+                if (resp[1] > resp[0]) {
                     sliderConfig.min = resp[0];
                     sliderConfig.max = resp[1];
                     rangeOne.min = sliderConfig.min;
@@ -2914,8 +2934,7 @@
                     rangeTwo.max = sliderConfig.max;
                     rangeOne.value = sliderConfig.min;
                     rangeTwo.value = sliderConfig.max;
-                }
-                else{
+                } else {
                     sliderConfig.min = 0;
                     sliderConfig.max = resp[1];
                     rangeOne.min = sliderConfig.min;
@@ -2935,6 +2954,7 @@
             console.error('Error fetching min-max price data:', error);
             // Handle fetch error, possibly show an alert or retry
         });
+
     // Gán giá trị min và max cho các slider
     function formatCurrency(value) {
         return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
