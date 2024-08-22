@@ -37,4 +37,5 @@ public interface SanPhamRepository
     String getHinhAnhOfSP(@Param("idSP") String idSP);
     @Query(value = "SELECT COUNT(*) FROM sanpham WHERE LOWER(ten) LIKE LOWER(CONCAT('%', :ten, '%'))", nativeQuery = true)
     Integer checkTenSPIsExist(@Param("ten") String ten);
+
 };

@@ -1,9 +1,13 @@
 package com.example.java4.controller.QLSP;
 import com.example.java4.entities.*;
 import com.example.java4.repositories.SPCTRepository;
+import com.example.java4.repositories.SanPhamRepository;
+import com.example.java4.response.SanPhamView;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +20,8 @@ import java.util.UUID;
 public class SearchService {
     @Autowired
     private SPCTRepository spctRepo;
+    @Autowired
+    private SanPhamRepository spRepo;
     public List<ChiTietSanPham> searchChiTietSanPham(Map<String, Object> params) {
         return spctRepo.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -151,7 +157,6 @@ public class SearchService {
             return false;
         }
     }
-
 
 
 }

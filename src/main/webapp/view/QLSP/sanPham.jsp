@@ -165,7 +165,10 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Thuộc tính</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
                         </div>
                     </div>
                 </li>
@@ -491,6 +494,11 @@
                     </table>
             </div>
             <div class="d-flex flex-row-reverse">
+                <button id="btnAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">Thêm
+                    nhanh
+                </button>
+            </div>
+            <div class="d-flex flex-row-reverse">
                 <button id="btnOpenModalMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal"
                         data-bs-target="#ModalMultipleAdd">Thêm sản phẩm
                 </button>
@@ -523,7 +531,6 @@
                     </div>
                     <div class="modal-body d-flex gap-2">
                         <div>
-                            <form id="uploadFormAdd" method="post" enctype="multipart/form-data" action="/upload">
                                 <div class="mb-3 border">
                                     <label for="tenSPAdd" class="form-label">Tên sản phẩm</label>
                                     <input style="width: 300px" type="text" class="form-control" id="tenSPAdd">
@@ -535,7 +542,6 @@
                                     <label class="form-check-label" for="trangThaiAdd" id="trangThaiLabeladd"></label>
                                 </div>
                                 <button type="submit" id="saveAddBtn" class="btn btn-primary">Lưu</button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -920,7 +926,8 @@
         }).then(response => response.json())
             .then(resp => {
                 tenSpEdit.value = resp.ten;
-                hinhAnhDisplay.src = "/image/" + resp.hinhAnh;
+                //continue
+                hinhAnhDisplay.src = resp.hinhAnh ? "/image/" + resp.hinhAnh : "/image-icon/placeholder.jpg";
                 if (resp.trangThai == 1) {
                     trangThaiEdit.checked = true;
                     labelElementedit.textContent = "Đang hoạt động";
@@ -1021,12 +1028,93 @@
 
 </script>
 <script>
-    $(document).ready(function () {
-        $('#saveAddBtn').on('click', function (event) {
+    const saveAddBtn = document.querySelectorAll('#saveAddBtn');
+    saveAddBtn.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            console.log("test check btn");
 
-            // Optionally, submit the form normally after AJAX request (if needed)
+            var tenSP = document.getElementById('tenSPAdd').value;
+            var trangThairaw = document.getElementById('trangThaiAdd').checked;
+            var tenSperr = document.getElementById("tenSPAddErr");
+
+            let sttCheck = 0;
+
+            // Validate product name
+            if (validateNull(tenSP)) {
+                tenSperr.textContent = "Vui lòng nhập tên sản phẩm";
+            } else {
+                tenSperr.textContent = "";
+                sttCheck++;
+            }
+
+            if (sttCheck === 1) {
+                Swal.fire({
+                    title: 'Xác nhận?',
+                    text: "Dữ liệu sẽ được lưu lại!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ok!',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const data = {
+                            ten: tenSP,
+                            trangThai: trangThairaw ? 1 : 0,
+                        };
+
+                        fetch(`/san-pham/save`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire(
+                                    'Đã lưu!',
+                                    'Dữ liệu đã được ghi nhận.',
+                                    'success'
+                                ).then(() => {
+                                    // Fetch the total product count for pagination
+                                    fetch("/san-pham/count", {
+                                        headers: {
+                                            'Accept': 'application/json',
+                                            'Content-Type': 'application/json'
+                                        }
+                                    }).then(response => response.json())
+                                        .then(totalProducts => {
+                                            const lastPage = Math.ceil(totalProducts / 20);
+                                            loadDSSP(lastPage);
+                                            currentPage = lastPage;
+                                            loadTotalPagination(currentPage);
+                                        }).catch(error => {
+                                        console.error('Error fetching pagination data:', error);
+                                    });
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Lỗi!',
+                                    'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
+                                    'error'
+                                );
+                            }
+                        }).catch(error => {
+                            console.error('Error saving product data:', error);
+                            Swal.fire(
+                                'Lỗi!',
+                                'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
+                                'error'
+                            );
+                        });
+                    }
+                });
+            }
         });
     });
+
 </script>
 <script>
     // Hiển thị thông báo thêm thành công hoặc thất bại sử dụng thư viện Sweet Alert2
@@ -1161,62 +1249,54 @@
     let dataCell = {id: "", name: "", size: size, amount: 0};
     let lstDataSet = [];
     let checkChooseDropdown = "";
+    let tenSPSearch = "";
+    function search(e) {
+        e.preventDefault();
+        console.log('data chat lieu ID search:', idChatLieuSearch);
+        console.log('data kieu tay ID search:', idKieuTaySearch);
+        console.log('debug trang thai search: ', idTrangThaiSearch);
+        console.log( "debug tensp search: ", tenSPSearch);
+        fetch("/san-pham/search" +"&idChatLieu=" + idChatLieuSearch + "&idKieuTay=" + idKieuTaySearch  + "&trangThai="+idTrangThaiSearch + "&page=", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(resp => {
+                let html = '';
+                resp.map((sp, i) => {
+                    const maSanPham = sp.ma || 'N/A';
+                    const tenSanPham = sp.ten || 'N/A';
+                    const hinhAnh = sp.hinhAnh || null;
+                    const ngayTao = sp.ngayTao || 'N/A';
+                    const trangThai = sp.trangThai === 1
+                        ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
+                        : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
 
-    // function search(e) {
-    //     e.preventDefault();
-    //     console.log('data mau sac ID:', idMauSac);
-    //     console.log('data kich thuoc ID:', idKichThuoc);
-    //     console.log('data chat lieu ID:', idChatLieu);
-    //     console.log('data kieu tay ID:', idKieuTay);
-    //     console.log('debug trang thai: ', idTrangThai);
-    //     console.log('data sp local ID:', idSPCTLocal);
-    //     fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin=" + minGiaBanSearch + "&giaBanMax=" + maxGiaBanSearch + "&trangThai="+idTrangThai + "&page=", {
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then(response => response.json())
-    //         .then(resp => {
-    //             let html = '';
-    //             resp.map((spct, i) => {
-    //                 const trangThai = spct.trangThai == 1
-    //                     ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
-    //                     : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
-    //                 const mauSac = spct.idMauSac.ten || 'N/A';
-    //                 const kichThuoc = spct.idKichThuoc.ten || 'N/A';
-    //                 const chatLieu = spct.idChatLieu.ten || 'N/A';
-    //                 const kieuTay = spct.idKieuTay.ten || 'N/A';
-    //                 const soLuong = spct.soLuong || 'N/A';
-    //                 const giaBan = spct.giaBan || 'N/A';
-    //                 const giaNhap = spct.giaNhap || 'N/A';
-    //                 const moTa = spct.moTa || 'N/A';
-    //                 var hinhAnh = spct.hinhAnh;
-    //                 var fallbackImage = '/image-icon/placeholder.jpg';
-    //                 html += '<tr>' +
-    //                     '<td>' + (i + 1) + '</td>' +
-    //                     '<td><img src="' + (hinhAnh ? "/image/" + hinhAnh : fallbackImage) +
-    //                     '" alt="Image" style="width: 50px; height: 60px" class="img-fluid rounded border" /></td>' +
-    //                     '<td>' + mauSac + '</td>' +
-    //                     '<td>' + kichThuoc + '</td>' +
-    //                     '<td>' + soLuong + '</td>' +
-    //                     '<td>' + giaNhap + '</td>' +
-    //                     '<td>' + giaBan + '</td>' +
-    //                     '<td>' +
-    //                     '<div  id="tooltip">Xem' +
-    //                     '<span id="tooltiptext">' + moTa + '</span>' +
-    //                     '</div>' +
-    //                     '</td>' +
-    //                     '<td>' + trangThai + '</td>' +
-    //                     '<td>' +
-    //                     '<div class="d-inline">' +
-    //                     '<button id="editSPCTBtn_' + spct.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Sửa</button>' +
-    //                     '</div>' +
-    //                     '</td>' +
-    //                     '</tr>';
-    //             });
-    //             $("#tbl_ds_spct").html(html)
-    //         });
-    // }
+                    // Build the HTML row for each product using string concatenation
+                    html += '<tr>' +
+                        '<td>' + (i + 1) + '</td>' +
+                        '<td>' +
+                        '<img src="' + (hinhAnh ? "/image/" + hinhAnh : "/image-icon/placeholder.jpg") + '" ' +
+                        'alt="Image" ' +
+                        'style="width: 50px; height: 60px" ' +
+                        'class="img-fluid rounded border" />' +
+                        '</td>' +
+                        '<td>' + maSanPham + '</td>' +
+                        '<td>' + tenSanPham + '</td>' +
+                        '<td>' + ngayTao + '</td>' +
+                        '<td>' + trangThai + '</td>' +
+                        '<td>' +
+                        '<div class="d-inline">' +
+                        '<button id="editSPBtn_' + sp.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Chỉnh sửa</button>' +
+                        '<button id="detailSPBtn_' + sp.id + '" class="btn btn-danger">Chi tiết</button>' +
+                        '</div>' +
+                        '</td>' +
+                        '</tr>';
+                });
+                $("#tbl_ds_sp").html(html)
+            });
+    }
 
 
     function refreshSearch(e) {

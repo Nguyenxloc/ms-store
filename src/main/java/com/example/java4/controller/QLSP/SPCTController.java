@@ -10,6 +10,7 @@ import com.example.java4.request.QLSP.Store.SPCTStore;
 import com.example.java4.request.QLSP.Update.SPCTUpdate;
 import com.example.java4.response.SPCTResponse;
 import com.example.java4.response.SPCTView;
+import com.example.java4.response.SanPhamView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -342,4 +343,5 @@ public class SPCTController {
         }
         return ResponseEntity.ok(lstSpct);
     }
+
 }
