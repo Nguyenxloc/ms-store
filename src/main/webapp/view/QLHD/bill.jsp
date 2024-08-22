@@ -100,21 +100,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
                         <i class="bi bi-graph-up" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Thống kê doanh thu</span></a>
                 </li>
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -134,21 +134,21 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" >
-                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
+                        <span style=" margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -164,21 +164,21 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -399,7 +399,7 @@
                         <h6 class="m-0 font-weight-bold">Bộ Lọc</h6>
                     </div>
                     <div class="card-body">
-                        <form class="row g-3" method="get" action="/hoa-don/hien-thi" id="searchForm" onsubmit="return validateDates()">
+                        <form class="row g-3" method="get" action="/admin/hoa-don/hien-thi" id="searchForm" onsubmit="return validateDates()">
                             <div class="col-md-6">
                                 <label for="searchKeyword" class="form-label">Tìm kiếm</label>
                                 <div class="input-group">
@@ -431,7 +431,7 @@
                             <div class="col-md-12 mt-3 d-flex justify-content-end">
                                 <input type="hidden" id="page" name="page" value="${param.page != null ? param.page : '0'}">
                                 <button type="submit" class="btn btn-primary mr-2">Tìm kiếm</button>
-                                <a href="/hoa-don/hien-thi">
+                                <a href="/admin/hoa-don/hien-thi">
                                     <button type="button" class="btn btn-danger">Làm Mới</button>
                                 </a>
                             </div>
@@ -530,10 +530,12 @@
                                     </thead>
 
                                     <tbody>
+                                    <c:set var="stt" value="1" />
                                     <c:forEach var="hoaDon" items="${hoaDonPage}" varStatus="i">
                                         <c:if test="${(hoaDon.loaiHoaDon == 0 && hoaDon.trangThai == 6) || (hoaDon.loaiHoaDon == 1 && hoaDon.trangThai != 0)}">
                                         <tr>
-                                            <td>${i.index + 1}</td>
+                                            <td>${stt}</td>
+                                            <c:set var="stt" value="${stt + 1}" />
                                             <td>${hoaDon.ma}</td>
                                             <td>${hoaDon.nhanVien.hoTen}</td>
                                             <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
@@ -555,7 +557,7 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <a href="/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
+                                                <a href="/admin/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
                                                     <i class="bi bi-eye-fill"></i>
                                                 </a>
                                             </td>
@@ -610,9 +612,11 @@
                                         </thead>
 
                                         <tbody>
+                                        <c:set var="stt" value="1" />
                                         <c:forEach var="hoaDon" items="${hoaDonPage}" varStatus="i">
                                             <tr>
-                                                <td>${i.index + 1}</td>
+                                                <td>${stt}</td> <!-- Hiển thị giá trị STT hiện tại -->
+                                                <c:set var="stt" value="${stt + 1}" />
                                                 <td>${hoaDon.ma}</td>
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td >
@@ -636,7 +640,7 @@
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <a href="/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
+                                                    <a href="/admin/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
                                                         <i class="bi bi-eye-fill"></i>
                                                     </a>
                                                 </td>
@@ -689,9 +693,11 @@
                                         </thead>
 
                                         <tbody>
+                                        <c:set var="stt" value="1" />
                                         <c:forEach var="hoaDon" items="${hoaDonPage}" varStatus="i">
                                             <tr>
-                                                <td>${i.index + 1}</td>
+                                                <td>${stt}</td> <!-- Hiển thị giá trị STT hiện tại -->
+                                                <c:set var="stt" value="${stt + 1}" />
                                                 <td>${hoaDon.ma}</td>
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
@@ -713,7 +719,7 @@
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <a href="/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
+                                                    <a href="/admin/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
                                                         <i class="bi bi-eye-fill"></i>
                                                     </a>
                                                 </td>
@@ -767,9 +773,11 @@
                                     </thead>
 
                                     <tbody>
+                                    <c:set var="stt" value="1" />
                                     <c:forEach var="hoaDon" items="${hoaDonPage}" varStatus="i">
                                         <tr>
-                                            <td>${i.index + 1}</td>
+                                            <td>${stt}</td> <!-- Hiển thị giá trị STT hiện tại -->
+                                            <c:set var="stt" value="${stt + 1}" />
                                             <td>${hoaDon.ma}</td>
                                             <td>${hoaDon.nhanVien.hoTen}</td>
                                             <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
@@ -791,7 +799,7 @@
                                             </td>
                                             <td>
                                                 <!-- Button trigger modal -->
-                                                <a href="/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
+                                                <a href="/admin/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
                                                     <i class="bi bi-eye-fill"></i>
                                                 </a>
                                             </td>
@@ -847,9 +855,11 @@
                                         </thead>
 
                                         <tbody>
+                                        <c:set var="stt" value="1" />
                                         <c:forEach var="hoaDon" items="${hoaDonPage}" varStatus="i">
                                             <tr>
-                                                <td>${i.index + 1}</td>
+                                                <td>${stt}</td> <!-- Hiển thị giá trị STT hiện tại -->
+                                                <c:set var="stt" value="${stt + 1}" />
                                                 <td>${hoaDon.ma}</td>
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
@@ -871,7 +881,7 @@
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <a href="/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
+                                                    <a href="/admin/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
                                                         <i class="bi bi-eye-fill"></i>
                                                     </a>
                                                 </td>
@@ -925,9 +935,11 @@
                                         </thead>
 
                                         <tbody>
+                                        <c:set var="stt" value="1" />
                                         <c:forEach var="hoaDon" items="${hoaDonPage}" varStatus="i">
                                             <tr>
-                                                <td>${i.index + 1}</td>
+                                                <td>${stt}</td> <!-- Hiển thị giá trị STT hiện tại -->
+                                                <c:set var="stt" value="${stt + 1}" />
                                                 <td>${hoaDon.ma}</td>
                                                 <td>${hoaDon.nhanVien.hoTen}</td>
                                                 <td>${hoaDon.khachHang.hoTen == null ? "Khách lẻ" : hoaDon.khachHang.hoTen }</td>
@@ -952,7 +964,7 @@
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <a href="/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
+                                                    <a href="/admin/hoa-don/detail/${hoaDon.id}" class="btn btn-warning">
                                                         <i class="bi bi-eye-fill"></i>
                                                     </a>
                                                 </td>

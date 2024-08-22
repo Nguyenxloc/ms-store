@@ -290,22 +290,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
                         <i class="bi bi-graph-up" style="margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                        <span style="font-weight: bold; margin-left: 6px">Thống kê doanh thu</span></a>
                 </li>
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi"
-                       style="display: flex; color: white; align-items: center">
+                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -324,15 +323,15 @@
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
-                        <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
-                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
+                <li class="nav-item" >
+                    <a class="nav-link" href="/admin/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
+                        <span style=" margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -355,21 +354,21 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -1513,59 +1512,59 @@
 
 
                         <!-- Phần input tìm kiếm và các select -->
-                        <div class="mb-3 p-3" style="background-color: #f0f0f0;">
+<%--                        <div class="mb-3 p-3" style="background-color: #f0f0f0;">--%>
                             <!-- Phần input tìm kiếm và nút tìm kiếm -->
-                            <div class="d-flex align-items-center">
-                                <input type="text" class="form-control" name="search" id="searchInput"
-                                       placeholder="Nhập từ khóa tìm kiếm..." style="width: 750px;">
-                                <button class="btn btn-primary mx-3" type="button" id="searchButton">Tìm kiếm</button>
-                                <button class="btn btn-danger mx-2" type="button" id="refreshButton">Làm mới</button>
-                            </div>
+<%--                            <div class="d-flex align-items-center">--%>
+<%--                                <input type="text" class="form-control" name="search" id="searchInput"--%>
+<%--                                       placeholder="Nhập từ khóa tìm kiếm..." style="width: 750px;">--%>
+<%--                                <button class="btn btn-primary mx-3" type="button" id="searchButton">Tìm kiếm</button>--%>
+<%--                                <button class="btn btn-danger mx-2" type="button" id="refreshButton">Làm mới</button>--%>
+<%--                            </div>--%>
 
                             <!-- Các select -->
                             <%-- Lọc theo thuộc tính                             --%>
-                            <form method="post" action="/hoa-don/filter">
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        <label for="colorSelect" class="form-label">Màu sắc</label>
-                                        <select class="form-select" id="colorSelect">
-                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
-                                            <c:forEach var="mauSac" items="${listMauSac}">
-                                                <option value="${mauSac.id}">${mauSac.ten}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="sizeSelect" class="form-label">Kích thước</label>
-                                        <select class="form-select" id="sizeSelect">
-                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
-                                            <c:forEach var="kichThuoc" items="${listKichThuoc}">
-                                                <option value="${kichThuoc.id}">${kichThuoc.ten}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="materialSelect" class="form-label">Chất liệu</label>
-                                        <select class="form-select" id="materialSelect">
-                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
-                                            <c:forEach var="chatLieu" items="${listChatLieu}">
-                                                <option value="${chatLieu.id}">${chatLieu.ten}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="sleeveSelect" class="form-label">Kiểu tay</label>
-                                        <select class="form-select" id="sleeveSelect">
-                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
-                                            <c:forEach var="kieuTay" items="${listKieuTay}">
-                                                <option value="${kieuTay.id}">${kieuTay.ten}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
+<%--                            <form method="post" action="/hoa-don/filter">--%>
+<%--                                <div class="row mt-3">--%>
+<%--                                    <div class="col-md-3">--%>
+<%--                                        <label for="colorSelect" class="form-label">Màu sắc</label>--%>
+<%--                                        <select class="form-select" id="colorSelect">--%>
+<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
+<%--                                            <c:forEach var="mauSac" items="${listMauSac}">--%>
+<%--                                                <option value="${mauSac.id}">${mauSac.ten}</option>--%>
+<%--                                            </c:forEach>--%>
+<%--                                        </select>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="col-md-3">--%>
+<%--                                        <label for="sizeSelect" class="form-label">Kích thước</label>--%>
+<%--                                        <select class="form-select" id="sizeSelect">--%>
+<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
+<%--                                            <c:forEach var="kichThuoc" items="${listKichThuoc}">--%>
+<%--                                                <option value="${kichThuoc.id}">${kichThuoc.ten}</option>--%>
+<%--                                            </c:forEach>--%>
+<%--                                        </select>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="col-md-3">--%>
+<%--                                        <label for="materialSelect" class="form-label">Chất liệu</label>--%>
+<%--                                        <select class="form-select" id="materialSelect">--%>
+<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
+<%--                                            <c:forEach var="chatLieu" items="${listChatLieu}">--%>
+<%--                                                <option value="${chatLieu.id}">${chatLieu.ten}</option>--%>
+<%--                                            </c:forEach>--%>
+<%--                                        </select>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="col-md-3">--%>
+<%--                                        <label for="sleeveSelect" class="form-label">Kiểu tay</label>--%>
+<%--                                        <select class="form-select" id="sleeveSelect">--%>
+<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
+<%--                                            <c:forEach var="kieuTay" items="${listKieuTay}">--%>
+<%--                                                <option value="${kieuTay.id}">${kieuTay.ten}</option>--%>
+<%--                                            </c:forEach>--%>
+<%--                                        </select>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </form>--%>
 
-                        </div>
+<%--                        </div>--%>
 
                         <!-- Bảng thông tin sản phẩm -->
                         <table class="table table-hover table-bordered custom-table ">

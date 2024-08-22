@@ -38,7 +38,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/hoa-don")
+@RequestMapping("/admin/hoa-don")
 public class QuanLyHoaDonController {
 
     @Autowired
@@ -657,8 +657,6 @@ public class QuanLyHoaDonController {
                         chiTietSanPham.setSoLuong(soLuongConLai);
                         chiTietSanPham.setTrangThai(1);
                         _chiTietSanPhamRepo.save(chiTietSanPham);
-
-
                     }
                 }
             }
@@ -690,10 +688,6 @@ public class QuanLyHoaDonController {
                 hoaDon.setNgayChoGiaoHang(LocalDateTime.now());
                 lichSuHoaDon.setNgayChoGiaoHang(LocalDateTime.now());
                 lichSuHoaDon.setTrangThai(HoaDonRepository.CHO_GIAO_HANG);
-
-//                lichSuHoaDon.setIdHoaDon(hoaDon);
-//                lichSuHoaDon.setIdNhanVien(nhanVien);
-//                lichSuHoaDon.setGhiChu(moTa);
                 _lichSuHoaDonRepo.save(lichSuHoaDon);
 
                 // Gửi Email khi đã xác nhận đơn hàng
@@ -719,6 +713,7 @@ public class QuanLyHoaDonController {
                 giaoHang.setNgayNhan(LocalDateTime.now());
                 lichSuHoaDon.setNgayHoanThanh(LocalDateTime.now());
                 lichSuHoaDon.setTrangThai(HoaDonRepository.DA_HOAN_THANH);
+//                _giaoHangRepo.save(giaoHang);
                 _lichSuHoaDonRepo.save(lichSuHoaDon);
 
                 // Cập nhật trạng thái Chi tiết hóa đơn
