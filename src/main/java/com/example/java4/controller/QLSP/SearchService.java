@@ -50,14 +50,11 @@ public class SearchService {
     public List<ChiTietSanPham> searchChiTietSanPham1(Map<String, Object> params) {
         return spctRepo.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-
             System.out.println("Params: " + params);
-
             params.forEach((key, value) -> {
                 if (value != null) {
                     Predicate predicate = null;
                     System.out.println("Processing key: " + key + ", value: " + value);
-
                     switch (key) {
                         case "moTa":
                             if (value instanceof String) {
@@ -117,6 +114,14 @@ public class SearchService {
                             if (value instanceof String && isValidGuid((String) value)) {
                                 Join<ChiTietSanPham, ?> join = root.join(key);
                                 predicate = criteriaBuilder.equal(join.get("id"), value);
+                            }
+                            break;
+                        case "trangThai":
+                            if (value instanceof Integer || value instanceof String) {
+                                int trangThaiValue = (value instanceof Integer) ? (Integer) value : Integer.parseInt((String) value);
+                                predicate = criteriaBuilder.equal(root.get("trangThai"), trangThaiValue);
+                            } else {
+                                System.out.println("Invalid data type for key: " + key + ", value: " + value);
                             }
                             break;
                     }

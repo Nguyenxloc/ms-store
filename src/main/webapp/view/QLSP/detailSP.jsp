@@ -757,12 +757,14 @@
                             <div class="col col-md-2">
                                 <div class="dropdown" style="width: 200px;">
                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                            id="lblTrangThai" style="width: 150px;" data-bs-toggle="dropdown"
+                                            id="lblTrangThaiSearch" style="width: 150px;" data-bs-toggle="dropdown"
                                             aria-expanded="false">
                                         Trạng thái
                                     </button>
                                     <ul class="dropdown-menu" id="cboTrangThai"
                                         aria-labelledby="dropdownMenuButton3">
+                                        <li><a class="dropdown-item" onclick="setTrangThaiSearch(1)">Hoạt động</a></li>
+                                        <li><a class="dropdown-item" onclick="setTrangThaiSearch(0)">Dừng hoạt động</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -804,14 +806,6 @@
             <button id="btnAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">Thêm
                 mới
             </button>
-        </div>
-        <div class="d-flex flex-row-reverse">
-            <button id="btnMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal"
-                    data-bs-target="#ModalMultipleAdd">Thêm nhiều
-            </button>
-        </div>
-        <div class="d-flex flex-row-reverse">
-            <button onclick="testDataMaping(event)" class="btn btn-success me-2">test</button>
         </div>
         <div class="col-12 pb-1">
             <nav aria-label="Page navigation">
@@ -1363,6 +1357,7 @@
     let idKichThuoc = "";
     let idChatLieu = "";
     let idKieuTay = "";
+    let idTrangThai = "";
     let tenSPLocal = "";
     let ngayTaoSPLocal = "";
     const lblMauSac = document.getElementById("lblMauSac");
@@ -1602,6 +1597,17 @@
         lblKieuTay.textContent = kt.ten;
         console.log('Selected kieu tay ID modal:', idKieuTay);
         // You can add more logic here to handle the selected value
+    }
+
+    function setTrangThaiSearch(status) {
+        let lblTrangThai = document.getElementById('lblTrangThaiSearch');
+        if (status === 1) {
+            lblTrangThai.textContent = "Hoạt động";
+            idTrangThai =1 ;
+        } else {
+            lblTrangThai.textContent = "Dừng hoạt động";
+            idTrangThai =0;
+        }
     }
 
     function setMauSacModalEdit(msString) {
@@ -1949,8 +1955,9 @@
         console.log('data kich thuoc ID:', idKichThuoc);
         console.log('data chat lieu ID:', idChatLieu);
         console.log('data kieu tay ID:', idKieuTay);
+        console.log('debug trang thai: ', idTrangThai);
         console.log('data sp local ID:', idSPCTLocal);
-        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin=" + minGiaBanSearch + "&giaBanMax=" + maxGiaBanSearch + "&page=", {
+        fetch("/chi-tiet-sp/search" + "?idSanPham=" + pathVariable + "&idMauSac=" + idMauSac + "&idKichThuoc=" + idKichThuoc + "&idChatLieu=" + idChatLieu + "&idKieuTay=" + idKieuTay + "&giaBanMin=" + minGiaBanSearch + "&giaBanMax=" + maxGiaBanSearch + "&trangThai="+idTrangThai + "&page=", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -2004,10 +2011,12 @@
         idKichThuoc = "";
         idChatLieu = "";
         idKieuTay = "";
+        idTrangThai = "";
         minGiaBanSearch = "";
         maxGiaBanSearch = "";
-        lblMauSac.textContent = "Chọn màu sắc"
+        lblMauSac.textContent = "Chọn màu sắc";
         lblKichThuoc.textContent = "Chọn kích thước";
+        document.getElementById("lblTrangThaiSearch").textContent = "Trạng thái";
         loadDSSPCT(currentPage);
     }
 
