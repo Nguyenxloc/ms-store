@@ -177,7 +177,6 @@ public class QuanLyHoaDonController {
                        @RequestParam(value = "startDate", required = false) String startDateStr,
                        @RequestParam(value = "endDate", required = false) String endDateStr) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "ngayTao"));
-//        Pageable pageable = PageRequest.of(page, 5);
 
 
         if (UserInfor.idNhanVien != null) {
@@ -371,12 +370,22 @@ public class QuanLyHoaDonController {
                 LichSuHoaDonDTO::getThoiGian,
                 Comparator.nullsLast(Comparator.naturalOrder())
         ));
+
+        // Đêm so luong trong hoa don chi tiet
+        Integer totalSoLuong = 0;
+        for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
+            totalSoLuong += chiTietHoaDon.getSoLuong();
+        }
+
         model.addAttribute("listLichSuHoaDonDTO", listLichSuHoaDonDTO);
         model.addAttribute("hinhAnhMap", hinhAnhMap);
         model.addAttribute("hinhAnhMapCTSP", hinhAnhMapCTSP);
         model.addAttribute("tongTienThanhToan", calculateTongTienThanhToan(tongTien, khuyenMai, giaoHang).doubleValue());
         // Thêm các thông tin vào model để truyền sang JSP
         addAttributesToModel(model, nhanVien, hoaDonDTO, khachHang, diaChiKhachHang, giaoHangDTO, listHDCT, listCTSP, listLichSuHoaDon, tongTien, phiGiamGia);
+
+        model.addAttribute("soLuongGioHang", totalSoLuong);
+
         return "/view/QLHD/detail_bill.jsp";
     }
 
@@ -996,7 +1005,9 @@ public class QuanLyHoaDonController {
     // Chức năng thếm sản phẩm vào giỏ hàng
     @GetMapping("/them-san-pham/{idCTSP}")
     public String addSanPhamVaoGioHang(@PathVariable("idCTSP") String idCTSP, @RequestParam(value = "page", defaultValue = "0") Optional<Integer> pageParam,
-                                       @RequestParam("idHoaDon") String idHoaDon, RedirectAttributes redirectAttributes) {
+                                       @RequestParam("idHoaDon") String idHoaDon,
+//                                       @RequestParam("phiShip") BigDecimal phiShip,
+                                       RedirectAttributes redirectAttributes) {
 
         // Tìm hóa đơn chi tiết trong giỏ hàng của hóa đơn có id là idHoaDon
         List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
@@ -1081,6 +1092,20 @@ public class QuanLyHoaDonController {
         HoaDonDTO hoaDonDTO = HoaDonDTO.fromEntity(hoaDon);
         hoaDonDTO.setTongTien(tongTien);
 
+        // Lấy ra đối tượng giao hàng theo IdHoaDon
+        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHoaDon);
+//        giaoHang.setPhiShip(phiShip);
+        if (giaoHang == null) {
+            redirectAttributes.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+        }
+
+        GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
+        if (giaoHangDTO == null) {
+            redirectAttributes.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+        }
+
+
+        _giaoHangRepo.save(giaoHang);
         redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
         redirectAttributes.addFlashAttribute("addProductSuccess", "Thêm sản phẩm vào giỏ hàng thành công");
         return "redirect:/hoa-don/detail/" + idHoaDon;

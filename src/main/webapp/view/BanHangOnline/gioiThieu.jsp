@@ -60,6 +60,7 @@
             align-items: center;
             flex-direction: column;
         }
+
         .product-item {
             width: 100%;
             max-width: 300px;
@@ -174,7 +175,8 @@
                         <c:otherwise>
                             <!-- Hiển thị nút đăng xuất khi đã đăng nhập -->
                             <li><a class="dropdown-item" href="/cua-hang/don-mua">Đơn mua</a></li>
-                            <li><a class="dropdown-item" href="/cua-hang/quan-ly-tai-khoan">Tài khoản của tôi</a></li>
+                            <li><a class="dropdown-item" href="/cua-hang/quan-ly-tai-khoan">Tài khoản của tôi</a>
+                            </li>
                             <li><a class="dropdown-item" href="/cua-hang/logout">Đăng xuất</a></li>
                         </c:otherwise>
                     </c:choose>
@@ -211,7 +213,8 @@
             </div>
             <div class="modal-body">
                 <div class="login-form-wrapper">
-                    <form id="login-form" class="form" action="/cua-hang/login" method="post" modelAttribute="khachHangDTO">
+                    <form id="login-form" class="form" action="/cua-hang/login" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="taiKhoan" class="text-info">Tài khoản:</label><br>
                             <input placeholder="Tài khoản" type="text" id="taiKhoan" name="taiKhoan"
@@ -253,7 +256,8 @@
             </div>
             <div class="modal-body">
                 <div class="register-form-wrapper">
-                    <form id="register-form" class="form" action="/cua-hang/register" method="post" modelAttribute="khachHangDTO">
+                    <form id="register-form" class="form" action="/cua-hang/register" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="registerUsername" class="text-info">Tài khoản:</label><br>
                             <input placeholder="Tài khoản" type="text" id="registerUsername" name="taiKhoan"
@@ -281,7 +285,8 @@
                         </div>
                         <div class="form-group">
                             <label for="registerPassword" class="text-info">Nhập lại mật khẩu:</label><br>
-                            <input placeholder="Nhập lại mật khẩu" type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau"
+                            <input placeholder="Nhập lại mật khẩu" type="password" id="nhapLaiMatKhau"
+                                   name="nhapLaiMatKhau"
                                    class="form-control" value="">
                             <small id="nhapLaiMatKhauError" class="text-danger"></small>
                         </div>
@@ -332,13 +337,13 @@
 
 
 <!-- Page Header Start -->
-<div class="container-fluid bg-secondary mb-5">
-    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Chi tiết sản phẩm</h1>
+<div class="container-fluid bg-secondary">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Giới thiệu</h1>
         <div class="d-inline-flex">
             <p class="m-0"><a href="/cua-hang/trang-chu">Trang chủ</a></p>
             <p class="m-0 px-2">-</p>
-            <p class="m-0">Chi tiết sản phẩm</p>
+            <p class="m-0">Giới thiệu</p>
         </div>
     </div>
 </div>
@@ -347,218 +352,40 @@
 
 <!-- Shop Detail Start -->
 <div class="container-fluid py-5" style="margin-top: -60px">
-    <div class="row px-xl-5" style="justify-content: center">
-        <div class="col-lg-5 pb-5" style="max-width: 32.66667%">
-            <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner border">
-                    <div class="carousel-item active">
-                        <img class="w-100 h-100" src="/image/${hinhAnh.hinhAnh1}" alt="Image" id="hinhAnh1">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="/image/${hinhAnh.hinhAnh2}" alt="Image" id="hinhAnh2">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="/image/${hinhAnh.hinhAnh3}" alt="Image" id="hinhAnh3">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                    <i class="fa fa-2x fa-angle-left text-dark"></i>
-                </a>
-                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                    <i class="fa fa-2x fa-angle-right text-dark"></i>
-                </a>
-            </div>
+    <div class="row mt-4">
+        <div class="col-6" style="padding: 40px; text-align: justify;">
+            <p>
+                    Shop áo sơ mi nam của chúng tôi tự hào là địa chỉ tin cậy dành cho những quý ông yêu thích sự lịch lãm
+                và sang trọng. Với mục tiêu mang đến cho khách hàng những sản phẩm chất lượng cao, chúng tôi không ngừng
+                cập nhật các xu hướng thời trang mới nhất để đa dạng hóa lựa chọn. Từ áo sơ mi công sở thanh lịch, đến áo sơ
+                mi casual trẻ trung, chúng tôi đảm bảo sự phù hợp cho mọi dịp, từ đi làm, gặp gỡ bạn bè đến các buổi tiệc
+                quan trọng.
+                <br>
+                <br>
+                Chất liệu của áo sơ mi tại shop được chọn lọc kỹ lưỡng, đảm bảo sự thoải mái và thoáng mát trong suốt
+                quá trình sử dụng. Kiểu dáng đa dạng, từ dáng ôm body tôn lên nét mạnh mẽ, nam tính đến dáng rộng phù hợp
+                với phong cách thoải mái, giúp khách hàng dễ dàng tìm được sản phẩm ưng ý. Không chỉ chú trọng về chất
+                lượng, shop còn mang đến trải nghiệm mua sắm tiện lợi với dịch vụ giao hàng nhanh chóng, tư vấn tận tâm và
+                chính sách đổi trả linh hoạt.
+                <br>
+                <br>
+                Hãy đến với shop áo sơ mi nam của chúng tôi để trải nghiệm sự khác biệt trong từng đường kim mũi chỉ và
+                phong cách phục vụ chuyên nghiệp!
+            </p>
         </div>
-
-        <div class="col-lg-7 pb-5">
-            <h3 class="font-weight-semi-bold">${ctsp.idSanPham.ten} - ${ctsp.idSanPham.ma}</h3>
-
-            <h3 class="font-weight-semi-bold mb-4">
-                <fmt:formatNumber value="${ctsp.giaBan}" type="currency" currencySymbol="₫"/>
-            </h3>
-
-            <p class="mb-4">${ctsp.moTa}</p>
-
-            <div class="d-flex mb-3">
-                <p class="text-dark font-weight-medium mb-0 mr-3">Số lượng tồn:</p>
-                <div class=" custom-control-inline">
-                    <span id="soLuongTon" style="font-weight: bold">${soLuongTon}</span>
-                </div>
-            </div>
-
-            <form method="post" action="/cua-hang/add-gio-hang">
-                <input type="hidden" name="idCTSP" value="${ctsp.id}">
-
-                <div class="d-flex mb-4">
-                    <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
-                    <c:forEach items="${listMauSac}" var="mauSac" varStatus="i">
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input onchange="onchangeByMauSac('${mauSac.tenMS}')" type="radio"
-                                   class="custom-control-input"
-                                   id="${mauSac.idMS}"
-                                   <c:if test="${i.index==0}">checked</c:if>
-                                   value="${mauSac.tenMS}" name="mauSac">
-                            <label class="custom-control-label" for="${mauSac.idMS}">${mauSac.tenMS}</label>
-                        </div>
-                    </c:forEach>
-                </div>
-
-                <div class="d-flex mb-3">
-                    <p class="text-dark font-weight-medium mb-0 mr-3">Kích thước:</p>
-                    <c:forEach items="${listKichThuoc}" var="kichThuoc" varStatus="i">
-                        <div class="custom-control custom-radio custom-control-inline kichThuocOption">
-                            <input onchange="onchangeByKichThuoc('${kichThuoc.tenKth}')" type="radio"
-                                   class="custom-control-input" id="${kichThuoc.idKth}"
-                                   <c:if test="${i.index==0}">checked</c:if> value="${kichThuoc.tenKth}"
-                                   name="kichThuoc">
-                            <label class="custom-control-label" for="${kichThuoc.idKth}">${kichThuoc.tenKth}</label>
-                        </div>
-                    </c:forEach>
-                </div>
-
-                <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-primary btn-minus">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <input type="text" class="form-control bg-secondary text-center" id="soLuong" name="soLuong"
-                               value="1">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm
-                        vào giỏ hàng
-                    </button>
-                </div>
-            </form>
+        <div class="col-6">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1861.9319637041044!2d105.7460205419072!3d21.03812993157764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455e940879933%3A0xcf10b34e9f1a03df!2zVHLGsOG7nW5nIENhbyDEkeG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e0!3m2!1svi!2s!4v1724208588840!5m2!1svi!2s"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 </div>
+
 <!-- Shop Detail End -->
-
-<!-- Container for the carousel -->
-<div class="container-fluid py-5">
-    <div class="text-center mb-4">
-        <h2 class="section-title px-5 mb-4"><span class="px-2">SẢN PHẨM BÁN CHẠY</span></h2>
-    </div>
-    <div class="row px-xl-5">
-        <div class="col">
-            <div id="product-container" class="row">
-                <!-- Sản phẩm sẽ được thêm vào đây bởi JavaScript -->
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const products = [];
-        <c:forEach items="${listCTSPRes}" var="ctsp">
-        products.push({
-            idCTSP: '${ctsp.idCTSP}',
-            idSP: '${ctsp.idSP}',
-            maSP: '${ctsp.maSP}',
-            tenSanPham: '${ctsp.tenSanPham}',
-            tenMauSac: '${ctsp.tenMauSac}',
-            tenKichThuoc: '${ctsp.tenKichThuoc}',
-            tenKieuTay: '${ctsp.tenKieuTay}',
-            soLuong: '${ctsp.soLuong}',
-            giaBan: parseFloat('${ctsp.giaBan}'),
-            hinhAnh1: '${ctsp.hinhAnh1}'
-        });
-        </c:forEach>
-
-        const listCTHD = [];
-        <c:forEach items="${listCTHDByTT}" var="cthd">
-        listCTHD.push({
-            id: '${cthd.id}',
-            idCTSP: '${cthd.idCTSP.id}',
-            idSP: '${cthd.idCTSP.idSanPham.id}',
-            soLuong: parseInt('${cthd.soLuong}', 10)
-        });
-        </c:forEach>
-
-        // Tính tổng số lượng bán cho từng sản phẩm
-        const totalQuantities = {};
-        listCTHD.forEach(cthd => {
-            if (!totalQuantities[cthd.idSP]) {
-                totalQuantities[cthd.idSP] = 0;
-            }
-            totalQuantities[cthd.idSP] += cthd.soLuong;
-        });
-
-        // Sắp xếp sản phẩm theo số lượng bán giảm dần
-        const sortedProducts = products.map(product => {
-            return {
-                ...product,
-                soldQuantity: totalQuantities[product.idSP] || 0
-            };
-        }).sort((a, b) => b.soldQuantity - a.soldQuantity);
-
-        // Loại bỏ sản phẩm bị lặp lại
-        const uniqueSortedProducts = [];
-        const seenProductIds = new Set();
-
-        sortedProducts.forEach(product => {
-            if (!seenProductIds.has(product.idSP)) {
-                uniqueSortedProducts.push(product);
-                seenProductIds.add(product.idSP);
-            }
-        });
-
-        // Lấy 8 sản phẩm hàng đầu
-        const top8Products = uniqueSortedProducts.slice(0, 8);
-
-        // Hiển thị các sản phẩm hàng đầu
-        const displayTop8Products = () => {
-            const productContainer = document.getElementById('product-container');
-            productContainer.innerHTML = '';
-
-            top8Products.forEach(sp => {
-                const productHTML =
-                    '<div class="col-lg-3 col-md-4 col-sm-6 pb-1">' +
-                    '<a href="/cua-hang/detail-san-pham/' + sp.idCTSP + '" style="text-decoration: none">' +
-                    '<div class="card product-item border-0 mb-2">' +
-                    '<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">' +
-                    '<img style="width: 100%; height: 370px; border-radius: 10px;" class="img-fluid w-100" src="/image/' + sp.hinhAnh1 + '" alt="">' +
-                    '</div>' +
-                    '<div class="card-body border-left border-right text-center p-0 pt-4 pb-3" style="margin-top: -10px; margin-bottom: -12px">' +
-                    '<h6 class="text-truncate mb-2">' + sp.tenSanPham + '</h6>' +
-                    '<h6 class="text-truncate mb-2" style="font-family: auto">' + sp.maSP + '</h6>' +
-                    '<p class="text-truncate mb-2">Đã bán: ' + sp.soldQuantity + '</p>' +
-                    '</div>' +
-                    '<div class="card-footer d-flex justify-content-between bg-light border float-start" style="margin-top: -3px; margin-bottom: -3px">' +
-                    '<div class="d-flex justify-content-center mb-0" style="margin-bottom: 3px">' +
-                    '<h6>' +
-                    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(sp.giaBan) +
-                    '<span style="font-size: 16px; text-decoration: underline"></span>' +
-                    '</h6>' +
-                    '</div>' +
-                    '<a href="/cua-hang/detail-san-pham/' + sp.idCTSP + '" class="btn btn-sm text-dark p-0">' +
-                    '<i class="fas fa-eye text-primary mr-1"></i>Chi tiết' +
-                    '</a>' +
-                    '</div>' +
-                    '</div>' +
-                    '</a>' +
-                    '</div>';
-                productContainer.insertAdjacentHTML('beforeend', productHTML);
-            });
-        };
-
-        displayTop8Products();
-    });
-</script>
-
-
 
 
 <!-- Footer Start -->
-<%@ include file="/view/BanHangOnline/footer.jsp"%>
+<%@ include file="/view/BanHangOnline/footer.jsp" %>
 <!-- Footer End -->
 
 
@@ -580,107 +407,6 @@
 <script src="/view_ban_hang/js/main.js"></script>
 </body>
 
-<script>
-    var list = [];
-    <c:forEach items="${listMauSizeSL}" var="item">
-    var MauSizeSL = {};
-    MauSizeSL.hinhAnh1 = "${item.hinhAnh1}";
-    MauSizeSL.hinhAnh2 = "${item.hinhAnh2}";
-    MauSizeSL.hinhAnh3 = "${item.hinhAnh3}";
-    MauSizeSL.tenMauSac = "${item.tenMauSac}";
-    MauSizeSL.tenKichThuoc = "${item.tenKichThuoc}";
-    MauSizeSL.soLuong = "${item.soLuong}";
-    list.push(MauSizeSL);
-    </c:forEach>
-
-    // Tìm và set giá trị ban đầu
-    var initialSelectedMauSac = document.querySelector('input[name="mauSac"]:checked').value;
-    var initialSelectedKichThuoc = document.querySelector('input[name="kichThuoc"]:checked').value;
-    setHinhAnhAndSoLuong(initialSelectedMauSac, initialSelectedKichThuoc);
-    filterKichThuocOptions(initialSelectedMauSac);
-
-    // Lọc số lượng tồn spct theo kích thước khi chọn màu sắc
-    function onchangeByMauSac(tenMauSac) {
-        var tenKichThuoc = document.querySelector('input[name="kichThuoc"]:checked').value;
-        var isKichThuocValid = list.some(item => item.tenMauSac === tenMauSac && item.tenKichThuoc === tenKichThuoc);
-
-        if (!isKichThuocValid) {
-            // Chọn kích thước đầu tiên có sẵn cho màu sắc mới
-            var kichThuocOptions = document.querySelectorAll('.kichThuocOption');
-            for (var option of kichThuocOptions) {
-                var input = option.querySelector('input[name="kichThuoc"]');
-                var isMatch = list.some(item => item.tenMauSac === tenMauSac && item.tenKichThuoc === input.value);
-                if (isMatch) {
-                    input.checked = true;
-                    tenKichThuoc = input.value;
-                    break;
-                }
-            }
-        }
-        setHinhAnhAndSoLuong(tenMauSac, tenKichThuoc);
-        filterKichThuocOptions(tenMauSac);
-    }
-
-
-    // Hàm cập nhật hình ảnh và số lượng
-    function setHinhAnhAndSoLuong(tenMauSac, tenKichThuoc) {
-        var soLuong = 0;
-        var hinhAnh1 = "";
-        var hinhAnh2 = "";
-        var hinhAnh3 = "";
-
-        list.forEach(item => {
-            if (item.tenMauSac == tenMauSac && item.tenKichThuoc == tenKichThuoc) {
-                soLuong = item.soLuong;
-                hinhAnh1 = item.hinhAnh1;
-                hinhAnh2 = item.hinhAnh2;
-                hinhAnh3 = item.hinhAnh3;
-            }
-        });
-
-        if (soLuong < 0 || soLuong == null) {
-            soLuong = 0;
-        }
-
-        document.getElementById("soLuongTon").textContent = soLuong;
-        document.getElementById("hinhAnh1").src = "/image/" + hinhAnh1;
-        document.getElementById("hinhAnh2").src = "/image/" + hinhAnh2;
-        document.getElementById("hinhAnh3").src = "/image/" + hinhAnh3;
-    }
-
-    // Lọc các tùy chọn kích thước dựa trên màu sắc
-    function filterKichThuocOptions(tenMauSac) {
-        var kichThuocOptions = document.querySelectorAll('.kichThuocOption');
-        kichThuocOptions.forEach(option => {
-            var input = option.querySelector('input[name="kichThuoc"]');
-            var isMatch = list.some(item => item.tenMauSac === tenMauSac && item.tenKichThuoc === input.value);
-            option.style.display = isMatch ? 'inline-block' : 'none';
-        });
-        // Chọn kích thước đầu tiên hiển thị
-        var visibleOptions = Array.from(kichThuocOptions).filter(option => option.style.display !== 'none');
-        if (visibleOptions.length > 0) {
-            visibleOptions[0].querySelector('input').checked = true;
-        }
-    }
-
-    //Lọc số lượng tồn ctsp theo màu sắc khi chọn kích thước
-    function onchangeByKichThuoc(tenKichThuoc) {
-        var listMauSac = document.getElementsByName("mauSac");
-        var tenMauSac = "";
-        for (var i = 0; i < listMauSac.length; i++) {
-            if (listMauSac.item(i).checked) {
-                tenMauSac = listMauSac.item(i).value;
-            }
-        }
-        var soLuong;
-        list.forEach(item => {
-            if (item.tenKichThuoc == tenKichThuoc && item.tenMauSac == tenMauSac) {
-                soLuong = item.soLuong
-            }
-        });
-        document.getElementById("soLuongTon").textContent = soLuong != null ? soLuong : 0;
-    }
-</script>
 
 <script>
     // Hiển thị thông báo thất bại nếu đăng nhập thất bại
@@ -853,7 +579,8 @@
                         $('#checkDangKy').val(0);
                     }
                 }
-            })) {}
+            })) {
+            }
 
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');

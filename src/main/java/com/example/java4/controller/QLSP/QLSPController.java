@@ -45,6 +45,5 @@ public class QLSPController {
     public String addSPView() {
         return "/view/QLSP/addSP.jsp";
     }
-
 }
 

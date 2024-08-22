@@ -27,6 +27,10 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
+    <%--Link Ajax --%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
     <!-- Custom styles for this template-->
     <link href="/view_admin/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -42,19 +46,14 @@
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
             rel="stylesheet">
 
-    <%--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">--%>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <!-- Custom CSS -->
 
     <%--    Thư viện Char Js để làm biểu đồ--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
@@ -63,6 +62,8 @@
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
     <style>
@@ -334,7 +335,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    <a class="nav-link collapsed" href="/admin/quan-ly-san-pham" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Quản lý sản phẩm</span>
@@ -350,8 +351,8 @@
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" >
                     <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
-                        <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
-                        <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
+                        <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
+                        <span style=" margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
@@ -363,7 +364,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm/quan-ly-km" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -419,18 +420,7 @@
                 </form>
 
                 <!-- Topbar Search  -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -515,7 +505,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
+                            <span class="badge badge-danger badge-counter"></span>
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -585,7 +575,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
                             <img class="img-profile rounded-circle"
                                  src="/imageUser/${nv.anhDaiDien}">
                         </a>
@@ -594,10 +584,11 @@
                              aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Tài khoản của tôi
+                                Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/hoa-don/dang-xuat">
+                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat" data-toggle="modal"
+                               data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
                             </a>
@@ -1089,16 +1080,12 @@
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
 
 <!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 
@@ -1186,198 +1173,7 @@
 
 
     // Biểu đồ cột thống ke hóa đơn và sản phẩm
-    <%--document.addEventListener("DOMContentLoaded", function () {--%>
-    <%--    const ctx = document.getElementById('myChart').getContext('2d');--%>
-    <%--    const myChart = new Chart(ctx, {--%>
-    <%--        type: 'bar',--%>
-    <%--        data: {--%>
-    <%--            labels: [], // Placeholder for initial labels--%>
-    <%--            datasets: [--%>
-    <%--                {--%>
-    <%--                    label: 'Hóa đơn',--%>
-    <%--                    data: [],--%>
-    <%--                    backgroundColor: 'rgba(54, 162, 235, 0.7)',--%>
-    <%--                    borderColor: 'rgba(54, 162, 235, 1)',--%>
-    <%--                    borderWidth: 1--%>
-    <%--                },--%>
-    <%--                {--%>
-    <%--                    label: 'Sản phẩm',--%>
-    <%--                    data: [],--%>
-    <%--                    backgroundColor: 'rgba(255, 206, 86, 0.7)',--%>
-    <%--                    borderColor: 'rgba(255, 206, 86, 1)',--%>
-    <%--                    borderWidth: 1--%>
-    <%--                }--%>
-    <%--            ]--%>
-    <%--        },--%>
-    <%--        options: {--%>
-    <%--            scales: {--%>
-    <%--                x: {--%>
-    <%--                    ticks: {--%>
-    <%--                        maxRotation: 45,--%>
-    <%--                        minRotation: 45--%>
-    <%--                    }--%>
-    <%--                },--%>
-    <%--                y: {--%>
-    <%--                    beginAtZero: true,--%>
-    <%--                    title: {--%>
-    <%--                        display: true,--%>
-    <%--                        text: 'Số lượng',--%>
-    <%--                        color: '#000',--%>
-    <%--                        font: {--%>
-    <%--                            size: 13--%>
-    <%--                        }--%>
-    <%--                    }--%>
-    <%--                }--%>
-    <%--            }--%>
-    <%--        }--%>
-    <%--    });--%>
 
-    <%--    function fetchData(url, title) {--%>
-    <%--        return fetch(url)--%>
-    <%--            .then(response => response.json())--%>
-    <%--            .then(data => {--%>
-    <%--                if (Array.isArray(data) && data.length > 0) {--%>
-    <%--                    updateChart(data);--%>
-    <%--                } else {--%>
-    <%--                    updateChart([{ day: new Date().toLocaleDateString('en-GB'), soLuongHoaDon: 0, soLuongSanPham: 0 }]);--%>
-    <%--                }--%>
-    <%--                updateTitle(title);--%>
-    <%--            })--%>
-    <%--            .catch(error => {--%>
-    <%--                console.error('Error fetching data:', error);--%>
-    <%--                updateChart([{ day: new Date().toLocaleDateString('en-GB'), soLuongHoaDon: 0, soLuongSanPham: 0 }]);--%>
-    <%--                updateTitle(title);--%>
-    <%--            });--%>
-    <%--    }--%>
-
-    <%--    function updateChart(data) {--%>
-    <%--        const days = data.map(item => new Date(item.day).toLocaleDateString('en-GB'));--%>
-    <%--        const soLuongHoaDon = data.map(item => item.soLuongHoaDon);--%>
-    <%--        const soLuongSanPham = data.map(item => item.soLuongSanPham);--%>
-
-    <%--        myChart.data.labels = days;--%>
-    <%--        myChart.data.datasets[0].data = soLuongHoaDon;--%>
-    <%--        myChart.data.datasets[1].data = soLuongSanPham;--%>
-    <%--        myChart.update();--%>
-    <%--    }--%>
-
-    <%--    function updateTitle(title) {--%>
-    <%--        document.getElementById('chart-title').textContent = title;--%>
-    <%--    }--%>
-
-    <%--    function setActiveButton(id) {--%>
-    <%--        const buttons = document.querySelectorAll('.btn');--%>
-    <%--        buttons.forEach(btn => btn.classList.remove('active'));--%>
-    <%--        document.getElementById(id).classList.add('active');--%>
-    <%--    }--%>
-
-    <%--    // Event listeners for buttons--%>
-    <%--    document.getElementById('btn-filter').addEventListener('click', () => {--%>
-    <%--        setActiveButton('btn-filter');--%>
-    <%--    });--%>
-
-    <%--    document.getElementById('btn-today').addEventListener('click', () => {--%>
-    <%--        setActiveButton('btn-today');--%>
-    <%--        fetchData('/api/thong-ke/ngay-hien-tai', 'Biểu Đồ Thống Kê Hóa Đơn Và Sản Phẩm Ngày Hôm Nay');--%>
-    <%--    });--%>
-
-    <%--    document.getElementById('btn-week').addEventListener('click', () => {--%>
-    <%--        setActiveButton('btn-week');--%>
-    <%--        const startDate = new Date();--%>
-    <%--        const endDate = new Date();--%>
-    <%--        startDate.setDate(startDate.getDate() - 7);--%>
-    <%--        fetchData(`/api/thong-ke/tuan-hien-tai?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`, 'Biểu Đồ Thống Kê Hóa Đơn Và Sản Phẩm Tuần Này');--%>
-    <%--    });--%>
-
-    <%--    document.getElementById('btn-month').addEventListener('click', () => {--%>
-    <%--        setActiveButton('btn-month');--%>
-    <%--        fetchData('/api/thong-ke/thang-hien-tai', 'Biểu Đồ Thống Kê Hóa Đơn Và Sản Phẩm Tháng Này');--%>
-    <%--    });--%>
-
-    <%--    document.getElementById('btn-year').addEventListener('click', () => {--%>
-    <%--        setActiveButton('btn-year');--%>
-    <%--        fetchData('/api/thong-ke/nam-hien-tai', 'Biểu Đồ Thống Kê Hóa Đơn Và Sản Phẩm Năm Nay');--%>
-    <%--    });--%>
-
-    <%--    document.getElementById('btn-custom').addEventListener('click', () => {--%>
-    <%--        setActiveButton('btn-custom');--%>
-    <%--    });--%>
-
-    <%--    // Event listener for form submission--%>
-    <%--    // Hiển thị dữ liệu lên biểu đồ tùy chỉnh--%>
-    <%--    $(document).ready(function () {--%>
-    <%--        function clearError(input, errorElement) {--%>
-    <%--            input.removeClass('border-danger');--%>
-    <%--            errorElement.hide();--%>
-    <%--        }--%>
-
-    <%--        $('#start-date').on('click', function () {--%>
-    <%--            clearError($(this), $('#start-date-error'));--%>
-    <%--        });--%>
-
-    <%--        $('#end-date').on('click', function () {--%>
-    <%--            clearError($(this), $('#end-date-error'));--%>
-    <%--        });--%>
-
-    <%--        $('#date-range-form').on('submit', function (event) {--%>
-    <%--            event.preventDefault();--%>
-    <%--            const formData = new FormData(this);--%>
-    <%--            const startDate = formData.get('startDate');--%>
-    <%--            const endDate = formData.get('endDate');--%>
-    <%--            let valid = true;--%>
-
-    <%--            // Clear previous error messages--%>
-    <%--            clearError($('#start-date'), $('#start-date-error'));--%>
-    <%--            clearError($('#end-date'), $('#end-date-error'));--%>
-
-    <%--            // Validate start date--%>
-    <%--            if (!startDate) {--%>
-    <%--                $('#start-date-error').text('Vui lòng nhập ngày bắt đầu.').show();--%>
-    <%--                $('#start-date').addClass('border-danger');--%>
-    <%--                valid = false;--%>
-    <%--            }--%>
-
-    <%--            // Validate end date--%>
-    <%--            if (!endDate) {--%>
-    <%--                $('#end-date-error').text('Vui lòng nhập ngày kết thúc.').show();--%>
-    <%--                $('#end-date').addClass('border-danger');--%>
-    <%--                valid = false;--%>
-    <%--            } else if (startDate && endDate < startDate) {--%>
-    <%--                $('#end-date-error').text('Ngày kết thúc phải sau ngày bắt đầu.').show();--%>
-    <%--                $('#end-date').addClass('border-danger');--%>
-    <%--                valid = false;--%>
-    <%--            }--%>
-
-    <%--            // If not valid, prevent form submission--%>
-    <%--            if (!valid) {--%>
-    <%--                return;--%>
-    <%--            }--%>
-
-    <%--            // If valid, proceed with AJAX request--%>
-    <%--            $.ajax({--%>
-    <%--                url: `/admin/thong-ke/tu-ngay-den-ngay`,--%>
-    <%--                type: 'GET',--%>
-    <%--                data: {--%>
-    <%--                    startDate: startDate,--%>
-    <%--                    endDate: endDate--%>
-    <%--                },--%>
-    <%--                success: function (data) {--%>
-    <%--                    updateChart(data);--%>
-    <%--                    document.querySelector('.modal-backdrop.show').classList.add('hide-backdrop');--%>
-    <%--                    $('#customModal').modal('hide');--%>
-    <%--                    $('#chart-title').text('Biểu Đồ Thống Kê Hóa Đơn Và Sản Phẩm Tùy Chỉnh');--%>
-    <%--                },--%>
-    <%--                error: function (xhr, status, error) {--%>
-    <%--                    console.error('Error fetching data:', error);--%>
-    <%--                }--%>
-    <%--            });--%>
-    <%--        });--%>
-    <%--    });--%>
-
-    <%--    // Load initial data for the current month--%>
-    <%--    fetchData('/api/thong-ke/thang-hien-tai', 'Biểu Đồ Thống Kê Hóa Đơn Và Sản Phẩm Tháng Này');--%>
-    <%--    setActiveButton('btn-month');--%>
-    <%--});--%>
 
 
 
@@ -1585,6 +1381,31 @@
 
 
 
+    //Đăng xuất
+    document.getElementById('dang-xuat').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng xuất!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã đăng xuất!",
+                    text: "Bạn đã đăng xuất thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // Điều hướng tới URL đăng xuất sau khi người dùng xác nhận
+                    window.location.href = "/admin/dang-nhap-view";
+                });
+            }
+        });
+    });
 
 
 </script>
