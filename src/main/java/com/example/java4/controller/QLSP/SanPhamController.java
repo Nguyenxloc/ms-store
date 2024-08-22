@@ -244,7 +244,7 @@ public class SanPhamController {
     @CrossOrigin
     @PostMapping("/check-duplicate")
     public ResponseEntity<Boolean> save(
-            @RequestParam("tenSP") String tenSP,
+            @RequestParam("tenSP") String tenSP
     ) {
         return ResponseEntity.ok(true);
     }
