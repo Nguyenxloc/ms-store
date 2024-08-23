@@ -308,30 +308,33 @@
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="/admin/quan-ly-san-pham" data-toggle="collapse" data-target="#collapseTwo"
+                <li class="nav-item" style="">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Quản lý sản phẩm</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
                         </div>
                     </div>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" >
-                    <a class="nav-link" href="/admin/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
                         <span style=" margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -368,7 +371,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -1590,7 +1593,7 @@
 
     var tongTien = ${tongTienDonHang};
     var soLuongGioHang = ${soLuongGioHang};
-
+    var giamGia = ${giamGia};
 
 
 
@@ -1611,13 +1614,13 @@
     }
 
     // Function to recalculate shipping fee and total payment
-    function calculateShippingAndTotal(tongTien,soLuongGioHang) {
+    function calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia) {
         // Get necessary values
         var idQuanHuyenTest = ${diaChiKhachHang.idQH};
         var idPhuongXaTest = ${diaChiKhachHang.idPX};
         <%--var soLuongGioHang = ${soLuongGioHang};--%>
         // var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
-        var giamGia = ${giamGia};
+
 
         // Calculate weight
         var khoiLuong = soLuongGioHang * 200;
@@ -1644,13 +1647,12 @@
                 $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
                 $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
 
-
             });
         });
     }
 
     // Initial calculation on page load
-    calculateShippingAndTotal(tongTien,soLuongGioHang);
+    calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia);
 
 </script>
 
@@ -1958,13 +1960,19 @@
                             });
 
                             districtSelect.change(function () {
+
                                 var idquan = $(this).val();
+                                alert(123)
                                 getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idquan, function (data_phuong) {
                                     wardSelect.html('<option value="">Chọn Phường/Xã</option>');
                                     $.each(data_phuong.data, function (key_phuong, val_phuong) {
                                         wardSelect.append('<option value="' + val_phuong.WardCode + '">' + val_phuong.WardName + '</option>');
                                     });
                                 });
+
+                            //     Testtttttttttt
+
+
                             });
                         });
                     });
@@ -2001,6 +2009,20 @@
                                     wardSelect.append('<option value="' + val_phuong.WardCode + '">' + val_phuong.WardName + '</option>');
                                 });
                             });
+
+
+                            // Sự kiện khi thay đổi giá trị Xã
+                            wardSelect.change(function () {
+                                // Hiển thị thông báo khi chọn xã thành công
+                                alert('Oke');
+
+                                // Cập nhật phí ship từ 30k thành 50k
+
+                                $('#phiShip').val(50000);
+                            });
+
+
+
                         });
                     });
                 });
@@ -2370,6 +2392,9 @@
                                 // Cập nhật lại tổng tiền và tổng tiền thanh toán
                                 var newTotalPrice = response.tongTien;
                                 var newQuantity = response.totalSoLuong;
+                                var giamGia = response.giamGia;
+                                var phieuGiamGia = response.phieuGiamGia;
+
                                 const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', {
                                     style: 'currency',
                                     currency: 'VND',
@@ -2378,7 +2403,8 @@
                                 $('#tongTienValue').text(formatCurrency(newTotalPrice));
                                 //Cập nhật lại phí ship và tổng tiền
 
-                                calculateShippingAndTotal(newTotalPrice,newQuantity);
+                                calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
+                                $('#phieuGiamGia').text(phieuGiamGia);
 
                                 // Show success message
                                 Toast.fire({
@@ -2463,12 +2489,15 @@
 
                         let newTotalPrice = response.tongTien;
                         var newQuantity = response.totalSoLuong;
+                        var giamGia = response.giamGia;
+                        var phieuGiamGia = response.phieuGiamGia;
                         $('#tongTienValue').text(formatCurrency(newTotalPrice));
+                        $('#phieuGiamGia').text(phieuGiamGia);
 
                         const parseCurrency = (value) => parseFloat(value.replace(/[^\d.-]+/g, ''));
 
                         // Tính lại tổng tiền
-                        calculateShippingAndTotal(newTotalPrice,newQuantity);
+                        calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
 
                         // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền
                         response.listHDCT.forEach(item => {
