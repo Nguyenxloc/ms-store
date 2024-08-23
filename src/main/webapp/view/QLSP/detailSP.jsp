@@ -829,7 +829,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
-                        <h3 class="modal-title">Chỉnh sửa sản phẩm chi tiết</h3>
+                        <h3 class="modal-title">Thêm mới sản phẩm chi tiết</h3>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -882,6 +882,48 @@
                                         <div class="icon-container">
                                             <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
                                                data-bs-target="#ModalHotAddKT" id="iconHotAddKTModalAdd"
+                                               style="font-size: 25px"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-3" id="chatLieuBoxModalAdd">
+                                    <div class="d-flex">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    id="lblChatLieuModalAdd" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Chọn chất liệu
+                                            </button>
+                                            <ul class="dropdown-menu" id="cboChatLieuModalAdd"
+                                                aria-labelledby="dropdownMenuButton4">
+                                            </ul>
+                                            <p style="color: red;" id="cboChatLieuModalAddErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddCL" id="iconHotAddCLModalAdd"
+                                               style="font-size: 25px"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-3" id="kieuTayBoxModalAdd">
+                                    <div class="d-flex">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    id="lblKieuTayModalAdd" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Chọn kiểu tay
+                                            </button>
+                                            <ul class="dropdown-menu" id="cboKieuTayModalAdd"
+                                                aria-labelledby="dropdownMenuButton5">
+                                            </ul>
+                                            <p style="color: red;" id="cboKieuTayModalAddErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddKTA" id="iconHotAddKTAModalAdd"
                                                style="font-size: 25px"></i>
                                         </div>
                                     </div>
@@ -953,7 +995,6 @@
                                            accept="image/*"/>
                                 </div>
                             </div>
-
                             <button id="saveAddBtn" class="btn btn-primary me-5 mt-5" style="width: 100px">Lưu</button>
                         </form>
                     </div>
@@ -1550,11 +1591,8 @@
             trangThaiLabelModalAdd.textContent = "Dừng hoạt động";
         }
     }
-
     trangThaiModalAddRaw.addEventListener("change", updateLabeladd);
     updateLabeladd();
-
-    // change sttlbl edit
     function updateLabeledit() {
         if (trangThaiModalEditRaw.checked) {
             trangThaiLabelModalEdit.textContent = "Đang hoạt động";
@@ -1562,11 +1600,8 @@
             trangThaiLabelModalEdit.textContent = "Dừng hoạt động";
         }
     }
-
     trangThaiModalEditRaw.addEventListener("change", updateLabeledit);
-    // end change sttlbl edit
     updateLabeledit();
-
     function setMauSac(msString) {
         const ms = JSON.parse(msString.replace(/&quot;/g, '"'));
         idMauSac = ms.id;
@@ -1702,7 +1737,6 @@
                     'error'
                 );
             });
-
         console.log('Selected kieu tay ID modal edit:', idKieuTayModalEdit);
         // You can add more logic here to handle the selected value
     }
@@ -1773,6 +1807,30 @@
             });
     }
     loadSP();
+
+    const renderDropdownOrNot = () => {
+        fetch("/san-pham/count-spct-byIdSP?idSP=" + pathVariable, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(resp => {
+                if (resp > 0) {
+                    document.getElementById("chatLieuBoxModalAdd").style.display = "none";
+                    document.getElementById("kieuTayBoxModalAdd").style.display = "none";
+                } else {
+                    document.getElementById("chatLieuBoxModalAdd").style.display = "block";
+                    document.getElementById("kieuTayBoxModalAdd").style.display = "block";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching count data:', error);
+            });
+    }
+    // Call the function to execute it
+    renderDropdownOrNot();
+
     const loadCboMauSac = () => {
         let datatest = "data testing";
         fetch("/mau-sac/index", {
