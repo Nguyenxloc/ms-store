@@ -42,6 +42,13 @@
             rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+            rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .table-scroll {
             height: 340px;
@@ -271,7 +278,7 @@
             background: #555;
             margin-top: -5px;
             position: relative;
-            z-index: 10000;
+
         }
 
         input[type=range]::-ms-thumb {
@@ -283,7 +290,7 @@
             background: #555;
             margin-top: -5px;
             position: relative;
-            z-index: 10000;
+
         }
 
         input[type=range]::-moz-range-thumb {
@@ -295,7 +302,7 @@
             background: #555;
             margin-top: -5px;
             position: relative;
-            z-index: 10000;
+
         }
 
         input[type=range]:focus {
@@ -320,15 +327,16 @@
             flex: 0 0 33.333333%;
             max-width: 33.333333%;
         }
+
         .pagination li.active a {
             background-color: #007bff;
             color: white;
         }
+
         .pagination li a {
             cursor: pointer;
         }
     </style>
-
 
 
 </head>
@@ -338,7 +346,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
+    <!-- Sidebar  Menu bên tay trái-->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -353,73 +361,102 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Thống kê doanh thu</span></a>
-        </li>
+        <c:choose>
+            <c:when test="${sessionScope.userRole == 'Quản lý'}">
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/ban-hang-tai-quay/admin/ban-tai-quay">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Bán hàng tại quầy</span></a>
-        </li>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý đơn hàng</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
+                        <span style="color: #fff;">Quản lý sản phẩm</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Thuộc tính</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý hóa đơn</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Quản lý sản phẩm</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                    <a class="collapse-item" href="cards.html">Cards</a>
-                </div>
-            </div>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                        <i class="bi bi-gift" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý nhân viên</span></a>
-        </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </c:when>
+            <c:otherwise>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý khách hàng</span></a>
-        </li>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+                <!-- Nav Item - Charts -->
+                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Nav Item - Charts -->
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
 
+                <!-- Nav Item - Charts -->
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+            </c:otherwise>
+        </c:choose>
     </ul>
-
-    <!--   -----------   -->
+    <!-- End of Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -586,20 +623,19 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
                             <img class="img-profile rounded-circle"
                                  src="/imageUser/${nv.anhDaiDien}">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/store/tai-khoan-cua-toi">
+                            <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Tài khoản của tôi
+                                Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/store/dang-xuat" id="dang-xuat" data-toggle="modal"
-                               data-target="#logoutModal">
+                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
                             </a>
@@ -609,7 +645,6 @@
             </nav>
             <!-- Bán hàng tại quầy -->
             <div class="container-fluid bg-white">
-                <div class="container">
                 <div class="row">
                     <div class="mt-3">
                         <h4 class="">Quản lý sản phẩm chi tiết</h4>
@@ -633,7 +668,7 @@
                                     <h5 class="mt-2" style="width: 150px;">Trạng thái:</h5>
                                     <h5 class="mt-2 font-weight-normal" id="trangThaiSP"></h5>
                                 </div>
-                                <div class="d-flex mt-2" style="height: 40px">
+                                <div class="d-flex mt-2" style="height: 40px"  id="cboChatLieuArea">
                                     <h5 class="mt-2" style="width: 150px">Chất liệu:&nbsp&nbsp</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -652,7 +687,7 @@
                                            data-bs-target="#ModalHotAddCL" style="font-size: 25px"></i>
                                     </div>
                                 </div>
-                                <div class="d-flex mt-2" style="height: 40px">
+                                <div class="d-flex mt-2" style="height: 40px" id="cboKieuTayArea">
                                     <h5 class="mt-2" style="width: 150px">Kiểu tay:&nbsp&nbsp</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -794,651 +829,523 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="row">
-                        <div class="mt-3">
-                            <h4 class="">Quản lý sản phẩm chi tiết</h4>
-                            <div class="d-flex gap-5 mt-3">
-                                <img id="hinhAnhSP" src="path_to_your_image.jpg" class="rounded border"
-                                     width="150" height="200" alt="Product Image">
-                                <div id="product-details">
-                                    <h5 class="">Tên sản phẩm:&nbsp&nbsp<span id="tenSP"></span></h5>
-                                    <h5 class="">Mã sản phẩm:&nbsp&nbsp<span id="maSP"></span></h5>
-                                    <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoSP"></span></h5>
-                                    <h5 class="">Trạng thái:&nbsp&nbsp<span id="trangThaiSP"></span></h5>
-
+                        <h3 class="modal-title">Thêm mới sản phẩm chi tiết</h3>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; height: 80vh;">
+                    <div class="mb-3">
+                        <form id="uploadFormAdd" method="post" enctype="multipart/form-data" action="/uploads">
+                            <div class="row">
+                                <div class="d-flex mb-2" style="gap: 20px;">
+                                    <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
+                                            id="tenSPModalAdd"></span>
+                                    </h5>
+                                    <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalAdd"></span>
+                                    </h5>
+                                </div>
+                                <div class="col col-md-3">
                                     <div class="d-flex">
-                                        <h5 class="">Chất liệu:&nbsp&nbsp</h5>
-                                        <div class="dropdown" >
+                                        <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                    id="lblChatLieuModalEdit" style="width: 150px"
+                                                    id="lblMauSacModalAdd" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Chọn màu sắc
+                                            </button>
+                                            <ul class="dropdown-menu" id="cboMauSacModalAdd"
+                                                aria-labelledby="dropdownMenuButton2">
+                                            </ul>
+                                            <p style="color: red;" id="cboMauSacModalAddErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddMS" id="iconHotAddMSModalAdd"
+                                               style="font-size: 25px"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="d-flex">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    id="lblKichThuocModalAdd" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Chọn kích thước
+                                            </button>
+                                            <ul class="dropdown-menu" id="cboKichThuocModalAdd"
+                                                aria-labelledby="dropdownMenuButton3">
+                                            </ul>
+                                            <p style="color: red;" id="cboKichThuocModalAddErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddKT" id="iconHotAddKTModalAdd"
+                                               style="font-size: 25px"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-3" id="chatLieuBoxModalAdd">
+                                    <div class="d-flex">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                                    id="lblChatLieuModalAdd" style="width: 150px;"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                 Chọn chất liệu
                                             </button>
-                                            <ul class="dropdown-menu" id="cboChatLieuModalEdit"
+                                            <ul class="dropdown-menu" id="cboChatLieuModalAdd"
                                                 aria-labelledby="dropdownMenuButton4">
                                             </ul>
-                                            <p style="color: red;" id="cboChatLieuModalEditErr"></p>
+                                            <p style="color: red;" id="cboChatLieuModalAddErr"></p>
                                         </div>
                                         <div class="icon-container">
                                             <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                               data-bs-target="#ModalHotAddCL" style="font-size: 25px"></i>
+                                               data-bs-target="#ModalHotAddCL" id="iconHotAddCLModalAdd"
+                                               style="font-size: 25px"></i>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col col-md-3" id="kieuTayBoxModalAdd">
                                     <div class="d-flex">
-                                        <h5 class="">Kiểu tay:&nbsp&nbsp</h5>
                                         <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                    id="lblKieuTayModalEdit" style="width: 150px;"
+                                                    id="lblKieuTayModalAdd" style="width: 150px;"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                 Chọn kiểu tay
                                             </button>
-                                            <ul class="dropdown-menu" id="cboKieuTayModalEdit"
+                                            <ul class="dropdown-menu" id="cboKieuTayModalAdd"
                                                 aria-labelledby="dropdownMenuButton5">
                                             </ul>
-                                            <p style="color: red;" id="cboKieuTayModalEditErr"></p>
+                                            <p style="color: red;" id="cboKieuTayModalAddErr"></p>
                                         </div>
                                         <div class="icon-container">
                                             <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                               data-bs-target="#ModalHotAddKTA" style="font-size: 25px"></i>
+                                               data-bs-target="#ModalHotAddKTA" id="iconHotAddKTAModalAdd"
+                                               style="font-size: 25px"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="mt-3 border-bottom">Danh sách sản phẩm chi tiết: </h5>
-                            <div class="mt-3">
-                                <div class="row ms-2">
-                                    <div class="col col-md-2">
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <label for="soLuongModalAdd" class="form-label">Số lượng</label>
+                                    <input type="number" name="file" class="form-control" id="soLuongModalAdd"
+                                           value="">
+                                    <p style="color: red;" id="soLuongModalAddErr"></p>
+                                </div>
+                                <div class="col col-md-4">
+                                    <label for="giaNhapModalAdd" class="form-label">Giá nhập</label>
+                                    <input type="number" name="file" class="form-control" id="giaNhapModalAdd"
+                                           value="">
+                                    <p style="color: red;" id="giaNhapModalAddErr"></p>
+                                </div>
+                                <div class="col col-md-4">
+                                    <label for="giaBanModalAdd" class="form-label">Giá bán</label>
+                                    <input type="number" name="file" class="form-control" id="giaBanModalAdd"
+                                           value="">
+                                    <p style="color: red;" id="giaBanModalAddErr"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-6">
+                                    <label for="moTaModalAdd" class="form-label">Mô tả</label>
+                                    <textarea class="form-control custom-textarea" style="width: 550px;"
+                                              id="moTaModalAdd" name="moTa"></textarea>
+                                    <p style="color: red;" id="moTaModalAddErr"></p>
+                                </div>
+                                <div class="col col-md-3 d-flex justify-content-center align-items-center">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                               id="trangThaiModalAdd"
+                                               checked>
+                                        <label class="form-check-label" for="trangThaiLabelModalEdit"
+                                               id="trangThaiLabelModalAdd">Trạng
+                                            thái</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <img width="200" height="200"
+                                         src="/image-icon/pendingIMG.png"
+                                         alt="" class="fit-img" id="hinhAnh1DisplayModalAdd">
+                                    <p class="text-center">Hình ảnh 1</p>
+                                    <input type="file" id="fileHinhAnh1ModalAdd" class="file-input-overlay"
+                                           accept="image/*"/>
+                                </div>
+
+                                <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <img width="200" height="200"
+                                         src="/image-icon/pendingIMG.png"
+                                         alt="" class="fit-img" id="hinhAnh2DisplayModalAdd">
+                                    <p class="text-center">Hình ảnh 2</p>
+                                    <input type="file" id="fileHinhAnh2ModalAdd" class="file-input-overlay"
+                                           accept="image/*"/>
+                                </div>
+
+                                <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <img width="200" height="200"
+                                         src="/image-icon/pendingIMG.png"
+                                         alt="" class="fit-img" id="hinhAnh3DisplayModalAdd">
+                                    <p class="text-center">Hình ảnh 3</p>
+                                    <input type="file" id="fileHinhAnh3ModalAdd" class="file-input-overlay"
+                                           accept="image/*"/>
+                                </div>
+                            </div>
+                            <button id="saveAddBtn" class="btn btn-primary me-5 mt-5" style="width: 100px">Lưu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--End modal --%>
+    <!-- EditModal-->
+    <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true"
+         data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h3 class="modal-title" id="exampleModalLabel4">Chỉnh sửa sản phẩm chi tiết</h3>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; height: 80vh;">
+                    <div class="mb-3">
+                        <form id="uploadFormEdit" method="post" enctype="multipart/form-data"
+                              action="/hinh-anh/upload">
+                            <div class="row">
+                                <div class="d-flex mb-2" style="gap: 20px;">
+                                    <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
+                                            id="tenSPModalEdit"></span>
+                                    </h5>
+                                    <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEdit"></span>
+                                    </h5>
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="d-flex">
                                         <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                    id="lblMauSac" style="width: 150px;" data-bs-toggle="dropdown"
+                                                    id="lblMauSacModalEdit" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                 Chọn màu sắc
                                             </button>
-                                            <ul class="dropdown-menu" id="cboMauSac"
+                                            <ul class="dropdown-menu" id="cboMauSacModalEdit"
                                                 aria-labelledby="dropdownMenuButton2">
                                             </ul>
+                                            <p style="color: red;" id="cboMauSacModalEditErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddMS" style="font-size: 25px"></i>
                                         </div>
                                     </div>
-                                    <div class="col col-md-2">
-                                        <div class="dropdown" style="width: 200px;">
+                                </div>
+                                <div class="col col-md-3">
+                                    <div class="d-flex">
+                                        <div class="dropdown">
                                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                    id="lblKichThuoc" style="width: 150px;" data-bs-toggle="dropdown"
+                                                    id="lblKichThuocModalEdit" style="width: 150px;"
+                                                    data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                 Chọn kích thước
                                             </button>
-                                            <ul class="dropdown-menu" id="cboKichThuoc"
+                                            <ul class="dropdown-menu" id="cboKichThuocModalEdit"
                                                 aria-labelledby="dropdownMenuButton3">
                                             </ul>
+                                            <p style="color: red;" id="cboKichThuocModalEditErr"></p>
+                                        </div>
+                                        <div class="icon-container">
+                                            <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
+                                               data-bs-target="#ModalHotAddKT" style="font-size: 25px"></i>
                                         </div>
                                     </div>
-                                    <div class="col col-md-1">
-                                        <h5 class="mt-2">Đơn giá: </h5>
-                                    </div>
-                                    <div class="mb-4 pb-4 col col-md-2" style="height: 20px">
-                                        <section class="range-slider container">
-                                            <span class="output outputOne"></span>
-                                            <span class="output outputTwo"></span>
-                                            <span class="full-range"></span>
-                                            <span class="incl-range"></span>
-                                            <input  name="rangeOne" type="range">
-                                            <input  name="rangeTwo" type="range">
-                                        </section>
-                                    </div>
-                                    <div class="col col-md-3 d-flex gap-3 ms-5">
-                                        <button id="btnSearch" class="btn btn-success me-2" onclick="search(event)">
-                                            Tìm kiếm
-                                        </button>
-                                        <button id="btnRef" class="btn btn-success me-2" onclick="refresh(event)">
-                                            Refresh
-                                        </button>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <label for="soLuongModalEdit" class="form-label">Số lượng</label>
+                                    <input type="number" name="file" class="form-control" id="soLuongModalEdit"
+                                           value="">
+                                    <p style="color: red;" id="soLuongModalEditErr"></p>
+                                </div>
+                                <div class="col col-md-4">
+                                    <label for="giaNhapModalEdit" class="form-label">Giá nhập</label>
+                                    <input type="number" name="file" class="form-control" id="giaNhapModalEdit"
+                                           value="">
+                                    <p style="color: red;" id="giaNhapModalEditErr"></p>
+                                </div>
+                                <div class="col col-md-4">
+                                    <label for="giaBanModalEdit" class="form-label">Giá bán</label>
+                                    <input type="number" name="file" class="form-control" id="giaBanModalEdit"
+                                           value="">
+                                    <p style="color: red;" id="giaBanModalEditErr"></p>
+                                </div>
+                                <div class="col col-md-6">
+                                    <label for="moTaModalEdit" class="form-label">Mô tả</label>
+                                    <textarea class="form-control custom-textarea" style="width: 550px;"
+                                              id="moTaModalEdit" name="moTa"></textarea>
+                                    <p style="color: red;" id="moTaModalEditErr"></p>
+                                </div>
+                                <div class="col col-md-3 d-flex justify-content-center align-items-center">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                               id="trangThaiModalEdit"
+                                               checked>
+                                        <label class="form-check-label" for="trangThaiLabelModalEdit"
+                                               id="trangThaiLabelModalEdit">Trạng
+                                            thái</label>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-hover mt-3">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Màu sắc</th>
-                                    <th>Kích thước</th>
-                                    <th>Số lượng</th>
-                                    <th>Giá nhập</th>
-                                    <th>Giá bán</th>
-                                    <th>Mô tả</th>
-                                    <th>Trạng thái</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                                </thead>
-                                <tbody id="tbl_ds_spct">
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <button id="btnAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">Thêm
-                    mới
-                </button>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <button id="btnMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal"
-                        data-bs-target="#ModalMultipleAdd">Thêm nhiều
-                </button>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <button onclick="testDataMaping(event)" class="btn btn-success me-2">test</button>
-            </div>
-            <div class="col-12 pb-1">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center mb-3">
-                        <li class="page-item" id="prev">
-                            <Button class="page-link" onclick="navigate(-1,event)">Previous</Button>
-                        </li>
-                        <div class="d-flex" id="paginationBody">
-                        </div>
-                        <li class="page-item" id="next">
-                            <Button class="page-link" onclick="navigate(1,event)">Next</Button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <!-- AddModal-->
-        <div class="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h3 class="modal-title">Chỉnh sửa sản phẩm chi tiết</h3>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" style="overflow-y: auto; height: 80vh;">
-                        <div class="mb-3">
-                            <form id="uploadFormAdd" method="post" enctype="multipart/form-data" action="/uploads">
-                                <div class="row">
-                                    <div class="d-flex mb-2" style="gap: 20px;">
-                                        <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
-                                                id="tenSPModalAdd"></span>
-                                        </h5>
-                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalAdd"></span>
-                                        </h5>
-                                    </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblMauSacModalAdd" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn màu sắc
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboMauSacModalAdd"
-                                                    aria-labelledby="dropdownMenuButton2">
-                                                </ul>
-                                                <p style="color: red;" id="cboMauSacModalAddErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddMS" id="iconHotAddMSModalAdd"
-                                                   style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblKichThuocModalAdd" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn kích thước
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboKichThuocModalAdd"
-                                                    aria-labelledby="dropdownMenuButton3">
-                                                </ul>
-                                                <p style="color: red;" id="cboKichThuocModalAddErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddKT" id="iconHotAddKTModalAdd"
-                                                   style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="row">
+                                <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <img width="200" height="200"
+                                         src="/image-icon/pendingIMG.png"
+                                         alt="" class="fit-img" id="hinhAnh1DisplayModalEdit">
+                                    <p class="text-center">Hình ảnh 1</p>
+                                    <input type="file" name="hinhAnh1File" id="fileHinhAnh1ModalEdit"
+                                           class="file-input-overlay"/>
                                 </div>
-                                <div class="row">
-                                    <div class="col col-md-4">
-                                        <label for="soLuongModalAdd" class="form-label">Số lượng</label>
-                                        <input type="number" name="file" class="form-control" id="soLuongModalAdd"
-                                               value="">
-                                        <p style="color: red;" id="soLuongModalAddErr"></p>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <label for="giaNhapModalAdd" class="form-label">Giá nhập</label>
-                                        <input type="number" name="file" class="form-control" id="giaNhapModalAdd"
-                                               value="">
-                                        <p style="color: red;" id="giaNhapModalAddErr"></p>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <label for="giaBanModalAdd" class="form-label">Giá bán</label>
-                                        <input type="number" name="file" class="form-control" id="giaBanModalAdd"
-                                               value="">
-                                        <p style="color: red;" id="giaBanModalAddErr"></p>
-                                    </div>
+                                <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <img width="200" height="200"
+                                         src="/image-icon/pendingIMG.png"
+                                         alt="" class="fit-img" id="hinhAnh2DisplayModalEdit">
+                                    <p class="text-center">Hình ảnh 2</p>
+                                    <input type="file" name="hinhAnh2File" id="fileHinhAnh2ModalEdit"
+                                           class="file-input-overlay"/>
                                 </div>
-                                <div class="row">
-                                    <div class="col col-md-6">
-                                        <label for="moTaModalAdd" class="form-label">Mô tả</label>
-                                        <textarea class="form-control custom-textarea" style="width: 550px;"
-                                                  id="moTaModalAdd" name="moTa"></textarea>
-                                        <p style="color: red;" id="moTaModalAddErr"></p>
-                                    </div>
-                                    <div class="col col-md-3 d-flex justify-content-center align-items-center">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                   id="trangThaiModalAdd"
-                                                   checked>
-                                            <label class="form-check-label" for="trangThaiLabelModalEdit"
-                                                   id="trangThaiLabelModalAdd">Trạng
-                                                thái</label>
-                                        </div>
-                                    </div>
-
+                                <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <img width="200" height="200"
+                                         src="/image-icon/pendingIMG.png"
+                                         alt="" class="fit-img" id="hinhAnh3DisplayModalEdit">
+                                    <p class="text-center">Hình ảnh 3</p>
+                                    <input type="file" name="hinhAnh3File" id="fileHinhAnh3ModalEdit"
+                                           class="file-input-overlay"/>
                                 </div>
-                                <div class="row">
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
-                                        <img width="200" height="200"
-                                             src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh1DisplayModalAdd">
-                                        <p class="text-center">Hình ảnh 1</p>
-                                        <input type="file" id="fileHinhAnh1ModalAdd" class="file-input-overlay"
-                                               accept="image/*"/>
-                                    </div>
-
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
-                                        <img width="200" height="200"
-                                             src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh2DisplayModalAdd">
-                                        <p class="text-center">Hình ảnh 2</p>
-                                        <input type="file" id="fileHinhAnh2ModalAdd" class="file-input-overlay"
-                                               accept="image/*"/>
-                                    </div>
-
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
-                                        <img width="200" height="200"
-                                             src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh3DisplayModalAdd">
-                                        <p class="text-center">Hình ảnh 3</p>
-                                        <input type="file" id="fileHinhAnh3ModalAdd" class="file-input-overlay"
-                                               accept="image/*"/>
-                                    </div>
-                                </div>
-
-                                <button id="saveAddBtn" class="btn btn-primary me-5 mt-5" style="width: 100px">Lưu</button>
-                            </form>
-                        </div>
+                            </div>
+                            <button id="saveEditBtn" class="btn btn-primary mt-5" style="width: 100px">Lưu</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <%--End modal --%>
-        <!-- EditModal-->
-        <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h3 class="modal-title" id="exampleModalLabel4">Chỉnh sửa sản phẩm chi tiết</h3>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <%--End modal --%>
+
+    <!-- EditAllModal-->
+    <div class="modal fade" id="ModalEditAll" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true"
+         data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h3 class="modal-title" id="exampleModalLabel5">Chỉnh sửa sản phẩm chi tiết</h3>
                     </div>
-                    <div class="modal-body" style="overflow-y: auto; height: 80vh;">
-                        <div class="mb-3">
-                            <form id="uploadFormEdit" method="post" enctype="multipart/form-data"
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; height: 80vh;">
+                    <div class="mb-3">
+                        <div class="">
+                            <form id="uploadFormEditAll" method="post" enctype="multipart/form-data"
                                   action="/hinh-anh/upload">
                                 <div class="row">
                                     <div class="d-flex mb-2" style="gap: 20px;">
                                         <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
-                                                id="tenSPModalEdit"></span>
+                                                id="tenSPModalEditAll"></span>
                                         </h5>
-                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEdit"></span>
+                                        <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEditAll"></span>
                                         </h5>
                                     </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblMauSacModalEdit" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn màu sắc
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboMauSacModalEdit"
-                                                    aria-labelledby="dropdownMenuButton2">
-                                                </ul>
-                                                <p style="color: red;" id="cboMauSacModalEditErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddMS" style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col col-md-3">
-                                        <div class="d-flex">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                        id="lblKichThuocModalEdit" style="width: 150px;"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                    Chọn kích thước
-                                                </button>
-                                                <ul class="dropdown-menu" id="cboKichThuocModalEdit"
-                                                    aria-labelledby="dropdownMenuButton3">
-                                                </ul>
-                                                <p style="color: red;" id="cboKichThuocModalEditErr"></p>
-                                            </div>
-                                            <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddKT" style="font-size: 25px"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
+
                                 <div class="row">
-                                    <div class="col col-md-4">
-                                        <label for="soLuongModalEdit" class="form-label">Số lượng</label>
-                                        <input type="number" name="file" class="form-control" id="soLuongModalEdit"
+                                    <div class="col col-md-4 border" id="soLuongContainer">
+                                        <label id="lblSoLuongModalEditAll" for="soLuongModalEdit"
+                                               class="form-label">Số lượng</label>
+                                        <input type="number" name="file" class="form-control"
+                                               id="soLuongModalEditAll"
                                                value="">
-                                        <p style="color: red;" id="soLuongModalEditErr"></p>
+                                        <p style="color: red;" id="soLuongModalEditErrAll"></p>
                                     </div>
-                                    <div class="col col-md-4">
-                                        <label for="giaNhapModalEdit" class="form-label">Giá nhập</label>
-                                        <input type="number" name="file" class="form-control" id="giaNhapModalEdit"
+                                    <div class="col col-md-4 border" id="giaNhapContainer">
+                                        <label id="lblGiaNhapModalEditAll" for="giaNhapModalEdit"
+                                               class="form-label">Giá nhập</label>
+                                        <input type="number" name="file" class="form-control"
+                                               id="giaNhapModalEditAll"
                                                value="">
-                                        <p style="color: red;" id="giaNhapModalEditErr"></p>
+                                        <p style="color: red;" id="giaNhapModalEditErrAll"></p>
                                     </div>
-                                    <div class="col col-md-4">
-                                        <label for="giaBanModalEdit" class="form-label">Giá bán</label>
-                                        <input type="number" name="file" class="form-control" id="giaBanModalEdit"
+                                    <div class="col col-md-4 border" id="giaBanContainer">
+                                        <label id="lblGiaBanModalEditAll" for="giaBanModalEdit" class="form-label">Giá
+                                            bán</label>
+                                        <input type="number" name="file" class="form-control"
+                                               id="giaBanModalEditAll"
                                                value="">
-                                        <p style="color: red;" id="giaBanModalEditErr"></p>
+                                        <p style="color: red;" id="giaBanModalEditErrAll"></p>
                                     </div>
-                                    <div class="col col-md-6">
+                                    <div class="col col-md-6 border" id="moTaContainer">
                                         <label for="moTaModalEdit" class="form-label">Mô tả</label>
                                         <textarea class="form-control custom-textarea" style="width: 550px;"
-                                                  id="moTaModalEdit" name="moTa"></textarea>
-                                        <p style="color: red;" id="moTaModalEditErr"></p>
+                                                  id="moTaModalEditAll" name="moTa"></textarea>
+                                        <p style="color: red;" id="moTaModalEditErrAll"></p>
                                     </div>
-                                    <div class="col col-md-3 d-flex justify-content-center align-items-center">
+                                    <div class="col col-md-3 " id="trangThaiContainer">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch"
-                                                   id="trangThaiModalEdit"
+                                                   id="trangThaiModalEditAll"
                                                    checked>
                                             <label class="form-check-label" for="trangThaiLabelModalEdit"
-                                                   id="trangThaiLabelModalEdit">Trạng
+                                                   id="trangThaiLabelModalEditAll">Trạng
                                                 thái</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <div class="col col-md-3 border hover-effect click-effect image-container"
+                                         id="hinhAnh1Container">
                                         <img width="200" height="200"
                                              src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh1DisplayModalEdit">
+                                             alt="" class="fit-img" id="hinhAnh1DisplayModalEditAll">
                                         <p class="text-center">Hình ảnh 1</p>
-                                        <input type="file" name="hinhAnh1File" id="fileHinhAnh1ModalEdit"
+                                        <input type="file" name="hinhAnh1File" id="fileHinhAnh1ModalEditAll"
                                                class="file-input-overlay"/>
                                     </div>
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <div class="col col-md-3 hover-effect click-effect image-container"
+                                         id="hinhAnh2Container">
                                         <img width="200" height="200"
                                              src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh2DisplayModalEdit">
+                                             alt="" class="fit-img" id="hinhAnh2DisplayModalEditAll">
                                         <p class="text-center">Hình ảnh 2</p>
-                                        <input type="file" name="hinhAnh2File" id="fileHinhAnh2ModalEdit"
+                                        <input type="file" name="hinhAnh2File" id="fileHinhAnh2ModalEditAll"
                                                class="file-input-overlay"/>
                                     </div>
-                                    <div class="col col-md-3 hover-effect click-effect image-container">
+                                    <div class="col col-md-3 hover-effect click-effect image-container"
+                                         id="hinhAnh3Container">
                                         <img width="200" height="200"
                                              src="/image-icon/pendingIMG.png"
-                                             alt="" class="fit-img" id="hinhAnh3DisplayModalEdit">
+                                             alt="" class="fit-img" id="hinhAnh3DisplayModalEditAll">
                                         <p class="text-center">Hình ảnh 3</p>
-                                        <input type="file" name="hinhAnh3File" id="fileHinhAnh3ModalEdit"
+                                        <input type="file" name="hinhAnh3File" id="fileHinhAnh3ModalEditAll"
                                                class="file-input-overlay"/>
                                     </div>
                                 </div>
-                                <button id="saveEditBtn" class="btn btn-primary mt-5" style="width: 100px">Lưu</button>
                             </form>
                         </div>
+                        <button id="saveEditAllBtn" class="btn btn-primary" style="width: 100px">Lưu</button>
                     </div>
                 </div>
             </div>
         </div>
-        <%--End modal --%>
-
-        <!-- EditAllModal-->
-        <div class="modal fade" id="ModalEditAll" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h3 class="modal-title" id="exampleModalLabel5">Chỉnh sửa sản phẩm chi tiết</h3>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" style="overflow-y: auto; height: 80vh;">
-                        <div class="mb-3">
-                            <div class="">
-                                <form id="uploadFormEditAll" method="post" enctype="multipart/form-data"
-                                      action="/hinh-anh/upload">
-                                    <div class="row">
-                                        <div class="d-flex mb-2" style="gap: 20px;">
-                                            <h5 class="" style="width: 600px">Tên sản phẩm:&nbsp&nbsp<span
-                                                    id="tenSPModalEditAll"></span>
-                                            </h5>
-                                            <h5 class="">Ngày tạo:&nbsp&nbsp<span id="ngayTaoModalEditAll"></span>
-                                            </h5>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col col-md-4 border" id="soLuongContainer">
-                                            <label id="lblSoLuongModalEditAll" for="soLuongModalEdit"
-                                                   class="form-label">Số lượng</label>
-                                            <input type="number" name="file" class="form-control"
-                                                   id="soLuongModalEditAll"
-                                                   value="">
-                                            <p style="color: red;" id="soLuongModalEditErrAll"></p>
-                                        </div>
-                                        <div class="col col-md-4 border" id="giaNhapContainer">
-                                            <label id="lblGiaNhapModalEditAll" for="giaNhapModalEdit"
-                                                   class="form-label">Giá nhập</label>
-                                            <input type="number" name="file" class="form-control"
-                                                   id="giaNhapModalEditAll"
-                                                   value="">
-                                            <p style="color: red;" id="giaNhapModalEditErrAll"></p>
-                                        </div>
-                                        <div class="col col-md-4 border" id="giaBanContainer">
-                                            <label id="lblGiaBanModalEditAll" for="giaBanModalEdit" class="form-label">Giá
-                                                bán</label>
-                                            <input type="number" name="file" class="form-control"
-                                                   id="giaBanModalEditAll"
-                                                   value="">
-                                            <p style="color: red;" id="giaBanModalEditErrAll"></p>
-                                        </div>
-                                        <div class="col col-md-6 border" id="moTaContainer">
-                                            <label for="moTaModalEdit" class="form-label">Mô tả</label>
-                                            <textarea class="form-control custom-textarea" style="width: 550px;"
-                                                      id="moTaModalEditAll" name="moTa"></textarea>
-                                            <p style="color: red;" id="moTaModalEditErrAll"></p>
-                                        </div>
-                                        <div class="col col-md-3 " id="trangThaiContainer">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                       id="trangThaiModalEditAll"
-                                                       checked>
-                                                <label class="form-check-label" for="trangThaiLabelModalEdit"
-                                                       id="trangThaiLabelModalEditAll">Trạng
-                                                    thái</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col col-md-3 border hover-effect click-effect image-container"
-                                             id="hinhAnh1Container">
-                                            <img width="200" height="200"
-                                                 src="/image-icon/pendingIMG.png"
-                                                 alt="" class="fit-img" id="hinhAnh1DisplayModalEditAll">
-                                            <p class="text-center">Hình ảnh 1</p>
-                                            <input type="file" name="hinhAnh1File" id="fileHinhAnh1ModalEditAll"
-                                                   class="file-input-overlay"/>
-                                        </div>
-                                        <div class="col col-md-3 hover-effect click-effect image-container"
-                                             id="hinhAnh2Container">
-                                            <img width="200" height="200"
-                                                 src="/image-icon/pendingIMG.png"
-                                                 alt="" class="fit-img" id="hinhAnh2DisplayModalEditAll">
-                                            <p class="text-center">Hình ảnh 2</p>
-                                            <input type="file" name="hinhAnh2File" id="fileHinhAnh2ModalEditAll"
-                                                   class="file-input-overlay"/>
-                                        </div>
-                                        <div class="col col-md-3 hover-effect click-effect image-container"
-                                             id="hinhAnh3Container">
-                                            <img width="200" height="200"
-                                                 src="/image-icon/pendingIMG.png"
-                                                 alt="" class="fit-img" id="hinhAnh3DisplayModalEditAll">
-                                            <p class="text-center">Hình ảnh 3</p>
-                                            <input type="file" name="hinhAnh3File" id="fileHinhAnh3ModalEditAll"
-                                                   class="file-input-overlay"/>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <button id="saveEditAllBtn" class="btn btn-primary" style="width: 100px">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--End modal --%>
-
-
-        <!-- ModalHotAddMS -->
-        <div class="modal fade" id="modalHotAddMS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h5 class="modal-title" id="exampleModalLabel1">Thêm nhanh màu săc</h5>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 mt-3">
-                            <label for="tenModalHotAddMS" class="form-label">Tên màu sắc:</label>
-                            <input type="text" class="form-control" id="tenModalHotAddMS">
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="btnModalHotAddMS">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--        end modal hot add ms--%>
-
-        <!-- ModalHotAddKT -->
-        <div class="modal fade" id="modalHotAddKT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h5 class="modal-title" id="exampleModalLabel2">Thêm nhanh kích thước</h5>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 mt-3">
-                            <label for="tenModalHotAddKT" class="form-label">Tên kích thước:</label>
-                            <input type="text" class="form-control" id="tenModalHotAddKT">
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="btnModalHotAddKT">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--        end modal hot add cl--%>
-        <!-- ModalHotAddCL -->
-        <div class="modal fade" id="modalHotAddCL" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h5 class="modal-title">Thêm nhanh chất liệu</h5>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 mt-3">
-                            <label for="tenModalHotAddCL" class="form-label">Tên chất liệu:</label>
-                            <input type="text" class="form-control" id="tenModalHotAddCL">
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="btnModalHotAddCL">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--        end modal hot add cl--%>
-        <!-- ModalHotAddKTA -->
-        <div class="modal fade" id="modalHotAddKTA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-             data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="row">
-                            <h5 class="modal-title">Thêm nhanh kiểu tay</h5>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 mt-3">
-                            <label for="tenModalHotAddKTA" class="form-label">Tên kiểu tay:</label>
-                            <input type="text" class="form-control" id="tenModalHotAddKTA">
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary" id="btnModalHotAddKTA">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--        end modal hot add kta--%>
-
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>MS - Store</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
     </div>
+    <%--End modal --%>
+
+
+    <!-- ModalHotAddMS -->
+    <div class="modal fade" id="modalHotAddMS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h5 class="modal-title" id="exampleModalLabel1">Thêm nhanh màu săc</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label for="tenModalHotAddMS" class="form-label">Tên màu sắc:</label>
+                        <input type="text" class="form-control" id="tenModalHotAddMS">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="btnModalHotAddMS">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--        end modal hot add ms--%>
+
+    <!-- ModalHotAddKT -->
+    <div class="modal fade" id="modalHotAddKT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h5 class="modal-title" id="exampleModalLabel2">Thêm nhanh kích thước</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label for="tenModalHotAddKT" class="form-label">Tên kích thước:</label>
+                        <input type="text" class="form-control" id="tenModalHotAddKT">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="btnModalHotAddKT">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--        end modal hot add cl--%>
+    <!-- ModalHotAddCL -->
+    <div class="modal fade" id="modalHotAddCL" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h5 class="modal-title">Thêm nhanh chất liệu</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label for="tenModalHotAddCL" class="form-label">Tên chất liệu:</label>
+                        <input type="text" class="form-control" id="tenModalHotAddCL">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="btnModalHotAddCL">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--        end modal hot add cl--%>
+    <!-- ModalHotAddKTA -->
+    <div class="modal fade" id="modalHotAddKTA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h5 class="modal-title">Thêm nhanh kiểu tay</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 mt-3">
+                        <label for="tenModalHotAddKTA" class="form-label">Tên kiểu tay:</label>
+                        <input type="text" class="form-control" id="tenModalHotAddKTA">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" id="btnModalHotAddKTA">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--        end modal hot add kta--%>
+
+</div>
 </div>
 
 <!-- Scroll to Top Button-->
@@ -1684,11 +1591,8 @@
             trangThaiLabelModalAdd.textContent = "Dừng hoạt động";
         }
     }
-
     trangThaiModalAddRaw.addEventListener("change", updateLabeladd);
     updateLabeladd();
-
-    // change sttlbl edit
     function updateLabeledit() {
         if (trangThaiModalEditRaw.checked) {
             trangThaiLabelModalEdit.textContent = "Đang hoạt động";
@@ -1696,11 +1600,8 @@
             trangThaiLabelModalEdit.textContent = "Dừng hoạt động";
         }
     }
-
     trangThaiModalEditRaw.addEventListener("change", updateLabeledit);
-    // end change sttlbl edit
     updateLabeledit();
-
     function setMauSac(msString) {
         const ms = JSON.parse(msString.replace(/&quot;/g, '"'));
         idMauSac = ms.id;
@@ -1836,7 +1737,6 @@
                     'error'
                 );
             });
-
         console.log('Selected kieu tay ID modal edit:', idKieuTayModalEdit);
         // You can add more logic here to handle the selected value
     }
@@ -1907,6 +1807,34 @@
             });
     }
     loadSP();
+
+    const renderDropdownOrNot = () => {
+        fetch("/san-pham/count-spct-byIdSP?idSP=" + pathVariable, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(resp => {
+                if (resp > 0) {
+                    document.getElementById("chatLieuBoxModalAdd").style.display = "none";
+                    document.getElementById("kieuTayBoxModalAdd").style.display = "none";
+                    document.getElementById('cboChatLieuArea').style.pointerEvents = 'auto';
+                    document.getElementById('cboKieuTayArea').style.pointerEvents = 'auto';
+                } else {
+                    document.getElementById("chatLieuBoxModalAdd").style.display = "block";
+                    document.getElementById("kieuTayBoxModalAdd").style.display = "block";
+                    document.getElementById('cboChatLieuArea').style.pointerEvents = 'none';
+                    document.getElementById('cboKieuTayArea').style.pointerEvents = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching count data:', error);
+            });
+    }
+    // Call the function to execute it
+    renderDropdownOrNot();
+
     const loadCboMauSac = () => {
         let datatest = "data testing";
         fetch("/mau-sac/index", {
@@ -2100,23 +2028,37 @@
             .then(resp => {
                 let html = '';
                 resp.map((spct, i) => {
-                    const trangThai = spct.trangThai == 1 ? "Hoạt động" : "Dừng hđ";
+                    const trangThai = spct.trangThai == 1
+                        ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
+                        : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
                     const mauSac = spct.idMauSac.ten || 'N/A';
                     const kichThuoc = spct.idKichThuoc.ten || 'N/A';
                     const chatLieu = spct.idChatLieu.ten || 'N/A';
                     const kieuTay = spct.idKieuTay.ten || 'N/A';
                     const soLuong = spct.soLuong || 'N/A';
+                    const giaBan = spct.giaBan || 'N/A';
+                    const giaNhap = spct.giaNhap || 'N/A';
+                    const moTa = spct.moTa || 'N/A';
+                    var hinhAnh = spct.hinhAnh;
+                    var fallbackImage = '/image-icon/placeholder.jpg';
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
+                        '<td><img src="' + (hinhAnh ? "/image/" + hinhAnh : fallbackImage) +
+                        '" alt="Image" style="width: 50px; height: 60px" class="img-fluid rounded border" /></td>' +
                         '<td>' + mauSac + '</td>' +
                         '<td>' + kichThuoc + '</td>' +
-                        '<td>' + chatLieu + '</td>' +
-                        '<td>' + kieuTay + '</td>' +
                         '<td>' + soLuong + '</td>' +
+                        '<td>' + giaNhap + '</td>' +
+                        '<td>' + giaBan + '</td>' +
+                        '<td>' +
+                        '<div  id="tooltip">Xem' +
+                        '<span id="tooltiptext">' + moTa + '</span>' +
+                        '</div>' +
+                        '</td>' +
                         '<td>' + trangThai + '</td>' +
                         '<td>' +
                         '<div class="d-inline">' +
-                        '<button id="editSPCTBtn_' + spct.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Chỉnh sửa</button>' +
+                        '<button id="editSPCTBtn_' + spct.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Sửa</button>' +
                         '</div>' +
                         '</td>' +
                         '</tr>';
@@ -2391,6 +2333,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Prepare data for saving
+                        console.log("test save add :",document.getElementById("lblChatLieuModalEdit").textContent );
+                        console.log("test save add :",idKieuTayModalAdd );
+                        console.log("test save add :",idKieuTayModalAdd );
+                        if(document.getElementById("lblChatLieuModalEdit").textContent.trim() === "Chọn chất liệu"){
+                            console.log("do set html");
+                            document.getElementById("chatLieuMemo").value = idChatLieuModalAdd;
+                            document.getElementById("kieuTayMemo").value = idKieuTayModalAdd;
+                        }
                         const data = {
                             idSp: pathVariable,
                             idMauSac: idMauSacModalAdd,
@@ -2415,6 +2365,7 @@
                         }).then(response => response.json())
                             .then(resp => {
                                 console.log("test resp =================: ", resp);
+                                renderDropdownOrNot();
                                 if (resp !== null && resp.id) {
                                     // Prepare image data after successful response
                                     const dataHinhAnh = {
@@ -2954,13 +2905,12 @@
         e.preventDefault();
         console.log("test check btn");
         console.log("id spct local: ", idSPCTLocal);
-        console.log("=============================================t=====est display switch: ",document.getElementById("trangThaiContainer").style.display);
+        console.log("=============================================t=====est display switch: ", document.getElementById("trangThaiContainer").style.display);
         let trangThaiValue = "";
         if (document.getElementById("trangThaiContainer").style.display === "none") {
             console.log("=============================================test display switch: ");
             trangThaiValue = "";
-        }
-        else{
+        } else {
             if (trangThaiModalEditAll.checked) {
                 trangThaiValue = 1;
             } else if (!trangThaiModalEditAll.checked) {
@@ -3006,7 +2956,7 @@
                             loadDSSPCT(currentPage);
                         });
                     });
-                    if(fileHinhAnh1ModalEditAll.value != ""|| fileHinhAnh2ModalEditAll != "" || fileHinhAnh3ModalEditAll.value !=""){
+                    if (fileHinhAnh1ModalEditAll.value != "" || fileHinhAnh2ModalEditAll != "" || fileHinhAnh3ModalEditAll.value != "") {
                         var formData = new FormData($('#uploadFormEditAll')[0]);
                         $.ajax({
                             url: '/uploads',
@@ -3034,11 +2984,6 @@
     // Giả sử sliderConfig được lấy từ controller
     let minGiaBanSearch = "";
     let maxGiaBanSearch = "";
-     const sliderConfig = {
-        min: 100000,
-        max: 1000000
-    };
-
     let minValue = "";
     let maxValue = "";
     var rangeOne = document.querySelector('input[name="rangeOne"]');
@@ -3149,13 +3094,29 @@
 </script>
 
 
-
-
 <script>
-    $(document).ready(function () {
-        $('#saveAddBtn').on('click', function (event) {
+    document.getElementById('dang-xuat').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
 
-            // Optionally, submit the form normally after AJAX request (if needed)
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng xuất!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã đăng xuất!",
+                    text: "Bạn đã đăng xuất thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // Điều hướng tới URL đăng xuất sau khi người dùng xác nhận
+                    window.location.href = "/admin/dang-nhap-view";
+                });
+            }
         });
     });
 </script>

@@ -1,5 +1,7 @@
 package com.example.java4.controller.QLSP;
+import com.example.java4.config.UserInfor;
 import com.example.java4.entities.ChiTietSanPham;
+import com.example.java4.entities.NhanVien;
 import com.example.java4.entities.SanPham;
 import com.example.java4.repositories.*;
 import com.example.java4.request.QLSP.Store.KichThuocMulStore;
@@ -14,10 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -207,7 +212,6 @@ public class SanPhamController {
         }
     }
 
-
     @GetMapping("min-max-price")
     public ResponseEntity<List<Long>> getMinMaxPrice(@RequestParam("idSP") String idSP) {
         Long minValue = spctRepository.getMinGiaBan(idSP);
@@ -241,18 +245,25 @@ public class SanPhamController {
 
     @CrossOrigin
     @GetMapping("/check-duplicate")
-    public ResponseEntity<Boolean> checkDuplicate(
-            @RequestParam("tenSP") String tenSP
-    ) {
-        // Trim the tenSP before searching
-        tenSP = tenSP.trim();
-        SanPham existingProduct = spRepo.checkTenSPExist(tenSP);
-        if (existingProduct != null) {
-            return ResponseEntity.ok(true);
-        } else {
-            return ResponseEntity.ok(false);
+    public ResponseEntity<Boolean> checkDuplicate(@RequestParam("tenSP") String tenSP) {
+        // Decode the URL-encoded string to handle special characters
+        try {
+            tenSP = URLDecoder.decode(tenSP, StandardCharsets.UTF_8.toString());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(false);
         }
+        System.out.println("debug tensp check duplicate: "+tenSP);
+        // Trim the decoded string
+        tenSP = tenSP.trim();
+        // Now you can proceed with your logic
+        SanPham existingProduct = spRepo.checkTenSPExist(tenSP);
+        boolean isDuplicate = existingProduct != null;
+        return ResponseEntity.ok(isDuplicate);
     }
 
-
+    @CrossOrigin
+    @GetMapping("/count-spct-byIdSP")
+    public ResponseEntity<Integer> countSPCTbyIDSP(@RequestParam("idSP") String idSP) {
+        return ResponseEntity.ok(spctRepository.getCountByidsp(idSP));
+    }
 }

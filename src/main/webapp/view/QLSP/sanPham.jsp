@@ -1015,7 +1015,7 @@
             var tenSP = document.getElementById('tenSPAdd').value;
             var trangThairaw = document.getElementById('trangThaiAdd').checked;
             var tenSperr = document.getElementById("tenSPAddErr");
-
+            const encodedTenSP = encodeURIComponent(tenSP);
             let sttCheck = 0;
 
             // Validate product name
@@ -1027,14 +1027,16 @@
             }
 
             if (sttCheck === 1) {
-                fetch(`/san-pham/check-duplicate?tenSP=`+tenSP, {
-                    method: 'POST',
+                fetch(`/san-pham/check-duplicate?tenSP=`+encodedTenSP, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify()
-                }).then(response => {
-                    if (response.ok) {
+                }).then(response => response.json()).then(data => {
+                    console.log("test check duplicate response: ", data);
+                    console.log("test ten sp: ", tenSP);
+                    if (!data) {
                         Swal.fire({
                             title: 'Xác nhận?',
                             text: "Dữ liệu sẽ được lưu lại!",
