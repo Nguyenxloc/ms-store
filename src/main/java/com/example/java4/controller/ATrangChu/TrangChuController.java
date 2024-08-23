@@ -148,7 +148,7 @@ public class TrangChuController {
             Model model,
             @PathVariable("idCTSP") String idCTSP
     ) {
-        ChiTietSanPham chiTietSanPham = spctRepo.findById(idCTSP).get();
+        ChiTietSanPham chiTietSanPham = spctRepo.getByIDCTSP(idCTSP);
         HinhAnh hinhAnh = hinhAnhRepo.findByIdCTSP(idCTSP);
 
         //Lấy danh sách màu sắc, kích thước, số lượng của sản phẩm
@@ -579,10 +579,6 @@ public class TrangChuController {
                                   RedirectAttributes redirectAttributes) {
         DiaChi diaChi = diaChiRepo.findById(id).get();
 
-        System.out.println("===========================================" + idT);
-        System.out.println("===========================================" + idQH);
-        System.out.println("===========================================" + idPX);
-
         if (diaChi.getIdTinhThanh() != null) {
             diaChi.setTenNguoiNhan(request.getTenNguoiNhan());
             diaChi.setSdtNguoiNhan(request.getSdtNguoiNhan());
@@ -593,8 +589,6 @@ public class TrangChuController {
             diaChi.setIdT(idT);
             diaChi.setIdQH(idQH);
             diaChi.setIdPX(idPX);
-
-
 
             diaChiRepo.save(diaChi);
             redirectAttributes.addFlashAttribute("successAccount", "Cập nhật địa chỉ thành công");
@@ -632,9 +626,14 @@ public class TrangChuController {
                 tongTienBigDecimal = tongTienBigDecimal.add(cthd.getDonGia().multiply(soLuongDecimal));
             }
             HoaDon hoaDon = hoaDonRepo.findByIdKhachHang(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
-            if (tongTienBigDecimal.compareTo(hoaDon.getIdKhuyenMai().getApDung()) < 0) {
-                hoaDon.setIdKhuyenMai(null);
-                hoaDonRepo.save(hoaDon);
+            if (hoaDon != null && hoaDon.getIdKhuyenMai() != null) {
+                KhuyenMai khuyenMai = hoaDon.getIdKhuyenMai();
+                if (khuyenMai.getId() != null && !khuyenMai.getId().isEmpty()) {
+                    if (tongTienBigDecimal.compareTo(khuyenMai.getApDung()) < 0) {
+                        hoaDon.setIdKhuyenMai(null);
+                        hoaDonRepo.save(hoaDon);
+                    }
+                }
             }
         }
         return "redirect:/cua-hang/gio-hang";
