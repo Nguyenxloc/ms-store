@@ -1221,10 +1221,16 @@ public class QuanLyHoaDonController {
                 return ResponseEntity.badRequest().body(Map.of("error", "Số lượng phải lớn hơn 0."));
             }
 
+
+
             // Kiểm tra số lượng không vượt quá số lượng tồn kho
             if (soLuong > chiTietSanPham.getSoLuong()) {
                 response.put("newQuantity", chiTietSanPham.getSoLuong());
                 return ResponseEntity.badRequest().body(Map.of("error", "Số lượng cập nhật vượt quá số lượng tồn kho."));
+            }
+
+            if (soLuong > 10) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Bạn chỉ có thể cập nhật tối đa 10 sản phẩm cho mỗi mặt hàng."));
             }
 
             // Lấy danh sách chi tiết hóa đơn

@@ -22,7 +22,7 @@
     <title>MSStore_Quản lý hóa đơn</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<%--    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">--%>
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
@@ -1579,18 +1579,17 @@
 <script src="/view_admin/js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="/view_admin/vendor/chart.js/Chart.min.js"></script>
+<%--<script src="/view_admin/vendor/chart.js/Chart.min.js"></script>--%>
 
 <!-- Page level custom scripts -->
-<script src="/view_admin/js/demo/chart-area-demo.js"></script>
-<script src="/view_admin/js/demo/chart-pie-demo.js"></script>
+<%--<script src="/view_admin/js/demo/chart-area-demo.js"></script>--%>
+<%--<script src="/view_admin/js/demo/chart-pie-demo.js"></script>--%>
 
 <!-- Page level custom scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
-
     var tongTien = ${tongTienDonHang};
     var soLuongGioHang = ${soLuongGioHang};
     var giamGia = ${giamGia};
@@ -1620,7 +1619,14 @@
         var idPhuongXaTest = ${diaChiKhachHang.idPX};
         <%--var soLuongGioHang = ${soLuongGioHang};--%>
         // var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
-
+        // Nếu tổng tiền hàng về 0
+        if (tongTien <= 0) {
+            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+            return; // Không cần thực hiện các bước tính phí ship
+        }
 
         // Calculate weight
         var khoiLuong = soLuongGioHang * 200;
@@ -1908,7 +1914,7 @@
             }).format(tongTienThanhToan));
         }
 
-        var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
+        // var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
 
         function getJSONWithToken(url, callback) {
             $.ajax({
@@ -1962,7 +1968,6 @@
                             districtSelect.change(function () {
 
                                 var idquan = $(this).val();
-                                alert(123)
                                 getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idquan, function (data_phuong) {
                                     wardSelect.html('<option value="">Chọn Phường/Xã</option>');
                                     $.each(data_phuong.data, function (key_phuong, val_phuong) {
@@ -1970,8 +1975,7 @@
                                     });
                                 });
 
-                            //     Testtttttttttt
-
+                                
 
                             });
                         });
@@ -2009,20 +2013,6 @@
                                     wardSelect.append('<option value="' + val_phuong.WardCode + '">' + val_phuong.WardName + '</option>');
                                 });
                             });
-
-
-                            // Sự kiện khi thay đổi giá trị Xã
-                            wardSelect.change(function () {
-                                // Hiển thị thông báo khi chọn xã thành công
-                                alert('Oke');
-
-                                // Cập nhật phí ship từ 30k thành 50k
-
-                                $('#phiShip').val(50000);
-                            });
-
-
-
                         });
                     });
                 });
