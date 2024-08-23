@@ -163,7 +163,9 @@ public class QuanLyHoaDonController {
     @GetMapping("dang-xuat")
     public String dangXuat() {
         UserInfor.idNhanVien = null;
+        System.out.println();
         return "redirect:/admin/dang-nhap-view";
+
     }
 
 
