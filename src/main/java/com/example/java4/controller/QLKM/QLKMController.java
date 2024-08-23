@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("admin/quan-ly-khuyen-mai")
+@RequestMapping("qlkm")
 public class QLKMController {
     @GetMapping("")
     public String hienThi(Model model, @RequestParam(value = "page", defaultValue = "0") String pageParam) {

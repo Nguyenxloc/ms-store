@@ -992,7 +992,7 @@ public class BanTaiQuayController {
     public String createKhachHang(@RequestParam String idHoaDon,
                                   @RequestParam String hoTen,
                                   @RequestParam Integer gioiTinh,
-                                  @RequestParam String sdt,RedirectAttributes redirectAttributes){
+                                  @RequestParam String sdt,Model model){
 
         if (idHoaDon.equals("")){
             KhachHang khachHang = new KhachHang();
@@ -1001,14 +1001,6 @@ public class BanTaiQuayController {
             khachHang.setGioiTinh(gioiTinh);
             khachHang.setTrangThai(1);
             khachHangRepository.save(khachHang);
-//            try {
-//                //gửi dữ liệu success từ Controller sang View(file.jsp)
-//                khachHangRepository.save(khachHang);
-//                redirectAttributes.addFlashAttribute("success", "Hóa đơn được tạo thành công!");
-//            } catch (Exception e) {
-//                redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi khi tạo hóa đơn.");
-//            }
-
             return "redirect:/ban-hang-tai-quay";
         }else {
             KhachHang khachHang = new KhachHang();
@@ -1017,13 +1009,6 @@ public class BanTaiQuayController {
             khachHang.setGioiTinh(gioiTinh);
             khachHang.setTrangThai(1);
             khachHangRepository.save(khachHang);
-//            try {
-//                //gửi dữ liệu success từ Controller sang View(file.jsp)
-//                khachHangRepository.save(khachHang);
-//                redirectAttributes.addFlashAttribute("success", "Hóa đơn được tạo thành công!");
-//            } catch (Exception e) {
-//                redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi khi tạo hóa đơn.");
-//            }
             return "redirect:/ban-hang-tai-quay/detail-hoa-don/" + idHoaDon;
         }
 
@@ -1310,23 +1295,37 @@ public class BanTaiQuayController {
         System.out.println("----------------------------------"+cardType);
 
         if (responseCode.equals("00")){
-            LocalDateTime now =LocalDateTime.now();
-            HoaDon hoaDon = hoaDonRepository.findByIdHoaDon(idHoaDon);
-            if (hoaDon.getId().equals(idHoaDon)) {
-                BigDecimal big = new BigDecimal(tt);
-                hoaDon.setTongTien(big);
-                hoaDon.setNgayThanhToan(now);
-                hoaDon.setLoaiHoaDon(0);
-                hoaDon.setTrangThai(6);
-                hoaDon.setPhuongThucThanhToan(1);
+            model.addAttribute("message","Thanh toán thành công");
+        }else {
+            model.addAttribute("message","Thanh toán thất bại");
+        }
 
+        LocalDateTime now =LocalDateTime.now();
+        HoaDon hoaDon = hoaDonRepository.findByIdHoaDon(idHoaDon);
+        if (hoaDon.getId().equals(idHoaDon)){
+            BigDecimal big = new BigDecimal(tt);
+            hoaDon.setTongTien(big);
+            hoaDon.setNgayThanhToan(now);
+            hoaDon.setLoaiHoaDon(0);
+            hoaDon.setTrangThai(6);
+            hoaDon.setPhuongThucThanhToan(1);
+//            hoaDonRepository.save(hoaDon);
+
+            try {
+                //gửi dữ liệu success từ Controller sang View(file.jsp)
                 hoaDonRepository.save(hoaDon);
                 redirectAttributes.addFlashAttribute("success", "Thanh toán thành công!");
-                createLichSuHoaDon(hoaDon, nhanVienRepo.findById(UserInfor.idNhanVien).get(), "Đã thanh toán");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi khi thanh toán.");
             }
-        }else {
-                redirectAttributes.addFlashAttribute("error", "Thanh toán thất bại!");
         }
+
+        model.addAttribute("amount",amount);
+        model.addAttribute("ngayTao",now);
+        model.addAttribute("maHD",orderInfo);
+
+        createLichSuHoaDon(hoaDon,nhanVienRepo.findById(UserInfor.idNhanVien).get(),"Đã thanh toán");
+//        return ResponseEntity.ok("Thanh toán thành công");
 
         return "redirect:/ban-hang-tai-quay";
 
