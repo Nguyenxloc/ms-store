@@ -668,7 +668,7 @@
                                     <h5 class="mt-2" style="width: 150px;">Trạng thái:</h5>
                                     <h5 class="mt-2 font-weight-normal" id="trangThaiSP"></h5>
                                 </div>
-                                <div class="d-flex mt-2" style="height: 40px">
+                                <div class="d-flex mt-2" style="height: 40px"  id="cboChatLieuArea">
                                     <h5 class="mt-2" style="width: 150px">Chất liệu:&nbsp&nbsp</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -687,7 +687,7 @@
                                            data-bs-target="#ModalHotAddCL" style="font-size: 25px"></i>
                                     </div>
                                 </div>
-                                <div class="d-flex mt-2" style="height: 40px">
+                                <div class="d-flex mt-2" style="height: 40px" id="cboKieuTayArea">
                                     <h5 class="mt-2" style="width: 150px">Kiểu tay:&nbsp&nbsp</h5>
                                     <div class="dropdown">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
@@ -1822,6 +1822,8 @@
                 } else {
                     document.getElementById("chatLieuBoxModalAdd").style.display = "block";
                     document.getElementById("kieuTayBoxModalAdd").style.display = "block";
+                    document.getElementById('cboChatLieuArea').style.pointerEvents = 'none';
+                    document.getElementById('cboKieuTayArea').style.pointerEvents = 'none';
                 }
             })
             .catch(error => {
@@ -2329,6 +2331,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Prepare data for saving
+                        console.log("test save add :",document.getElementById("lblChatLieuModalEdit").textContent );
+                        console.log("test save add :",idKieuTayModalAdd );
+                        console.log("test save add :",idKieuTayModalAdd );
+                        if(document.getElementById("lblChatLieuModalEdit").textContent.trim() === "Chọn chất liệu"){
+                            console.log("do set html");
+                            document.getElementById("chatLieuMemo").value = idChatLieuModalAdd;
+                            document.getElementById("kieuTayMemo").value = idKieuTayModalAdd;
+                        }
                         const data = {
                             idSp: pathVariable,
                             idMauSac: idMauSacModalAdd,
