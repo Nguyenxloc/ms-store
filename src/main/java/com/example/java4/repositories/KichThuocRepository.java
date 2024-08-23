@@ -23,7 +23,7 @@ public interface KichThuocRepository
             "from ChiTietSanPham ctsp " +
             "join SanPham sp on sp.id = ctsp.idSanPham.id " +
             "join KichThuoc kth on kth.id = ctsp.idKichThuoc.id " +
-            "where sp.id = ?1 " +
+            "where sp.id = ?1 and ctsp.trangThai = 1" +
             "order by kth.ma asc ")
     List<KichThuocRespone> getListKichThuocByIdSP(String idSP);
     //Lấy ra kích thước theo tên kích thước

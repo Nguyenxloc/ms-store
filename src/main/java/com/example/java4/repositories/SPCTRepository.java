@@ -118,7 +118,7 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
             "join SanPham sp on sp.id = ctsp.idSanPham.id " +
             "join MauSac ms on ms.id = ctsp.idMauSac.id " +
             "join HinhAnh ha on ctsp.id = ha.idCTSP.id " +
-            "where sp.id = ?1")
+            "where sp.id = ?1 and ctsp.trangThai = 1")
     List<MauSizeSL> getListMauSizeSL(String idSP);
 
     //Lấy ra số lượng ctsp bên trang chi tiết
@@ -200,6 +200,10 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
 
     @Query(value = "SELECT MIN(ctsp.giaBan) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP")
     Long getMinGiaBan(@Param("idSP") String idSP);
+
+
+    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.id = ?1 and ctsp.trangThai = 1")
+    ChiTietSanPham getByIDCTSP(String id);
 };
 
 
