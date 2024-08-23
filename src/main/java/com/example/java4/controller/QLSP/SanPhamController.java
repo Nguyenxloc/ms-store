@@ -242,10 +242,18 @@ public class SanPhamController {
     }
 
     @CrossOrigin
-    @PostMapping("/check-duplicate")
-    public ResponseEntity<Boolean> save(
+    @GetMapping("/check-duplicate")
+    public ResponseEntity<Boolean> checkDuplicate(
             @RequestParam("tenSP") String tenSP
     ) {
-        return ResponseEntity.ok(true);
+        // Trim the tenSP before searching
+        tenSP = tenSP.trim();
+        SanPham existingProduct = spRepo.checkTenSPExist(tenSP);
+        if (existingProduct != null) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
     }
+
 }

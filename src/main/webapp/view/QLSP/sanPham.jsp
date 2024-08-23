@@ -424,85 +424,92 @@
 
             <!-- start searchsp -->
             <div class="container-fluid bg-white">
-                    <h2>Quản lý sản phẩm</h2>
-                    <div class="row mt-3 ms-2">
-                        <div class="col col-md-3">
-                            <input id="tenSPSearch" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                        </div>
-
-                        <div class="col col-md-2">
-                            <div class="dropdown">
-                                <button id="lblChatLieuSearch" class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                    Chọn chất liệu
-                                </button>
-                                <ul id="cboChatLieuSearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col col-md-2">
-                            <div class="dropdown">
-                                <button id="lblKieuTaySearch" class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                    Chọn kiểu tay
-                                </button>
-                                <ul id="cboKieuTaySearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col col-md-2">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                        id="lblTrangThaiSearch" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Chọn trạng thái
-                                </button>
-                                <ul id="cboTrangThaiSearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                    <li><a class="dropdown-item" onclick="setTrangThaiSearch(1)">Hoạt động</a></li>
-                                    <li><a class="dropdown-item" onclick="setTrangThaiSearch(0)">Dừng hoạt động</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col col-md-3 d-flex gap-3">
-                            <button id="btnSearch" class="btn btn-success me-2" onclick="search(event)">
-                                Tìm kiếm
-                            </button>
-                            <button id="btnRefresh" class="btn btn-success me-2" onclick="refreshSearch(event)">
-                                Refresh
-                            </button>
-                        </div>
-
+                <h2>Quản lý sản phẩm</h2>
+                <div class="row mt-3 ms-2">
+                    <div class="col col-md-3">
+                        <input id="tenSPSearch" type="text" class="form-control bg-light border-0 small"
+                               placeholder="Search for..."
+                               aria-label="Search" aria-describedby="basic-addon2">
                     </div>
-                    <table class="table table-hover mt-2">
-                        <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Hình ảnh</th>
-                            <th>Mã</th>
-                            <th>Tên</th>
-                            <th>Ngày tạo</th>
-                            <th>Trạng thái</th>
-                            <th>Thao tác</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbl_ds_sp">
 
-                        </tbody>
-                    </table>
+                    <div class="col col-md-2">
+                        <div class="dropdown">
+                            <button id="lblChatLieuSearch" class="btn btn-outline-secondary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Chọn chất liệu
+                            </button>
+                            <ul id="cboChatLieuSearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col col-md-2">
+                        <div class="dropdown">
+                            <button id="lblKieuTaySearch" class="btn btn-outline-secondary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                Chọn kiểu tay
+                            </button>
+                            <ul id="cboKieuTaySearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col col-md-2">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                    id="lblTrangThaiSearch" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chọn trạng thái
+                            </button>
+                            <ul id="cboTrangThaiSearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                <li><a class="dropdown-item" onclick="setTrangThaiSearch(1)">Hoạt động</a></li>
+                                <li><a class="dropdown-item" onclick="setTrangThaiSearch(0)">Dừng hoạt động</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col col-md-3 d-flex gap-3">
+                        <button id="btnSearch" class="btn btn-success me-2" onclick="search(event)">
+                            Tìm kiếm
+                        </button>
+                        <button id="btnRefresh" class="btn btn-success me-2" onclick="refreshSearch(event)">
+                            Refresh
+                        </button>
+                    </div>
+
+                </div>
+                <div class="d-flex flex-row-reverse mt-5">
+                    <div class="d-flex">
+                        <button id="btnAdd" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#ModalAdd" style="width: 150px">Thêm
+                            nhanh
+                        </button>
+                    </div>
+                    <div class="d-flex">
+                        <button id="btnOpenModalMultipleAdd" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#ModalMultipleAdd">Thêm sản phẩm
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-hover mt-2">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Hình ảnh</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Ngày tạo</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbl_ds_sp">
+
+                    </tbody>
+                </table>
             </div>
-            <div class="d-flex flex-row-reverse">
-                <button id="btnAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">Thêm
-                    nhanh
-                </button>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <button id="btnOpenModalMultipleAdd" class="btn btn-success me-2" data-bs-toggle="modal"
-                        data-bs-target="#ModalMultipleAdd">Thêm sản phẩm
-                </button>
-            </div>
+
             <div class="col-12 pb-1">
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center mb-3">
@@ -531,17 +538,17 @@
                     </div>
                     <div class="modal-body d-flex gap-2">
                         <div>
-                                <div class="mb-3 border">
-                                    <label for="tenSPAdd" class="form-label">Tên sản phẩm</label>
-                                    <input style="width: 300px" type="text" class="form-control" id="tenSPAdd">
-                                    <p style="color: red;" id="tenSPAddErr"></p>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="trangThaiAdd"
-                                           checked>
-                                    <label class="form-check-label" for="trangThaiAdd" id="trangThaiLabeladd"></label>
-                                </div>
-                                <button type="submit" id="saveAddBtn" class="btn btn-primary">Lưu</button>
+                            <div class="mb-3">
+                                <label for="tenSPAdd" class="form-label">Tên sản phẩm</label>
+                                <input style="width: 450px" type="text" class="form-control" id="tenSPAdd">
+                                <p style="color: red;" id="tenSPAddErr"></p>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="trangThaiAdd"
+                                       checked>
+                                <label class="form-check-label" for="trangThaiAdd" id="trangThaiLabeladd"></label>
+                            </div>
+                            <button type="submit" id="saveAddBtn" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -557,7 +564,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="row">
-                            <h3 class="modal-title">Thêm nhiều sản phẩm chi tiết</h3>
+                            <h3 class="modal-title">Thêm nhiều sản phẩm bao gồm sản phẩm chi tiết</h3>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -567,11 +574,11 @@
                                 <div class="row" style="gap: 10px;">
                                     <div class="col col-md-12">
                                         <div class="d-flex" style="gap: 10px;">
-                                            <p style="width: 80px;">Tên SP:</p>
+                                            <p style="width: 120px;">Tên SP:</p>
                                             <div>
                                                 <input type="text" id="tensp"
-                                                       class="w-full p-2 ms-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                       placeholder="Nhập tên sản phẩm">
+                                                       class="w-full p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                       placeholder="Nhập tên sản phẩm" style="width: 450px ">
                                                 <p style="color: red;" class="ms-4" id="tenSPErr"></p>
                                             </div>
                                         </div>
@@ -632,6 +639,7 @@
                                     </div>
 
                                     <div class="col col-md-12">
+                                        <h5>Sản phẩm bao gồm các màu sắc:</h5>
                                         <div class="d-flex">
                                             <p class="mt-2" style="width: 80px;">Màu sắc: </p>
                                             <div class="icon-container">
@@ -652,7 +660,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <h5>Mỗi màu sắc bao gồm các kích thước: </h5>
                                     <div id="kichThuocWrapper">
 
                                     </div>
@@ -1049,68 +1057,80 @@
             }
 
             if (sttCheck === 1) {
-                Swal.fire({
-                    title: 'Xác nhận?',
-                    text: "Dữ liệu sẽ được lưu lại!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok!',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const data = {
-                            ten: tenSP,
-                            trangThai: trangThairaw ? 1 : 0,
-                        };
+                fetch(`/san-pham/check-duplicate?tenSP=`+tenSP, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify()
+                }).then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            title: 'Xác nhận?',
+                            text: "Dữ liệu sẽ được lưu lại!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ok!',
+                            cancelButtonText: 'Hủy'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const data = {
+                                    ten: tenSP,
+                                    trangThai: trangThairaw ? 1 : 0,
+                                };
 
-                        fetch(`/san-pham/save`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        }).then(response => {
-                            if (response.ok) {
-                                Swal.fire(
-                                    'Đã lưu!',
-                                    'Dữ liệu đã được ghi nhận.',
-                                    'success'
-                                ).then(() => {
-                                    // Fetch the total product count for pagination
-                                    fetch("/san-pham/count", {
-                                        headers: {
-                                            'Accept': 'application/json',
-                                            'Content-Type': 'application/json'
-                                        }
-                                    }).then(response => response.json())
-                                        .then(totalProducts => {
-                                            const lastPage = Math.ceil(totalProducts / 20);
-                                            loadDSSP(lastPage);
-                                            currentPage = lastPage;
-                                            loadTotalPagination(currentPage);
-                                        }).catch(error => {
-                                        console.error('Error fetching pagination data:', error);
-                                    });
+                                fetch(`/san-pham/save`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(data)
+                                }).then(response => {
+                                    if (response.ok) {
+                                        Swal.fire(
+                                            'Đã lưu!',
+                                            'Dữ liệu đã được ghi nhận.',
+                                            'success'
+                                        ).then(() => {
+                                            // Fetch the total product count for pagination
+                                            fetch("/san-pham/count", {
+                                                headers: {
+                                                    'Accept': 'application/json',
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            }).then(response => response.json())
+                                                .then(totalProducts => {
+                                                    const lastPage = Math.ceil(totalProducts / 20);
+                                                    loadDSSP(lastPage);
+                                                    currentPage = lastPage;
+                                                    loadTotalPagination(currentPage);
+                                                }).catch(error => {
+                                                console.error('Error fetching pagination data:', error);
+                                            });
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Lỗi!',
+                                            'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
+                                            'error'
+                                        );
+                                    }
+                                }).catch(error => {
+                                    console.error('Error saving product data:', error);
+                                    Swal.fire(
+                                        'Lỗi!',
+                                        'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
+                                        'error'
+                                    );
                                 });
-                            } else {
-                                Swal.fire(
-                                    'Lỗi!',
-                                    'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
-                                    'error'
-                                );
                             }
-                        }).catch(error => {
-                            console.error('Error saving product data:', error);
-                            Swal.fire(
-                                'Lỗi!',
-                                'Đã xảy ra lỗi trong quá trình lưu dữ liệu.',
-                                'error'
-                            );
                         });
+                    } else {
+                        tenSperr.textContent = "Tên sản phẩm trùng"
                     }
-                });
+                })
             }
         });
     });
@@ -1250,13 +1270,14 @@
     let lstDataSet = [];
     let checkChooseDropdown = "";
     let tenSPSearch = "";
+
     function search(e) {
         e.preventDefault();
         console.log('data chat lieu ID search:', idChatLieuSearch);
         console.log('data kieu tay ID search:', idKieuTaySearch);
         console.log('debug trang thai search: ', idTrangThaiSearch);
-        console.log( "debug tensp search: ", tenSPSearch);
-        fetch("/san-pham/search" +"&idChatLieu=" + idChatLieuSearch + "&idKieuTay=" + idKieuTaySearch  + "&trangThai="+idTrangThaiSearch + "&page=", {
+        console.log("debug tensp search: ", tenSPSearch);
+        fetch("/san-pham/search" + "&idChatLieu=" + idChatLieuSearch + "&idKieuTay=" + idKieuTaySearch + "&trangThai=" + idTrangThaiSearch + "&page=", {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -1302,7 +1323,7 @@
     function refreshSearch(e) {
         e.preventDefault();
         idChatLieuSearch = "";
-        idKieuTaySearch  = "";
+        idKieuTaySearch = "";
         idTrangThaiSearch = "";
         document.getElementById("lblMauSacSearch").textContent = "Chọn chất liệu";
         document.getElementById("lblKichThuocSearch").textContent = "Chọn kiểu tay";
@@ -1476,10 +1497,10 @@
         let lblTrangThai = document.getElementById('lblTrangThaiSearch');
         if (status === 1) {
             lblTrangThai.textContent = "Hoạt động";
-            idTrangThaiSearch =1 ;
+            idTrangThaiSearch = 1;
         } else {
             lblTrangThai.textContent = "Dừng hoạt động";
-            idTrangThaiSearch =0;
+            idTrangThaiSearch = 0;
         }
     }
 
