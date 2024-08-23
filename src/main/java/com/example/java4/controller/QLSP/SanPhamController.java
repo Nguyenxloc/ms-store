@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 @Controller
 @RequestMapping("san-pham")
 public class SanPhamController {
@@ -38,6 +37,8 @@ public class SanPhamController {
     KichThuocRepository sizeRepo;
     @Autowired
     SPCTRepository spctRepository;
+    @Autowired
+    SearchService search;
 
     public SanPhamController() {
     }
@@ -145,7 +146,7 @@ public class SanPhamController {
             sp.setMa(ma);
             sp.setTrangThai(Integer.valueOf(newSanPham.getTrangThai()));
             sp.setNgayTao(localNow);
-            sp.setHinhAnh(newSanPham.getHinhAnh());
+            sp.setHinhAnh(null);
             spRepo.save(sp);
             return ResponseEntity.ok(true);
         }
@@ -205,4 +206,53 @@ public class SanPhamController {
             return ResponseEntity.ok(null);
         }
     }
+
+
+    @GetMapping("min-max-price")
+    public ResponseEntity<List<Long>> getMinMaxPrice(@RequestParam("idSP") String idSP) {
+        Long minValue = spctRepository.getMinGiaBan(idSP);
+        Long maxValue = spctRepository.getMaxGiaBan(idSP);
+
+        System.out.println("============================test min api : " + minValue);
+        System.out.println("============================test max api : " + maxValue);
+
+        // Create a list containing the min and max values
+        List<Long> minMaxPrices = Arrays.asList(minValue, maxValue);
+
+        // Return the list in the response
+        return ResponseEntity.ok(minMaxPrices);
+    }
+
+    @GetMapping("/searchsp")
+    public ResponseEntity<List<SanPhamView>> searchSanPham(
+            @RequestParam("idChatLieu") String idChatLieu,
+            @RequestParam("idKieuTay") String idKieuTay,
+            @RequestParam("trangThai") Integer trangThai,
+            @RequestParam("page") Optional<Integer> pageParam) {
+        int page = pageParam.orElse(1);
+        Pageable pageale = PageRequest.of(page-1, 20);
+        List<SanPham> lstSP = spRepo.findAll();
+        List<SanPhamView> lstSPView = new ArrayList<>();
+        for (SanPham sanPham : lstSP) {
+            
+        }
+        return ResponseEntity.ok(null);
+    }
+
+    @CrossOrigin
+    @GetMapping("/check-duplicate")
+    public ResponseEntity<Boolean> checkDuplicate(
+            @RequestParam("tenSP") String tenSP
+    ) {
+        // Trim the tenSP before searching
+        tenSP = tenSP.trim();
+        SanPham existingProduct = spRepo.checkTenSPExist(tenSP);
+        if (existingProduct != null) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
+    }
+
+
 }

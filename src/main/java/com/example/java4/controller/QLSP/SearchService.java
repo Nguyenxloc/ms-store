@@ -1,9 +1,13 @@
 package com.example.java4.controller.QLSP;
 import com.example.java4.entities.*;
 import com.example.java4.repositories.SPCTRepository;
+import com.example.java4.repositories.SanPhamRepository;
+import com.example.java4.response.SanPhamView;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,6 +20,8 @@ import java.util.UUID;
 public class SearchService {
     @Autowired
     private SPCTRepository spctRepo;
+    @Autowired
+    private SanPhamRepository spRepo;
     public List<ChiTietSanPham> searchChiTietSanPham(Map<String, Object> params) {
         return spctRepo.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -50,14 +56,11 @@ public class SearchService {
     public List<ChiTietSanPham> searchChiTietSanPham1(Map<String, Object> params) {
         return spctRepo.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-
             System.out.println("Params: " + params);
-
             params.forEach((key, value) -> {
                 if (value != null) {
                     Predicate predicate = null;
                     System.out.println("Processing key: " + key + ", value: " + value);
-
                     switch (key) {
                         case "moTa":
                             if (value instanceof String) {
@@ -119,6 +122,14 @@ public class SearchService {
                                 predicate = criteriaBuilder.equal(join.get("id"), value);
                             }
                             break;
+                        case "trangThai":
+                            if (value instanceof Integer || value instanceof String) {
+                                int trangThaiValue = (value instanceof Integer) ? (Integer) value : Integer.parseInt((String) value);
+                                predicate = criteriaBuilder.equal(root.get("trangThai"), trangThaiValue);
+                            } else {
+                                System.out.println("Invalid data type for key: " + key + ", value: " + value);
+                            }
+                            break;
                     }
 
                     if (predicate != null) {
@@ -146,7 +157,6 @@ public class SearchService {
             return false;
         }
     }
-
 
 
 }

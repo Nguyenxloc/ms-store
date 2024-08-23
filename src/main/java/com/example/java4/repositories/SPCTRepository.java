@@ -194,6 +194,14 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
 //            "WHERE ctsp.soLuong < :minStock " +
 //            "ORDER BY ctsp.soLuong ASC")
 //    Page<SPCTDTO> getLowStockProducts(@Param("minStock") int minStock, Pageable pageable);
+
+    @Query(value = "SELECT MAX(ctsp.giaBan) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP")
+    Long getMaxGiaBan(@Param("idSP") String idSP);
+
+    @Query(value = "SELECT MIN(ctsp.giaBan) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP")
+    Long getMinGiaBan(@Param("idSP") String idSP);
+
+
 };
 
 

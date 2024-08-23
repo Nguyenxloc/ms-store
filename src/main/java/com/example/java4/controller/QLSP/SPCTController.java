@@ -10,6 +10,7 @@ import com.example.java4.request.QLSP.Store.SPCTStore;
 import com.example.java4.request.QLSP.Update.SPCTUpdate;
 import com.example.java4.response.SPCTResponse;
 import com.example.java4.response.SPCTView;
+import com.example.java4.response.SanPhamView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -270,13 +271,8 @@ public class SPCTController {
         } else {
             ChiTietSanPhamNoMap spctChecked = spctRepoNoMap.findDuplicatedRecord(newChiTietSP.getIdSp(), newChiTietSP.getIdMauSac(), newChiTietSP.getIdKichThuoc(), newChiTietSP.getIdChatLieu(), newChiTietSP.getIdKieuTay());
             if (spctChecked != null) {
-                System.out.println("do duplicated adding");
-                spctChecked.setGiaNhap(BigDecimal.valueOf(Long.valueOf(newChiTietSP.getGiaNhap())));
-                spctChecked.setGiaBan(BigDecimal.valueOf(Long.valueOf(newChiTietSP.getGiaBan())));
-                spctChecked.setTrangThai(Integer.valueOf(newChiTietSP.getTrangThai()));
-                spctChecked.setSoLuong(Integer.valueOf(newChiTietSP.getSoLuong()) + spctChecked.getSoLuong());
-                spctChecked.setMoTa(newChiTietSP.getMoTa());
-                return ResponseEntity.ok(spctRepoNoMap.save(spctChecked));
+                System.out.println("is duplicated");
+                return ResponseEntity.ok(null);
             } else {
                 System.out.println("do normal adding");
                 LocalDateTime localNow = LocalDateTime.now();
@@ -326,4 +322,5 @@ public class SPCTController {
         }
         return ResponseEntity.ok(lstSpct);
     }
+
 }
