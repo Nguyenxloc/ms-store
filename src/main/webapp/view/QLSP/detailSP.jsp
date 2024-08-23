@@ -1819,6 +1819,8 @@
                 if (resp > 0) {
                     document.getElementById("chatLieuBoxModalAdd").style.display = "none";
                     document.getElementById("kieuTayBoxModalAdd").style.display = "none";
+                    document.getElementById('cboChatLieuArea').style.pointerEvents = 'auto';
+                    document.getElementById('cboKieuTayArea').style.pointerEvents = 'auto';
                 } else {
                     document.getElementById("chatLieuBoxModalAdd").style.display = "block";
                     document.getElementById("kieuTayBoxModalAdd").style.display = "block";
@@ -2363,6 +2365,7 @@
                         }).then(response => response.json())
                             .then(resp => {
                                 console.log("test resp =================: ", resp);
+                                renderDropdownOrNot();
                                 if (resp !== null && resp.id) {
                                     // Prepare image data after successful response
                                     const dataHinhAnh = {
