@@ -1178,12 +1178,19 @@ public class QuanLyHoaDonController {
             phiGiamGia =  ( hoaDon.getIdKhuyenMai() != null) ? hoaDon.getIdKhuyenMai().getSoTienGiam() : BigDecimal.ZERO;
             String phieuGiamGia =  ( hoaDon.getIdKhuyenMai() != null) ? hoaDon.getIdKhuyenMai().getMa() : "N/A";
 
+            // Đêm so luong trong hoa don chi tiet
+            Integer totalSoLuong = 0;
+            for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
+                totalSoLuong += chiTietHoaDon.getSoLuong();
+            }
+
             // Cập nhật lại danh sách sản phẩm để hiển thị để cập nhật lại số lượng
             List<ChiTietSanPham> updatedListCTSP = _sanPhamChiTietRepo.findAll();
             Map<String, Object> response = new HashMap<>();
             response.put("tongTien", tongTien);
             response.put("giamGia",phiGiamGia);
             response.put("phieuGiamGia", phieuGiamGia);
+            response.put("totalSoLuong", totalSoLuong);
             response.put("tongTienThanhToan", tongTienThanhToan);
             response.put("updatedListCTSP", updatedListCTSP);
             response.put("newQuantity", chiTietSanPham.getSoLuong());
@@ -1279,13 +1286,16 @@ public class QuanLyHoaDonController {
             List<ChiTietSanPham> updatedListCTSP = _sanPhamChiTietRepo.findAll();
             phiGiamGia =  ( hoaDon.getIdKhuyenMai() != null) ? hoaDon.getIdKhuyenMai().getSoTienGiam() : BigDecimal.ZERO;
             String phieuGiamGia =  ( hoaDon.getIdKhuyenMai() != null) ? hoaDon.getIdKhuyenMai().getMa() : "N/A";
-
-
-
+            // Đêm so luong trong hoa don chi tiet
+            Integer totalSoLuong = 0;
+            for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
+                totalSoLuong += chiTietHoaDon.getSoLuong();
+            }
             response.put("tongTien", tongTien);
             response.put("giamGia",phiGiamGia);
             response.put("phieuGiamGia", phieuGiamGia);
             response.put("tongTienThanhToan", tongTienThanhToan);
+            response.put("totalSoLuong", totalSoLuong);
             response.put("listHDCT", listHDCT);
             response.put("idCTSP", idCTSP);
             response.put("newQuantity", chiTietSanPham.getSoLuong());
