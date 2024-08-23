@@ -1,7 +1,10 @@
 package com.example.java4.controller.QLThuocTinh;
 
+import com.example.java4.entities.ChatLieu;
 import com.example.java4.entities.MauSac;
+import com.example.java4.repositories.ChatLieuRepository;
 import com.example.java4.repositories.MauSacRepository;
+import com.example.java4.request.ThuocTinhRequest.ChatLieuRequest;
 import com.example.java4.request.ThuocTinhRequest.MauSacRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,66 +17,66 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/quan-ly-mau-sac")
+@RequestMapping("/admin/quan-ly-chat-lieu")
 public class ChatLieuControllerSang {
 
     @Autowired
-    MauSacRepository mauSacRepo;
+    ChatLieuRepository chatLieuRepo;
 
     @GetMapping("")
-    public String getList(Model model, String keyword, @RequestParam("idMauSac") Optional<String> idMauSac) {
+    public String getList(Model model, String keyword, @RequestParam("idChatLieu") Optional<String> idChatLieu) {
 
-        MauSac mauSac = mauSacRepo.findByIdMS(idMauSac);
-        if (mauSac != null) {
-            model.addAttribute("mauSac", mauSac);
+        ChatLieu chatLieu = chatLieuRepo.findByIdKTh(idChatLieu);
+        if (chatLieu != null) {
+            model.addAttribute("chatLieu", chatLieu);
         }
 
-        List<MauSac> list = mauSacRepo.findAll();
+        List<ChatLieu> list = chatLieuRepo.findAll();
         if (keyword != null) {
-            list = mauSacRepo.search(keyword);
+            list = chatLieuRepo.search(keyword);
         }
-        model.addAttribute("listMauSac", list);
-        MauSacRequest request = new MauSacRequest();
+        model.addAttribute("listChatLieu", list);
+        ChatLieuRequest request = new ChatLieuRequest();
         model.addAttribute("data", request);
 
-        return "/view/QLThuocTinh/mauSac.jsp";
+        return "/view/QLThuocTinh/chatLieu.jsp";
     }
 
     @PostMapping("/add")
-    public String addMauSac(MauSacRequest request, RedirectAttributes redirectAttributes
+    public String addChatLieu(ChatLieuRequest request, RedirectAttributes redirectAttributes
     ) {
-        int count = mauSacRepo.countByMa(request.getMa());
-        // Tạo mã tự động kiểu "MS" + số thứ tự
-        String maTuDong = "MSAMSS" + (mauSacRepo.count() + 1);
+        int count = chatLieuRepo.countByMa(request.getMa());
+        // Tạo mã tự động kiểu số thứ tự
+        String maTuDong = "CLIMSS" + (chatLieuRepo.count() + 1);
 
-        MauSac mauSac = new MauSac();
-        mauSac.setMa(maTuDong);
-        mauSac.setTen(request.getTen().trim());
-        mauSac.setNgayTao(LocalDateTime.now().withNano(0));
-        mauSac.setTrangThai(1);
-        mauSacRepo.save(mauSac);
-        redirectAttributes.addFlashAttribute("success", "Thêm màu sắc thành công");
+        ChatLieu chatLieu = new ChatLieu();
+        chatLieu.setMa(maTuDong);
+        chatLieu.setTen(request.getTen().trim());
+        chatLieu.setNgayTao(LocalDateTime.now().withNano(0));
+        chatLieu.setTrangThai(1);
+        chatLieuRepo.save(chatLieu);
+        redirectAttributes.addFlashAttribute("success", "Thêm chất liệu thành công");
 
-        return "redirect:/admin/quan-ly-mau-sac";
+        return "redirect:/admin/quan-ly-chat-lieu";
     }
 
     @PostMapping("/update/{id}")
-    public String updateMauSac(@PathVariable("id") String idMauSac, MauSacRequest request, RedirectAttributes redirectAttributes) {
-        MauSac mauSac = mauSacRepo.findById1(idMauSac);
+    public String updateChatLieu(@PathVariable("id") String idChatLieu, ChatLieuRequest request, RedirectAttributes redirectAttributes) {
+        ChatLieu chatLieu = chatLieuRepo.findById1(idChatLieu);
 
-        mauSac.setTen(request.getTen().trim());
-        mauSac.setTrangThai(request.getTrangThai());
-        mauSacRepo.save(mauSac);
-        redirectAttributes.addFlashAttribute("success", "Sửa màu sắc thành công");
+        chatLieu.setTen(request.getTen().trim());
+        chatLieu.setTrangThai(request.getTrangThai());
+        chatLieuRepo.save(chatLieu);
+        redirectAttributes.addFlashAttribute("success", "Sửa chất liệu thành công");
 
-        return "redirect:/admin/quan-ly-mau-sac";
+        return "redirect:/admin/quan-ly-chat-lieu";
     }
 
 
     @GetMapping("delete/{id}")
     public String delete(@PathVariable("id") String id) {
-        mauSacRepo.deleteById(id);
-        return "redirect:/admin/quan-ly-mau-sac";
+        chatLieuRepo.deleteById(id);
+        return "redirect:/admin/quan-ly-chat-lieu";
     }
 
 }

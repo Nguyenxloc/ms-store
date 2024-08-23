@@ -1,7 +1,8 @@
 package com.example.java4.controller.QLThuocTinh;
 
-import com.example.java4.entities.MauSac;
-import com.example.java4.repositories.MauSacRepository;
+import com.example.java4.entities.KieuTay;
+import com.example.java4.repositories.KieuTayRepository;
+import com.example.java4.request.ThuocTinhRequest.KieuTayRequest;
 import com.example.java4.request.ThuocTinhRequest.MauSacRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,62 +19,60 @@ import java.util.Optional;
 public class KieuTayControllerSang {
 
     @Autowired
-    MauSacRepository mauSacRepo;
+    KieuTayRepository kieuTayRepo;
 
     @GetMapping("")
-    public String getList(Model model, String keyword, @RequestParam("idKieuTay") Optional<String> idMauSac) {
+    public String getList(Model model, String keyword, @RequestParam("idKieuTay") Optional<String> idKieutay) {
 
-        MauSac mauSac = mauSacRepo.findByIdMS(idMauSac);
-        if (mauSac != null) {
-            model.addAttribute("mauSac", mauSac);
+        KieuTay kieuTay = kieuTayRepo.findByIdKTay(idKieutay);
+        if (kieuTay != null) {
+            model.addAttribute("kieuTay", kieuTay);
         }
 
-        List<MauSac> list = mauSacRepo.findAll();
+        List<KieuTay> list = kieuTayRepo.findAll();
         if (keyword != null) {
-            list = mauSacRepo.search(keyword);
+            list = kieuTayRepo.search(keyword);
         }
-        model.addAttribute("listMauSac", list);
-        MauSacRequest request = new MauSacRequest();
+        model.addAttribute("listKieuTay", list);
+        KieuTayRequest request = new KieuTayRequest();
         model.addAttribute("data", request);
 
-        return "/view/QLThuocTinh/mauSac.jsp";
+        return "/view/QLThuocTinh/kieuTay.jsp";
     }
 
     @PostMapping("/add")
-    public String addMauSac(MauSacRequest request, RedirectAttributes redirectAttributes
+    public String addKieutay(KieuTayRequest request, RedirectAttributes redirectAttributes
     ) {
-        int count = mauSacRepo.countByMa(request.getMa());
-        // Tạo mã tự động kiểu "MS" + số thứ tự
-        String maTuDong = "MSAMSS" + (mauSacRepo.count() + 1);
+        int count = kieuTayRepo.countByMa(request.getMa());
+        // Tạo mã tự động kiểu số thứ tự
+        String maTuDong = "KTAMSS" + (kieuTayRepo.count() + 1);
 
-        MauSac mauSac = new MauSac();
-        mauSac.setMa(maTuDong);
-        mauSac.setTen(request.getTen().trim());
-        mauSac.setNgayTao(LocalDateTime.now().withNano(0));
-        mauSac.setTrangThai(1);
-        mauSacRepo.save(mauSac);
-        redirectAttributes.addFlashAttribute("success", "Thêm màu sắc thành công");
+        KieuTay kieuTay = new KieuTay();
+        kieuTay.setMa(maTuDong);
+        kieuTay.setTen(request.getTen().trim());
+        kieuTay.setNgayTao(LocalDateTime.now().withNano(0));
+        kieuTay.setTrangThai(1);
+        kieuTayRepo.save(kieuTay);
+        redirectAttributes.addFlashAttribute("success", "Thêm kiểu tay thành công");
 
-        return "redirect:/admin/quan-ly-mau-sac";
+        return "redirect:/admin/quan-ly-kieu-tay";
     }
 
     @PostMapping("/update/{id}")
-    public String updateMauSac(@PathVariable("id") String idMauSac, MauSacRequest request, RedirectAttributes redirectAttributes) {
-        MauSac mauSac = mauSacRepo.findById1(idMauSac);
+    public String updateKieuTay(@PathVariable("id") String idKieuTay, MauSacRequest request, RedirectAttributes redirectAttributes) {
+        KieuTay kieuTay = kieuTayRepo.findById1(idKieuTay);
 
-        mauSac.setTen(request.getTen().trim());
-        mauSac.setTrangThai(request.getTrangThai());
-        mauSacRepo.save(mauSac);
-        redirectAttributes.addFlashAttribute("success", "Sửa màu sắc thành công");
+        kieuTay.setTen(request.getTen().trim());
+        kieuTay.setTrangThai(request.getTrangThai());
+        kieuTayRepo.save(kieuTay);
+        redirectAttributes.addFlashAttribute("success", "Sửa kiểu tay thành công");
 
-        return "redirect:/admin/quan-ly-mau-sac";
+        return "redirect:/admin/quan-ly-kieu-tay";
     }
-
 
     @GetMapping("delete/{id}")
     public String delete(@PathVariable("id") String id) {
-        mauSacRepo.deleteById(id);
-        return "redirect:/admin/quan-ly-mau-sac";
+        kieuTayRepo.deleteById(id);
+        return "redirect:/admin/quan-ly-kieu-tay";
     }
-
 }

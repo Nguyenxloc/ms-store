@@ -69,11 +69,9 @@ public class MauSacControllerSang {
         return "redirect:/admin/quan-ly-mau-sac";
     }
 
-
     @GetMapping("delete/{id}")
     public String delete(@PathVariable("id") String id) {
         mauSacRepo.deleteById(id);
         return "redirect:/admin/quan-ly-mau-sac";
     }
-
 }

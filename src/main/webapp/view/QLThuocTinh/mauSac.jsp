@@ -338,24 +338,31 @@
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="staticBackdropLabel1">Sửa màu sắc</h5>
+                                                            <h5 class="modal-title" id="staticBackdropLabel1">Sửa màu
+                                                                sắc</h5>
                                                             <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="/admin/quan-ly-mau-sac/update/${i.id}" method="post" id="capNhatForm${i.id}"">
+                                                            <form action="/admin/quan-ly-mau-sac/update/${i.id}"
+                                                                  method="post" id="capNhatForm${i.id}">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Mã</label>
-                                                                    <input type="text" class="form-control" name="ma" value="${i.ma}" readonly>
+                                                                    <input type="text" class="form-control" name="ma"
+                                                                           value="${i.ma}" readonly>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label class="form-label" for="Name${i.id}">Tên màu sắc</label>
-                                                                    <input type="text" class="form-control" id="name${i.id}" name="ten" value="${i.ten}">
-                                                                    <div id="nameError${i.id}" class="text-danger"></div>
+                                                                    <label class="form-label" for="Name${i.id}">Tên màu
+                                                                        sắc</label>
+                                                                    <input type="text" class="form-control"
+                                                                           id="name${i.id}" name="ten" value="${i.ten}">
+                                                                    <div id="nameError${i.id}"
+                                                                         class="text-danger"></div>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label class="form-label" for="status${i.id}">Trạng thái</label>
+                                                                    <label class="form-label" for="status${i.id}">Trạng
+                                                                        thái</label>
                                                                     <select class="form-select"
                                                                             aria-label="Default select example"
                                                                             name="trangThai"
@@ -371,8 +378,11 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="submit" class="btn btn-warning">Sửa</button>
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" class="btn btn-warning">Sửa
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Đóng
+                                                                    </button>
                                                                 </div>
                                                             </form>
 
@@ -380,7 +390,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <a href="/admin/quan-ly-mau-sac/delete/${i.id}" class="btn btn-danger"
                                                onclick="return confirm('Bạn có muốn xóa không ?')"><i
                                                     class="bi bi-trash"></i></a>
@@ -587,7 +596,7 @@
             const nameInputs = document.querySelectorAll('input[id^="name"]');
             nameInputs.forEach(input => {
                 if (input.id !== 'name' + id && input.value.trim() === nameInput) {
-                    document.getElementById('nameError' + id).textContent = 'Tên chức vụ đã tồn tại';
+                    document.getElementById('nameError' + id).textContent = 'Tên màu sắc đã tồn tại';
                     hasError = true;
                 }
             });
@@ -602,13 +611,10 @@
         form.addEventListener('submit', function (event) {
             var formId = form.id.replace('capNhatForm', '');
             if (!validateForm(formId)) {
-                event.preventDefault(); // Ngăn chặn submit form nếu có lỗi
+                event.preventDefault();
             }
         });
     });
 </script>
-
-
-
 
 </html>

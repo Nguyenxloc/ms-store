@@ -247,11 +247,10 @@
             </nav>
 
 
-            <!-- Quản lý khách hàng -->
             <div class="container-fluid">
                 <div class="container">
-                    <h5>QUẢN LÝ MÀU SẮC</h5>
-                    <%--  Màu sắc  --%>
+                    <h5>QUẢN LÝ CHẤT LIỆU</h5>
+                    <%--  Chất liệu  --%>
                     <div class="card">
                         <div class="card-body">
                             <div>
@@ -260,12 +259,12 @@
                                     <div class="col-5">
                                         <form class="d-flex">
                                             <input class="form-control me-2" type="text" name="keyword"
-                                                   placeholder="Tên màu sắc"
+                                                   placeholder="Tên chất liệu"
                                                    aria-label="Search">
                                             <button class="btn btn-outline-success" type="submit">Tìm</button>
                                         </form>
                                     </div>
-                                    <%--Button thêm mới màu sắc--%>
+                                    <%--Button thêm mới chất liệu--%>
                                     <div class="col-5 text-end" style="margin: 10px">
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop">
@@ -279,18 +278,18 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">THÊM MÀU SẮC</h5>
+                                                <h5 class="modal-title" id="staticBackdropLabel">THÊM CHẤT LIỆU</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="/admin/quan-ly-mau-sac/add" method="post" id="colorForm">
+                                                <form action="/admin/quan-ly-chat-lieu/add" method="post" id="colorForm">
                                                     <div class="mb-3">
-                                                        <label class="form-label" for="colorName">Tên màu sắc</label>
+                                                        <label class="form-label" for="colorName">Tên chất liệu</label>
                                                         <input type="text" class="form-control" id="colorName"
                                                                name="ten"/>
                                                         <div id="error-message" style="color: red; display: none;">Tên
-                                                            màu sắc không hợp lệ.
+                                                            chất liệu không hợp lệ.
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -316,9 +315,9 @@
                                     <th scope="col">Thao tác</th>
                                 </tr>
                                 </thead>
-                                <c:forEach var="i" items="${listMauSac}" varStatus="ms">
+                                <c:forEach var="i" items="${listChatLieu}" varStatus="cl">
                                     <tr>
-                                        <th scope="row">${ms.index + 1}</th>
+                                        <th scope="row">${cl.index + 1}</th>
                                         <td>${i.ma}</td>
                                         <td>${i.ten}</td>
                                         <td>${fn:replace(i.ngayTao.toString(), 'T', ' ')}</td>
@@ -338,19 +337,19 @@
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="staticBackdropLabel1">Sửa màu sắc</h5>
+                                                            <h5 class="modal-title" id="staticBackdropLabel1">Sửa chất liệu</h5>
                                                             <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form action="/admin/quan-ly-mau-sac/update/${i.id}" method="post" id="capNhatForm${i.id}"">
+                                                            <form action="/admin/quan-ly-chat-lieu/update/${i.id}" method="post" id="capNhatForm${i.id}"">
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Mã</label>
                                                                     <input type="text" class="form-control" name="ma" value="${i.ma}" readonly>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label class="form-label" for="Name${i.id}">Tên màu sắc</label>
+                                                                    <label class="form-label" for="Name${i.id}">Tên chất liệu</label>
                                                                     <input type="text" class="form-control" id="name${i.id}" name="ten" value="${i.ten}">
                                                                     <div id="nameError${i.id}" class="text-danger"></div>
                                                                 </div>
@@ -375,13 +374,11 @@
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                                                 </div>
                                                             </form>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <a href="/admin/quan-ly-mau-sac/delete/${i.id}" class="btn btn-danger"
+                                            <a href="/admin/quan-ly-chat-lieu/delete/${i.id}" class="btn btn-danger"
                                                onclick="return confirm('Bạn có muốn xóa không ?')"><i
                                                     class="bi bi-trash"></i></a>
                                         </td>
@@ -393,7 +390,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
@@ -495,7 +491,7 @@
 
 </script>
 
-<%--Validate thêm màu sắc--%>
+<%--Validate thêm chất liệu--%>
 <script>
     document.getElementById('colorForm').addEventListener('submit', function (event) {
         var colorNameInput = document.getElementById('colorName');
@@ -503,46 +499,46 @@
         var colorName = colorNameInput.value.trim();
 
         // Chuyển đổi danh sách từ JSP thành mảng JavaScript
-        var listMS = [
-            <c:forEach items="${listMauSac}" var="ms" varStatus="status">
+        var listCL = [
+            <c:forEach items="${listChatLieu}" var="cl" varStatus="status">
             {
-                ten: "<c:out value='${ms.ten}' />",
-                trangThai: "<c:out value='${ms.trangThai}' />"
+                ten: "<c:out value='${cl.ten}' />",
+                trangThai: "<c:out value='${cl.trangThai}' />"
             }<c:if test="${!status.last}">, </c:if>
             </c:forEach>
         ];
 
-        // Kiểm tra xem tên màu sắc có bị trống
+        // Check trống
         if (colorName === '') {
-            errorMessage.textContent = 'Tên màu sắc không được để trống.';
+            errorMessage.textContent = 'Tên chất liệu không được để trống.';
             errorMessage.style.display = 'block';
-            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+            event.preventDefault();
             return;
         }
 
-        // Kiểm tra độ dài tên màu sắc
+        // Kiểm tra độ dài tên
         if (colorName.length < 2 || colorName.length > 30) {
-            errorMessage.textContent = 'Tên màu sắc phải có độ dài từ 2 đến 30 ký tự.';
+            errorMessage.textContent = 'Tên chất liệu phải có độ dài từ 2 đến 30 ký tự.';
             errorMessage.style.display = 'block';
-            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+            event.preventDefault();
             return;
         }
 
         // Kiểm tra ký tự đặc biệt
         var regex = /^[a-zA-Z0-9À-ỹ\s]+$/;
         if (!regex.test(colorName)) {
-            errorMessage.textContent = 'Tên màu sắc không được chứa ký tự đặc biệt.';
+            errorMessage.textContent = 'Tên chất liệu không được chứa ký tự đặc biệt.';
             errorMessage.style.display = 'block';
-            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+            event.preventDefault();
             return;
         }
 
-        // Kiểm tra tên màu sắc có bị trùng trong danh sách không
-        var isDuplicate = listMS.some(function (mauSac) {
-            return mauSac.ten === colorName;
+        // Check trùng
+        var isDuplicate = listCL.some(function (chatLieu) {
+            return chatLieu.ten === colorName;
         });
         if (isDuplicate) {
-            errorMessage.textContent = 'Tên màu sắc đã tồn tại.';
+            errorMessage.textContent = 'Tên chất liệu đã tồn tại.';
             errorMessage.style.display = 'block';
             event.preventDefault();
             return;
@@ -552,12 +548,12 @@
 </script>
 
 <script>
-    var listMS = []
-    <c:forEach items="${listMauSac}" var="mausac">
-    var MauSac = {};
-    MauSac.id = "${mausac.id}";
-    MauSac.ten = "${mausac.ten}";
-    listMS.push(MauSac);
+    var listCL = []
+    <c:forEach items="${listChatLieu}" var="cl">
+    var ChatLieu = {};
+    ChatLieu.id = "${cl.id}";
+    ChatLieu.ten = "${cl.ten}";
+    listCL.push(ChatLieu);
     </c:forEach>
 
     // Hàm kiểm tra tính hợp lệ
@@ -571,23 +567,23 @@
 
         // Kiểm tra tên không được để trống
         if (nameInput === "") {
-            nameError.textContent = "Tên màu sắc không được để trống.";
+            nameError.textContent = "Tên chất liệu không được để trống.";
             hasError = true;
         } else if (nameInput.length < 2 || nameInput.length > 30) {
-            nameError.textContent = "Tên màu sắc phải có độ dài từ 2 đến 30 ký tự.";
+            nameError.textContent = "Tên chất liệu phải có độ dài từ 2 đến 30 ký tự.";
             hasError = true;
         } else {
             // Kiểm tra ký tự đặc biệt trong tên (phải chứa các ký tự hợp lệ)
             var specialCharPattern = /^[a-zA-Z0-9À-ỹ\s]+$/;
             if (!specialCharPattern.test(nameInput)) {
-                nameError.textContent = "Tên màu sắc không được chứa ký tự đặc biệt.";
+                nameError.textContent = "Tên chất liệu không được chứa ký tự đặc biệt.";
                 hasError = true;
             }
 
             const nameInputs = document.querySelectorAll('input[id^="name"]');
             nameInputs.forEach(input => {
                 if (input.id !== 'name' + id && input.value.trim() === nameInput) {
-                    document.getElementById('nameError' + id).textContent = 'Tên chức vụ đã tồn tại';
+                    document.getElementById('nameError' + id).textContent = 'Tên chất liệu đã tồn tại';
                     hasError = true;
                 }
             });
@@ -602,7 +598,7 @@
         form.addEventListener('submit', function (event) {
             var formId = form.id.replace('capNhatForm', '');
             if (!validateForm(formId)) {
-                event.preventDefault(); // Ngăn chặn submit form nếu có lỗi
+                event.preventDefault();
             }
         });
     });

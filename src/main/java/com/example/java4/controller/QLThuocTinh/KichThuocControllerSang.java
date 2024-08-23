@@ -1,8 +1,8 @@
 package com.example.java4.controller.QLThuocTinh;
 
-import com.example.java4.entities.MauSac;
-import com.example.java4.repositories.MauSacRepository;
-import com.example.java4.request.ThuocTinhRequest.MauSacRequest;
+import com.example.java4.entities.KichThuoc;
+import com.example.java4.repositories.KichThuocRepository;
+import com.example.java4.request.ThuocTinhRequest.KichThuocRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,66 +14,66 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/quan-ly-mau-sac")
+@RequestMapping("/admin/quan-ly-kich-thuoc")
 public class KichThuocControllerSang {
 
     @Autowired
-    MauSacRepository mauSacRepo;
+    KichThuocRepository kichThuocRepo;
 
     @GetMapping("")
-    public String getList(Model model, String keyword, @RequestParam("idMauSac") Optional<String> idMauSac) {
+    public String getList(Model model, String keyword, @RequestParam("idKichThuoc") Optional<String> idKichThuoc) {
 
-        MauSac mauSac = mauSacRepo.findByIdMS(idMauSac);
-        if (mauSac != null) {
-            model.addAttribute("mauSac", mauSac);
+        KichThuoc kichThuoc = kichThuocRepo.findByIdKTh(idKichThuoc);
+        if (kichThuoc != null) {
+            model.addAttribute("kichThuoc", kichThuoc);
         }
 
-        List<MauSac> list = mauSacRepo.findAll();
+        List<KichThuoc> list = kichThuocRepo.findAll();
         if (keyword != null) {
-            list = mauSacRepo.search(keyword);
+            list = kichThuocRepo.search(keyword);
         }
-        model.addAttribute("listMauSac", list);
-        MauSacRequest request = new MauSacRequest();
+        model.addAttribute("listKichThuoc", list);
+        KichThuoc request = new KichThuoc();
         model.addAttribute("data", request);
 
-        return "/view/QLThuocTinh/mauSac.jsp";
+        return "/view/QLThuocTinh/kichThuoc.jsp";
     }
 
     @PostMapping("/add")
-    public String addMauSac(MauSacRequest request, RedirectAttributes redirectAttributes
+    public String addKichThuoc(KichThuocRequest request, RedirectAttributes redirectAttributes
     ) {
-        int count = mauSacRepo.countByMa(request.getMa());
-        // Tạo mã tự động kiểu "MS" + số thứ tự
-        String maTuDong = "MSAMSS" + (mauSacRepo.count() + 1);
+        int count = kichThuocRepo.countByMa(request.getMa());
+        // Tạo mã tự động kiểu số thứ tự
+        String maTuDong = "KTHMSS" + (kichThuocRepo.count() + 1);
 
-        MauSac mauSac = new MauSac();
-        mauSac.setMa(maTuDong);
-        mauSac.setTen(request.getTen().trim());
-        mauSac.setNgayTao(LocalDateTime.now().withNano(0));
-        mauSac.setTrangThai(1);
-        mauSacRepo.save(mauSac);
-        redirectAttributes.addFlashAttribute("success", "Thêm màu sắc thành công");
+        KichThuoc kichThuoc = new KichThuoc();
+        kichThuoc.setMa(maTuDong);
+        kichThuoc.setTen(request.getTen().trim());
+        kichThuoc.setNgayTao(LocalDateTime.now().withNano(0));
+        kichThuoc.setTrangThai(1);
+        kichThuocRepo.save(kichThuoc);
+        redirectAttributes.addFlashAttribute("success", "Thêm kích thước thành công");
 
-        return "redirect:/admin/quan-ly-mau-sac";
+        return "redirect:/admin/quan-ly-kich-thuoc";
     }
 
     @PostMapping("/update/{id}")
-    public String updateMauSac(@PathVariable("id") String idMauSac, MauSacRequest request, RedirectAttributes redirectAttributes) {
-        MauSac mauSac = mauSacRepo.findById1(idMauSac);
+    public String updateKichThuoc(@PathVariable("id") String idKichThuoc, KichThuocRequest request, RedirectAttributes redirectAttributes) {
+        KichThuoc kichThuoc = kichThuocRepo.findById1(idKichThuoc);
 
-        mauSac.setTen(request.getTen().trim());
-        mauSac.setTrangThai(request.getTrangThai());
-        mauSacRepo.save(mauSac);
-        redirectAttributes.addFlashAttribute("success", "Sửa màu sắc thành công");
+        kichThuoc.setTen(request.getTen().trim());
+        kichThuoc.setTrangThai(request.getTrangThai());
+        kichThuocRepo.save(kichThuoc);
+        redirectAttributes.addFlashAttribute("success", "Sửa kích thước thành công");
 
-        return "redirect:/admin/quan-ly-mau-sac";
+        return "redirect:/admin/quan-ly-kich-thuoc";
     }
 
 
     @GetMapping("delete/{id}")
     public String delete(@PathVariable("id") String id) {
-        mauSacRepo.deleteById(id);
-        return "redirect:/admin/quan-ly-mau-sac";
+        kichThuocRepo.deleteById(id);
+        return "redirect:/admin/quan-ly-kich-thuoc";
     }
 
 }
