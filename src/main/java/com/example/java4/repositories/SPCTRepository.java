@@ -200,10 +200,7 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
 
     @Query(value = "SELECT MIN(ctsp.giaBan) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP")
     Long getMinGiaBan(@Param("idSP") String idSP);
-
-
-    @Query("select ctsp from ChiTietSanPham ctsp where ctsp.id = ?1 and ctsp.trangThai = 1")
-    ChiTietSanPham getByIDCTSP(String id);
+    
 };
 
 
