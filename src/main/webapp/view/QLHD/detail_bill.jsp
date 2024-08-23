@@ -22,7 +22,7 @@
     <title>MSStore_Quản lý hóa đơn</title>
 
     <!-- Custom fonts for this template-->
-<%--    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">--%>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
@@ -290,51 +290,49 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
                         <i class="bi bi-graph-up" style="margin-left: 2px"></i>
-                        <span style=" margin-left: 6px">Thống kê doanh thu</span></a>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
                 </li>
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/hoa-don/hien-thi"
+                       style="display: flex; color: white; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item" style="">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="/admin/quan-ly-san-pham" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Quản lý sản phẩm</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
+                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
+                            <a class="collapse-item" href="cards.html">Cards</a>
                         </div>
                     </div>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" >
-                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
-                        <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
-                        <span style=" margin-left: 6px">Quản lý nhân viên</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -357,21 +355,21 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -426,8 +424,126 @@
                         </div>
                     </li>
 
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter"></span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">
+                                Alerts Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 12, 2019</div>
+                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-success">
+                                        <i class="fas fa-donate text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 7, 2019</div>
+                                    $290.29 has been deposited into your account!
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-warning">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 2, 2019</div>
+                                    Spending Alert: We've noticed unusually high spending for your account.
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                        </div>
+                    </li>
 
-
+                    <!-- Nav Item - Messages -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-envelope fa-fw"></i>
+                            <!-- Counter - Messages -->
+                            <span class="badge badge-danger badge-counter"></span>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
+                            <h6 class="dropdown-header">
+                                Message Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                         alt="...">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                        problem I've been having.
+                                    </div>
+                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                         alt="...">
+                                    <div class="status-indicator"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">I have the photos that you ordered last month, how
+                                        would you like them sent to you?
+                                    </div>
+                                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                         alt="...">
+                                    <div class="status-indicator bg-warning"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Last month's report looks great, I am very happy with
+                                        the progress so far, keep up the good work!
+                                    </div>
+                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                         alt="...">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                        told me that people say this to all dogs, even if they aren't good...
+                                    </div>
+                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                        </div>
+                    </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -633,7 +749,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="confirmForm" method="post" action="/admin/hoa-don/xac-nhan/${hoaDonDTO.id}">
+                            <form id="confirmForm" method="post" action="/hoa-don/xac-nhan/${hoaDonDTO.id}">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="confirmModalLabel">Xác nhận đơn hàng</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -700,7 +816,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="cancelForm" method="post" action="/admin/hoa-don/huy/${hoaDonDTO.id}">
+                            <form id="cancelForm" method="post" action="/hoa-don/huy/${hoaDonDTO.id}">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="cancelModalLabel">Hủy đơn hàng</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -864,7 +980,7 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="/admin/hoa-don/xac-nhan-thanh-toan" method="post">
+                                <form action="/hoa-don/xac-nhan-thanh-toan" method="post">
                                     <input type="hidden" name="id" value="${hoaDonDTO.id}">
                                     <div class="mb-3">
                                         <label for="totalAmountInput" class="form-label">Tổng tiền:</label>
@@ -1397,59 +1513,59 @@
 
 
                         <!-- Phần input tìm kiếm và các select -->
-<%--                        <div class="mb-3 p-3" style="background-color: #f0f0f0;">--%>
+                        <div class="mb-3 p-3" style="background-color: #f0f0f0;">
                             <!-- Phần input tìm kiếm và nút tìm kiếm -->
-<%--                            <div class="d-flex align-items-center">--%>
-<%--                                <input type="text" class="form-control" name="search" id="searchInput"--%>
-<%--                                       placeholder="Nhập từ khóa tìm kiếm..." style="width: 750px;">--%>
-<%--                                <button class="btn btn-primary mx-3" type="button" id="searchButton">Tìm kiếm</button>--%>
-<%--                                <button class="btn btn-danger mx-2" type="button" id="refreshButton">Làm mới</button>--%>
-<%--                            </div>--%>
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control" name="search" id="searchInput"
+                                       placeholder="Nhập từ khóa tìm kiếm..." style="width: 750px;">
+                                <button class="btn btn-primary mx-3" type="button" id="searchButton">Tìm kiếm</button>
+                                <button class="btn btn-danger mx-2" type="button" id="refreshButton">Làm mới</button>
+                            </div>
 
                             <!-- Các select -->
                             <%-- Lọc theo thuộc tính                             --%>
-<%--                            <form method="post" action="/hoa-don/filter">--%>
-<%--                                <div class="row mt-3">--%>
-<%--                                    <div class="col-md-3">--%>
-<%--                                        <label for="colorSelect" class="form-label">Màu sắc</label>--%>
-<%--                                        <select class="form-select" id="colorSelect">--%>
-<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
-<%--                                            <c:forEach var="mauSac" items="${listMauSac}">--%>
-<%--                                                <option value="${mauSac.id}">${mauSac.ten}</option>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-md-3">--%>
-<%--                                        <label for="sizeSelect" class="form-label">Kích thước</label>--%>
-<%--                                        <select class="form-select" id="sizeSelect">--%>
-<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
-<%--                                            <c:forEach var="kichThuoc" items="${listKichThuoc}">--%>
-<%--                                                <option value="${kichThuoc.id}">${kichThuoc.ten}</option>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-md-3">--%>
-<%--                                        <label for="materialSelect" class="form-label">Chất liệu</label>--%>
-<%--                                        <select class="form-select" id="materialSelect">--%>
-<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
-<%--                                            <c:forEach var="chatLieu" items="${listChatLieu}">--%>
-<%--                                                <option value="${chatLieu.id}">${chatLieu.ten}</option>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-md-3">--%>
-<%--                                        <label for="sleeveSelect" class="form-label">Kiểu tay</label>--%>
-<%--                                        <select class="form-select" id="sleeveSelect">--%>
-<%--                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->--%>
-<%--                                            <c:forEach var="kieuTay" items="${listKieuTay}">--%>
-<%--                                                <option value="${kieuTay.id}">${kieuTay.ten}</option>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </select>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </form>--%>
+                            <form method="post" action="/hoa-don/filter">
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label for="colorSelect" class="form-label">Màu sắc</label>
+                                        <select class="form-select" id="colorSelect">
+                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
+                                            <c:forEach var="mauSac" items="${listMauSac}">
+                                                <option value="${mauSac.id}">${mauSac.ten}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="sizeSelect" class="form-label">Kích thước</label>
+                                        <select class="form-select" id="sizeSelect">
+                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
+                                            <c:forEach var="kichThuoc" items="${listKichThuoc}">
+                                                <option value="${kichThuoc.id}">${kichThuoc.ten}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="materialSelect" class="form-label">Chất liệu</label>
+                                        <select class="form-select" id="materialSelect">
+                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
+                                            <c:forEach var="chatLieu" items="${listChatLieu}">
+                                                <option value="${chatLieu.id}">${chatLieu.ten}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="sleeveSelect" class="form-label">Kiểu tay</label>
+                                        <select class="form-select" id="sleeveSelect">
+                                            <option value="">Tất cả</option> <!-- Option cho tất cả -->
+                                            <c:forEach var="kieuTay" items="${listKieuTay}">
+                                                <option value="${kieuTay.id}">${kieuTay.ten}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
 
-<%--                        </div>--%>
+                        </div>
 
                         <!-- Bảng thông tin sản phẩm -->
                         <table class="table table-hover table-bordered custom-table ">
@@ -1501,7 +1617,7 @@
                                     </td>
                                     <td>
                                         <!-- Thao tác, ví dụ như nút sửa, xóa -->
-                                        <a href="/admin/hoa-don/them-san-pham/${product.id}?idHoaDon=${hoaDonDTO.id}">
+                                        <a href="/hoa-don/them-san-pham/${product.id}?idHoaDon=${hoaDonDTO.id}">
                                             <button class="btn btn-primary btn-sm">Chọn</button>
                                         </a>
                                     </td>
@@ -1542,7 +1658,7 @@
             </div>
         </div>
 
-        <%--       In phiếu giao hàng--%>
+        <%--        In phiếu giao hàng--%>
         <div id="printOverlay">
             <iframe id="printFrame"></iframe>
         </div>
@@ -1567,34 +1683,11 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Bootstrap core JavaScript-->
-<script src="/view_admin/vendor/jquery/jquery.min.js"></script>
-<script src="/view_admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/view_admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/view_admin/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<%--<script src="/view_admin/vendor/chart.js/Chart.min.js"></script>--%>
-
-<!-- Page level custom scripts -->
-<%--<script src="/view_admin/js/demo/chart-area-demo.js"></script>--%>
-<%--<script src="/view_admin/js/demo/chart-pie-demo.js"></script>--%>
-
 <!-- Page level custom scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     var token = '108bdaef-8395-11ee-af43-6ead57e9219a';
-    var tongTien = ${tongTienDonHang};
-    var soLuongGioHang = ${soLuongGioHang};
-    var giamGia = ${giamGia};
-
-
 
     // Function to get JSON with token
     function getJSONWithToken(url, callback) {
@@ -1613,20 +1706,15 @@
     }
 
     // Function to recalculate shipping fee and total payment
-    function calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia) {
+    function calculateShippingAndTotal() {
         // Get necessary values
         var idQuanHuyenTest = ${diaChiKhachHang.idQH};
         var idPhuongXaTest = ${diaChiKhachHang.idPX};
-        <%--var soLuongGioHang = ${soLuongGioHang};--%>
-        // var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
-        // Nếu tổng tiền hàng về 0
-        if (tongTien <= 0) {
-            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
-            return; // Không cần thực hiện các bước tính phí ship
-        }
+        var soLuongGioHang = ${soLuongGioHang};
+        var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
+        var giamGia = ${giamGia};
+
+
 
         // Calculate weight
         var khoiLuong = soLuongGioHang * 200;
@@ -1653,12 +1741,13 @@
                 $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
                 $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
 
+
             });
         });
     }
 
     // Initial calculation on page load
-    calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia);
+    calculateShippingAndTotal();
 
 </script>
 
@@ -1737,13 +1826,6 @@
     });
     </c:if>
 
-    <c:if test="${not empty cancelSuccess}">
-    Toast.fire({
-        icon: "success",
-        title: "${cancelSuccess}"
-    });
-    </c:if>
-
     // $(document).ready(function () {
     //     $('#userDropdown .fas').on('click', function (e) {
     //         e.stopPropagation();
@@ -1769,7 +1851,7 @@
             overlay.style.display = 'none';
         };
 
-        iframe.src = '/admin/hoa-don/in-phieu-giao-hang';
+        iframe.src = '/hoa-don/in-phieu-giao-hang';
         // Xóa sessionStorage sau khi in
         sessionStorage.removeItem('printAfterReload');
     }
@@ -1904,18 +1986,11 @@
             // Tính tổng tiền thanh toán
             var tongTienThanhToan = tongTien + phiVanChuyen - giamGia;
             // Cập nhật giá trị vào các phần tử trong HTML
-            $('#tongTienValue').text(new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(tongTien));
-            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(tongTienThanhToan));
+            $('#tongTienValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTien));
+            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTienThanhToan));
         }
 
-        // var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
-
+        var token = '4787bafa-2157-11ef-a90d-aaf29aa34580';
         function getJSONWithToken(url, callback) {
             $.ajax({
                 url: url,
@@ -1939,7 +2014,7 @@
 
 
             // Sự kiện khi click vào ô input địa chỉ cụ thể
-            addressInput.on('click', function () {
+            addressInput.on('click', function() {
                 // Xóa các giá trị đã chọn trước đó
                 provinceSelect.html('<option value="">Chọn Tỉnh/Thành Phố</option>');
                 districtSelect.html('<option value="">Chọn Quận/Huyện</option>');
@@ -1966,7 +2041,6 @@
                             });
 
                             districtSelect.change(function () {
-
                                 var idquan = $(this).val();
                                 getJSONWithToken('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=' + idquan, function (data_phuong) {
                                     wardSelect.html('<option value="">Chọn Phường/Xã</option>');
@@ -1974,9 +2048,6 @@
                                         wardSelect.append('<option value="' + val_phuong.WardCode + '">' + val_phuong.WardName + '</option>');
                                     });
                                 });
-
-                                
-
                             });
                         });
                     });
@@ -2049,11 +2120,12 @@
                 hoTen.addClass('border-danger');
                 hoTenError.text('Họ tên không được vượt quá độ dài 50 ký tự').addClass('text-danger');
                 isValid = false;
-            } else if (/[0-9]/.test(hoTenValue)) {  // Kiểm tra ký tự số
+            }
+            else if (/[0-9]/.test(hoTenValue)) {  // Kiểm tra ký tự số
                 hoTen.addClass('border-danger');
                 hoTenError.text('Họ tên không được chứa số').addClass('text-danger');
                 isValid = false;
-            } else if (!isValidFullName(hoTenValue)) {
+            }else if(!isValidFullName(hoTenValue)){
                 hoTen.addClass('border-danger');
                 hoTenError.text('Họ tên không được chứa ký tự đặc biệt').addClass('text-danger');
                 isValid = false;
@@ -2106,15 +2178,20 @@
                 diaChiChiTiet.addClass('border-danger');
                 diaChiChiTietError.text('Địa chỉ cụ thể phải chứa cả ký tự chữ và ký tự số').addClass('text-danger');
 
-            } else if (!isValidAddress(diaChiChiTietValue)) {
+            }
+            else if (!isValidAddress(diaChiChiTietValue)) {
                 isValid = false;
                 diaChiChiTiet.addClass('border-danger');
                 diaChiChiTietError.text('Địa chỉ cụ thể không được chứa ký tự đặc biệt').addClass('text-danger');
-            } else if (!/[a-zA-Z]/.test(diaChiChiTietValue) || !/[0-9]/.test(diaChiChiTietValue)) {
+            }
+
+            else if (!/[a-zA-Z]/.test(diaChiChiTietValue) || !/[0-9]/.test(diaChiChiTietValue)) {
                 isValid = false;
                 diaChiChiTiet.addClass('border-danger');
                 diaChiChiTietError.text('Địa chỉ cụ thể phải chứa cả ký tự chữ và ký tự số').addClass('text-danger');
-            } else {
+            }
+
+            else {
                 // If all conditions are passed, the input is valid
                 diaChiChiTiet.removeClass('border-danger');
                 diaChiChiTietError.text('').removeClass('text-danger');
@@ -2137,15 +2214,18 @@
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Vui lòng nhập phí ship').addClass('text-danger');
-            } else if (!/^\d+$/.test(phiShipValue)) {
+            }
+            else if (!/^\d+$/.test(phiShipValue)) {
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Phí ship phải là số hợp lệ. Không được chứa ký tự chữ hoặc ký tự đặc biệt').addClass('text-danger');
-            } else if (parseInt(phiShipValue, 10) <= 0) {
+            }
+            else if (parseInt(phiShipValue, 10) <= 0) {
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Phí ship phải là số dương và lớn hơn 0').addClass('text-danger');
-            } else if (parseInt(phiShipValue, 10) > maxShipFee) {
+            }
+            else if (parseInt(phiShipValue, 10) > maxShipFee) {
                 isValid = false;
                 phiShip.addClass('border-danger');
                 phiShipError.text('Phí ship không được vượt quá 200.000 VNĐ').addClass('text-danger');
@@ -2223,6 +2303,7 @@
             }
 
 
+
             $('#tenTinhThanh').val($('#tinh option:selected').text());
             $('#tenQuanHuyen').val($('#huyen option:selected').text());
             $('#tenPhuongXa').val($('#xa option:selected').text());
@@ -2250,6 +2331,7 @@
             $(this).removeClass('border-danger');
             $(errorId).text('');
         });
+
 
 
     });
@@ -2357,7 +2439,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'GET',
-                        url: '/admin/hoa-don/xoa-san-pham/' + idCTSP,
+                        url: '/hoa-don/xoa-san-pham/' + idCTSP,
                         data: {
                             idHoaDon: idHoaDon
                         },
@@ -2381,20 +2463,33 @@
 
                                 // Cập nhật lại tổng tiền và tổng tiền thanh toán
                                 var newTotalPrice = response.tongTien;
-                                var newQuantity = response.totalSoLuong;
-                                var giamGia = response.giamGia;
-                                var phieuGiamGia = response.phieuGiamGia;
-
                                 const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', {
                                     style: 'currency',
                                     currency: 'VND',
                                     currencyDisplay: 'code'
                                 }).format(amount).replace('VND', '₫');
+
                                 $('#tongTienValue').text(formatCurrency(newTotalPrice));
+
+
+
+                                // calculateShippingAndTotal();
                                 //Cập nhật lại phí ship và tổng tiền
 
-                                calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
-                                $('#phieuGiamGia').text(phieuGiamGia);
+
+                                // const giamGia = parseFloat($('#giamGia').text().replace(/[^0-9.-]+/g, ""));
+                                // const giamGia = response.giamGia;
+                                // const phieuGiamGia = response.phieuGiamGia;
+                                // const phiVanChuyen = parseFloat($('#phiVanChuyen').text());
+                                // const tongTienThanhToan = ;
+
+                                // $('#phieuGiamGia').text(phieuGiamGia);
+                                // $('#giamGia').text(formatCurrency(giamGia));
+                                // $('#phiVanChuyen').text(formatCurrency(firstFee));
+                                // $('#phiShipHoaDon').text(formatCurrency(firstFee));
+                                // $('#tongTienThanhToanValue').text(formatCurrency(response.tongTienThanhToan));
+
+
 
                                 // Show success message
                                 Toast.fire({
@@ -2402,7 +2497,8 @@
                                     icon: 'success'
                                 });
 
-
+                                // Optional: reload the page if necessary
+                                // location.reload();
                             }
                         },
                         error: function () {
@@ -2412,9 +2508,6 @@
                             });
                         }
                     });
-
-
-
                 }
             });
         });
@@ -2451,7 +2544,7 @@
             // Gửi Ajax request để cập nhật số lượng
             $.ajax({
                 type: 'GET',
-                url: '/admin/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,
+                url: '/hoa-don/cap-nhat-so-luong-san-pham/' + idCTSP,
                 data: {
                     idHoaDon: idHoaDon,
                     soLuong: newQuantity
@@ -2478,16 +2571,23 @@
                         }).format(amount).replace('VND', '₫');
 
                         let newTotalPrice = response.tongTien;
-                        var newQuantity = response.totalSoLuong;
-                        var giamGia = response.giamGia;
-                        var phieuGiamGia = response.phieuGiamGia;
+
                         $('#tongTienValue').text(formatCurrency(newTotalPrice));
-                        $('#phieuGiamGia').text(phieuGiamGia);
 
                         const parseCurrency = (value) => parseFloat(value.replace(/[^\d.-]+/g, ''));
 
-                        // Tính lại tổng tiền
-                        calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
+                        // const tongTienGiam = response.tongTienThanhToan;
+                        // const giamGia = response.giamGia;
+                        // const phieuGiamGia = response.phieuGiamGia;
+                        // const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
+                        // const tongTienThanhToan = response.tongTienThanhToan;
+                        //
+                        //
+                        // $('#phieuGiamGia').text(phieuGiamGia);
+                        // $('#giamGia').text(formatCurrency(giamGia));
+                        // $('#phiVanChuyen').text(formatCurrency(phiVanChuyen));
+                        // $('#phiShipHoaDon').text(formatCurrency(phiVanChuyen));
+                        // $('#tongTienThanhToanValue').text(formatCurrency(tongTienThanhToan));
 
                         // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền
                         response.listHDCT.forEach(item => {

@@ -63,21 +63,21 @@ public class SPCTController {
         List<ChiTietSanPham> lstChiTietSP = chiTietSPRepository.findByIdSPAll(idSP, pageable).getContent();
         List<SPCTView> lstSPCTView =  new ArrayList<>();
         for (ChiTietSanPham chiTietSanPham : lstChiTietSP) {
-             SPCTView spctView = new SPCTView();
-             spctView.setId(chiTietSanPham.getId());
-             spctView.setSoLuong(chiTietSanPham.getSoLuong());
-             spctView.setMoTa(chiTietSanPham.getMoTa());
-             spctView.setGiaNhap(chiTietSanPham.getGiaNhap());
-             spctView.setGiaBan(chiTietSanPham.getGiaBan());
-             spctView.setNgayTao(chiTietSanPham.getNgayTao());
-             spctView.setTrangThai(chiTietSanPham.getTrangThai());
-             spctView.setIdMauSac(chiTietSanPham.getIdMauSac());
-             spctView.setIdKichThuoc(chiTietSanPham.getIdKichThuoc());
-             spctView.setIdChatLieu(chiTietSanPham.getIdChatLieu());
-             spctView.setIdKieuTay(chiTietSanPham.getIdKieuTay());
-             spctView.setIdSanPham(chiTietSanPham.getIdSanPham());
-             spctView.setHinhAnh(chiTietSPRepository.getHinhAnhOfSPCT(chiTietSanPham.getId()));
-             lstSPCTView.add(spctView);
+            SPCTView spctView = new SPCTView();
+            spctView.setId(chiTietSanPham.getId());
+            spctView.setSoLuong(chiTietSanPham.getSoLuong());
+            spctView.setMoTa(chiTietSanPham.getMoTa());
+            spctView.setGiaNhap(chiTietSanPham.getGiaNhap());
+            spctView.setGiaBan(chiTietSanPham.getGiaBan());
+            spctView.setNgayTao(chiTietSanPham.getNgayTao());
+            spctView.setTrangThai(chiTietSanPham.getTrangThai());
+            spctView.setIdMauSac(chiTietSanPham.getIdMauSac());
+            spctView.setIdKichThuoc(chiTietSanPham.getIdKichThuoc());
+            spctView.setIdChatLieu(chiTietSanPham.getIdChatLieu());
+            spctView.setIdKieuTay(chiTietSanPham.getIdKieuTay());
+            spctView.setIdSanPham(chiTietSanPham.getIdSanPham());
+            spctView.setHinhAnh(chiTietSPRepository.getHinhAnhOfSPCT(chiTietSanPham.getId()));
+            lstSPCTView.add(spctView);
             System.out.println("==========================================hinh anh: "+ spctView.getHinhAnh());
         }
         return ResponseEntity.ok(lstSPCTView);
@@ -159,8 +159,8 @@ public class SPCTController {
     @CrossOrigin
     @PostMapping("/update-all-ChatLieu")
     public ResponseEntity<Integer> doUpdateAllChatLieu(@RequestParam(value = "idSanPham") String idSanPham,
-                                                        @RequestParam(value = "idChatLieu") String idChatLieu) {
-            return ResponseEntity.ok(chiTietSPRepository.updateAllChatLieu(idSanPham,idChatLieu));
+                                                       @RequestParam(value = "idChatLieu") String idChatLieu) {
+        return ResponseEntity.ok(chiTietSPRepository.updateAllChatLieu(idSanPham,idChatLieu));
     }
 
     @CrossOrigin
@@ -294,9 +294,30 @@ public class SPCTController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ChiTietSanPham>> searchChiTietSanPham(@RequestParam Map<String, Object> params) {
-        List<ChiTietSanPham> chiTietSanPhams = search.searchChiTietSanPham1(params);
-        return ResponseEntity.ok(chiTietSanPhams);
+    public ResponseEntity<List<SPCTView>> searchChiTietSanPham(@RequestParam Map<String, Object> params, @RequestParam("page") Optional<Integer> pageParam) {
+        List<ChiTietSanPham> lstChiTietSP = search.searchChiTietSanPham1(params);
+        int page = pageParam.orElse(1);
+        Pageable pageable = PageRequest.of(page - 1, 20);
+        List<SPCTView> lstSPCTView =  new ArrayList<>();
+        for (ChiTietSanPham chiTietSanPham : lstChiTietSP) {
+            SPCTView spctView = new SPCTView();
+            spctView.setId(chiTietSanPham.getId());
+            spctView.setSoLuong(chiTietSanPham.getSoLuong());
+            spctView.setMoTa(chiTietSanPham.getMoTa());
+            spctView.setGiaNhap(chiTietSanPham.getGiaNhap());
+            spctView.setGiaBan(chiTietSanPham.getGiaBan());
+            spctView.setNgayTao(chiTietSanPham.getNgayTao());
+            spctView.setTrangThai(chiTietSanPham.getTrangThai());
+            spctView.setIdMauSac(chiTietSanPham.getIdMauSac());
+            spctView.setIdKichThuoc(chiTietSanPham.getIdKichThuoc());
+            spctView.setIdChatLieu(chiTietSanPham.getIdChatLieu());
+            spctView.setIdKieuTay(chiTietSanPham.getIdKieuTay());
+            spctView.setIdSanPham(chiTietSanPham.getIdSanPham());
+            spctView.setHinhAnh(chiTietSPRepository.getHinhAnhOfSPCT(chiTietSanPham.getId()));
+            lstSPCTView.add(spctView);
+            System.out.println("==========================================hinh anh: "+ spctView.getHinhAnh());
+        }
+        return ResponseEntity.ok(lstSPCTView);
     }
 
     @GetMapping("/search1")
@@ -307,23 +328,20 @@ public class SPCTController {
         for (ChiTietSanPham chiTietSanPham : chiTietSanPhams) {
             String sanPhamId = chiTietSanPham.getIdSanPham().getId();
             if (chiTietSanPham.getSoLuong() > 0 && !processedIds.contains(sanPhamId)) {
-                 SPCTResponse  spctResponse = new SPCTResponse();
-                 spctResponse.setIdCTSP(chiTietSanPham.getId());
-                 spctResponse.setIdSP(chiTietSanPham.getIdSanPham().getId());
-                 spctResponse.setMaSP(chiTietSanPham.getIdSanPham().getMa());
-                 spctResponse.setTenSP(chiTietSanPham.getIdSanPham().getTen());
-                 spctResponse.setTenKieuTay(chiTietSanPham.getIdKieuTay().getTen());
-                 spctResponse.setGiaBan(chiTietSanPham.getGiaBan());
-                 spctResponse.setHinhAnh1(hinhAnhRepo.findMinHinhAnhByCTSP(chiTietSanPham.getId()));
-                 lstSpct.add(spctResponse);
-                 processedIds.add(sanPhamId);
-                 System.out.println("spctresponse: "+spctResponse);
+                SPCTResponse  spctResponse = new SPCTResponse();
+                spctResponse.setIdCTSP(chiTietSanPham.getId());
+                spctResponse.setIdSP(chiTietSanPham.getIdSanPham().getId());
+                spctResponse.setMaSP(chiTietSanPham.getIdSanPham().getMa());
+                spctResponse.setTenSP(chiTietSanPham.getIdSanPham().getTen());
+                spctResponse.setTenKieuTay(chiTietSanPham.getIdKieuTay().getTen());
+                spctResponse.setGiaBan(chiTietSanPham.getGiaBan());
+                spctResponse.setHinhAnh1(hinhAnhRepo.findMinHinhAnhByCTSP(chiTietSanPham.getId()));
+                lstSpct.add(spctResponse);
+                processedIds.add(sanPhamId);
+                System.out.println("spctresponse: "+spctResponse);
             }
         }
         return ResponseEntity.ok(lstSpct);
     }
-
-
-
 
 }

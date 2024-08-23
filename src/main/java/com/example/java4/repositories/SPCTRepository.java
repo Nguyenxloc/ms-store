@@ -185,6 +185,7 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
 
     @Query(value = "SELECT MIN(ha.hinhAnh1) FROM HinhAnh ha WHERE ha.idCTSP.id = :idSPCT")
     String getHinhAnhOfSPCT(@Param("idSPCT") String idSPCT);
+
     // Thống kê danh sách sản phẩm sắp hết hàng
 //    @Query("SELECT new com.example.java4.response.SPCTDTO(" +
 //            "sp.ten, sp.ma, ctsp.giaBan, ha.hinhAnh1, ctsp.soLuong) " +
@@ -194,15 +195,12 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
 //            "WHERE ctsp.soLuong < :minStock " +
 //            "ORDER BY ctsp.soLuong ASC")
 //    Page<SPCTDTO> getLowStockProducts(@Param("minStock") int minStock, Pageable pageable);
-
     @Query(value = "SELECT MAX(ctsp.giaBan) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP")
     Long getMaxGiaBan(@Param("idSP") String idSP);
 
     @Query(value = "SELECT MIN(ctsp.giaBan) FROM ChiTietSanPham ctsp WHERE ctsp.idSanPham.id = :idSP")
     Long getMinGiaBan(@Param("idSP") String idSP);
 
-
 };
-
 
 

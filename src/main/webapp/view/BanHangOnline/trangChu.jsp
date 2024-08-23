@@ -452,7 +452,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="/cua-hang/trang-chu" class="nav-item nav-link active">Trang chủ</a>
-                        <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                        <a href="/cua-hang/gioi-thieu" class="nav-item nav-link">Giới thiệu</a>
                     </div>
                 </div>
             </nav>
@@ -855,19 +855,7 @@
 <hr>
 
 <!-- Footer Start -->
-<div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-    <div class="row px-xl-5 pt-5">
-        <div class="col-lg-5 col-md-12 mb-5 pr-3 pr-xl-5">
-            <a href="" class="text-decoration-none">
-                <h1 class="mb-4 display-5 font-weight-semi-bold"><span
-                        class="text-primary font-weight-bold border border-white px-3 mr-1">MS</span>Store</h1>
-            </a>
-            <label class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>13 P. Trịnh Văn Bô, Xuân Phương, Nam Từ Liêm, Hà Nội</label>
-            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>MSStore@gmail.com</p>
-            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+0222 222 222</p>
-        </div>
-    </div>
-</div>
+<%@ include file="/view/BanHangOnline/footer.jsp"%>
 <!-- Footer End -->
 
 
