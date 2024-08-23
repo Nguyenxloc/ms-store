@@ -376,20 +376,17 @@ public class QuanLyHoaDonController {
                 LichSuHoaDonDTO::getThoiGian,
                 Comparator.nullsLast(Comparator.naturalOrder())
         ));
-
         // Đêm so luong trong hoa don chi tiet
         Integer totalSoLuong = 0;
         for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
             totalSoLuong += chiTietHoaDon.getSoLuong();
         }
-
         model.addAttribute("listLichSuHoaDonDTO", listLichSuHoaDonDTO);
         model.addAttribute("hinhAnhMap", hinhAnhMap);
         model.addAttribute("hinhAnhMapCTSP", hinhAnhMapCTSP);
         model.addAttribute("tongTienThanhToan", calculateTongTienThanhToan(tongTien, khuyenMai, giaoHang).doubleValue());
         // Thêm các thông tin vào model để truyền sang JSP
         addAttributesToModel(model, nhanVien, hoaDonDTO, khachHang, diaChiKhachHang, giaoHangDTO, listHDCT, listCTSP, listLichSuHoaDon, tongTien, phiGiamGia);
-
         model.addAttribute("soLuongGioHang", totalSoLuong);
         System.out.println("debug api kl ++++++++++++++++++++++++ qh"+diaChiKhachHang.getIdQH());
         System.out.println("debug api kl ++++++++++++++++++++++++ px"+diaChiKhachHang.getIdPX());
