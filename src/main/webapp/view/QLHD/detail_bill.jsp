@@ -1708,13 +1708,18 @@
     // Function to recalculate shipping fee and total payment
     function calculateShippingAndTotal() {
         // Get necessary values
-        var idQuanHuyenTest = ${diaChiKhachHang.idQH};
-        var idPhuongXaTest = ${diaChiKhachHang.idPX};
-        var soLuongGioHang = ${soLuongGioHang};
+        var idQuanHuyenTest = `${diaChiKhachHang.idQH}`; // Ensure this is a valid value
+        var idPhuongXaTest = `${diaChiKhachHang.idPX}`; // Ensure this is a valid value
+        var soLuongGioHang = parseInt('${soLuongGioHang}', 10); // Ensure this is an integer
         var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
-        var giamGia = ${giamGia};
+        var giamGia = parseFloat('${giamGia}') || 0; // Ensure this is a number
 
-
+        // Log values for debugging
+        console.log("idQuanHuyenTest:", idQuanHuyenTest);
+        console.log("idPhuongXaTest:", idPhuongXaTest);
+        console.log("soLuongGioHang:", soLuongGioHang);
+        console.log("tongTien:", tongTien);
+        console.log("giamGia:", giamGia);
 
         // Calculate weight
         var khoiLuong = soLuongGioHang * 200;
@@ -1722,32 +1727,43 @@
         console.log("Tổng kl: ", khoiLuong);
 
         // Step 1: Get the service_id
-        getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=' + idQuanHuyenTest + '&from_district=3440', function (data_maDV) {
-            var service_id = data_maDV.data[0].service_id;
-            console.log("API maDV: ", service_id);
+        var availableServicesUrl = `https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=`+idQuanHuyenTest+`&from_district=3440`;
 
-            // Step 2: Calculate shipping fee based on service_id and other parameters
-            getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
+        getJSONWithToken(availableServicesUrl, function (data_maDV) {
+            if (data_maDV && data_maDV.data && data_maDV.data.length > 0) {
+                var service_id = data_maDV.data[0].service_id;
+                console.log("API maDV: ", service_id);
 
-                var firstFee = data_total.data.total;
-                console.log("API Response: ", firstFee); // Log the shipping fee
+                // Step 2: Calculate shipping fee based on service_id and other parameters
+                var feeUrl = `https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=`+service_id+`&insurance_value=`+tongTien+`&from_district_id=3440&to_district_id=`+idQuanHuyenTest+`&to_ward_code=`+idPhuongXaTest+`&height=15&length=15&weight=`+khoiLuong+`&width=15`;
 
-                // Calculate the new total
-                var newTotal = tongTien + firstFee - giamGia;
+                getJSONWithToken(feeUrl, function (data_total) {
+                    if (data_total && data_total.data) {
+                        var firstFee = data_total.data.total;
+                        console.log("API Response: ", firstFee); // Log the shipping fee
 
-                // Update the total amount in the DOM
-                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
-                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
-                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
-                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+                        // Calculate the new total
+                        var newTotal = tongTien + firstFee - giamGia;
 
-
-            });
+                        // Update the total amount in the DOM
+                        $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
+                        $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                        $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                        $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+                    } else {
+                        console.error("Invalid data_total response:", data_total);
+                    }
+                });
+            } else {
+                console.error("Invalid data_maDV response:", data_maDV);
+            }
         });
     }
 
     // Initial calculation on page load
     calculateShippingAndTotal();
+
+
 
 </script>
 
