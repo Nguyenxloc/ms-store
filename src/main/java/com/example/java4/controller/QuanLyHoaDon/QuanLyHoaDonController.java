@@ -293,6 +293,7 @@ public class QuanLyHoaDonController {
                              @RequestParam(value = "page", defaultValue = "0") String pageParam
     ) {
         //Tìm đối tượng nhân viên
+
         NhanVien nhanVien = new NhanVien();
         if (UserInfor.idNhanVien != null) {
             nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
@@ -309,19 +310,40 @@ public class QuanLyHoaDonController {
             return "/view/QLHD/detail_bill.jsp";
         }
 
+        // Lấy ra đối tượng giao hàng theo IdHoaDon
+        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHD);
+        if (giaoHang == null) {
+            model.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
+        }
+
         KhachHang khachHang = hoaDon.getIdKhachHang();
         DiaChi diaChiKhachHang = new DiaChi();
         if (khachHang == null) {
             khachHang = new KhachHang(); // Assume you have a default constructor
             khachHang.setHoTen("Khách lẻ"); // Default name
         }
-        if (diaChiKhachHang == null) {
+
+        // Lấy danh sách địa chỉ của khách hàng từ cơ sở dữ liệu
+        List<DiaChi> diaChiList = _diaChiRepository.findDiaChiByIdKhachHang(khachHang.getId());
+        if (diaChiList != null && !diaChiList.isEmpty()) {
+            // So sánh thông tin giao hàng với các địa chỉ trong danh sách
+            for (DiaChi diaChi : diaChiList) {
+                if (diaChi.getIdTinhThanh().equals(giaoHang.getIdTinhThanh()) &&
+                        diaChi.getIdQuanHuyen().equals(giaoHang.getIdQuanHuyen()) &&
+                        diaChi.getIdPhuongXa().equals(giaoHang.getIdPhuongXa()) &&
+                        diaChi.getDiaChiChiTiet().equals(giaoHang.getDiaChiChiTiet())) {
+                    diaChiKhachHang = diaChi; // Nếu khớp, gán địa chỉ này cho diaChiKhachHang
+                    break;
+                }
+            }
+        }
+
+        // Nếu không tìm thấy địa chỉ khớp, tạo địa chỉ mặc định
+        if (diaChiKhachHang == null || diaChiKhachHang.getDiaChiChiTiet().isEmpty()) {
             diaChiKhachHang = new DiaChi();
             diaChiKhachHang.setDiaChiChiTiet("");
-        } else {
-            List<DiaChi> diaChiList = _diaChiRepository.findDiaChiByIdKhachHang(khachHang.getId());
-            diaChiKhachHang = diaChiList.isEmpty() ? new DiaChi() : diaChiList.get(0);
         }
+
 
         KhuyenMai khuyenMai = _hoaDonRepo.findKhuyenMaiByHoaDonId(idHD);
         if (khuyenMai == null) {
@@ -342,11 +364,7 @@ public class QuanLyHoaDonController {
         Map<String, HinhAnh> hinhAnhMap = getHinhAnhMap(listHDCT);
         Map<String, HinhAnh> hinhAnhMapCTSP = getHinhAnhMapCTSP();
 
-        // Lấy ra đối tượng giao hàng theo IdHoaDon
-        GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHD);
-        if (giaoHang == null) {
-            model.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
-        }
+
 
         GiaoHangDTO giaoHangDTO = GiaoHangDTO.toDTO(giaoHang);
         if (giaoHangDTO == null) {
@@ -375,22 +393,21 @@ public class QuanLyHoaDonController {
                 LichSuHoaDonDTO::getThoiGian,
                 Comparator.nullsLast(Comparator.naturalOrder())
         ));
-
         // Đêm so luong trong hoa don chi tiet
         Integer totalSoLuong = 0;
         for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
             totalSoLuong += chiTietHoaDon.getSoLuong();
         }
-
         model.addAttribute("listLichSuHoaDonDTO", listLichSuHoaDonDTO);
         model.addAttribute("hinhAnhMap", hinhAnhMap);
         model.addAttribute("hinhAnhMapCTSP", hinhAnhMapCTSP);
         model.addAttribute("tongTienThanhToan", calculateTongTienThanhToan(tongTien, khuyenMai, giaoHang).doubleValue());
         // Thêm các thông tin vào model để truyền sang JSP
         addAttributesToModel(model, nhanVien, hoaDonDTO, khachHang, diaChiKhachHang, giaoHangDTO, listHDCT, listCTSP, listLichSuHoaDon, tongTien, phiGiamGia);
-
         model.addAttribute("soLuongGioHang", totalSoLuong);
-
+        System.out.println("debug api kl ++++++++++++++++++++++++ qh"+diaChiKhachHang.getIdQH());
+        System.out.println("debug api kl ++++++++++++++++++++++++ px"+diaChiKhachHang.getIdPX());
+        System.out.println("debug api kl ++++++++++++++++++++++++ tt"+diaChiKhachHang.getIdT());
         return "/view/QLHD/detail_bill.jsp";
     }
 

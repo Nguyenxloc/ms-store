@@ -58,7 +58,7 @@ public class SearchService {
             List<Predicate> predicates = new ArrayList<>();
             System.out.println("Params: " + params);
             params.forEach((key, value) -> {
-                if (value != null) {
+                if (value != null && !value.toString().trim().isEmpty()) {
                     Predicate predicate = null;
                     System.out.println("Processing key: " + key + ", value: " + value);
                     switch (key) {
@@ -73,7 +73,7 @@ public class SearchService {
                             }
                             break;
                         case "giaBanMin":
-                            if (value instanceof String) {
+                            if (value instanceof String && !value.toString().trim().isEmpty()) {
                                 try {
                                     BigDecimal minPrice = new BigDecimal((String) value);
                                     predicate = criteriaBuilder.greaterThanOrEqualTo(root.get("giaBan"), minPrice);
@@ -83,7 +83,7 @@ public class SearchService {
                             }
                             break;
                         case "giaBanMax":
-                            if (value instanceof String) {
+                            if (value instanceof String && !value.toString().trim().isEmpty()) {
                                 try {
                                     BigDecimal maxPrice = new BigDecimal((String) value);
                                     predicate = criteriaBuilder.lessThanOrEqualTo(root.get("giaBan"), maxPrice);
@@ -93,7 +93,7 @@ public class SearchService {
                             }
                             break;
                         case "ngayTaoAfter":
-                            if (value instanceof String) {
+                            if (value instanceof String && !value.toString().trim().isEmpty()) {
                                 try {
                                     LocalDateTime dateTime = LocalDateTime.parse((String) value);
                                     predicate = criteriaBuilder.greaterThanOrEqualTo(root.get("ngayTao"), dateTime);
@@ -103,7 +103,7 @@ public class SearchService {
                             }
                             break;
                         case "ngayTaoBefore":
-                            if (value instanceof String) {
+                            if (value instanceof String && !value.toString().trim().isEmpty()) {
                                 try {
                                     LocalDateTime dateTime = LocalDateTime.parse((String) value);
                                     predicate = criteriaBuilder.lessThanOrEqualTo(root.get("ngayTao"), dateTime);
@@ -123,7 +123,7 @@ public class SearchService {
                             }
                             break;
                         case "trangThai":
-                            if (value instanceof Integer || value instanceof String) {
+                            if (value instanceof Integer || value instanceof String && !value.toString().trim().isEmpty()) {
                                 int trangThaiValue = (value instanceof Integer) ? (Integer) value : Integer.parseInt((String) value);
                                 predicate = criteriaBuilder.equal(root.get("trangThai"), trangThaiValue);
                             } else {
@@ -138,6 +138,8 @@ public class SearchService {
                     } else {
                         System.out.println("No predicate added for key: " + key);
                     }
+                } else {
+                    System.out.println("Skipping key: " + key + " due to null or empty value.");
                 }
             });
 
@@ -147,6 +149,7 @@ public class SearchService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
     }
+
 
     // Helper method to check if a string is a valid GUID
     private boolean isValidGuid(String guid) {

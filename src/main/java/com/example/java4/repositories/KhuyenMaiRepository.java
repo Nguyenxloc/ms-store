@@ -44,7 +44,7 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai,String> {
 
 
     //Sáng
-    @Query("select km from KhuyenMai km where km.trangThai = ?1 ")
+    @Query("select km from KhuyenMai km where km.trangThai = ?1 and km.soLuong > 0")
     List<KhuyenMai> findByTrangThai(Integer trangThai);
 
 //  =====Tài====

@@ -1152,7 +1152,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="updateForm" method="post" action="/hoa-don/cap-nhat/${hoaDonDTO.id}">
+                            <form id="updateForm" method="post" action="/admin/hoa-don/cap-nhat/${hoaDonDTO.id}">
                                 <input type="hidden" name="tenTinhThanh" id="tenTinhThanh">
                                 <input type="hidden" name="tenQuanHuyen" id="tenQuanHuyen">
                                 <input type="hidden" name="tenPhuongXa" id="tenPhuongXa">
@@ -1593,7 +1593,8 @@
     var tongTien = ${tongTienDonHang};
     var soLuongGioHang = ${soLuongGioHang};
     var giamGia = ${giamGia};
-    var initialPhiShip = ${giaoHangDTO.phiShip == null ? 0 : giaoHangDTO.phiShip};
+    //Bến phí ship toàn cục
+    var phiShipMoi = ${giaoHangDTO.phiShip};
 
 
 
@@ -1614,21 +1615,20 @@
     }
 
     // Hàm tính lại phí ship và tổng tiền thanh toán
-    function calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia) {
+    function calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia) {
         // Get necessary values
         var idQuanHuyenTest = ${diaChiKhachHang.idQH};
         var idPhuongXaTest = ${diaChiKhachHang.idPX};
-
-        // Lấy phí ship ban đầu từ giaoHangDTO.phiShip truyền từ Controller
-        <%--var initialPhiShip = ${giaoHangDTO.phiShip == null ? 0 : giaoHangDTO.phiShip};--%>
-        alert(initialPhiShip);
-
-        // Hiển thị phí ship ban đầu và tổng tiền thanh toán dựa trên phí ship ban đầu
-        updatePaymentDetails(tongTien + initialPhiShip - giamGia, initialPhiShip, initialPhiShip, giamGia);
-
-        // Nếu tổng tiền hàng là 0 hoặc nhỏ hơn, không thực hiện tính phí ship nữa
+        <%--var soLuongGioHang = ${soLuongGioHang};--%>
+        // var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
+        // Nếu tổng tiền hàng về 0
         if (tongTien <= 0) {
-            return;
+            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#phiShip').val(0);
+            $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+            return; // Không cần thực hiện các bước tính phí ship
         }
 
         // Calculate weight
@@ -1644,52 +1644,41 @@
             // Step 2: Calculate shipping fee based on service_id and other parameters
             getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyenTest + '&to_ward_code=' + idPhuongXaTest + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function (data_total) {
 
-                var firstFee = data_total.data.total;
+                 var firstFee = data_total.data.total;
+                phiShipMoi = firstFee;
                 console.log("API Response: ", firstFee); // Log the shipping fee
 
-                // Tính lại tổng tiền mới dựa trên phí ship mới
+                // Calculate the new total
                 var newTotal = tongTien + firstFee - giamGia;
 
-                // Cập nhật DOM với tổng tiền mới và phí ship mới
-                updatePaymentDetails(newTotal, firstFee, firstFee, giamGia);
+                // Update the total amount in the DOM
+                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
+                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+                $('#phiShip').val(firstFee);
+
             });
         });
     }
 
-    function updatePaymentDetails(tongTienThanhToan, phiVanChuyen, phiShipHoaDon, giamGia) {
-        $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tongTienThanhToan));
-        $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(phiVanChuyen));
-        $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(phiShipHoaDon));
-        $('#phiShip').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(phiShipHoaDon));
-        $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
-    }
-
-    // Initial calculation on page load with initialPhiShip
-    $(document).ready(function() {
-        <%--var tongTien = ${tongTien};--%>
-        <%--var soLuongGioHang = ${soLuongGioHang};--%>
-        <%--var giamGia = ${giamGia};--%>
-        <%--var initialPhiShip = ${giaoHangDTO.phiShip == null ? 0 : giaoHangDTO.phiShip};--%>
-
-        // Hiển thị thông tin ban đầu với phí ship từ Controller
-        updatePaymentDetails(tongTien + initialPhiShip - giamGia, initialPhiShip, initialPhiShip, giamGia);
-
-        // Sau đó tính lại phí ship và tổng tiền nếu cần thiết
-        calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia);
-    });
-
+    // Initial calculation on page load
+    calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia);
 
     // Hàm trả về phí ship
     function tinhPhiShip(tongTien, soLuongGioHang, giamGia) {
         // Get necessary values
-        var idQuanHuyenTest = ${diaChiKhachHang.idQH};
-        var idPhuongXaTest = ${diaChiKhachHang.idPX};
+        var idQuanHuyenTest = `${diaChiKhachHang.idQH}`; // Ensure this is a valid value
+        var idPhuongXaTest = `${diaChiKhachHang.idPX}`;
+
+        console.log("idQuanHuyenTest:", idQuanHuyenTest);
+        console.log("idPhuongXaTest:", idPhuongXaTest);
 
         // Nếu tổng tiền hàng về 0
         if (tongTien <= 0) {
             $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
             $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#phiShip').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+            $('#phiShip').val(0);
             $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
             $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
             return 0; // Không cần thực hiện các bước tính phí ship, trả về 0
@@ -1718,12 +1707,12 @@
                     // Update the total amount in the DOM
                     $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
                     $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                    $('#phiShipHoaDonn').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
                     $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
 
                     // Set the value of the shipping fee in an input field
                     $('#phiShip').val(firstFee);
 
-                    resolve(firstFee); // Resolve the promise with the shipping fee
                 });
             });
         });
@@ -1735,8 +1724,7 @@
 
 <script>
 
-    //Bến phí ship toàn cục
-    var firstFee = 0;
+
 
     // Hiển thị thông báo thành công nếu xác nhận đơn hàng thành công
     const Toast = Swal.mixin({
@@ -2086,14 +2074,17 @@
 
                             // Cập nhật thông tin thay đổi lại phí ship
                             wardSelect.change(function () {
+                                var idTinhThanh = provinceSelect.val();
+                                var idQuanHuyen = districtSelect.val();
+                                var idPhuongXa = $(this).val();
 
-                                alert("Thành Công")
-                                $('#phiShip').val(50000);
 
-                                tinhPhiShip(tongTien, soLuongGioHang, giamGia).then(function (phiShip) {
-                                    console.log("Phí ship mới: ", phiShip);
-                                    $('#phiShip').val(phiShip); // Set the input field value to the new shipping fee
-                                });
+
+                                // Tính lại phí ship
+                                // Recalculate the shipping fee
+                                calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia, idTinhThanh, idQuanHuyen, idPhuongXa);
+
+
                             });
                         });
                     });
@@ -2333,6 +2324,43 @@
             $(errorId).text('');
         });
 
+
+
+
+        // Hàm tính lại phí ship và tổng tiền thanh toán
+        function calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia, idTinhThanh, idQuanHuyen, idPhuongXa) {
+            if (tongTien <= 0) {
+                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+                $('#phiShip').val(0);
+                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
+                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+                return;
+            }
+
+            var khoiLuong = soLuongGioHang * 200;
+
+            // Step 1: Get the service_id
+            getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services?shop_id=1244&to_district=' + idQuanHuyen + '&from_district=3440', function(data_maDV) {
+                var service_id = data_maDV.data[0].service_id;
+
+                // Step 2: Calculate shipping fee based on service_id and other parameters
+                getJSONWithToken('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuanHuyen + '&to_ward_code=' + idPhuongXa + '&height=15&length=15&weight=' + khoiLuong + '&width=15', function(data_total) {
+                    var firstFee = data_total.data.total;
+                    phiShipMoi = firstFee;
+
+                    var newTotal = tongTien + firstFee - giamGia;
+
+                    $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
+                    $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                    $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
+                    $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+                    $('#phiShip').val(firstFee);
+
+                    alert(firstFee);
+                });
+            });
+        }
 
     });
 

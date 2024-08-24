@@ -2,15 +2,19 @@ package com.example.java4.repositories;
 
 import com.example.java4.entities.KichThuoc;
 import com.example.java4.entities.KichThuoc;
+import com.example.java4.entities.KieuTay;
 import com.example.java4.response.KichThuocRespone;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface KichThuocRepository
@@ -23,7 +27,7 @@ public interface KichThuocRepository
             "from ChiTietSanPham ctsp " +
             "join SanPham sp on sp.id = ctsp.idSanPham.id " +
             "join KichThuoc kth on kth.id = ctsp.idKichThuoc.id " +
-            "where sp.id = ?1 " +
+            "where sp.id = ?1 and ctsp.trangThai = 1" +
             "order by kth.ma asc ")
     List<KichThuocRespone> getListKichThuocByIdSP(String idSP);
     //Lấy ra kích thước theo tên kích thước
@@ -42,4 +46,21 @@ public interface KichThuocRepository
     Integer getCountStt1();
     @Query(value = "SELECT COUNT(*) FROM kichthuoc where trangThai=0",nativeQuery = true)
     Integer getCountStt0();
+
+    //Sáng
+    @Query(value = "select kth from KichThuoc kth where kth.ma Like %?1% " +
+            "or kth.ten Like %?1%")
+    List<KichThuoc> search(String keyword);
+
+    Integer countByMa(String ma);
+
+    @Query("SELECT kth from KichThuoc kth where kth.id = ?1")
+    KichThuoc findByIdKTh(Optional<String> id);
+
+    @Query("SELECT kth from KichThuoc kth where kth.id = ?1")
+    KichThuoc findById1(String id);
+
+    @Modifying
+    @Transactional
+    void deleteById(String id);
 };

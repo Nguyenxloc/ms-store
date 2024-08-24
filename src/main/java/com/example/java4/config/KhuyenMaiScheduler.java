@@ -10,10 +10,8 @@ public class KhuyenMaiScheduler {
 
     @Autowired
     private KhuyenMaiService khuyenMaiService;
-
-    @Scheduled(cron = "0 0 0 * * *")
-//    @Scheduled(fixedRate = 5000)
-    // Chạy vào lúc 12 giờ đêm hàng ngày
+    // 1 tiếng thì sẽ chạy lại 1 lần
+    @Scheduled(cron = "0 0 */1 * * *")
     public void runTask() {
         khuyenMaiService.updateKhuyenMaiStatus();
     }

@@ -750,6 +750,7 @@
                             <h6 class="price font-weight-medium" id="phiShip" style="font-size: 18px"></h6>
                             <input type="hidden" name="phiVanChuyen" value="" id="phiVanChuyen"/>
                         </div>
+                        <div><p style="color: red">Phí ship chỉ mang tính chất tham khảo.</p></div>
                     </div>
                     <div class="card border-secondary">
                         <div class="card-header bg-secondary border-0">

@@ -377,7 +377,9 @@
                 <fmt:formatNumber value="${ctsp.giaBan}" type="currency" currencySymbol="₫"/>
             </h3>
 
-            <p class="mb-4">${ctsp.moTa}</p>
+            <p class="mb-4">${ctsp.moTa}, kiểu <span style="text-transform: lowercase;">${ctsp.idKieuTay.ten}</span>,
+                chất liệu <span style="text-transform: lowercase;">${ctsp.idChatLieu.ten}</span></p>
+
 
             <div class="d-flex mb-3">
                 <p class="text-dark font-weight-medium mb-0 mr-3">Số lượng tồn:</p>
@@ -409,8 +411,8 @@
                         <div class="custom-control custom-radio custom-control-inline kichThuocOption">
                             <input onchange="onchangeByKichThuoc('${kichThuoc.tenKth}')" type="radio"
                                    class="custom-control-input" id="${kichThuoc.idKth}"
-                                   <c:if test="${i.index==0}">checked</c:if> value="${kichThuoc.tenKth}"
-                                   name="kichThuoc">
+                                   <c:if test="${i.index==0}">checked</c:if>
+                                   value="${kichThuoc.tenKth}" name="kichThuoc">
                             <label class="custom-control-label" for="${kichThuoc.idKth}">${kichThuoc.tenKth}</label>
                         </div>
                     </c:forEach>
@@ -621,7 +623,6 @@
         filterKichThuocOptions(tenMauSac);
     }
 
-
     // Hàm cập nhật hình ảnh và số lượng
     function setHinhAnhAndSoLuong(tenMauSac, tenKichThuoc) {
         var soLuong = 0;
@@ -680,6 +681,9 @@
         });
         document.getElementById("soLuongTon").textContent = soLuong != null ? soLuong : 0;
     }
+    var initialSelectedMauSac = document.querySelector('input[name="mauSac"]:checked').value;
+    var initialSelectedKichThuoc = document.querySelector('input[name="kichThuoc"]:checked').value;
+    setHinhAnhAndSoLuong(initialSelectedMauSac, initialSelectedKichThuoc);
 </script>
 
 <script>
@@ -840,7 +844,7 @@
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
             } else if (!phoneRegex.test(phone)) {
-                $('#registerPhoneError').text('Số điện thoại không hợp lệ. Định dạng hợp lệ: bắt đầu với +84 hoặc 0 và theo sau là 9-10 chữ số.');
+                $('#registerPhoneError').text('Số điện thoại không hợp lệ.');
                 $('#registerPhone').addClass('border-danger');
                 hasError = true;
             } else if (listKhachHang.find(kh => {
