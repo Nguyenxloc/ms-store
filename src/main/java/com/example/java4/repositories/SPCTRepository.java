@@ -1,5 +1,6 @@
 package com.example.java4.repositories;
 
+import com.example.java4.entities.ChatLieu;
 import com.example.java4.entities.ChiTietSanPham;
 import com.example.java4.response.MauSizeSL;
 import com.example.java4.response.SPCTDTO;
@@ -202,6 +203,13 @@ public interface SPCTRepository extends JpaRepository<ChiTietSanPham, String>, J
     Long getMinGiaBan(@Param("idSP") String idSP);
     @Query("select ctsp from ChiTietSanPham ctsp where ctsp.id = ?1 and ctsp.trangThai = 1")
     ChiTietSanPham getByIDCTSP(String id);
+
+    @Query("select min(ctsp.idChatLieu.id) from ChiTietSanPham ctsp where ctsp.idSanPham.id = :idSP")
+    String getMinChatLieuSPCTByIdSP(@Param("idSP") String idSP);
+
+    @Query("select min(ctsp.idKieuTay.id) from ChiTietSanPham ctsp where ctsp.idSanPham.id = :idSP")
+    String getMinKieuTaySPCTByIdSP(@Param("idSP") String idSP);
+
 };
 
 

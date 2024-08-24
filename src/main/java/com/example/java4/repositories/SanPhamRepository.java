@@ -39,4 +39,6 @@ public interface SanPhamRepository
     Integer checkTenSPIsExist(@Param("ten") String ten);
     @Query(value = "SELECT sp FROM SanPham sp WHERE LOWER(sp.ten) = LOWER(:tenSP)")
     SanPham checkTenSPExist(@Param("tenSP") String tenSP);
+    @Query(value = "SELECT sp FROM SanPham sp where sp.trangThai=:trangThai")
+    List<SanPham> findAllByTrangThai(@Param("trangThai") int trangThai);
 };
