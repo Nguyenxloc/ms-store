@@ -88,13 +88,8 @@
                                 <small id="matKhauError" class="text-danger"></small>
                             </div>
                             <div class="form-group">
-                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input
-                                        id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                                 <input type="submit" name="submit" class="btn btn-info btn-md w-100" value="Submit">
                             </div>
-<%--                            <div id="register-link" class="text-right">--%>
-<%--                                <a href="/dang-ky/singup" class="text-info">Register here</a>--%>
-<%--                            </div>--%>
                         </form:form>
                     </div>
 

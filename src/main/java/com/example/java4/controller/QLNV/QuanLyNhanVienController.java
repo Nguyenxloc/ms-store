@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("qlnv")
+@RequestMapping("admin/quan-ly-nhan-vien")
 public class QuanLyNhanVienController {
     @Autowired
     NhanVienRepository nhanVienRepo;
@@ -41,7 +41,7 @@ public class QuanLyNhanVienController {
     private String fileUpload;
 
     //Quản lý nhân viên
-    @GetMapping("quan-ly-nhan-vien")
+    @GetMapping("hien-thi")
     public String getQuanLyNhanVien(
             Model model,
             @RequestParam("page") Optional<Integer> pageParam
@@ -70,7 +70,7 @@ public class QuanLyNhanVienController {
             nhanVien.setTrangThai(NhanVienRepository.ACTIVE);
             nhanVienRepo.save(nhanVien);
         }
-        return "redirect:/qlnv/quan-ly-nhan-vien";
+        return "redirect:/admin/quan-ly-nhan-vien/hien-thi";
     }
 
     @GetMapping("/them-nhan-vien-view")
@@ -128,7 +128,7 @@ public class QuanLyNhanVienController {
         nhanVien.setNgayTao(LocalDateTime.now());
         nhanVien.setTrangThai(NhanVienRepository.ACTIVE);
         nhanVienRepo.save(nhanVien);
-        return "redirect:/qlnv/quan-ly-nhan-vien";
+        return "redirect:/admin/quan-ly-nhan-vien/hien-thi";
     }
 
     @PostMapping("them-chuc-vu")
@@ -140,7 +140,7 @@ public class QuanLyNhanVienController {
         chucVu.setNgayTao(LocalDateTime.now());
         chucVu.setTrangThai(ChucVuRepository.ACTIVE);
         chucVuRepo.save(chucVu);
-        return "redirect:/qlnv/them-nhan-vien-view";
+        return "redirect:/admin/quan-ly-nhan-vien/them-nhan-vien-view";
     }
 
     @PostMapping("sua-chuc-vu/{id}")
@@ -155,7 +155,7 @@ public class QuanLyNhanVienController {
         chucVu.setNgaySua(LocalDateTime.now());
         chucVu.setTrangThai(trangThai);
         chucVuRepo.save(chucVu);
-        return "redirect:/qlnv/them-nhan-vien-view";
+        return "redirect:/admin/quan-ly-nhan-vien/them-nhan-vien-view";
     }
 
 
@@ -212,7 +212,7 @@ public class QuanLyNhanVienController {
         nhanVien.setNgaySua(LocalDateTime.now());
         nhanVien.setTrangThai(nvReq.getTrangThai());
         nhanVienRepo.save(nhanVien);
-        return "redirect:/qlnv/quan-ly-nhan-vien";
+        return "redirect:/admin/quan-ly-nhan-vien/hien-thi";
     }
 
     @PostMapping("tim-kiem")
@@ -297,6 +297,6 @@ public class QuanLyNhanVienController {
         nhanVien.setNgaySua(LocalDateTime.now());
         nhanVien.setTrangThai(nvReq.getTrangThai());
         nhanVienRepo.save(nhanVien);
-        return "redirect:/qlnv/quan-ly-nhan-vien";
+        return "redirect:/admin/quan-ly-nhan-vien/hien-thi";
     }
 }

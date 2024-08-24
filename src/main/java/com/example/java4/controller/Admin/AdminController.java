@@ -43,7 +43,7 @@ public class AdminController {
         NhanVien nhanVienByTK = nhanVienRepo.findByTaiKhoan(nvReq.getTaiKhoan());
         if (nhanVienByTK == null){
             redirectAttributes.addFlashAttribute("error", "Tên tài khoản không tồn tại!");
-            return "redirect:/ban-hang-tai-quay/dang-nhap-view";
+            return "redirect:/admin/dang-nhap-view";
         }else {
             if (nvReq.getMatKhau().equals(nhanVienByTK.getMatKhau())){
                 UserInfor.idNhanVien = nhanVienByTK.getId();
@@ -51,10 +51,10 @@ public class AdminController {
                 String role = nhanVienByTK.getIdCV().getTen();
                 session.setAttribute("userRole", role);
                 redirectAttributes.addFlashAttribute("success", "Đăng nhập thành công");
-                return "redirect:/ban-hang-tai-quay";
+                return "redirect:/admin/thong-ke/view";
             }else {
                 redirectAttributes.addFlashAttribute("error", "Mật khẩu nhập vào chưa đúng!");
-                return "redirect:/ban-hang-tai-quay/dang-nhap-view";
+                return "redirect:/admin/dang-nhap-view";
             }
         }
     }

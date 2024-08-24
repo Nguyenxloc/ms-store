@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("qlkh")
+@RequestMapping("admin/quan-ly-khach-hang")
 public class QuanLyKhachHangController {
     @Autowired
     KhachHangRepository khachHangRepo;
@@ -48,7 +48,7 @@ public class QuanLyKhachHangController {
     private String fileUpload;
 
     //Quản lý khách hàng
-    @GetMapping("quan-ly-khach-hang")
+    @GetMapping("hien-thi")
     public String getQuanLyKhachHang(
             Model model,
             @RequestParam("page") Optional<Integer> pageParam
@@ -115,7 +115,7 @@ public class QuanLyKhachHangController {
         khachHang.setNgayTao(LocalDateTime.now());
         khachHang.setTrangThai(NhanVienRepository.ACTIVE);
         khachHangRepo.save(khachHang);
-        return "redirect:/qlkh/quan-ly-khach-hang";
+        return "redirect:/admin/quan-ly-khach-hang/hien-thi";
     }
 
 
@@ -167,7 +167,7 @@ public class QuanLyKhachHangController {
         khachHang.setNgaySua(LocalDateTime.now());
         khachHang.setTrangThai(khReq.getTrangThai());
         khachHangRepo.save(khachHang);
-        return "redirect:/qlkh/quan-ly-khach-hang";
+        return "redirect:/admin/quan-ly-khach-hang/hien-thi";
     }
 
     @GetMapping("dia-chi-view/{idKH}")
