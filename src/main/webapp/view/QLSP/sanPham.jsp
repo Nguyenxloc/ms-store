@@ -564,7 +564,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="row">
-                            <h3 class="modal-title">Thêm nhiều sản phẩm bao gồm sản phẩm chi tiết</h3>
+                            <h3 class="modal-title">Thêm sản phẩm bao gồm các sản phẩm chi tiết</h3>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -578,7 +578,7 @@
                                             <div>
                                                 <input type="text" id="tensp"
                                                        class="w-full p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                       placeholder="Nhập tên sản phẩm" style="width: 450px ">
+                                                       placeholder="Nhập tên sản phẩm" style="width: 485px ">
                                                 <p style="color: red;" class="ms-4" id="tenSPErr"></p>
                                             </div>
                                         </div>

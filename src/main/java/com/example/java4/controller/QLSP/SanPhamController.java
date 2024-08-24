@@ -11,6 +11,8 @@ import com.example.java4.request.QLSP.Update.SanPhamUpdate;
 import com.example.java4.response.SanPhamView;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -231,14 +233,38 @@ public class SanPhamController {
     public ResponseEntity<List<SanPhamView>> searchSanPham(
             @RequestParam("idChatLieu") String idChatLieu,
             @RequestParam("idKieuTay") String idKieuTay,
-            @RequestParam("trangThai") Integer trangThai,
+            @RequestParam("trangThai") String trangThai,
             @RequestParam("page") Optional<Integer> pageParam) {
         int page = pageParam.orElse(1);
-        Pageable pageale = PageRequest.of(page-1, 20);
-        List<SanPham> lstSP = spRepo.findAll();
-        List<SanPhamView> lstSPView = new ArrayList<>();
-        for (SanPham sanPham : lstSP) {
-            
+        Pageable pageable = PageRequest.of(page-1, 20);
+        List<SanPham> lstSP;
+        Page<SanPham> pageSP;
+        Page<SanPhamView> pageSPView;
+        List<SanPhamView> lstSPView;
+        if (idChatLieu.equals("") && idKieuTay.equals("") && !trangThai.equals("")) {
+            Integer trangThaiSearch = Integer.parseInt(trangThai);
+            pageSP = spRepo.findByTrangThai(trangThaiSearch, pageable);
+
+            for (SanPham sp : pageSP.getContent()) {
+                lstSPView = new ArrayList<>();
+                SanPhamView spView = new SanPhamView();
+                spView.setId(sp.getId());
+                spView.setMa(sp.getMa());
+                spView.setTen(sp.getTen());
+                spView.setNgayTao(sp.getNgayTao());
+                spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
+                spView.setTrangThai(sp.getTrangThai());
+                lstSPView.add(spView);
+            }
+            Page<SanPhamView> pageSPView = new PageImpl<>(lstSPView, pageable, pageSP != null ? pageSP.getTotalElements() : 0);
+        }
+
+        // Convert the list to a Page object
+
+        if(!idChatLieu.equals("") && idKieuTay.equals("") && trangThai.equals("")){
+//            for (SanPham sanPham : lstSP) {
+//
+//            }
         }
         return ResponseEntity.ok(null);
     }
