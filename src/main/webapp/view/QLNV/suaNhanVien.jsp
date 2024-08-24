@@ -18,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MSqlnv_Tại quầy</title>
+    <title>MSStore_Quản lý nhân viên</title>
 
     <!-- Custom fonts for this template-->
     <link href="/view_admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -121,7 +121,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">MS - qlnv</div>
+            <div class="sidebar-brand-text mx-3">MS - Store</div>
         </a>
 
         <!-- Divider -->
@@ -138,50 +138,53 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
+                <li class="nav-item" >
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem;"></i>
                         <span>Quản lý sản phẩm</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-mau-sac">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kich-thuoc">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kieu-tay">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-chat-lieu">Chất liệu</a>
                         </div>
                     </div>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm/quan-ly-km" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -197,21 +200,21 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -229,18 +232,6 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
@@ -268,127 +259,6 @@
                         </div>
                     </li>
 
-                    <!-- Nav Item - Alerts -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                Alerts Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Message Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="/view_admin/img/undraw_profile_1.svg"
-                                         alt="">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="/view_admin/img/undraw_profile_2.svg"
-                                         alt="">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="/view_admin/img/undraw_profile_3.svg"
-                                         alt="...">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                         alt="...">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
-                    </li>
-
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
@@ -402,12 +272,12 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
+                            <a class="dropdown-item" href="/admin/quan-ly-nhan-vien/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/qlnv/dang-xuat" id="dang-xuat" data-toggle="modal"
+                            <a class="dropdown-item" href="" id="dang-xuat" data-toggle="modal"
                                data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
@@ -424,7 +294,7 @@
 
                     <%--      Tìm kiếm & lọc thông tin nhân ciên      --%>
                     <h5 class="card-title mb-3">Sửa thông tin nhân viên</h5>
-                    <sf:form id="employeeForm" method="post" action="/qlnv/sua-nhan-vien/${nhanVien.id}" enctype="multipart/form-data"
+                    <sf:form id="employeeForm" method="post" action="/admin/quan-ly-nhan-vien/sua-nhan-vien/${nhanVien.id}" enctype="multipart/form-data"
                              modelAttribute="nhanVien">
                         <div class="row">
                             <div class="col-sm-4">
@@ -527,7 +397,7 @@
 
                                         <div class="text-center" style="margin-top: 40px">
                                             <button type="submit" class="btn btn-warning">Sửa</button>
-                                            <a href="/qlnv/quan-ly-nhan-vien">
+                                            <a href="/admin/quan-ly-nhan-vien/hien-thi">
                                                 <button type="button" class="btn btn-secondary">Hủy</button>
                                             </a>
                                         </div>
@@ -551,7 +421,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>MS - qlnv</span>
+                    <span>MS - Store</span>
                 </div>
             </div>
         </footer>
@@ -565,26 +435,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-<%--<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"--%>
-<%--     aria-hidden="true">--%>
-<%--    <div class="modal-dialog" role="document">--%>
-<%--        <div class="modal-content">--%>
-<%--            <div class="modal-header">--%>
-<%--                <h5 class="modal-title" id="exampleModalLabel1">Bạn có chắc chắn muốn đăng xuất không?</h5>--%>
-<%--                <button class="close" type="button" data-dismiss="modal" aria-label="Close">--%>
-<%--                    <span aria-hidden="true">×</span>--%>
-<%--                </button>--%>
-<%--            </div>--%>
-<%--            <div class="modal-body">Chọn "Đăng xuất" bạn sẽ thoát khỏi trang này!</div>--%>
-<%--            <div class="modal-footer">--%>
-<%--                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>--%>
-<%--                <a class="btn btn-primary" href="/qlnv/dang-xuat">Đăng xuất</a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 
 <!-- Bootstrap core JavaScript-->
 <script src="/view_admin/vendor/jquery/jquery.min.js"></script>
