@@ -301,6 +301,15 @@ public class BanTaiQuayController {
                         hoaDonRepository.save(hoaDon);
                     }
                 }
+
+                String idKM = hoaDon.getIdKhuyenMai().getId();
+                for (KhuyenMai km:listKhuyenMai){
+                    if (km.getId().equals(idKM)){
+                        km.setSoLuong(km.getSoLuong()+1);
+                        khuyenMaiRepo.save(km);
+                    }
+                }
+
             }
         }
 
@@ -489,8 +498,9 @@ public class BanTaiQuayController {
         System.out.println("=================id kh: "+ idKH);
         System.out.println("=================tong tien: "+ tongTien);
         System.out.println("===================true false:"+ idKhuyenMai.equals(""));
+
         newHoaDon.setIdNhanVien(nhanVienRepo.findById(UserInfor.idNhanVien).get());
-        newHoaDon.setPhuongThucThanhToan(0);
+
         if(idKhuyenMai.equals("")){
             newHoaDon.setIdKhuyenMai(null);
         }
@@ -503,6 +513,13 @@ public class BanTaiQuayController {
         else{
             newHoaDon.setIdKhachHang(khachHangRepository.findById(idKH).get());
         }
+
+//        ChiTietHoaDon chiTietHoaDon = hoaDonChiTietRepository.findByIdHoaDon(idHoaDon);
+//        if (chiTietHoaDon.getIdHoaDon().getId().equals(idHoaDon)){
+//            chiTietHoaDon.setTrangThai(1);
+//            hoaDonChiTietRepository.save(chiTietHoaDon);
+//        }
+
         newHoaDon.setNgayThanhToan(now);
         newHoaDon.setTongTien(tongTien);
         newHoaDon.setLoaiHoaDon(0);

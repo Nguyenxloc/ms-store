@@ -159,14 +159,14 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="color: white; margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -203,7 +203,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -394,7 +394,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/qlnv/tai-khoan-cua-toi/${nv.id}">
+                            <a class="dropdown-item" href="/admin/quan-ly-nhan-vien/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Thông tin cá nhân
                             </a>
@@ -940,7 +940,7 @@
                                                 <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                                 <input type="hidden" name="maHoaDon" value="${hoaDon.ma}">
                                                 <input type="hidden" class="form-control" name="ngayTao" value="${hoaDon.ngayTao}">
-                                                <input type="hidden" name="idHoaDon" value="${hoaDon.id}" id="selectedInvoiceId">
+                                                <input type="hidden" value="${hoaDon.id}" id="selectedInvoiceId">
                                                 <button class="btn btn-primary" type="submit">
                                                     <i class="bi bi-plus-square"></i>
                                                 </button>
@@ -1581,8 +1581,6 @@
         }
 
 
-
-
     });
     //
 
@@ -1832,6 +1830,15 @@
                 Swal.fire({
                     title: 'Lỗi!',
                     text: 'Vui lòng kiểm tra lại tiền khách đưa khi thanh toán.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+            else if (tongTien===null){
+                // thongBao.textContent =  "Vui lòng kiểm tra lại thanh toán";
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: 'Vui lòng kiểm tra lại tiền khách đưa khi thanh toán111111111.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
