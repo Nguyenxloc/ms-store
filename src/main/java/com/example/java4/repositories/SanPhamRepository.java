@@ -41,4 +41,10 @@ public interface SanPhamRepository
     SanPham checkTenSPExist(@Param("tenSP") String tenSP);
     @Query(value = "SELECT sp FROM SanPham sp where sp.trangThai=:trangThai")
     List<SanPham> findAllByTrangThai(@Param("trangThai") int trangThai);
+    @Query(value = "SELECT sp FROM SanPham sp ORDER BY sp.ngayTao ASC")
+    Page<SanPham> findAllCase(Pageable pageable);
+    @Query("SELECT sp FROM SanPham sp WHERE " +
+            "LOWER(sp.ma) LIKE LOWER(CONCAT('%', :ma, '%')) OR " +
+            "LOWER(sp.ten) LIKE LOWER(CONCAT('%', :ten, '%'))")
+    List<SanPham> searchByMaOrTen(@Param("ma") String ma, @Param("ten") String ten);
 };

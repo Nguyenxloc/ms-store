@@ -434,30 +434,6 @@
 
                     <div class="col col-md-2">
                         <div class="dropdown">
-                            <button id="lblChatLieuSearch" class="btn btn-outline-secondary dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                Chọn chất liệu
-                            </button>
-                            <ul id="cboChatLieuSearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col col-md-2">
-                        <div class="dropdown">
-                            <button id="lblKieuTaySearch" class="btn btn-outline-secondary dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                Chọn kiểu tay
-                            </button>
-                            <ul id="cboKieuTaySearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col col-md-2">
-                        <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                     id="lblTrangThaiSearch" data-bs-toggle="dropdown" aria-expanded="false">
                                 Chọn trạng thái
@@ -510,7 +486,7 @@
                 </table>
             </div>
 
-            <div class="col-12 pb-1">
+            <div class="col-12 pb-1" id="paginationBox">
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center mb-3">
                         <li class="page-item" id="prev">
@@ -878,12 +854,13 @@
             let items = document.querySelectorAll('.page-item');
             let activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
             let newIndex = activeIndex + direction;
-            currentPage = newIndex
-            loadDSSP(currentPage);
+            currentPage = newIndex;
+            loadDSSP();
             if (newIndex > 0 && newIndex < items.length - 1) {
                 setActive(items[newIndex].querySelector('a'));
             }
         }
+
     }
 
     updateButtons();
@@ -1247,8 +1224,6 @@
     const lblChatLieuAdd = document.getElementById("lblChatLieuAdd");
     const lblKieuTayAdd = document.getElementById("lblKieuTayAdd");
     const lblTrangThaiSearch = document.getElementById("lblTrangThaiSearch");
-    const lblChatLieuSearch = document.getElementById("lblChatLieuSearch");
-    const lblKieuTaySearch = document.getElementById("lblKieuTaySearch");
     const iconAddMoreCboMauSac = document.getElementById("iconAddMoreCboMauSac");
     const iconAddMoreCboKichThuoc = document.getElementById("iconAddMoreCboKichThuoc");
     const iconRemoveMoreCboMauSac = document.getElementById("iconRemoveMoreCboMauSac");
@@ -1260,8 +1235,6 @@
     let idKichThuocAdd = "";
     let idChatLieuAdd = "";
     let idKieuTayAdd = "";
-    let idChatLieuSearch = "";
-    let idKieuTaySearch = "";
     let idTrangThaiSearch = "";
     let howManyCboMauSac = 1;
     let howManyCboKichThuoc = 0;
@@ -1273,21 +1246,97 @@
     let checkChooseDropdown = "";
     let tenSPSearch = "";
 
+
     function search(e) {
-        e.preventDefault();
-        console.log('data chat lieu ID search:', idChatLieuSearch);
-        console.log('data kieu tay ID search:', idKieuTaySearch);
-        console.log('debug trang thai search: ', idTrangThaiSearch);
-        console.log("debug tensp search: ", tenSPSearch);
-        fetch("/san-pham/search" + "&idChatLieu=" + idChatLieuSearch + "&idKieuTay=" + idKieuTaySearch + "&trangThai=" + idTrangThaiSearch + "&page=", {
+        e.preventDefault(); // Prevent default form submission behavior
+        let html = '';
+        let searchText = document.getElementById("tenSPSearch").value.trim();
+        if (searchText !== "") {
+            idTrangThaiSearch = "";
+            document.getElementById("lblTrangThaiSearch").textContent = "Trạng thái";
+            searchTyping(); // If there's a search term, call searchTyping
+        }
+        else{
+            fetch("/san-pham/searchsp?trangThai=" + encodeURIComponent(idTrangThaiSearch), {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(spList => {
+                    // Build HTML for search results
+                    spList.forEach((sp, i) => {
+                        const maSanPham = sp.ma || 'N/A';
+                        const tenSanPham = sp.ten || 'N/A';
+                        const hinhAnh = sp.hinhAnh || null;
+                        const ngayTao = sp.ngayTao || 'N/A';
+                        const trangThai = sp.trangThai === 1
+                            ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
+                            : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
+
+                        html += '<tr>' +
+                            '<td>' + (i + 1) + '</td>' +
+                            '<td>' +
+                            '<img src="' + (hinhAnh ? "/image/" + hinhAnh : "/image-icon/placeholder.jpg") + '" ' +
+                            'alt="Image" ' +
+                            'style="width: 50px; height: 60px" ' +
+                            'class="img-fluid rounded border" />' +
+                            '</td>' +
+                            '<td>' + maSanPham + '</td>' +
+                            '<td>' + tenSanPham + '</td>' +
+                            '<td>' + ngayTao + '</td>' +
+                            '<td>' + trangThai + '</td>' +
+                            '<td>' +
+                            '<div class="d-inline">' +
+                            '<button id="editSPBtn_' + sp.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Chỉnh sửa</button>' +
+                            '<button id="detailSPBtn_' + sp.id + '" class="btn btn-danger">Chi tiết</button>' +
+                            '</div>' +
+                            '</td>' +
+                            '</tr>';
+                    });
+
+                    document.getElementById("tbl_ds_sp").innerHTML = html;
+                    document.getElementById("paginationBox").style.display = "none";
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+        // Fetch search results based on trangThai
+    }
+
+
+    function searchTyping() {
+        let html = '';
+        let text = document.getElementById("tenSPSearch").value;
+        let trimmedText = text.trim();
+        let firstTwoChars = trimmedText.toLowerCase().substring(0, 2);
+        let queryParam = firstTwoChars === "sp" ? "ma=" : "ten=";
+        let searchValue = encodeURIComponent(trimmedText);
+
+        console.log("Debug: Search value:", searchValue);
+        console.log("Debug: First two characters:", firstTwoChars);
+
+        fetch("/san-pham/search-typing?" + queryParam + searchValue, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(response => response.json())
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(resp => {
-                let html = '';
-                resp.map((sp, i) => {
+                resp.forEach((sp, i) => {
                     const maSanPham = sp.ma || 'N/A';
                     const tenSanPham = sp.ten || 'N/A';
                     const hinhAnh = sp.hinhAnh || null;
@@ -1296,7 +1345,6 @@
                         ? '<p style="font-weight: bold; color: blue">Hoạt động</p>'
                         : '<p style="font-weight: bold; color: red">Dừng HĐ</p>';
 
-                    // Build the HTML row for each product using string concatenation
                     html += '<tr>' +
                         '<td>' + (i + 1) + '</td>' +
                         '<td>' +
@@ -1317,20 +1365,24 @@
                         '</td>' +
                         '</tr>';
                 });
-                $("#tbl_ds_sp").html(html)
+                document.getElementById("tbl_ds_sp").innerHTML = html;
+                document.getElementById("paginationBox").style.display = "none";
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
             });
     }
 
 
+
+
     function refreshSearch(e) {
         e.preventDefault();
-        idChatLieuSearch = "";
-        idKieuTaySearch = "";
         idTrangThaiSearch = "";
-        document.getElementById("lblMauSacSearch").textContent = "Chọn chất liệu";
-        document.getElementById("lblKichThuocSearch").textContent = "Chọn kiểu tay";
         document.getElementById("lblTrangThaiSearch").textContent = "Trạng thái";
-        loadDSSPCT(currentPage);
+        document.getElementById("tenSPSearch").value = "";
+        loadDSSP(currentPage);
+        document.getElementById("paginationBox").style.display="block";
     }
 
 
@@ -1481,19 +1533,6 @@
         // You can add more logic here to handle the selected value
     }
 
-    function setChatLieuSearch(clString) {
-        const cl = JSON.parse(clString.replace(/&quot;/g, '"'));
-        idChatLieuSearch = cl.id;
-        lblChatLieuSearch.textContent = cl.ten;
-        console.log('Selected chat lieu ID:', idChatLieu);
-    }
-
-    function setKieuTaySearch(ktString) {
-        const kt = JSON.parse(ktString.replace(/&quot;/g, '"'));
-        idKieuTaySearch = kt.id;
-        lblKieuTaySearch.textContent = kt.ten;
-        console.log('Selected kieu tay ID modal:', idKieuTayAdd);
-    }
 
     function setTrangThaiSearch(status) {
         let lblTrangThai = document.getElementById('lblTrangThaiSearch');
@@ -1874,28 +1913,14 @@
         document.getElementById('next').classList.toggle('disabled', activeIndex === items.length - 2);
     }
 
-    function navigate(direction, e) {
-        e.preventDefault();
-        if (totalPage > 1) {
-            let items = document.querySelectorAll('.page-item');
-            let activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
-            let newIndex = activeIndex + direction;
-            currentPage = newIndex
-            loadDSSP(currentPage);
-            if (newIndex > 0 && newIndex < items.length - 1) {
-                setActive(items[newIndex].querySelector('a'));
-            }
-        }
-    }
+
 
     updateButtons();
     loadDSSP(currentPage);
     loadTotalPagination(currentPage);
 
-
     const editSPBtn = document.querySelectorAll('#editSPBtn');
     const saveEditBtn = document.querySelectorAll('#saveEditBtn');
-
 
     function getFileName(fullPath) {
         // Check for the last occurrence of the backslash or forward slash

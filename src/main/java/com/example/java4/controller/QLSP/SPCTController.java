@@ -228,7 +228,6 @@ public class SPCTController {
                     newHinhAnh = new HinhAnh();
                     newHinhAnh.setIdCTSP(chiTietSanPham); // Ensure you set the correct relationship here
                 }
-
                 newHinhAnh.setHinhAnh1(params.get("hinhAnh1").toString());
                 newHinhAnh.setHinhAnh2(params.get("hinhAnh2").toString());
                 newHinhAnh.setHinhAnh3(params.get("hinhAnh3").toString());

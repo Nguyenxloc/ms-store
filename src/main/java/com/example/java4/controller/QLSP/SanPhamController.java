@@ -56,7 +56,7 @@ public class SanPhamController {
     public ResponseEntity<List<SanPhamView>> index(@RequestParam("page") Optional<Integer> pageParam){
         int page = pageParam.orElse(1);
         Pageable pageale = PageRequest.of(page-1, 20);
-        List<SanPham> lstSP = spRepo.findByTrangThai(1,pageale).getContent();
+        List<SanPham> lstSP = spRepo.findAllCase(pageale).getContent();
         List<SanPhamView> lstSPView = new ArrayList<>();
         for (SanPham sanPham : lstSP) {
              SanPhamView spView  = new SanPhamView();
@@ -232,164 +232,22 @@ public class SanPhamController {
 
     @GetMapping("/searchsp")
     public ResponseEntity<List<SanPhamView>> searchSanPham(
-            @RequestParam("idChatLieu") String idChatLieu,
-            @RequestParam("idKieuTay") String idKieuTay,
             @RequestParam("trangThai") String trangThai) {
-
-        List<SanPham> lstSPAll = spRepo.findAll();
-        List<SanPhamView> lstSPViewNew = new ArrayList<>();
-
-        // Case 1: All parameters are empty
-        if (idChatLieu.equals("") && idKieuTay.equals("") && trangThai.equals("")) {
-            // Optionally, return all products or an empty list based on your requirements
-            for (SanPham sp : lstSPAll) {
-                SanPhamView spView = new SanPhamView();
-                spView.setId(sp.getId());
-                spView.setMa(sp.getMa());
-                spView.setTen(sp.getTen());
-                spView.setNgayTao(sp.getNgayTao());
-                spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                spView.setTrangThai(sp.getTrangThai());
-                lstSPViewNew.add(spView);
-            }
-            return ResponseEntity.ok(lstSPViewNew); // Return all products
+        Integer trangThaiSearch = Integer.parseInt(trangThai);
+        List<SanPham> lstSP = spRepo.findAllByTrangThai(trangThaiSearch);
+        List<SanPhamView> lstSPView = new ArrayList<>();
+        for (SanPham sanPham : lstSP) {
+            SanPhamView spView  = new SanPhamView();
+            spView.setId(sanPham.getId());
+            spView.setMa(sanPham.getMa());
+            spView.setTen(sanPham.getTen());
+            spView.setNgayTao(sanPham.getNgayTao());
+            spView.setHinhAnh(spRepo.getHinhAnhOfSP(sanPham.getId()));
+            spView.setTrangThai(sanPham.getTrangThai());
+            lstSPView.add(spView);
         }
-
-        // Other cases as previously defined...
-
-        // Case 2: Only trangThai is provided
-        if (idChatLieu.equals("") && idKieuTay.equals("") && !trangThai.equals("")) {
-            Integer trangThaiSearch = Integer.parseInt(trangThai);
-            List<SanPham> lstSPNew = spRepo.findAllByTrangThai(trangThaiSearch);
-            for (SanPham sp : lstSPNew) {
-                SanPhamView spView = new SanPhamView();
-                spView.setId(sp.getId());
-                spView.setMa(sp.getMa());
-                spView.setTen(sp.getTen());
-                spView.setNgayTao(sp.getNgayTao());
-                spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                spView.setTrangThai(sp.getTrangThai());
-                lstSPViewNew.add(spView);
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Case 3: Only idKieuTay is provided
-        if(idChatLieu.equals("") && !idKieuTay.equals("") && trangThai.equals("")){
-            for (SanPham sp : lstSPAll) {
-                if(sp.getId().equals(spctRepository.getMinKieuTaySPCTByIdSP(sp.getId()))){
-                    SanPhamView spView = new SanPhamView();
-                    spView.setId(sp.getId());
-                    spView.setMa(sp.getMa());
-                    spView.setTen(sp.getTen());
-                    spView.setNgayTao(sp.getNgayTao());
-                    spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                    spView.setTrangThai(sp.getTrangThai());
-                    lstSPViewNew.add(spView);
-                }
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Case 4: Only idChatLieu is provided
-        if(!idChatLieu.equals("") && idKieuTay.equals("") && trangThai.equals("")){
-            for (SanPham sp : lstSPAll) {
-                if(sp.getId().equals(spctRepository.getMinChatLieuSPCTByIdSP(sp.getId()))){
-                    SanPhamView spView = new SanPhamView();
-                    spView.setId(sp.getId());
-                    spView.setMa(sp.getMa());
-                    spView.setTen(sp.getTen());
-                    spView.setNgayTao(sp.getNgayTao());
-                    spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                    spView.setTrangThai(sp.getTrangThai());
-                    lstSPViewNew.add(spView);
-                }
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Case 5: idChatLieu and idKieuTay are provided
-        if(!idChatLieu.equals("") && !idKieuTay.equals("") && trangThai.equals("")){
-            for (SanPham sp : lstSPAll) {
-                if(sp.getId().equals(spctRepository.getMinChatLieuSPCTByIdSP(sp.getId())) &&
-                        sp.getId().equals(spctRepository.getMinKieuTaySPCTByIdSP(sp.getId()))){
-                    SanPhamView spView = new SanPhamView();
-                    spView.setId(sp.getId());
-                    spView.setMa(sp.getMa());
-                    spView.setTen(sp.getTen());
-                    spView.setNgayTao(sp.getNgayTao());
-                    spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                    spView.setTrangThai(sp.getTrangThai());
-                    lstSPViewNew.add(spView);
-                }
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Case 6: idChatLieu and trangThai are provided
-        if(!idChatLieu.equals("") && idKieuTay.equals("") && !trangThai.equals("")){
-            Integer trangThaiSearch = Integer.parseInt(trangThai);
-            for (SanPham sp : lstSPAll) {
-                if(sp.getId().equals(spctRepository.getMinChatLieuSPCTByIdSP(sp.getId())) &&
-                        sp.getTrangThai().equals(trangThaiSearch)){
-                    SanPhamView spView = new SanPhamView();
-                    spView.setId(sp.getId());
-                    spView.setMa(sp.getMa());
-                    spView.setTen(sp.getTen());
-                    spView.setNgayTao(sp.getNgayTao());
-                    spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                    spView.setTrangThai(sp.getTrangThai());
-                    lstSPViewNew.add(spView);
-                }
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Case 7: idKieuTay and trangThai are provided
-        if(idChatLieu.equals("") && !idKieuTay.equals("") && !trangThai.equals("")){
-            Integer trangThaiSearch = Integer.parseInt(trangThai);
-            for (SanPham sp : lstSPAll) {
-                if(sp.getId().equals(spctRepository.getMinKieuTaySPCTByIdSP(sp.getId())) &&
-                        sp.getTrangThai().equals(trangThaiSearch)){
-                    SanPhamView spView = new SanPhamView();
-                    spView.setId(sp.getId());
-                    spView.setMa(sp.getMa());
-                    spView.setTen(sp.getTen());
-                    spView.setNgayTao(sp.getNgayTao());
-                    spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                    spView.setTrangThai(sp.getTrangThai());
-                    lstSPViewNew.add(spView);
-                }
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Case 8: All parameters are provided
-        if(!idChatLieu.equals("") && !idKieuTay.equals("") && !trangThai.equals("")){
-            Integer trangThaiSearch = Integer.parseInt(trangThai);
-            for (SanPham sp : lstSPAll) {
-                if(sp.getId().equals(spctRepository.getMinChatLieuSPCTByIdSP(sp.getId())) &&
-                        sp.getId().equals(spctRepository.getMinKieuTaySPCTByIdSP(sp.getId())) &&
-                        sp.getTrangThai().equals(trangThaiSearch)){
-                    SanPhamView spView = new SanPhamView();
-                    spView.setId(sp.getId());
-                    spView.setMa(sp.getMa());
-                    spView.setTen(sp.getTen());
-                    spView.setNgayTao(sp.getNgayTao());
-                    spView.setHinhAnh(spRepo.getHinhAnhOfSP(sp.getId()));
-                    spView.setTrangThai(sp.getTrangThai());
-                    lstSPViewNew.add(spView);
-                }
-            }
-            return ResponseEntity.ok(lstSPViewNew);
-        }
-
-        // Return null if no case is matched
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(lstSPView);
     }
-
-
-
 
     @CrossOrigin
     @GetMapping("/check-duplicate")
@@ -426,5 +284,25 @@ public class SanPhamController {
     public ResponseEntity<String> test1(@RequestParam("idSP") String idSP) {
         return ResponseEntity.ok(spctRepository.getMinKieuTaySPCTByIdSP(idSP));
     }
+    @CrossOrigin
+    @GetMapping("/search-typing")
+    public ResponseEntity<List<SanPhamView>> searchSanPhamByMaOrTen(
+            @RequestParam(value = "ma", required = false) String ma,
+            @RequestParam(value = "ten", required = false) String ten) {
+        List<SanPham> sanPhamList = spRepo.searchByMaOrTen(ma, ten);
+        List<SanPhamView> sanPhamViewList = new ArrayList<>();
+        for (SanPham sanPham : sanPhamList) {
+            SanPhamView spView  = new SanPhamView();
+            spView.setId(sanPham.getId());
+            spView.setMa(sanPham.getMa());
+            spView.setTen(sanPham.getTen());
+            spView.setNgayTao(sanPham.getNgayTao());
+            spView.setHinhAnh(spRepo.getHinhAnhOfSP(sanPham.getId()));
+            spView.setTrangThai(sanPham.getTrangThai());
+            sanPhamViewList.add(spView);
+        }
+        return ResponseEntity.ok(sanPhamViewList);
+    }
+
 
 }
