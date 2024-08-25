@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -124,5 +127,21 @@ public class KhuyenMaiController {
             kmRepo.save(km);
             return ResponseEntity.ok(true);
         }
+    }
+    @GetMapping("/check-duplicate")
+    public ResponseEntity<Boolean> checkDuplicate(@RequestParam("tenKM") String tenKM) {
+        // Decode the URL-encoded string to handle special characters
+        try {
+            tenKM = URLDecoder.decode(tenKM, StandardCharsets.UTF_8.toString());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        System.out.println("debug tensp check duplicate: "+tenKM);
+        // Trim the decoded string
+        tenKM = tenKM.trim();
+        // Now you can proceed with your logic
+        KhuyenMai existingKM = kmRepo.checkTenKMExist(tenKM);
+        boolean isDuplicate = existingKM != null;
+        return ResponseEntity.ok(isDuplicate);
     }
 }

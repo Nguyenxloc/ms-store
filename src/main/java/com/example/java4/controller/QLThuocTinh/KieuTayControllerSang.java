@@ -1,7 +1,11 @@
 package com.example.java4.controller.QLThuocTinh;
 
+import com.example.java4.config.UserInfor;
+import com.example.java4.entities.KichThuoc;
 import com.example.java4.entities.KieuTay;
+import com.example.java4.entities.NhanVien;
 import com.example.java4.repositories.KieuTayRepository;
+import com.example.java4.repositories.NhanVienRepository;
 import com.example.java4.request.ThuocTinhRequest.KieuTayRequest;
 import com.example.java4.request.ThuocTinhRequest.MauSacRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +24,30 @@ public class KieuTayControllerSang {
 
     @Autowired
     KieuTayRepository kieuTayRepo;
-
+    @Autowired
+    NhanVienRepository nhanVienRepo;
     @GetMapping("")
     public String getList(Model model, String keyword, @RequestParam("idKieuTay") Optional<String> idKieutay) {
+        if (UserInfor.idNhanVien != null){
+            NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+            model.addAttribute("nv", nhanVien);
+            KieuTay kieuTay = kieuTayRepo.findByIdKTay(idKieutay);
+            if (kieuTay != null) {
+                model.addAttribute("kieuTay", kieuTay);
+            }
 
-        KieuTay kieuTay = kieuTayRepo.findByIdKTay(idKieutay);
-        if (kieuTay != null) {
-            model.addAttribute("kieuTay", kieuTay);
+            List<KieuTay> list = kieuTayRepo.findAll();
+            if (keyword != null) {
+                list = kieuTayRepo.search(keyword);
+            }
+            model.addAttribute("listKieuTay", list);
+            KieuTayRequest request = new KieuTayRequest();
+            model.addAttribute("data", request);
+            return "/view/QLThuocTinh/kieuTay.jsp";
         }
-
-        List<KieuTay> list = kieuTayRepo.findAll();
-        if (keyword != null) {
-            list = kieuTayRepo.search(keyword);
+        else{
+            return  "redirect:/admin/dang-nhap-view";
         }
-        model.addAttribute("listKieuTay", list);
-        KieuTayRequest request = new KieuTayRequest();
-        model.addAttribute("data", request);
-
-        return "/view/QLThuocTinh/kieuTay.jsp";
     }
 
     @PostMapping("/add")

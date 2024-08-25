@@ -1,7 +1,12 @@
 package com.example.java4.controller.QLThuocTinh;
 
+import com.example.java4.config.UserInfor;
+import com.example.java4.entities.ChatLieu;
 import com.example.java4.entities.KichThuoc;
+import com.example.java4.entities.NhanVien;
 import com.example.java4.repositories.KichThuocRepository;
+import com.example.java4.repositories.NhanVienRepository;
+import com.example.java4.request.ThuocTinhRequest.ChatLieuRequest;
 import com.example.java4.request.ThuocTinhRequest.KichThuocRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,24 +24,30 @@ public class KichThuocControllerSang {
 
     @Autowired
     KichThuocRepository kichThuocRepo;
-
+    @Autowired
+    NhanVienRepository nhanVienRepo;
     @GetMapping("")
     public String getList(Model model, String keyword, @RequestParam("idKichThuoc") Optional<String> idKichThuoc) {
+        if (UserInfor.idNhanVien != null){
+            NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+            model.addAttribute("nv", nhanVien);
+            KichThuoc kichThuoc = kichThuocRepo.findByIdKTh(idKichThuoc);
+            if (kichThuoc != null) {
+                model.addAttribute("kichThuoc", kichThuoc);
+            }
 
-        KichThuoc kichThuoc = kichThuocRepo.findByIdKTh(idKichThuoc);
-        if (kichThuoc != null) {
-            model.addAttribute("kichThuoc", kichThuoc);
+            List<KichThuoc> list = kichThuocRepo.findAll();
+            if (keyword != null) {
+                list = kichThuocRepo.search(keyword);
+            }
+            model.addAttribute("listKichThuoc", list);
+            KichThuoc request = new KichThuoc();
+            model.addAttribute("data", request);
+            return "/view/QLThuocTinh/kichThuoc.jsp";
         }
-
-        List<KichThuoc> list = kichThuocRepo.findAll();
-        if (keyword != null) {
-            list = kichThuocRepo.search(keyword);
+        else{
+            return  "redirect:/admin/dang-nhap-view";
         }
-        model.addAttribute("listKichThuoc", list);
-        KichThuoc request = new KichThuoc();
-        model.addAttribute("data", request);
-
-        return "/view/QLThuocTinh/kichThuoc.jsp";
     }
 
     @PostMapping("/add")

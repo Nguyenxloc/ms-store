@@ -1,9 +1,12 @@
 package com.example.java4.controller.QLThuocTinh;
 
+import com.example.java4.config.UserInfor;
 import com.example.java4.entities.ChatLieu;
 import com.example.java4.entities.MauSac;
+import com.example.java4.entities.NhanVien;
 import com.example.java4.repositories.ChatLieuRepository;
 import com.example.java4.repositories.MauSacRepository;
+import com.example.java4.repositories.NhanVienRepository;
 import com.example.java4.request.ThuocTinhRequest.ChatLieuRequest;
 import com.example.java4.request.ThuocTinhRequest.MauSacRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +25,29 @@ public class ChatLieuControllerSang {
 
     @Autowired
     ChatLieuRepository chatLieuRepo;
-
+    @Autowired
+    NhanVienRepository nhanVienRepo;
     @GetMapping("")
     public String getList(Model model, String keyword, @RequestParam("idChatLieu") Optional<String> idChatLieu) {
-
-        ChatLieu chatLieu = chatLieuRepo.findByIdKTh(idChatLieu);
-        if (chatLieu != null) {
-            model.addAttribute("chatLieu", chatLieu);
+        if (UserInfor.idNhanVien != null){
+            NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+            model.addAttribute("nv", nhanVien);
+            ChatLieu chatLieu = chatLieuRepo.findByIdKTh(idChatLieu);
+            if (chatLieu != null) {
+                model.addAttribute("chatLieu", chatLieu);
+            }
+            List<ChatLieu> list = chatLieuRepo.findAll();
+            if (keyword != null) {
+                list = chatLieuRepo.search(keyword);
+            }
+            model.addAttribute("listChatLieu", list);
+            ChatLieuRequest request = new ChatLieuRequest();
+            model.addAttribute("data", request);
+            return "/view/QLThuocTinh/chatLieu.jsp";
         }
-
-        List<ChatLieu> list = chatLieuRepo.findAll();
-        if (keyword != null) {
-            list = chatLieuRepo.search(keyword);
+        else{
+            return  "redirect:/admin/dang-nhap-view";
         }
-        model.addAttribute("listChatLieu", list);
-        ChatLieuRequest request = new ChatLieuRequest();
-        model.addAttribute("data", request);
-
-        return "/view/QLThuocTinh/chatLieu.jsp";
     }
 
     @PostMapping("/add")

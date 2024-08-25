@@ -41,8 +41,8 @@ public interface KhuyenMaiRepository extends JpaRepository<KhuyenMai,String> {
     Integer getCountStt1();
     @Query(value = "SELECT COUNT(*) FROM khuyenMai where trangThai=0",nativeQuery = true)
     Integer getCountStt0();
-
-
+    @Query("SELECT km FROM KhuyenMai km WHERE LOWER(km.ten) = LOWER(:tenKM)")
+    KhuyenMai checkTenKMExist(@Param("tenKM") String tenKM);
     //Sáng
     @Query("select km from KhuyenMai km where km.trangThai = ?1 and km.soLuong > 0")
     List<KhuyenMai> findByTrangThai(Integer trangThai);

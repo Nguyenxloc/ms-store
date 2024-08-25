@@ -1,7 +1,12 @@
 package com.example.java4.controller.QLThuocTinh;
 
+import com.example.java4.config.UserInfor;
+import com.example.java4.entities.KieuTay;
 import com.example.java4.entities.MauSac;
+import com.example.java4.entities.NhanVien;
 import com.example.java4.repositories.MauSacRepository;
+import com.example.java4.repositories.NhanVienRepository;
+import com.example.java4.request.ThuocTinhRequest.KieuTayRequest;
 import com.example.java4.request.ThuocTinhRequest.MauSacRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,24 +24,29 @@ public class MauSacControllerSang {
 
     @Autowired
     MauSacRepository mauSacRepo;
-
+    @Autowired
+    NhanVienRepository nhanVienRepo;
     @GetMapping("")
     public String getList(Model model, String keyword, @RequestParam("idMauSac") Optional<String> idMauSac) {
-
-        MauSac mauSac = mauSacRepo.findByIdMS(idMauSac);
-        if (mauSac != null) {
-            model.addAttribute("mauSac", mauSac);
+        if (UserInfor.idNhanVien != null){
+            NhanVien nhanVien = nhanVienRepo.findById(UserInfor.idNhanVien).get();
+            model.addAttribute("nv", nhanVien);
+            MauSac mauSac = mauSacRepo.findByIdMS(idMauSac);
+            if (mauSac != null) {
+                model.addAttribute("mauSac", mauSac);
+            }
+            List<MauSac> list = mauSacRepo.findAll();
+            if (keyword != null) {
+                list = mauSacRepo.search(keyword);
+            }
+            model.addAttribute("listMauSac", list);
+            MauSacRequest request = new MauSacRequest();
+            model.addAttribute("data", request);
+            return "/view/QLThuocTinh/mauSac.jsp";
         }
-
-        List<MauSac> list = mauSacRepo.findAll();
-        if (keyword != null) {
-            list = mauSacRepo.search(keyword);
+        else{
+            return  "redirect:/admin/dang-nhap-view";
         }
-        model.addAttribute("listMauSac", list);
-        MauSacRequest request = new MauSacRequest();
-        model.addAttribute("data", request);
-
-        return "/view/QLThuocTinh/mauSac.jsp";
     }
 
     @PostMapping("/add")

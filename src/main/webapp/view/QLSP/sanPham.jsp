@@ -144,14 +144,14 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
@@ -165,30 +165,30 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
+                            <a class="collapse-item" href="/admin/quan-ly-mau-sac">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kich-thuoc">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kieu-tay">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-chat-lieu">Chất liệu</a>
                         </div>
                     </div>
                 </li>
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlnv/quan-ly-nhan-vien" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>
@@ -242,157 +242,12 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                             aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
-                                           aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
 
                     <!-- Nav Item - Alerts -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                Alerts Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Message Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
-                    </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -2047,71 +1902,87 @@
     document.addEventListener('DOMContentLoaded', function () {
         const saveMultipleAddBtn = document.getElementById('saveMultipleAddBtn');
         document.getElementById("tenSPErr").textContent = "";
+
         if (saveMultipleAddBtn) {
             saveMultipleAddBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                let tenSP = document.getElementById("tensp");
-                if (tenSP.value !== "") {
-                    Swal.fire({
-                        title: 'Xác nhận?',
-                        text: "Dữ liệu sẽ được lưu lại!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ok!',
-                        cancelButtonText: 'Hủy'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            fetchData('http://localhost:8080/san-pham/multiple-save' + "?tenSP=" + tenSP.value + "&idChatLieu=" + idChatLieuAdd + "&idKieuTay=" + idKieuTayAdd, 'POST', lstDataSet)
-                                .then(responseData => {
-                                    // Log the response to see what was returned
-                                    console.log("Response Data:", responseData);
-
-                                    // Redirect to the product detail page
-                                    if (responseData && typeof responseData === 'string') {
-                                        console.log('Post Success, ID:', responseData);
-                                        Swal.fire(
-                                            'Đã lưu!',
-                                            'Dữ liệu đã được ghi nhận.',
-                                            'success'
-                                        ).then(() => {
-                                            fetch("/san-pham/count", {
-                                                headers: {
-                                                    'Accept': 'application/json',
-                                                    'Content-Type': 'application/json'
-                                                }
-                                            })
-                                                .then(response => response.json())
-                                                .then(resp => {
-                                                    const totalPages = Math.ceil(resp / 20);
-                                                    loadDSSP(totalPages); // Load the product list
-                                                    currentPage = totalPages;
-                                                    loadTotalPagination(currentPage); // Update pagination UI
-                                                })
-                                                .catch(error => {
-                                                    console.error('Error fetching pagination data:', error);
-                                                });
-                                        });
-
-                                        window.location.href = `http://localhost:8080/admin/quan-ly-san-pham/` + responseData;
-                                    } else {
-                                        console.error('Unexpected response format:', responseData);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error during save operation:', error);
-                                });
-                        }
-                    });
-                } else {
+                let tenSP = document.getElementById("tensp").value.trim();
+                if (tenSP === "") {
                     document.getElementById("tenSPErr").textContent = "Không để trống";
+                    return;
                 }
+                let encodedTenSP = encodeURIComponent(tenSP);
+                fetch(`/san-pham/check-duplicate?tenSP=` + encodedTenSP, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("test check duplicate response: ", data);
+                        if (!data) {
+                            Swal.fire({
+                                title: 'Xác nhận?',
+                                text: "Dữ liệu sẽ được lưu lại!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Ok!',
+                                cancelButtonText: 'Hủy'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    fetchData('http://localhost:8080/san-pham/multiple-save' + "?tenSP=" + tenSP + "&idChatLieu=" + idChatLieuAdd + "&idKieuTay=" + idKieuTayAdd, 'POST', lstDataSet)
+                                        .then(responseData => {
+                                            console.log("Response Data:", responseData);
+                                            if (responseData && typeof responseData === 'string') {
+                                                Swal.fire(
+                                                    'Đã lưu!',
+                                                    'Dữ liệu đã được ghi nhận.',
+                                                    'success'
+                                                ).then(() => {
+                                                    fetch("/san-pham/count", {
+                                                        headers: {
+                                                            'Accept': 'application/json',
+                                                            'Content-Type': 'application/json'
+                                                        }
+                                                    })
+                                                        .then(response => response.json())
+                                                        .then(resp => {
+                                                            const totalPages = Math.ceil(resp / 20);
+                                                            loadDSSP(totalPages); // Load the product list
+                                                            currentPage = totalPages;
+                                                            loadTotalPagination(currentPage); // Update pagination UI
+                                                        })
+                                                        .catch(error => {
+                                                            console.error('Error fetching pagination data:', error);
+                                                        });
+                                                });
+
+                                                window.location.href = `http://localhost:8080/admin/quan-ly-san-pham/` + responseData;
+                                            } else {
+                                                console.error('Unexpected response format:', responseData);
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Error during save operation:', error);
+                                        });
+                                }
+                            });
+                        } else {
+                            document.getElementById("tenSPErr").textContent = "Tên sản phẩm đã tồn tại";
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking for duplicate:', error);
+                    });
             });
         } else {
             console.error('Save button not found!');
         }
     });
+
 
 
     function validateNull(param) {

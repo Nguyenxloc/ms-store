@@ -85,7 +85,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
+    <!-- Sidebar  Menu bên tay trái-->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -100,73 +100,105 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Thống kê doanh thu</span></a>
-        </li>
+        <c:choose>
+            <c:when test="${sessionScope.userRole == 'Quản lý'}">
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="/ban-hang-tai-quay/admin/ban-tai-quay">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Bán hàng tại quầy</span></a>
-        </li>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý đơn hàng</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-journal-text" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
+                </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item" >
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
+                        <span >Quản lý sản phẩm</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-mau-sac">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kich-thuoc">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kieu-tay">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-chat-lieu">Chất liệu</a>
+                        </div>
+                    </div>
+                </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý nhân viên</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý hóa đơn</span></a>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Quản lý sản phẩm</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                    <a class="collapse-item" href="cards.html">Cards</a>
-                </div>
-            </div>
-        </li>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
+                        <i class="bi bi-gift" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px" >Quản lý khuyến mãi</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý nhân viên</span></a>
-        </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+            </c:when>
+            <c:otherwise>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/thong-ke/view" style="display: flex; align-items: center">
+                        <i class="bi bi-graph-up" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Thống kê doanh thu</span></a>
+                </li>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Quản lý khách hàng</span></a>
-        </li>
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                        <i class="bi bi-shop" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
+                </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+                <!-- Nav Item - Charts -->
+                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Nav Item - Charts -->
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/qlkh/quan-ly-khach-hang" style="display: flex; align-items: center">
+                        <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
+                        <span style="margin-left: 6px">Quản lý khách hàng</span></a>
+                </li>
 
+                <!-- Nav Item - Charts -->
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+                <!-- Sidebar Toggler (Sidebar) -->
+            </c:otherwise>
+        </c:choose>
     </ul>
-
-    <!--   -----------   -->
+    <!-- End of Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -174,158 +206,8 @@
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
-
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                             aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
-                                           aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Alerts -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                Alerts Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                        </div>
-                    </li>
-
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Message Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
-                    </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -333,7 +215,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen}</span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">${nv.hoTen} | ${nv.idCV.ten}</span>
                             <img class="img-profile rounded-circle"
                                  src="/imageUser/${nv.anhDaiDien}">
                         </a>
@@ -360,82 +242,6 @@
                 <div class="container">
                     <div class="row">
                         <div class="">
-                            <div>
-                                <form method="post" action="/ban-hang-tai-quay/filter">
-                                    <div class="row">
-                                        <div class="col col-md-2">
-                                            <div class="input-group mb-3">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                        Chọn sản phẩm
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <c:forEach items="${listSanPham}" var="sanPham">
-                                                            <li><a class="dropdown-item"
-                                                                   href="/ban-hang-tai-quay/locSPCTBySanPham/${sanPham.id}">${sanPham.ten}</a>
-                                                            </li>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Chọn màu sắc
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                    <c:forEach items="${listMauSac}" var="mauSac">
-                                                        <li><a class="dropdown-item" href="/ban-hang-tai-quay/locSPCTByMauSac/${mauSac.id}">${mauSac.ten}</a></li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Chọn kích thước
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                                                    <c:forEach items="${listKichThuoc}" var="kichThuoc">
-                                                        <li><a class="dropdown-item" href="/ban-hang-tai-quay/locSPCTByKichThuoc/${kichThuoc.id}">${kichThuoc.ten}</a></li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Chọn chất liệu
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                                                    <c:forEach items="${listChatLieu}" var="chatLieu">
-                                                        <li><a class="dropdown-item" href="/ban-hang-tai-quay/locSPCTByChatLieu/${chatLieu.id}">${chatLieu.ten}</a></li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col col-md-2">
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton5" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Chọn kiểu tay
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-                                                    <c:forEach items="${listKieuTay}" var="kieuTay">
-                                                        <li><a class="dropdown-item" href="/ban-hang-tai-quay/locSPCTByKieuTay/${kieuTay.id}">${kieuTay.ten}</a></li>
-                                                    </c:forEach>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -460,9 +266,6 @@
             </div>
             <div class="d-flex flex-row-reverse">
                 <button id="btnAdd" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalAdd">Thêm mới</button>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <button onclick="testDataMaping(event)" class="btn btn-success me-2">test</button>
             </div>
             <div class="col-12 pb-1">
                 <nav aria-label="Page navigation">
@@ -489,11 +292,6 @@
                     <div class="modal-body d-flex gap-5">
                         <div class="container">
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="maKMEdit" class="form-label">Mã KM</label>
-                                    <input type="text" class="form-control" id="maKMAdd" value="">
-                                    <p class="error-message" id="maKMAddErr" style="color: red;"></p>
-                                </div>
                                 <div class="col-md-6">
                                     <label for="tenKMEdit" class="form-label">Tên khuyến mại</label>
                                     <input type="text" class="form-control" id="tenKMAdd" value="">
@@ -617,7 +415,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -756,7 +553,6 @@
                         '<td>' +
                         '<div class="d-inline">' +
                         '<button id="editKMBtn_' + km.id + '" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#ModalEdit">Chỉnh sửa</button>' +
-                        '<button id="detailKMBtn_' + km.id + '" class="btn btn-danger">Chi tiết</button>' +
                         '</div>' +
                         '</td>' +
                         '</tr>';
@@ -970,7 +766,8 @@
         button.addEventListener('click', function (e) {
             e.preventDefault();
             console.log("test check btn");
-            let maKMEdit = document.getElementById("maKMAdd");
+
+            // Get form elements
             let tenKMEdit = document.getElementById("tenKMAdd");
             let tenKMEditErr = document.getElementById("tenKMAddErr");
             let ngayBatDauEdit = document.getElementById("ngayBatDauAdd");
@@ -983,25 +780,67 @@
             let soLuongEditErr = document.getElementById("soLuongAddErr");
             let apDungEdit = document.getElementById("apDungAdd");
             let apDungEditErr = document.getElementById("apDungAddErr");
-            let trangThaiEdit  = document.getElementById("trangThaiAdd");
-            let trangThai = 0;
-            let sttCheck = 0;
-            console.log("test combobox: ", trangThaiEdit.value);
-            if(trangThaiEdit.checked==true){
-                trangThai = 1;
-            }
-            else{
-                trangThai = 0;
-            }
-            if(validateNull(tenKMEdit)){
+            let trangThaiEdit = document.getElementById("trangThaiAdd");
+
+            // Initialize variables
+            let trangThai = trangThaiEdit.checked ? 1 : 0;
+            let isValid = true;
+
+            // Clear previous error messages
+            clearErrors();
+
+            // Validate Tên khuyến mại
+            if (validateNull(tenKMEdit)) {
                 tenKMEditErr.textContent = "Vui lòng nhập tên sản phẩm";
-                sttCheck = 0;
+                isValid = false;
             }
-            else{
-                tenKMEditErr.textContent = "";
-                sttCheck ++;
+
+            // Validate Ngày bắt đầu
+            var startDate = new Date(ngayBatDauEdit.value);
+            var endDate = new Date(ngayKetThucEdit.value);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (!ngayBatDauEdit.value) {
+                ngayBatDauEditErr.textContent = "Vui lòng nhập ngày bắt đầu";
+                isValid = false;
+            } else if (startDate < today) {
+                ngayBatDauEditErr.textContent = "Ngày bắt đầu không được trong quá khứ";
+                isValid = false;
             }
-            if(sttCheck>0){
+
+            // Validate Ngày kết thúc
+            if (!ngayKetThucEdit.value) {
+                ngayKetThucEditErr.textContent = "Vui lòng nhập ngày kết thúc";
+                isValid = false;
+            } else if (endDate < today) {
+                ngayKetThucEditErr.textContent = "Ngày kết thúc không được trong quá khứ";
+                isValid = false;
+            } else if (startDate > endDate) {
+                ngayKetThucEditErr.textContent = "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu";
+                isValid = false;
+            }
+
+            // Validate Số tiền giảm
+            if (!soTienGiamEdit.value || isNaN(soTienGiamEdit.value) || Number(soTienGiamEdit.value) <= 0) {
+                soTienGiamEditErr.textContent = "Số tiền giảm phải là một số lớn hơn 0";
+                isValid = false;
+            }
+
+            // Validate Số lượng
+            if (!soLuongEdit.value || isNaN(soLuongEdit.value) || Number(soLuongEdit.value) <= 0) {
+                soLuongEditErr.textContent = "Số lượng phải là một số lớn hơn 0";
+                isValid = false;
+            }
+
+            // Validate Đơn tối thiểu
+            if (!apDungEdit.value || isNaN(apDungEdit.value) || Number(apDungEdit.value) <= 0) {
+                apDungEditErr.textContent = "Đơn tối thiểu phải là một số lớn hơn 0";
+                isValid = false;
+            }
+
+            // If all validations pass, proceed with form submission
+            if (isValid) {
                 Swal.fire({
                     title: 'Xác nhận?',
                     text: "Dữ liệu sẽ được lưu lại!",
@@ -1029,40 +868,52 @@
                             },
                             body: JSON.stringify(data)
                         }).then(response => {
-                            response.json();
+                            if (response.ok) {
+                                Swal.fire(
+                                    'Đã lưu!',
+                                    'Dữ liệu đã được ghi nhận.',
+                                    'success'
+                                ).then(() => {
+                                    loadDSKM(currentPage); // Assuming you have a function to reload the list
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Lỗi!',
+                                    'Có lỗi xảy ra khi lưu dữ liệu.',
+                                    'error'
+                                );
+                            }
+                        }).catch(error => {
+                            console.error('Error:', error);
                             Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then((resp) => {
-                                console.log("test response: ",resp);
-                                console.log("form data: ", data);
-                                loadDSKM(currentPage);
-                            });
+                                'Lỗi!',
+                                'Không thể lưu dữ liệu.',
+                                'error'
+                            );
                         });
                     }
                 });
             }
-            else{
-
-            }
         });
     });
 
-    function  validateNull(param){
-        if(param===""||param===undefined){
-            return true;
-        }
-        else {
-            return false;
-        }
+    function validateNull(inputElement) {
+        return !inputElement.value.trim();
+    }
+
+    function clearErrors() {
+        let errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(element => {
+            element.textContent = '';
+        });
     }
 
     saveEditBtn.forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             console.log("test check btn");
-            let maKMEdit = document.getElementById("maKMEdit");
+
+            // Get form elements
             let tenKMEdit = document.getElementById("tenKMEdit");
             let tenKMEditErr = document.getElementById("tenKMEditErr");
             let ngayBatDauEdit = document.getElementById("ngayBatDauEdit");
@@ -1075,25 +926,67 @@
             let soLuongEditErr = document.getElementById("soLuongEditErr");
             let apDungEdit = document.getElementById("apDungEdit");
             let apDungEditErr = document.getElementById("apDungEditErr");
-            let trangThaiEdit  = document.getElementById("trangThaiEdit");
-            let trangThai = 0;
-            let sttCheck = 0;
-            console.log("test combobox: ", trangThaiEdit.value);
-            if(trangThaiEdit.checked==true){
-                trangThai = 1;
-            }
-            else{
-                trangThai = 0;
-            }
-            if(validateNull(tenKMEdit)){
+            let trangThaiEdit = document.getElementById("trangThaiEdit");
+
+            // Initialize variables
+            let trangThai = trangThaiEdit.checked ? 1 : 0;
+            let isValid = true;
+
+            // Clear previous error messages
+            clearErrors();
+
+            // Validate Tên khuyến mại
+            if (validateNull(tenKMEdit)) {
                 tenKMEditErr.textContent = "Vui lòng nhập tên sản phẩm";
-                sttCheck = 0;
+                isValid = false;
             }
-            else{
-                tenKMEditErr.textContent = "";
-                sttCheck ++;
+
+            // Validate Ngày bắt đầu
+            var startDate = new Date(ngayBatDauEdit.value);
+            var endDate = new Date(ngayKetThucEdit.value);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (!ngayBatDauEdit.value) {
+                ngayBatDauEditErr.textContent = "Vui lòng nhập ngày bắt đầu";
+                isValid = false;
+            } else if (startDate < today) {
+                ngayBatDauEditErr.textContent = "Ngày bắt đầu không được trong quá khứ";
+                isValid = false;
             }
-            if(sttCheck>0){
+
+            // Validate Ngày kết thúc
+            if (!ngayKetThucEdit.value) {
+                ngayKetThucEditErr.textContent = "Vui lòng nhập ngày kết thúc";
+                isValid = false;
+            } else if (endDate < today) {
+                ngayKetThucEditErr.textContent = "Ngày kết thúc không được trong quá khứ";
+                isValid = false;
+            } else if (startDate > endDate) {
+                ngayKetThucEditErr.textContent = "Ngày kết thúc phải sau hoặc bằng ngày bắt đầu";
+                isValid = false;
+            }
+
+            // Validate Số tiền giảm
+            if (!soTienGiamEdit.value || isNaN(soTienGiamEdit.value) || Number(soTienGiamEdit.value) <= 0) {
+                soTienGiamEditErr.textContent = "Số tiền giảm phải là một số lớn hơn 0";
+                isValid = false;
+            }
+
+            // Validate Số lượng
+            if (!soLuongEdit.value || isNaN(soLuongEdit.value) || Number(soLuongEdit.value) <= 0) {
+                soLuongEditErr.textContent = "Số lượng phải là một số lớn hơn 0";
+                isValid = false;
+            }
+
+            // Validate Đơn tối thiểu
+            if (!apDungEdit.value || isNaN(apDungEdit.value) || Number(apDungEdit.value) <= 0) {
+                apDungEditErr.textContent = "Đơn tối thiểu phải là một số lớn hơn 0";
+                isValid = false;
+            }
+
+            // If all validations pass, proceed with form submission
+            if (isValid) {
                 Swal.fire({
                     title: 'Xác nhận?',
                     text: "Dữ liệu sẽ được lưu lại!",
@@ -1114,32 +1007,53 @@
                             apDung: apDungEdit.value,
                             trangThai: trangThai
                         };
-                        fetch(`/khuyen-mai/update/`+idKMLocal, {
+                        fetch(`/khuyen-mai/update/` + idKMLocal, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(data)
                         }).then(response => {
-                            response.json();
+                            if (response.ok) {
+                                Swal.fire(
+                                    'Đã lưu!',
+                                    'Dữ liệu đã được ghi nhận.',
+                                    'success'
+                                ).then(() => {
+                                    loadDSKM(currentPage); // Assuming you have a function to reload the list
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Lỗi!',
+                                    'Có lỗi xảy ra khi lưu dữ liệu.',
+                                    'error'
+                                );
+                            }
+                        }).catch(error => {
+                            console.error('Error:', error);
                             Swal.fire(
-                                'Đã thanh toán!',
-                                'Dữ liệu đã được ghi nhận.',
-                                'success'
-                            ).then((resp) => {
-                                console.log("test response: ",resp);
-                                console.log("form data: ", data);
-                                loadDSKM(currentPage);
-                            });
+                                'Lỗi!',
+                                'Không thể lưu dữ liệu.',
+                                'error'
+                            );
                         });
                     }
                 });
             }
-            else{
-
-            }
         });
     });
+
+    function validateNull(inputElement) {
+        return !inputElement.value.trim();
+    }
+
+    function clearErrors() {
+        let errorElements = document.querySelectorAll('.error-message');
+        errorElements.forEach(element => {
+            element.textContent = '';
+        });
+    }
+
 </script>
 <script>
     $(document).ready(function() {
