@@ -18,6 +18,7 @@ public class ChiTietSanPhamResponse {
     private String tenMauSac;
     private String tenKichThuoc;
     private String tenKieuTay;
+    private String tenChatLieu;
     private Integer soLuong;
     private BigDecimal giaBan;
     private String hinhAnh1;
