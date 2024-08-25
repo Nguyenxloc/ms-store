@@ -1268,7 +1268,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-<%--                            id="updateForm"--%>
+                            <%--                            id="updateForm"--%>
                             <form method="post" action="/hoa-don2/cap-nhat/${hoaDonDTO.id}"
                                   id="suaDiaChi${hoaDonDTO.id}">
                                 <input type="hidden" name="tenTinhThanh" id="tenTinhThanh">
@@ -1325,13 +1325,13 @@
                                 </div>
 
                                 <input type="hidden" name="phiVanChuyen" value="" id="phiVanChuyen"/>
-<%--                                <div class="mb-3">--%>
-<%--&lt;%&ndash;                                    <label class="form-label">Phí ship</label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                    <input type="number" class="form-control"&ndash;%&gt;--%>
-<%--&lt;%&ndash;                                           value="${giaoHangDTO.phiShip}">&ndash;%&gt;--%>
-<%--                                    --%>
-<%--                                    <div id="phiShipError" class="text-danger"></div>--%>
-<%--                                </div>--%>
+                                <%--                                <div class="mb-3">--%>
+                                <%--&lt;%&ndash;                                    <label class="form-label">Phí ship</label>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;                                    <input type="number" class="form-control"&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;                                           value="${giaoHangDTO.phiShip}">&ndash;%&gt;--%>
+                                <%--                                    --%>
+                                <%--                                    <div id="phiShipError" class="text-danger"></div>--%>
+                                <%--                                </div>--%>
                                 <div class="mb-3">
                                     <label for="ghiChu" class="form-label">Ghi chú</label>
                                     <textarea class="form-control" id="ghiChu"
@@ -2129,25 +2129,25 @@
                 var service_id = data_maDV.data[0].service_id;
                 console.log("API maDV: ", service_id);
 
-                    // Get shipping fee
-                    var feeUrl = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id +
-                        '&insurance_value=1000000&from_district_id=3440&to_district_id=' + idQuan +
-                        '&to_ward_code=' + idPhuong + '&height=15&length=15&weight=2000&width=15';
-                    getJSONWithToken(feeUrl, function (data_total) {
-                        if (data_total && data_total.data) {
-                            var phiShip = data_total.data.total;
-                            console.log("Shipping Fee: ", phiShip);
+                // Get shipping fee
+                var feeUrl = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id +
+                    '&insurance_value=1000000&from_district_id=3440&to_district_id=' + idQuan +
+                    '&to_ward_code=' + idPhuong + '&height=15&length=15&weight=2000&width=15';
+                getJSONWithToken(feeUrl, function (data_total) {
+                    if (data_total && data_total.data) {
+                        var phiShip = data_total.data.total;
+                        console.log("Shipping Fee: ", phiShip);
 
-                            // Cập nhật phí ship vào input hidden
-                            var phiVanChuyen = phiShip;
-                            $('#phiVanChuyen').val(phiVanChuyen);
+                        // Cập nhật phí ship vào input hidden
+                        var phiVanChuyen = phiShip;
+                        $('#phiVanChuyen').val(phiVanChuyen);
 
-                            // Submit form sau khi cập nhật phí ship
-                            form.submit();
-                        } else {
-                            console.error("Invalid data from fee API");
-                        }
-                    });
+                        // Submit form sau khi cập nhật phí ship
+                        form.submit();
+                    } else {
+                        console.error("Invalid data from fee API");
+                    }
+                });
 
             });
         });

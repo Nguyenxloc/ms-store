@@ -883,7 +883,7 @@ public class QuanLyHoaDonControllerTest {
         giaoHang.setIdPhuongXa(tenPhuong);
         giaoHang.setIdQuanHuyen(tenQuan);
         giaoHang.setIdTinhThanh(tenTinh);
-                if (giaoHang.getIdHoaDon().getId().equals(idHoaDon)){
+        if (giaoHang.getIdHoaDon().getId().equals(idHoaDon)){
             giaoHang.setPhiShip(phiPhipNew);
             _giaoHangRepo.save(giaoHang);
         }
