@@ -646,6 +646,7 @@
             tenMauSac: '${ctsp.tenMauSac}',
             tenKichThuoc: '${ctsp.tenKichThuoc}',
             tenKieuTay: '${ctsp.tenKieuTay}',
+            tenChatLieu: '${ctsp.tenChatLieu}',
             soLuong: '${ctsp.soLuong}',
             giaBan: parseFloat('${ctsp.giaBan}'),
             hinhAnh1: '${ctsp.hinhAnh1}'
@@ -734,7 +735,7 @@
                     '<img style="width: 100%; height: 370px;" class="img-fluid w-100" src="/image/' + sp.hinhAnh1 + '" alt="">' +
                     '</div>' +
                     '<div class="card-body border-left border-right text-center p-0 pt-4 pb-3" style="margin-top: -10px; margin-bottom: -12px">' +
-                    '<h6 class="text-truncate mb-2">' + sp.tenSanPham + '</h6>' +
+                    '<h6 class="text-truncate mb-2">' + sp.tenSanPham + " " + sp.tenKieuTay + " " + sp.tenChatLieu + '</h6>' +
                     '<h6 class="text-truncate mb-2" style="font-family: auto">' + sp.maSP + '</h6>' +
                     '<p class="text-truncate mb-2">Đã bán: ' + soldQuantity + '</p>' +
                     '</div>' +

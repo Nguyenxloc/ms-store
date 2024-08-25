@@ -19,5 +19,6 @@ public class GioHangResponse {
     private String tenMauSac;
     private String tenKichThuoc;
     private Integer soLuong;
+    private Integer soLuongCTSP;
     private BigDecimal donGia;
 }

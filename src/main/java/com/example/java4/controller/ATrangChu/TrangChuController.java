@@ -468,6 +468,26 @@ public class TrangChuController {
             model.addAttribute("check", check);
         }
 
+        //Check giỏ hảng xem có sản phẩm hết hàng không
+        boolean checkCTHDHetHang = false;
+        String mess = "";
+        for (ChiTietHoaDon cthd : listHDCT){
+            if (cthd.getIdCTSP().getSoLuong() == 0){
+                checkCTHDHetHang = true;
+                mess = "Có sản phẩm trong giỏ hàng của bạn đã hết. Vui lòng chọn sản phẩm khác!";
+                break;
+            } else  if (cthd.getIdCTSP().getSoLuong() < cthd.getSoLuong()){
+                checkCTHDHetHang = true;
+                mess = "Có sản phẩm trong giỏ hàng của bạn đã vượt quá số lượng trong kho. Vui lòng giảm số lượng hoặc chọn sản phẩm khác!";
+                break;
+            } else {
+                checkCTHDHetHang = false;
+            }
+        }
+        model.addAttribute("checkCTHDHetHang", checkCTHDHetHang);
+        model.addAttribute("mess", mess);
+
+
         //Tính tổng số lượng sản phẩm có trong giỏ hàng
         Integer totalSoLuong = 0;
         for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
@@ -682,6 +702,7 @@ public class TrangChuController {
     public String deleteIDSPCT(@PathVariable String idHDCT, RedirectAttributes redirectAttributes) {
         ChiTietHoaDon chiTietHoaDon = hdctRepo.findById(idHDCT).get();
         try {
+            redirectAttributes.addFlashAttribute("successMessage", "Xóa sản phẩm thành công");
             hdctRepo.delete(chiTietHoaDon);
 
             listHDCT = hdctRepo.findByIdHoaDonByIDKH(UserInfor.idKhachHang, HoaDonRepository.CHO_THANH_TOAN);
@@ -696,7 +717,7 @@ public class TrangChuController {
                 hoaDon.setIdKhuyenMai(null);
                 hoaDonRepo.save(hoaDon);
             }
-            redirectAttributes.addFlashAttribute("successMessage", "Xóa sản phẩm thành công");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

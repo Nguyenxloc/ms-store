@@ -371,14 +371,13 @@
         </div>
 
         <div class="col-lg-7 pb-5">
-            <h3 class="font-weight-semi-bold">${ctsp.idSanPham.ten} - ${ctsp.idSanPham.ma}</h3>
+            <h3 class="font-weight-semi-bold">${ctsp.idSanPham.ten} ${ctsp.idKieuTay.ten} ${ctsp.idChatLieu.ten} - ${ctsp.idSanPham.ma}</h3>
 
             <h3 class="font-weight-semi-bold mb-4">
                 <fmt:formatNumber value="${ctsp.giaBan}" type="currency" currencySymbol="₫"/>
             </h3>
 
-            <p class="mb-4">${ctsp.moTa}, kiểu <span style="text-transform: lowercase;">${ctsp.idKieuTay.ten}</span>,
-                chất liệu <span style="text-transform: lowercase;">${ctsp.idChatLieu.ten}</span></p>
+            <p class="mb-4">Mô tả: ${ctsp.moTa}</p>
 
 
             <div class="d-flex mb-3">
@@ -469,6 +468,7 @@
             tenMauSac: '${ctsp.tenMauSac}',
             tenKichThuoc: '${ctsp.tenKichThuoc}',
             tenKieuTay: '${ctsp.tenKieuTay}',
+            tenChatLieu: '${ctsp.tenChatLieu}',
             soLuong: '${ctsp.soLuong}',
             giaBan: parseFloat('${ctsp.giaBan}'),
             hinhAnh1: '${ctsp.hinhAnh1}'
@@ -530,7 +530,7 @@
                     '<img style="width: 100%; height: 370px; border-radius: 10px;" class="img-fluid w-100" src="/image/' + sp.hinhAnh1 + '" alt="">' +
                     '</div>' +
                     '<div class="card-body border-left border-right text-center p-0 pt-4 pb-3" style="margin-top: -10px; margin-bottom: -12px">' +
-                    '<h6 class="text-truncate mb-2">' + sp.tenSanPham + '</h6>' +
+                    '<h6 class="text-truncate mb-2">' + sp.tenSanPham + " " + sp.tenKieuTay + " " + sp.tenChatLieu + '</h6>' +
                     '<h6 class="text-truncate mb-2" style="font-family: auto">' + sp.maSP + '</h6>' +
                     '<p class="text-truncate mb-2">Đã bán: ' + sp.soldQuantity + '</p>' +
                     '</div>' +

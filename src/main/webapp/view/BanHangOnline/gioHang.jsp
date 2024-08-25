@@ -284,7 +284,8 @@
             </div>
             <div class="modal-body">
                 <div class="login-form-wrapper">
-                    <form id="login-form" class="form" action="/cua-hang/login" method="post" modelAttribute="khachHangDTO">
+                    <form id="login-form" class="form" action="/cua-hang/login" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="taiKhoan" class="text-info">Tài khoản:</label><br>
                             <input placeholder="Tài khoản" type="text" id="taiKhoan" name="taiKhoan"
@@ -326,7 +327,8 @@
             </div>
             <div class="modal-body">
                 <div class="register-form-wrapper">
-                    <form id="register-form" class="form" action="/cua-hang/register" method="post" modelAttribute="khachHangDTO">
+                    <form id="register-form" class="form" action="/cua-hang/register" method="post"
+                          modelAttribute="khachHangDTO">
                         <div class="form-group">
                             <label for="registerUsername" class="text-info">Tài khoản:</label><br>
                             <input placeholder="Tài khoản" type="text" id="registerUsername" name="taiKhoan"
@@ -354,7 +356,8 @@
                         </div>
                         <div class="form-group">
                             <label for="registerPassword" class="text-info">Nhập lại mật khẩu:</label><br>
-                            <input placeholder="Nhập lại mật khẩu" type="password" id="nhapLaiMatKhau" name="nhapLaiMatKhau"
+                            <input placeholder="Nhập lại mật khẩu" type="password" id="nhapLaiMatKhau"
+                                   name="nhapLaiMatKhau"
                                    class="form-control" value="">
                             <small id="nhapLaiMatKhauError" class="text-danger"></small>
                         </div>
@@ -442,46 +445,133 @@
                     </thead>
                     <c:forEach var="i" items="${listGioHang}">
                         <tbody class="align-middle">
-                        <tr>
-                            <td class="align-middle align-center"><img src="/image/${i.hinhAnh1}" alt=""
-                                                                       style="width: 50px;"></td>
-                            <td class="align-middle">${i.tenSanPham}</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <a href="/cua-hang/giam-so-luong/${i.idHDCT}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </a>
+                        <c:if test="${i.soLuongCTSP == 0}">
+                            <tr>
+                                <td class="align-middle align-center"><img src="/image/${i.hinhAnh1}" alt=""
+                                                                           style="width: 50px;"></td>
+                                <td class="align-middle">${i.tenSanPham} -- <span class="text-danger">Hết hàng</span></td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <a href="/cua-hang/giam-so-luong/${i.idHDCT}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-minus">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
+                                               value="${i.soLuong}" readonly>
+                                        <div class="input-group-btn">
+                                            <a href="/cua-hang/tang-so-luong/${i.idHDCT}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-plus">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                           value="${i.soLuong}" readonly>
-                                    <div class="input-group-btn">
-                                        <a href="/cua-hang/tang-so-luong/${i.idHDCT}">
-                                            <button type="button" class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </a>
+                                </td>
+                                <td class="align-middle">${i.tenMauSac}</td>
+                                <td class="align-middle">${i.tenKichThuoc}</td>
+                                <td class="align-middle">
+                                    <fmt:formatNumber value="${i.donGia}" type="currency" currencySymbol="₫"/>
+                                </td>
+                                <td class="align-middle">
+                                    <fmt:formatNumber value="${i.soLuong*i.donGia}" type="currency" currencySymbol="₫"/>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="/cua-hang/delete/${i.idHDCT}">
+                                        <button type="button" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${i.soLuongCTSP < i.soLuong && i.soLuongCTSP != 0}">
+                            <tr>
+                                <td class="align-middle align-center"><img src="/image/${i.hinhAnh1}" alt=""
+                                                                           style="width: 50px;"></td>
+                                <td class="align-middle">${i.tenSanPham} -- <span class="text-danger">Không đủ hàng</span>
+                                    <br> (Còn lại: <span class="font-weight-bold">${i.soLuongCTSP}</span> sản phẩm)</td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <a href="/cua-hang/giam-so-luong/${i.idHDCT}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-minus">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
+                                               value="${i.soLuong}" readonly>
+                                        <div class="input-group-btn">
+                                            <a href="/cua-hang/tang-so-luong/${i.idHDCT}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-plus">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">${i.tenMauSac}</td>
-                            <td class="align-middle">${i.tenKichThuoc}</td>
-                            <td class="align-middle">
-                                <fmt:formatNumber value="${i.donGia}" type="currency" currencySymbol="₫"/>
-                            </td>
-                            <td class="align-middle">
-                                <fmt:formatNumber value="${i.soLuong*i.donGia}" type="currency" currencySymbol="₫"/>
-                            </td>
-                            <td class="align-middle">
-                                <a href="/cua-hang/delete/${i.idHDCT}">
-                                    <button type="button" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="align-middle">${i.tenMauSac}</td>
+                                <td class="align-middle">${i.tenKichThuoc}</td>
+                                <td class="align-middle">
+                                    <fmt:formatNumber value="${i.donGia}" type="currency" currencySymbol="₫"/>
+                                </td>
+                                <td class="align-middle">
+                                    <fmt:formatNumber value="${i.soLuong*i.donGia}" type="currency" currencySymbol="₫"/>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="/cua-hang/delete/${i.idHDCT}">
+                                        <button type="button" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${i.soLuongCTSP >= i.soLuong}">
+                            <tr>
+                                <td class="align-middle align-center"><img src="/image/${i.hinhAnh1}" alt=""
+                                                                           style="width: 50px;"></td>
+                                <td class="align-middle">${i.tenSanPham}</td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <a href="/cua-hang/giam-so-luong/${i.idHDCT}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-minus">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm bg-secondary text-center"
+                                               value="${i.soLuong}" readonly>
+                                        <div class="input-group-btn">
+                                            <a href="/cua-hang/tang-so-luong/${i.idHDCT}">
+                                                <button type="button" class="btn btn-sm btn-primary btn-plus">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle">${i.tenMauSac}</td>
+                                <td class="align-middle">${i.tenKichThuoc}</td>
+                                <td class="align-middle">
+                                    <fmt:formatNumber value="${i.donGia}" type="currency" currencySymbol="₫"/>
+                                </td>
+                                <td class="align-middle">
+                                    <fmt:formatNumber value="${i.soLuong*i.donGia}" type="currency" currencySymbol="₫"/>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="/cua-hang/delete/${i.idHDCT}">
+                                        <button type="button" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
                         </tbody>
                     </c:forEach>
                 </table>
@@ -750,7 +840,7 @@
                             <h6 class="price font-weight-medium" id="phiShip" style="font-size: 18px"></h6>
                             <input type="hidden" name="phiVanChuyen" value="" id="phiVanChuyen"/>
                         </div>
-                        <div><p style="color: red">Phí ship chỉ mang tính chất tham khảo.</p></div>
+                        <div><p style="color: red">Phí ship mang tính chất tham khảo.</p></div>
                     </div>
                     <div class="card border-secondary">
                         <div class="card-header bg-secondary border-0">
@@ -774,7 +864,7 @@
                             </div>
                         </div>
                         <hr>
-                        <c:if test="${hoaDon.idKhuyenMai.soTienGiam == null || tongTien > hoaDon.idKhuyenMai.soTienGiam}" >
+                        <c:if test="${hoaDon.idKhuyenMai.soTienGiam == null || tongTien > hoaDon.idKhuyenMai.soTienGiam}">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold" style="margin-left: 18px">Tổng thanh toán:</h5>
                                 <h5 id="total-amount" class="font-weight-bold"
@@ -782,10 +872,11 @@
                                 <input type="hidden" name="tongTienThanhToan" value="" id="tongTienThanhToan"/>
                             </div>
                         </c:if>
-                        <c:if test="${tongTien < hoaDon.idKhuyenMai.soTienGiam}" >
+                        <c:if test="${tongTien < hoaDon.idKhuyenMai.soTienGiam}">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold" style="margin-left: 18px">Tổng thanh toán:</h5>
-                                <h5 id="total-amount1" class="font-weight-bold" style="margin-right: 18px; font-size: 22px">
+                                <h5 id="total-amount1" class="font-weight-bold"
+                                    style="margin-right: 18px; font-size: 22px">
                                     <fmt:formatNumber value="0" type="currency" currencySymbol="₫"/>
                                 </h5>
                                 <input type="hidden" name="tongTienThanhToan" value="0" id="tongTienThanhToan"/>
@@ -793,9 +884,20 @@
                         </c:if>
 
                         <div class="card-footer border-secondary bg-transparent">
-                            <button type="submit" style="font-size: 26px" id="datHang"
-                                    class="btn btn-block btn-primary my-3 py-3">
-                                <b>Đặt hàng ngay</b></button>
+                                <%--  Check sản phẩm tồn hết  --%>
+                            <c:if test="${checkCTHDHetHang == true}">
+                                <div class="alert alert-danger" role="alert">
+                                    ${mess}
+                                </div>
+                                <button disabled type="submit" style="font-size: 26px" id="datHang"
+                                        class="btn btn-block btn-primary my-3 py-3">
+                                    <b>Không thể đặt hàng</b></button>
+                            </c:if>
+                            <c:if test="${checkCTHDHetHang == false}">
+                                <button type="submit" style="font-size: 26px" id="datHang"
+                                        class="btn btn-block btn-primary my-3 py-3">
+                                    <b>Đặt hàng ngay</b></button>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -859,7 +961,7 @@
 
 
 <!-- Footer Start -->
-<%@ include file="/view/BanHangOnline/footer.jsp"%>
+<%@ include file="/view/BanHangOnline/footer.jsp" %>
 <!-- Footer End -->
 
 <!-- Back to Top -->
@@ -1051,7 +1153,8 @@
                         $('#checkDangKy').val(0);
                     }
                 }
-            })) {}
+            })) {
+            }
 
             if (!password) {
                 $('#registerPasswordError').text('Vui lòng nhập mật khẩu.');
@@ -1755,8 +1858,8 @@
             });
         }
         var listDC = document.getElementsByName('flexRadioDefault');
-        for(var i = 0 ; i < listDC.length ; i++) {
-            listDC[i].addEventListener('change', function() {
+        for (var i = 0; i < listDC.length; i++) {
+            listDC[i].addEventListener('change', function () {
                 if (this.checked) {
                     // Hàm hiển thị thông báo
                     function showToast(type, message) {
@@ -1765,11 +1868,13 @@
                             title: message
                         });
                     }
+
                     showToast('success', 'Chọn địa chỉ thành công!');
                 }
             });
         }
     }
+
     chonDiaChi();
 
     function showModal() {

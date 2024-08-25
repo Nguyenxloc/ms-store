@@ -54,7 +54,7 @@ public interface HDCTRepository
     public static final int CHUA_THANH_TOAN = 0;
     public static final int DA_THANH_TOAN = 1;
 
-    @Query("select new com.example.java4.response.GioHangResponse(cthd.id, ctsp.idSanPham.ten, ha.hinhAnh1, ctsp.idMauSac.ten, ctsp.idKichThuoc.ten, cthd.soLuong, cthd.donGia) " +
+    @Query("select new com.example.java4.response.GioHangResponse(cthd.id, ctsp.idSanPham.ten, ha.hinhAnh1, ctsp.idMauSac.ten, ctsp.idKichThuoc.ten, cthd.soLuong, cthd.idCTSP.soLuong, cthd.donGia) " +
             "from ChiTietHoaDon cthd " +
             "join ChiTietSanPham ctsp on ctsp.id = cthd.idCTSP.id " +
             "join HinhAnh ha on ha.idCTSP.id = ctsp.id " +
