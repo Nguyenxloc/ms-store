@@ -3019,4 +3019,48 @@
     </c:if>
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const soLuongInput = document.getElementById('soLuongModalEditAll');
+        const giaNhapInput = document.getElementById('giaNhapModalEditAll');
+        const giaBanInput = document.getElementById('giaBanModalEditAll');
+
+        function preventInvalidInput(input) {
+            input.addEventListener('keydown', function (e) {
+                // Prevent the `-` and `0` keys from being pressed at the beginning
+                if ((e.key === '-' || e.key === '0') && input.value.length === 0) {
+                    e.preventDefault();
+                }
+            });
+
+            // Optional: Prevent the user from pasting invalid values
+            input.addEventListener('paste', function (e) {
+                const pasteData = e.clipboardData.getData('text');
+                if (pasteData.startsWith('-') || pasteData.startsWith('0')) {
+                    e.preventDefault();
+                }
+            });
+
+            // Prevent invalid numbers on input change
+            input.addEventListener('input', function () {
+                if (input.value.startsWith('-') || input.value.startsWith('0')) {
+                    input.value = input.value.replace(/^-|^0+/, '');
+                }
+                if (input.value < 0) {
+                    input.value = Math.abs(input.value);
+                }
+            });
+        }
+
+        preventInvalidInput(soLuongInput);
+        preventInvalidInput(giaNhapInput);
+        preventInvalidInput(giaBanInput);
+    });
+
+
+</script>
+
+
+
+
 </html>
