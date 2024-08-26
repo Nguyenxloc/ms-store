@@ -288,7 +288,7 @@ public class QuanLyHoaDonControllerTest {
                              @RequestParam(value = "page", defaultValue = "0") String pageParam
     ) {
 
-
+    idHoaDon=idHD;
 
         //Tìm đối tượng nhân viên
         NhanVien nhanVien = new NhanVien();
@@ -1024,8 +1024,10 @@ public class QuanLyHoaDonControllerTest {
     @GetMapping("/them-san-pham/{idCTSP}")
     public String addSanPhamVaoGioHang(@PathVariable("idCTSP") String idCTSP, @RequestParam(value = "page", defaultValue = "0") Optional<Integer> pageParam,
                                        @RequestParam("idHoaDon") String idHoaDon,
-//                                       @RequestParam("phiShip") BigDecimal phiShip,
+                                       @RequestParam("phiVanChuyenHang") Long phiVanChuyenHang,
                                        RedirectAttributes redirectAttributes) {
+
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------"+phiVanChuyenHang);
 
         // Tìm hóa đơn chi tiết trong giỏ hàng của hóa đơn có id là idHoaDon
         List<ChiTietHoaDon> listHDCT = _hoaDonChiTietRepo.findAllByHoaDon_Id(idHoaDon);
@@ -1033,20 +1035,20 @@ public class QuanLyHoaDonControllerTest {
 
         if (idHoaDon == null || idHoaDon.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Không tìm thấy hóa đơn hoặc chi tiết sản phẩm");
-            return "redirect:/hoa-don/detail/" + idHoaDon;
+            return "redirect:/hoa-don2/detail/" + idHoaDon;
         }
 
         // Tìm sản phẩm chi tiết theo idCTSP
         Optional<ChiTietSanPham> optionalCTSP = _sanPhamChiTietRepo.findById(idCTSP);
         if (optionalCTSP.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Không tìm thấy sản phẩm chi tiết.");
-            return "redirect:/hoa-don/detail/" + idHoaDon;
+            return "redirect:/hoa-don2/detail/" + idHoaDon;
         }
         ChiTietSanPham chiTietSanPham = optionalCTSP.get();
 
         if (chiTietSanPham == null) {
             redirectAttributes.addFlashAttribute("error", "Không tìm thấy sản phẩm chi tiết.");
-            return "redirect:/hoa-don/detail/" + idHoaDon;
+            return "redirect:/hoa-don2/detail/" + idHoaDon;
         }
 
         // Kiểm tra xem sản phẩm chi tiết đã có trong giỏ hàng hay chưa
@@ -1112,7 +1114,8 @@ public class QuanLyHoaDonControllerTest {
 
         // Lấy ra đối tượng giao hàng theo IdHoaDon
         GiaoHang giaoHang = _giaoHangRepo.findByHoaDonId(idHoaDon);
-//        giaoHang.setPhiShip(phiShip);
+        BigDecimal phiShipNew = BigDecimal.valueOf(phiVanChuyenHang);
+        giaoHang.setPhiShip(phiShipNew);
         if (giaoHang == null) {
             redirectAttributes.addAttribute("errorDelivery", "Không tìm thấy đối tượng giao hàng");
         }
@@ -1126,7 +1129,7 @@ public class QuanLyHoaDonControllerTest {
         _giaoHangRepo.save(giaoHang);
         redirectAttributes.addFlashAttribute("hoaDonDTO", hoaDonDTO);
         redirectAttributes.addFlashAttribute("addProductSuccess", "Thêm sản phẩm vào giỏ hàng thành công");
-        return "redirect:/hoa-don/detail/" + idHoaDon;
+        return "redirect:/hoa-don2/detail/" + idHoaDon;
     }
 
 

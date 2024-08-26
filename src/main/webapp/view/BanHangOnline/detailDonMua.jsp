@@ -402,7 +402,7 @@
                             <span>Mã hóa đơn: ${i.ma}</span> |
                             <c:choose>
                                 <c:when test="${i.trangThai == 1}">
-                                    <div class="badge badge-warning" style="border-radius: 10px;">
+                                    <div class="badge badge-primary" style="border-radius: 10px;">
                                         Chờ xác nhận
                                     </div>
                                 </c:when>

@@ -1148,12 +1148,22 @@
                                                         <c:choose>
                                                             <c:when test="${hoaDonDTO.loaiHoaDon == 1}">
                                                                 <p class="fw-bold mb-1 small">Phí vận chuyển:
+                                                                    <span class="fw-normal" >
+                                                             <fmt:formatNumber
+                                                                     value="${giaoHangDTO.phiShip == null ? 0 : giaoHangDTO.phiShip }"
+                                                                     type="currency"
+                                                                     currencySymbol="₫" groupingUsed="true"/>
+                                                        </span></p>
+
+
+                                                                <p class="fw-bold mb-1 small">Phí vận chuyển2:
                                                                     <span class="fw-normal" id="phiShipHoaDon">
                                                              <fmt:formatNumber
                                                                      value="${giaoHangDTO.phiShip == null ? 0 : giaoHangDTO.phiShip }"
                                                                      type="currency"
                                                                      currencySymbol="₫" groupingUsed="true"/>
                                                         </span></p>
+
                                                             </c:when>
                                                         </c:choose>
                                                     </div>
@@ -1325,13 +1335,7 @@
                                 </div>
 
                                 <input type="hidden" name="phiVanChuyen" value="" id="phiVanChuyen"/>
-                                <%--                                <div class="mb-3">--%>
-                                <%--&lt;%&ndash;                                    <label class="form-label">Phí ship</label>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;                                    <input type="number" class="form-control"&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;                                           value="${giaoHangDTO.phiShip}">&ndash;%&gt;--%>
-                                <%--                                    --%>
-                                <%--                                    <div id="phiShipError" class="text-danger"></div>--%>
-                                <%--                                </div>--%>
+
                                 <div class="mb-3">
                                     <label for="ghiChu" class="form-label">Ghi chú</label>
                                     <textarea class="form-control" id="ghiChu"
@@ -1626,9 +1630,16 @@
                                     </td>
                                     <td>
                                         <!-- Thao tác, ví dụ như nút sửa, xóa -->
-                                        <a href="/hoa-don2/them-san-pham/${product.id}?idHoaDon=${hoaDonDTO.id}">
-                                            <button class="btn btn-primary btn-sm">Chọn</button>
-                                        </a>
+<%--                                        <a href="/hoa-don2/them-san-pham/${product.id}?idHoaDon=${hoaDonDTO.id}">--%>
+<%--                                            <button class="btn btn-primary btn-sm">Chọn</button>--%>
+<%--                                        </a>--%>
+
+
+                                        <form action="/hoa-don2/them-san-pham/${product.id}" method="get">
+                                            <input type="hidden" name="phiVanChuyenHang" value="" id="phiVanChuyenHang"/>
+                                            <button type="submit" class="btn btn-success">Thêm</button>
+                                        </form>
+
                                     </td>
                                     </tr>
                                 </c:if>
@@ -1743,6 +1754,14 @@
 
                 // Calculate the new total
                 var newTotal = tongTien + firstFee - giamGia;
+
+
+                var phiVanChuyenHangInputs = document.querySelectorAll("#phiVanChuyenHang");
+
+                // Cập nhật giá trị cho tất cả các input này
+                phiVanChuyenHangInputs.forEach(function(input) {
+                    input.value = firstFee;
+                });
 
                 // Update the total amount in the DOM
                 $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
@@ -2057,6 +2076,11 @@
         });
 
         $('form[id^="suaDiaChi"]').submit(function (e) {
+
+            var tongTien = ${tongTienDonHang};
+            var soLuongGioHang = ${soLuongGioHang};
+            var giamGia = ${giamGia};
+
             e.preventDefault();  // Ngăn chặn form submit mặc định
 
             var form = this;
@@ -2129,10 +2153,11 @@
                 var service_id = data_maDV.data[0].service_id;
                 console.log("API maDV: ", service_id);
 
+
+                var khoiLuong = soLuongGioHang * 200;
+
                 // Get shipping fee
-                var feeUrl = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id +
-                    '&insurance_value=1000000&from_district_id=3440&to_district_id=' + idQuan +
-                    '&to_ward_code=' + idPhuong + '&height=15&length=15&weight=2000&width=15';
+                var feeUrl = 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?service_id=' + service_id + '&insurance_value=' + tongTien + '&from_district_id=3440&to_district_id=' + idQuan + '&to_ward_code=' + idPhuong + '&height=15&length=15&weight=' + khoiLuong + '&width=15';
                 getJSONWithToken(feeUrl, function (data_total) {
                     if (data_total && data_total.data) {
                         var phiShip = data_total.data.total;
@@ -2613,33 +2638,19 @@
 
                                 // Cập nhật lại tổng tiền và tổng tiền thanh toán
                                 var newTotalPrice = response.tongTien;
+                                var newQuantity = response.totalSoLuong;
+                                var giamGia = response.giamGia;
+                                var phieuGiamGia = response.phieuGiamGia;
+
                                 const formatCurrency = (amount) => new Intl.NumberFormat('vi-VN', {
                                     style: 'currency',
                                     currency: 'VND',
                                     currencyDisplay: 'code'
                                 }).format(amount).replace('VND', '₫');
-
                                 $('#tongTienValue').text(formatCurrency(newTotalPrice));
-
-
-
-                                // calculateShippingAndTotal();
                                 //Cập nhật lại phí ship và tổng tiền
 
-
-                                // const giamGia = parseFloat($('#giamGia').text().replace(/[^0-9.-]+/g, ""));
-                                // const giamGia = response.giamGia;
-                                // const phieuGiamGia = response.phieuGiamGia;
-                                // const phiVanChuyen = parseFloat($('#phiVanChuyen').text());
-                                // const tongTienThanhToan = ;
-
-                                // $('#phieuGiamGia').text(phieuGiamGia);
-                                // $('#giamGia').text(formatCurrency(giamGia));
-                                // $('#phiVanChuyen').text(formatCurrency(firstFee));
-                                // $('#phiShipHoaDon').text(formatCurrency(firstFee));
-                                // $('#tongTienThanhToanValue').text(formatCurrency(response.tongTienThanhToan));
-
-
+                                $('#phieuGiamGia').text(phieuGiamGia);
 
                                 // Show success message
                                 Toast.fire({
@@ -2647,8 +2658,7 @@
                                     icon: 'success'
                                 });
 
-                                // Optional: reload the page if necessary
-                                // location.reload();
+
                             }
                         },
                         error: function () {
@@ -2658,6 +2668,9 @@
                             });
                         }
                     });
+
+
+
                 }
             });
         });
@@ -2674,7 +2687,6 @@
 
         // Bắt sự kiện khi người dùng click vào nút cập nhật số lượng
         $('.update-sl').click(function () {
-            console.log('Update button clicked');
 
             var idCTSP = $(this).data('id');
             var idHoaDon = $(this).data('hoadon');
@@ -2721,23 +2733,16 @@
                         }).format(amount).replace('VND', '₫');
 
                         let newTotalPrice = response.tongTien;
-
+                        var newQuantity = response.totalSoLuong;
+                        var giamGia = response.giamGia;
+                        var phieuGiamGia = response.phieuGiamGia;
                         $('#tongTienValue').text(formatCurrency(newTotalPrice));
+                        $('#phieuGiamGia').text(phieuGiamGia);
 
                         const parseCurrency = (value) => parseFloat(value.replace(/[^\d.-]+/g, ''));
 
-                        // const tongTienGiam = response.tongTienThanhToan;
-                        // const giamGia = response.giamGia;
-                        // const phieuGiamGia = response.phieuGiamGia;
-                        // const phiVanChuyen = parseFloat($('#phiVanChuyen').text().replace(/[^0-9.-]+/g, ""));
-                        // const tongTienThanhToan = response.tongTienThanhToan;
-                        //
-                        //
-                        // $('#phieuGiamGia').text(phieuGiamGia);
-                        // $('#giamGia').text(formatCurrency(giamGia));
-                        // $('#phiVanChuyen').text(formatCurrency(phiVanChuyen));
-                        // $('#phiShipHoaDon').text(formatCurrency(phiVanChuyen));
-                        // $('#tongTienThanhToanValue').text(formatCurrency(tongTienThanhToan));
+                        // Tính lại tổng tiền
+                        calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
 
                         // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền
                         response.listHDCT.forEach(item => {
