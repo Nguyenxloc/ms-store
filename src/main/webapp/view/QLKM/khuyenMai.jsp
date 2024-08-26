@@ -28,7 +28,6 @@
 
     <%--Link Ajax --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -41,6 +40,7 @@
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
             rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
     <style>
@@ -222,12 +222,12 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                              aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/store/tai-khoan-cua-toi">
+                            <a class="dropdown-item" href="/admin/quan-ly-nhan-vien/tai-khoan-cua-toi/${nv.id}">
                                 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Tài khoản của tôi
+                                Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/store/dang-xuat" id="dang-xuat" data-toggle="modal" data-target="#logoutModal">
+                            <a class="dropdown-item" href="" id="dang-xuat">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
                             </a>
@@ -239,8 +239,9 @@
 
             <!-- Bán hàng tại quầy -->
             <div class="container-fluid">
-                <div class="container">
-                    <div class="row">
+                <div class="container bg-white">
+                    <h2>Quản lý khuyến mại</h2>
+                    <div class="row mt-5">
                         <div class="">
                             <table class="table table-hover">
                                 <thead>
@@ -440,21 +441,6 @@
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
 </div>
 <!-- Bootstrap core JavaScript-->
 <script src="/view_admin/vendor/jquery/jquery.min.js"></script>
@@ -1060,6 +1046,30 @@
         $('#saveAddBtn').on('click', function(event) {
 
             // Optionally, submit the form normally after AJAX request (if needed)
+        });
+    });
+    document.getElementById('dang-xuat').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn đăng xuất không?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đăng xuất!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Đã đăng xuất!",
+                    text: "Bạn đã đăng xuất thành công.",
+                    icon: "success"
+                }).then(() => {
+                    // Điều hướng tới URL đăng xuất sau khi người dùng xác nhận
+                    window.location.href = "/admin/dang-nhap-view";
+                });
+            }
         });
     });
 </script>
