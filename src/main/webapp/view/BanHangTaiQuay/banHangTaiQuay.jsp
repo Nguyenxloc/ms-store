@@ -143,7 +143,7 @@
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
+                <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
@@ -152,10 +152,10 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
+                            <a class="collapse-item" href="/admin/quan-ly-mau-sac">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kich-thuoc">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kieu-tay">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-chat-lieu">Chất liệu</a>
                         </div>
                     </div>
                 </li>
@@ -176,7 +176,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/qlkm" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai" style="display: flex; align-items: center">
                         <i class="bi bi-gift" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khuyến mãi</span></a>
                 </li>

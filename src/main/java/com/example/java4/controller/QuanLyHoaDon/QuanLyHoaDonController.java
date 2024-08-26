@@ -339,7 +339,7 @@ public class QuanLyHoaDonController {
         }
 
         // Nếu không tìm thấy địa chỉ khớp, tạo địa chỉ mặc định
-        if (diaChiKhachHang == null || diaChiKhachHang.getDiaChiChiTiet().isEmpty()) {
+        if (diaChiKhachHang == null) {
             diaChiKhachHang = new DiaChi();
             diaChiKhachHang.setDiaChiChiTiet("");
         }

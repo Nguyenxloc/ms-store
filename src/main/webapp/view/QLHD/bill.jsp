@@ -127,10 +127,10 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
-                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
+                            <a class="collapse-item" href="/admin/quan-ly-mau-sac">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kich-thuoc">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-kieu-tay">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-chat-lieu">Chất liệu</a>
                         </div>
                     </div>
                 </li>

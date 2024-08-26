@@ -2247,7 +2247,7 @@
                                     }).then(() => {
                                         // Success message after saving images
                                         Swal.fire(
-                                            'Đã thanh toán!',
+                                            'Đã lưu thành công!',
                                             'Dữ liệu đã được ghi nhận.',
                                             'success'
                                         ).then(() => {
@@ -2333,7 +2333,7 @@
                         body: JSON.stringify(data)
                     }).then(() => {
                         Swal.fire(
-                            'Đã thanh toán!',
+                            'Đã lưu thành công!',
                             'Dữ liệu đã được ghi nhận.',
                             'success'
                         ).then(() => {
@@ -2383,7 +2383,7 @@
                         body: JSON.stringify(data)
                     }).then(() => {
                         Swal.fire(
-                            'Đã thanh toán!',
+                            'Đã lưu thành công!',
                             'Dữ liệu đã được ghi nhận.',
                             'success'
                         ).then(() => {
@@ -2433,7 +2433,7 @@
                         body: JSON.stringify(data)
                     }).then(() => {
                         Swal.fire(
-                            'Đã thanh toán!',
+                            'Đã lưu thành công!!',
                             'Dữ liệu đã được ghi nhận.',
                             'success'
                         ).then(() => {
@@ -2483,7 +2483,7 @@
                         body: JSON.stringify(data)
                     }).then(() => {
                         Swal.fire(
-                            'Đã thanh toán!',
+                            'Đã lưu thành công!',
                             'Dữ liệu đã được ghi nhận.',
                             'success'
                         ).then(() => {
@@ -2720,7 +2720,7 @@
                             body: JSON.stringify(data)
                         }).then(() => {
                             Swal.fire(
-                                'Đã thanh toán!',
+                                'Đã lưu thành công!',
                                 'Dữ liệu đã được ghi nhận.',
                                 'success'
                             ).then(() => {
@@ -2735,7 +2735,7 @@
                             body: JSON.stringify(dataHinhAnh)
                         }).then(() => {
                             Swal.fire(
-                                'Đã thanh toán!',
+                                'Đã lưu thành công!',
                                 'Dữ liệu đã được ghi nhận.',
                                 'success'
                             ).then(() => {
@@ -2812,7 +2812,7 @@
                         }
                     }).then(() => {
                         Swal.fire(
-                            'Đã thanh toán!',
+                            'Đã lưu thành công!',
                             'Dữ liệu đã được ghi nhận.',
                             'success'
                         ).then(() => {
