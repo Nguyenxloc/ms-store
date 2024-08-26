@@ -396,7 +396,7 @@
             </div>
             <div style="padding-bottom: 150px;">
                 <%-- Trạng thái hóa đơn --%>
-                <div class="mb-5" style="position: absolute; left: 591px; top: 157px;">
+                <div class="mb-5" style="position: absolute; left: 575px; top: 157px;">
                     <c:forEach var="i" items="${listHDCT}" varStatus="index">
                         <c:if test="${index.index == 0}">
                             <span>Mã hóa đơn: ${i.ma}</span> |

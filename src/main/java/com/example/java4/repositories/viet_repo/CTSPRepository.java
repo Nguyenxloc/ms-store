@@ -42,7 +42,7 @@ public interface CTSPRepository extends JpaRepository<ChiTietSanPham, String>, J
             "join KichThuoc kth on kth.id = ctsp.idKichThuoc.id " +
             "join KieuTay kta on kta.id = ctsp.idKieuTay.id " +
             "join HinhAnh ha on ha.idCTSP.id = ctsp.id " +
-            "where sp.trangThai = 1")
+            "where sp.trangThai = 1 and ctsp.trangThai = 1")
     List<ChiTietSanPhamResponse> getCTSPRes();
 
 }
