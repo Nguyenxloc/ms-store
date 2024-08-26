@@ -318,7 +318,7 @@
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           
+
                             <!-- Counter - Messages -->
                             <span class="badge badge-danger badge-counter"></span>
                         </a>
