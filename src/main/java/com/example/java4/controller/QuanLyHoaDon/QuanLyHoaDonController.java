@@ -727,7 +727,7 @@ public class QuanLyHoaDonController {
                 lichSuHoaDon.setNgayDangGiaoHang(LocalDateTime.now());
                 lichSuHoaDon.setTrangThai(HoaDonRepository.DANG_GIAO_HANG);
                 _lichSuHoaDonRepo.save(lichSuHoaDon);
-
+                _giaoHangRepo.save(giaoHang);
                 break;
             case HoaDonRepository.DANG_GIAO_HANG:
                 hoaDon.setTrangThai(HoaDonRepository.DA_HOAN_THANH);
@@ -739,7 +739,7 @@ public class QuanLyHoaDonController {
                 lichSuHoaDon.setNgayHoanThanh(LocalDateTime.now());
                 lichSuHoaDon.setTrangThai(HoaDonRepository.DA_HOAN_THANH);
                 _lichSuHoaDonRepo.save(lichSuHoaDon);
-
+                _giaoHangRepo.save(giaoHang);
                 // Cập nhật trạng thái Chi tiết hóa đơn
                 List<ChiTietHoaDon> chiTietList = _hoaDonChiTietRepo.findAllByHoaDon_Id(hoaDon.getId());
                 for (ChiTietHoaDon chiTietHD : chiTietList) {
@@ -1201,6 +1201,9 @@ public class QuanLyHoaDonController {
                 totalSoLuong += chiTietHoaDon.getSoLuong();
             }
 
+            //Cập nhật lại phí ship
+            _giaoHangRepo.save(giaoHang);
+
             // Cập nhật lại danh sách sản phẩm để hiển thị để cập nhật lại số lượng
             List<ChiTietSanPham> updatedListCTSP = _sanPhamChiTietRepo.findAll();
             Map<String, Object> response = new HashMap<>();
@@ -1291,6 +1294,9 @@ public class QuanLyHoaDonController {
             }
 
             hoaDon.setTongTien(tongTien);
+
+
+
             // Áp dụng lại khuyến mãi
             applyKhuyenMai(hoaDon);
             _hoaDonRepo.save(hoaDon);
@@ -1302,10 +1308,12 @@ public class QuanLyHoaDonController {
             BigDecimal phiShip = (giaoHang != null && giaoHang.getPhiShip() != null) ? giaoHang.getPhiShip() : BigDecimal.ZERO;
 
             BigDecimal tongTienThanhToan = tongTien.add(phiShip).subtract(phiGiamGia);
+
             // Kiểm tra và điều chỉnh tổng tiền thanh toán không âm
             if (tongTienThanhToan.compareTo(BigDecimal.ZERO) < 0) {
                 tongTienThanhToan = BigDecimal.ZERO;
             }
+
             List<ChiTietSanPham> updatedListCTSP = _sanPhamChiTietRepo.findAll();
             phiGiamGia =  ( hoaDon.getIdKhuyenMai() != null) ? hoaDon.getIdKhuyenMai().getSoTienGiam() : BigDecimal.ZERO;
             String phieuGiamGia =  ( hoaDon.getIdKhuyenMai() != null) ? hoaDon.getIdKhuyenMai().getMa() : "N/A";
@@ -1314,6 +1322,10 @@ public class QuanLyHoaDonController {
             for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
                 totalSoLuong += chiTietHoaDon.getSoLuong();
             }
+
+            //Cập nhật lại phí ship
+            _giaoHangRepo.save(giaoHang);
+
             response.put("tongTien", tongTien);
             response.put("giamGia",phiGiamGia);
             response.put("phieuGiamGia", phieuGiamGia);

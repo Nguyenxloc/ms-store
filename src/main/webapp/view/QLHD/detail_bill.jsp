@@ -295,13 +295,14 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi"
+                       style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
@@ -326,15 +327,17 @@
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item" >
-                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi" style="display: flex; align-items: center">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/quan-ly-nhan-vien/hien-thi"
+                       style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style=" margin-left: 2px"></i>
                         <span style=" margin-left: 6px">Quản lý nhân viên</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi"
+                       style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -357,13 +360,14 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi"
+                       style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
-                <li class="nav-item"  style="background: linear-gradient(45deg, black, transparent)">
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Quản lý hóa đơn</span></a>
@@ -371,7 +375,8 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/quan-ly-khach-hang/hien-thi"
+                       style="display: flex; align-items: center">
                         <i class="bi bi-person-bounding-box" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý khách hàng</span></a>
                 </li>
@@ -425,8 +430,6 @@
                             </form>
                         </div>
                     </li>
-
-
 
 
                     <div class="topbar-divider d-none d-sm-block"></div>
@@ -920,13 +923,13 @@
                                 <h5 class="m-0 font-weight-bold">Thông tin đơn hàng: ${hoaDonDTO.ma}</h5>
 
                                 <c:if test="${hoaDonDTO.loaiHoaDon == 1}">
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#updateModal"
-                                            <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 3}">
-                                                disabled
-                                            </c:if>>
-                                        Thay đổi
-                                    </button>
+<%--                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"--%>
+<%--                                            data-bs-target="#updateModal"--%>
+<%--                                            <c:if test="${hoaDonDTO.trangThai != 1 && hoaDonDTO.trangThai != 3}">--%>
+<%--                                                disabled--%>
+<%--                                            </c:if>>--%>
+<%--                                        Thay đổi--%>
+<%--                                    </button>--%>
                                 </c:if>
                             </div>
 
@@ -1099,8 +1102,10 @@
 
                                         <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                             <span>Phí vận chuyển:</span>
-                                            <span class="fw-normal " name="phiShip" id="phiVanChuyen"  data-phiship="${phiVanChuyen}">
-                                                <fmt:formatNumber value="${phiVanChuyen}" type="currency" currencySymbol="₫"
+                                            <span class="fw-normal " name="phiShip" id="phiVanChuyen"
+                                                  data-phiship="${phiVanChuyen}">
+                                                <fmt:formatNumber value="${phiVanChuyen}" type="currency"
+                                                                  currencySymbol="₫"
                                                                   groupingUsed="true"/>
                                             </span>
                                             <input type="text" hidden value="${phiVanChuyen}" name="phiShip">
@@ -1127,11 +1132,21 @@
                             <div class="card-footer">
                                 <p class="fw-bold mb-1 pb-3 small d-flex justify-content-between">
                                     <span>Tổng tiền thanh toán:</span>
-                                    <span class="text-danger" id="tongTienThanhToanValue" >
+
+                                    <c:if test="${tongTienThanhToan>hoaDonDTO.khuyenMai.soTienGiam}">
+                                         <span class="text-danger" id="tongTienThanhToanValue">
                     <c:set var="tongTienThanhToan" value="${tongTienThanhToan}"/>
                     <fmt:formatNumber value="${tongTienThanhToan}" type="currency" currencySymbol="₫"
                                       groupingUsed="true"/>
                 </span>
+                                    </c:if>
+
+                                    <c:if test="${tongTienThanhToan<hoaDonDTO.khuyenMai.soTienGiam}">
+                                         <span class="text-danger" >
+                                             0đ
+                                    </span>
+                                    </c:if>
+
                                 </p>
                             </div>
                         </div>
@@ -1609,10 +1624,11 @@
             }
         });
     }
+
     //start debug
 
     // Hàm tính lại phí ship và tổng tiền thanh toán
-    function calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia) {
+    function calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia) {
         // Get necessary values
         var idQuanHuyenTest = ${diaChiKhachHang.idQH};
         var idPhuongXaTest = ${diaChiKhachHang.idPX};
@@ -1620,10 +1636,13 @@
         // var tongTien = parseFloat($('#tongTienValue').data('tongtien')) || 0;
         // Nếu tổng tiền hàng về 0
         if (tongTien <= 0) {
-            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(0));
-            $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+            $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(0));
+            $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(0));
+            $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(0));
+            $('#giamGia').text(new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(giamGia));
             return; // Không cần thực hiện các bước tính phí ship
         }
 
@@ -1647,17 +1666,29 @@
                 var newTotal = tongTien + firstFee - giamGia;
 
                 // Update the total amount in the DOM
-                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(newTotal));
-                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
-                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(firstFee));
-                $('#giamGia').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(giamGia));
+                $('#tongTienThanhToanValue').text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(newTotal));
+                $('#phiVanChuyen').text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(firstFee));
+                $('#phiShipHoaDon').text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(firstFee));
+                $('#giamGia').text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(giamGia));
 
             });
         });
     }
 
     // Initial calculation on page load
-    calculateShippingAndTotal(tongTien,soLuongGioHang,giamGia);
+    calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia);
     //end debug
     // Hàm trả về phí ship
     function tinhPhiShip(tongTien, soLuongGioHang, giamGia, callback) {
@@ -2437,7 +2468,7 @@
                                 $('#tongTienValue').text(formatCurrency(newTotalPrice));
                                 //Cập nhật lại phí ship và tổng tiền
 
-                                calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
+                                calculateShippingAndTotal(newTotalPrice, newQuantity, giamGia);
                                 $('#phieuGiamGia').text(phieuGiamGia);
 
                                 // Show success message
@@ -2456,7 +2487,6 @@
                             });
                         }
                     });
-
 
 
                 }
@@ -2530,7 +2560,7 @@
                         const parseCurrency = (value) => parseFloat(value.replace(/[^\d.-]+/g, ''));
 
                         // Tính lại tổng tiền
-                        calculateShippingAndTotal(newTotalPrice,newQuantity,giamGia);
+                        calculateShippingAndTotal(newTotalPrice, newQuantity, giamGia);
 
                         // Lặp qua danh sách sản phẩm chi tiết hóa đơn để cập nhật lại số lượng và tổng tiền
                         response.listHDCT.forEach(item => {
@@ -2568,7 +2598,6 @@
             });
         });
     });
-
 
 
 </script>
@@ -2726,11 +2755,7 @@
     });
 
 
-
 </script>
-
-
-
 
 
 </body>

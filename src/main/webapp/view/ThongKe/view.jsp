@@ -322,7 +322,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
@@ -384,7 +384,7 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>

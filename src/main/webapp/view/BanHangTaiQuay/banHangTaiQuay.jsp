@@ -130,29 +130,32 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
+                <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Quản lý sản phẩm</span>
+                        <i class="bi bi-diagram-3" style="font-size: 1.2rem; color: #fff;"></i>
+                        <span style="color: #fff;">Quản lý sản phẩm</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="buttons.html">Màu sắc, kích thước các thứ</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
+                            <a class="collapse-item" href="/admin/quan-ly-san-pham">Sản phẩm</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Màu sắc</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kích thước</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Kiểu tay</a>
+                            <a class="collapse-item" href="/admin/quan-ly-thuoc-tinh">Chất liệu</a>
                         </div>
                     </div>
                 </li>
@@ -189,14 +192,14 @@
             <c:otherwise>
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item" style="background: linear-gradient(45deg, black, transparent)">
-                    <a class="nav-link" href="/ban-hang-tai-quay" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/ban-hang-tai-quay/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-shop" style="color: white; margin-left: 2px"></i>
                         <span style="font-weight: bold; margin-left: 6px">Bán hàng tại quầy</span></a>
                 </li>
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/hoa-don/hien-thi" style="display: flex; align-items: center">
+                    <a class="nav-link" href="/admin/hoa-don/hien-thi" style="display: flex; align-items: center">
                         <i class="bi bi-journal-text" style="margin-left: 2px"></i>
                         <span style="margin-left: 6px">Quản lý hóa đơn</span></a>
                 </li>
@@ -221,18 +224,18 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+<%--                <form--%>
+<%--                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">--%>
+<%--                    <div class="input-group">--%>
+<%--                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."--%>
+<%--                               aria-label="Search" aria-describedby="basic-addon2">--%>
+<%--                        <div class="input-group-append">--%>
+<%--                            <button class="btn btn-primary" type="button">--%>
+<%--                                <i class="fas fa-search fa-sm"></i>--%>
+<%--                            </button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </form>--%>
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
@@ -264,9 +267,9 @@
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw"></i>
+
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
+                            <span class="badge badge-danger badge-counter"></span>
                         </a>
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -315,9 +318,9 @@
                     <li class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
+                           
                             <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
+                            <span class="badge badge-danger badge-counter"></span>
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -399,7 +402,7 @@
                                 Thông tin cá nhân
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/ban-hang-tai-quay/dang-xuat" id="dang-xuat" data-toggle="modal"
+                            <a class="dropdown-item" href="/admin/ban-hang-tai-quay/dang-xuat" id="dang-xuat" data-toggle="modal"
                                data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
@@ -417,7 +420,7 @@
                         <div class="col-8">
                             <div>
                                 <h3 class="float-start">Hóa đơn</h3>
-                                <form action="/ban-hang-tai-quay/add-hoa-don" method="post" style="float: right;" class="float-end">
+                                <form action="/admin/ban-hang-tai-quay/add-hoa-don" method="post" style="float: right;" class="float-end">
                                     <button type="submit" class="btn btn-success">+ Tạo hóa đơn</button>
                                 </form>
                                 <a class="col-sm-3 btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#exampleModal4"
@@ -452,7 +455,7 @@
 
                                         <td>${hd.trangThai == 0 ? "Chưa thanh toán" : "Đã thanh toán"}</td>
                                         <td>
-                                            <a href="/ban-hang-tai-quay/detail-hoa-don/${hd.id}"
+                                            <a href="/admin/ban-hang-tai-quay/detail-hoa-don/${hd.id}"
                                                class="btn btn-primary">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
@@ -511,7 +514,7 @@
                                         <td>${hdct.idCTSP.idMauSac.ten}</td>
                                         <td>${hdct.idCTSP.idKichThuoc.ten}</td>
                                         <td style="display: flex; align-items: center;">
-                                            <form class="d-flex" method="post" action="/ban-hang-tai-quay/update-sl/${hdct.idCTSP.id}" onsubmit="return validateForm(this);">
+                                            <form class="d-flex" method="post" action="/admin/ban-hang-tai-quay/update-sl/${hdct.idCTSP.id}" onsubmit="return validateForm(this);">
                                                 <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                                 <input type="hidden" id="tongSL" name="tongSL" value="${hdct.idCTSP.soLuong}">
                                                 <input type="hidden" id="soLuongCu" name="soLuongCu" value="${hdct.soLuong}">
@@ -523,7 +526,7 @@
                                         </td>
                                         <td class="price">${hdct.donGia}</td>
                                         <td>
-                                            <form class="delete-form" action="/ban-hang-tai-quay/delete-hdct/${hdct.id}/${hdct.idCTSP.id}?highlightId=${hoaDon.id}" method="post">
+                                            <form class="delete-form" action="/admin/ban-hang-tai-quay/delete-hdct/${hdct.id}/${hdct.idCTSP.id}?highlightId=${hoaDon.id}" method="post">
                                                 <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                                 <button class="delete-button2 btn btn-danger" type="button" ><i class="bi bi-trash"></i></button>
                                             </form>
@@ -586,7 +589,7 @@
                                             + Chọn
                                         </a>
                                         <c:if test="${hoaDon.idKhuyenMai.id!=null}">
-                                            <a class="col-sm-3 btn btn-outline-danger" href="/ban-hang-tai-quay/huy-khuyen-mai/${hoaDon.idKhuyenMai.id}"
+                                            <a class="col-sm-3 btn btn-outline-danger" href="/admin/ban-hang-tai-quay/huy-khuyen-mai/${hoaDon.idKhuyenMai.id}"
                                                style="height: 38px;width: 79px;margin-top: 16px;">
                                                 X Hủy
                                             </a>
@@ -668,29 +671,75 @@
                                                 <c:if test="${hoaDon.id!=null}">
                                                     <button id="checkBtn" type="submit" class="btn btn-outline-primary" idhd =${hoaDon.id}><i class="bi bi-wallet2" style="padding-right: 5px"></i>Thanh Toán</button>
                                                     <%--Hủy hóa đơn--%>
-                                                    <a href="#" id="cancelOrder" class="btn btn-outline-danger"><i class="bi bi-x"></i> Hủy Đơn</a>
+                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal">
+                                                        <i class="bi bi-x"></i> Hủy Đơn
+                                                    </button>
                                                 </c:if>
 
 
                                             </div>
                                         </div>
                                     </div>
+<%----%>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="myModal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="mb-3 mt-3">
+                                                            <label class="form-label">Lý do hủy:</label>
+                                                            <input type="text" class="form-control" name="ghiChu" id="ghiChu">
+                                                            <p id="error-ghiChu" style="color: red"></p>
+                                                        </div>
+                                                        <a href="#" id="cancelOrder2" class="btn btn-outline-primary"><i class="bi bi-x"></i> Hủy Đơn</a>
+                                                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <div id="vnpay-div" class="content-div hidden">
                                         <div class="mb-3" style="margin-top: 15px">
                                             <div class="col-sm-12">
                                                 <div style="display: flex; align-items: center;">
-                                                    <form class="thanhToan-form" action="/ban-hang-tai-quay/pay/${total-hoaDon.idKhuyenMai.soTienGiam}/${hoaDon.ma}" method="get">
+                                                    <form class="thanhToan-form" action="/admin/ban-hang-tai-quay/pay/${total-hoaDon.idKhuyenMai.soTienGiam}/${hoaDon.ma}" method="get">
                                                         <button class="thanhToan-button2 btn btn-outline-primary" type="button" style="margin-top: 16px"><i class="bi bi-wallet2" style="padding-right: 5px"></i> Thanh Toán</button>
                                                     </form>
                                                     <a href="#" id="cancelOrder" class="btn btn-outline-danger" style="margin-left: 10px;"><i class="bi bi-x"></i> Hủy Đơn</a>
+<%--                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#myModal2">--%>
+<%--                                                        <i class="bi bi-x"></i> Hủy Đơn--%>
+<%--                                                    </button>--%>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
 
+<%--                                    <!-- The Modal -->--%>
+<%--                                    <div class="modal" id="myModal2">--%>
+<%--                                        <div class="modal-dialog">--%>
+<%--                                            <div class="modal-content">--%>
 
+<%--                                                <div class="modal-body">--%>
+<%--&lt;%&ndash;                                                    <form>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <div class="mb-3 mt-3">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <label class="form-label">Lý do hủy:</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <input type="text" class="form-control" name="ghiChu" id="ghiChu2">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                            <p id="error-ghiChu2" style="color: red"></p>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        </div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <a href="#" id="cancelOrder3" class="btn btn-outline-primary"><i class="bi bi-x"></i> Hủy Đơn</a>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    </form>&ndash;%&gt;--%>
+<%--                                                    <p>Xin chào</p>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
 
 
 
@@ -832,7 +881,7 @@
                                             <td class="price">${km.apDung}</td>
                                             <td>${km.soLuong}</td>
                                             <td>
-                                                <form action="/ban-hang-tai-quay/find-khuyen-mai/${km.id}" method="post" onsubmit="return validateAddToMaGiamGia();">
+                                                <form action="/admin/ban-hang-tai-quay/find-khuyen-mai/${km.id}" method="post" onsubmit="return validateAddToMaGiamGia();">
                                                     <input id="selectedMaGiamGia" type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                                     <input  type="hidden" name="idKMBanDau" value="${hoaDon.idKhuyenMai.id}">
                                                     <button class="btn btn-primary" type="submit">
@@ -866,7 +915,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="khachHangForm" method="post" action="/ban-hang-tai-quay/create">
+                        <form id="khachHangForm" method="post" action="/admin/ban-hang-tai-quay/create">
                             <div class="mb-3 mt-3">
                                 <label class="form-label">Họ tên khách hàng:</label>
                                 <input type="text" class="form-control" id="tenKhachHang" name="hoTen">
@@ -936,7 +985,7 @@
                                         <td>${kh.hoTen}</td>
                                         <td>${kh.sdt}</td>
                                         <td>
-                                            <form action="/ban-hang-tai-quay/find-kh/${kh.id}" method="post" onsubmit="return validateBeforeAddToCart();">
+                                            <form action="/admin/ban-hang-tai-quay/find-kh/${kh.id}" method="post" onsubmit="return validateBeforeAddToCart();">
                                                 <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                                                 <input type="hidden" name="maHoaDon" value="${hoaDon.ma}">
                                                 <input type="hidden" class="form-control" name="ngayTao" value="${hoaDon.ngayTao}">
@@ -985,7 +1034,7 @@
                                 </div>
 
                                 <%--     Lọc theo thuộc tính   --%>
-                                <form method="post" action="/ban-hang-tai-quay/filter">
+                                <form method="post" action="/admin/ban-hang-tai-quay/filter">
                                     <div class="row">
                                         <div class="col col-md-3">
                                             <div class="form-group">
@@ -1087,7 +1136,7 @@
                                                 <td class="price">${spct.giaBan}</td>
                                                 <td>${spct.trangThai==1?"Còn hàng":"Hết hàng"}</td>
                                                 <td>
-                                                    <form action="/ban-hang-tai-quay/add-san-pham/${spct.id}/${spct.giaBan}" method="post"
+                                                    <form action="/admin/ban-hang-tai-quay/add-san-pham/${spct.id}/${spct.giaBan}" method="post"
                                                           onsubmit="return validateBeforeAddToCart();">
                                                         <input type="hidden" name="idHoaDon" value="${hoaDon.id}"
                                                                id="selectedInvoiceId">
@@ -1541,6 +1590,99 @@
     });
 
     //hủy hóa đơn
+    <%--document.getElementById('cancelOrder3').addEventListener('click', function(event) {--%>
+    <%--    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>--%>
+
+    <%--    var listHDCT = [];--%>
+    <%--    <c:forEach items="${listHDCT}" var="hdct">--%>
+    <%--    var HoaDonCT = {};--%>
+    <%--    HoaDonCT.id = "${hdct.id}";--%>
+    <%--    listHDCT.push(HoaDonCT);--%>
+    <%--    </c:forEach>--%>
+
+    <%--    if (listHDCT.some(hoaDonCT => hoaDonCT.id != null)) {--%>
+    <%--        Swal.fire({--%>
+    <%--            title: 'Bạn có muốn hủy đơn không?',--%>
+    <%--            icon: 'warning',--%>
+    <%--            showCancelButton: true,--%>
+    <%--            confirmButtonColor: '#3085d6',--%>
+    <%--            cancelButtonColor: '#d33',--%>
+    <%--            confirmButtonText: 'Có, hủy đơn!',--%>
+    <%--            cancelButtonText: 'Không'--%>
+    <%--        }).then((result) => {--%>
+    <%--            if (result.isConfirmed) {--%>
+    <%--                var ghiChu = document.getElementById('ghiChu2').value;--%>
+    <%--                let hasError = false;--%>
+    <%--                if (ghiChu==""){--%>
+    <%--                    document.getElementById('error-ghiChu2').textContent = 'Vui lòng nhập lý do';--%>
+    <%--                    hasError=true;--%>
+    <%--                }else {--%>
+    <%--                    var url = "/admin/ban-hang-tai-quay/delete-hoa-don?ghiChu=" + encodeURIComponent(ghiChu);--%>
+    <%--                    // Chuyển hướng đến URL để hủy đơn cùng với ghi chú--%>
+    <%--                    window.location.href = url;--%>
+    <%--                }--%>
+    <%--            }--%>
+    <%--        });--%>
+    <%--    } else {--%>
+    <%--        Swal.fire({--%>
+    <%--            title: 'Lỗi!',--%>
+    <%--            text: 'Giỏ hàng không có sản phẩm.',--%>
+    <%--            icon: 'error',--%>
+    <%--            confirmButtonText: 'Đóng'--%>
+    <%--        });--%>
+    <%--    }--%>
+    <%--});--%>
+
+    //
+
+
+    //hủy hóa đơn
+    document.getElementById('cancelOrder2').addEventListener('click', function(event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+        var listHDCT = [];
+        <c:forEach items="${listHDCT}" var="hdct">
+        var HoaDonCT = {};
+        HoaDonCT.id = "${hdct.id}";
+        listHDCT.push(HoaDonCT);
+        </c:forEach>
+
+        if (listHDCT.some(hoaDonCT => hoaDonCT.id != null)) {
+            Swal.fire({
+                title: 'Bạn có muốn hủy đơn không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có, hủy đơn!',
+                cancelButtonText: 'Không'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var ghiChu = document.getElementById('ghiChu').value;
+                    let hasError = false;
+                    if (ghiChu==""){
+                        document.getElementById('error-ghiChu').textContent = 'Vui lòng nhập lý do';
+                        hasError=true;
+                    }else {
+                        var url = "/admin/ban-hang-tai-quay/delete-hoa-don?ghiChu=" + encodeURIComponent(ghiChu);
+                        // Chuyển hướng đến URL để hủy đơn cùng với ghi chú
+                        window.location.href = url;
+                    }
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Lỗi!',
+                text: 'Giỏ hàng không có sản phẩm.',
+                icon: 'error',
+                confirmButtonText: 'Đóng'
+            });
+        }
+    });
+
+    //
+
+    //hủy hóa đơn
     document.getElementById('cancelOrder').addEventListener('click', function(event) {
         event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
 
@@ -1567,7 +1709,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Chuyển hướng đến URL để hủy đơn
-                    window.location.href = "/ban-hang-tai-quay/delete-hoa-don/${hoaDon.id}";
+                    window.location.href = "/admin/ban-hang-tai-quay/delete-hoa-don/${hoaDon.id}";
                 }
             })
         }else{
@@ -1588,7 +1730,7 @@
         var txtSearch = param.value;
         console.log(txtSearch);
         $.ajax({
-            url: "/ban-hang-tai-quay/search/${hoaDon.id}",
+            url: "/admin/ban-hang-tai-quay/search/${hoaDon.id}",
             type: "POST",
             data: {
                 txt:txtSearch
@@ -1750,7 +1892,7 @@
                 if (result.isConfirmed) {
                     // Thực hiện hành động xóa ở đây, ví dụ:
                     // Gửi yêu cầu AJAX tới server để xóa dữ liệu
-                    fetch(`/ban-hang-tai-quay/delete-hoa-don/`+idhd, { method: 'GET' }).then(() => {
+                    fetch(`/admin/ban-hang-tai-quay/delete-hoa-don/`+idhd, { method: 'GET' }).then(() => {
                         Swal.fire(
                             'Đã xóa!',
                             'Dữ liệu của bạn đã bị xóa.',
@@ -1809,14 +1951,14 @@
                     cancelButtonText: 'Hủy'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/ban-hang-tai-quay/thanh-toan/`+idHD+'?idKhuyenMai='+idKhuyenMai+'&idKH='+idKH+'&tongTien='+tongTien,
+                        fetch(`/admin/ban-hang-tai-quay/thanh-toan/`+idHD+'?idKhuyenMai='+idKhuyenMai+'&idKH='+idKH+'&tongTien='+tongTien,
                             { method: 'POST' }).then(() => {
                             Swal.fire(
                                 'Đã thanh toán!',
                                 'Dữ liệu đã được ghi nhận.',
                                 'success'
                             ).then(() => {
-                                window.location.href = '/ban-hang-tai-quay';
+                                window.location.href = '/admin/ban-hang-tai-quay';
                             });
                             button.closest('tr').remove();
                         });
@@ -1946,7 +2088,7 @@
         var txtSearch = param.value;
         console.log(txtSearch);
         $.ajax({
-            url: "/ban-hang-tai-quay/searchSPCT",
+            url: "/admin/ban-hang-tai-quay/searchSPCT",
             type: "POST",
             data: {
                 search:txtSearch
@@ -1971,7 +2113,7 @@
         var txtSearch = param.value;
         console.log(txtSearch);
         $.ajax({
-            url: "/ban-hang-tai-quay/search/${hoaDon.id}",
+            url: "/admin/ban-hang-tai-quay/search/${hoaDon.id}",
             type: "POST",
             data: {
                 txt:txtSearch
@@ -1995,7 +2137,7 @@
             var productId = $(this).val();
             if (productId==""){
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTTheoAll",
+                    url: "/admin/ban-hang-tai-quay/locSPCTTheoAll",
                     type: 'GET',
                     success: function(data) {
                         $('#contentAjax2').empty()
@@ -2004,7 +2146,7 @@
                 });
             }else {
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTBySanPham/"+productId,
+                    url: "/admin/ban-hang-tai-quay/locSPCTBySanPham/"+productId,
                     type: 'GET',
                     data: {id: productId},
                     success: function(data) {
@@ -2022,7 +2164,7 @@
             var productId = $(this).val();
             if (productId==""){
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTTheoAll",
+                    url: "/admin/ban-hang-tai-quay/locSPCTTheoAll",
                     type: 'GET',
                     success: function(data) {
                         $('#contentAjax2').empty()
@@ -2031,7 +2173,7 @@
                 });
             }else {
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTByMauSac/"+productId,
+                    url: "/admin/ban-hang-tai-quay/locSPCTByMauSac/"+productId,
                     type: 'GET',
                     data: {id: productId},
                     success: function(data) {
@@ -2050,7 +2192,7 @@
             var productId = $(this).val();
             if (productId==""){
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTTheoAll",
+                    url: "/admin/ban-hang-tai-quay/locSPCTTheoAll",
                     type: 'GET',
                     success: function(data) {
                         $('#contentAjax2').empty()
@@ -2059,7 +2201,7 @@
                 });
             }else {
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTByKichThuoc/"+productId,
+                    url: "/admin/ban-hang-tai-quay/locSPCTByKichThuoc/"+productId,
                     type: 'GET',
                     data: {id: productId},
                     success: function(data) {
@@ -2077,7 +2219,7 @@
             var productId = $(this).val();
             if (productId==""){
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTTheoAll",
+                    url: "/admin/ban-hang-tai-quay/locSPCTTheoAll",
                     type: 'GET',
                     success: function(data) {
                         $('#contentAjax2').empty()
@@ -2086,7 +2228,7 @@
                 });
             }else {
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTByChatLieu/"+productId,
+                    url: "/admin/ban-hang-tai-quay/locSPCTByChatLieu/"+productId,
                     type: 'GET',
                     data: {id: productId},
                     success: function(data) {
@@ -2105,7 +2247,7 @@
             console.log("Id kiểu tay: ",productId)
             if (productId==""){
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTTheoAll",
+                    url: "/admin/ban-hang-tai-quay/locSPCTTheoAll",
                     type: 'GET',
                     success: function(data) {
                         $('#contentAjax2').empty()
@@ -2114,7 +2256,7 @@
                 });
             }else {
                 $.ajax({
-                    url: "/ban-hang-tai-quay/locSPCTByKieuTay/"+productId,
+                    url: "/admin/ban-hang-tai-quay/locSPCTByKieuTay/"+productId,
                     type: 'GET',
                     data: {id: productId},
                     success: function(data) {

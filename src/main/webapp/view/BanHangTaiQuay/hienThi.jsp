@@ -55,7 +55,7 @@
                     <td>${kh.hoTen}</td>
                     <td>${kh.sdt}</td>
                     <td>
-                        <form action="/ban-hang-tai-quay/find-kh/${kh.id}" method="post">
+                        <form action="/admin/ban-hang-tai-quay/find-kh/${kh.id}" method="post">
                             <input type="hidden" name="idHoaDon" value="${hoaDon.id}">
                             <input type="hidden" name="maHoaDon" value="${hoaDon.ma}">
                             <input type="hidden" class="form-control" name="ngayTao" value="${hoaDon.ngayTao}">

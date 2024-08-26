@@ -100,7 +100,7 @@ public class ThongKeController {
 
         // Top selling products
         LocalDateTime currentMonth = LocalDateTime.now();
-        Page<SPCTDTO> topSellingProducts = _thongKeRepo.getTopSellingProductsByMonth(currentMonth,10,pageRequest);
+        Page<SPCTDTO> topSellingProducts = _thongKeRepo.getTopSellingProductsByMonth(currentMonth,0,pageRequest);
 
         model.addAttribute("topSellingProducts",topSellingProducts);
         model.addAttribute("pageSPSapHetHang", listSanPhamSapHetHang);
