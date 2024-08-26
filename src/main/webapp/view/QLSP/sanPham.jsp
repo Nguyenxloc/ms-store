@@ -405,7 +405,7 @@
                                 <div class="row" style="gap: 10px;">
                                     <div class="col col-md-12">
                                         <div class="d-flex" style="gap: 10px;">
-                                            <p style="width: 120px;">Tên SP:</p>
+                                            <p style="width: 70px;">Tên SP:</p>
                                             <div>
                                                 <input type="text" id="tensp"
                                                        class="w-full p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -419,9 +419,6 @@
                                         <div class="d-flex" style="width: fit-content">
                                             <p class="mt-2" style="width: 80px;">Chất liệu: </p>
                                             <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddCL" id="iconHotAddChatLieu"
-                                                   style="font-size: 25px"></i>
                                             </div>
                                             <div class="d-flex" id="chatLieuBox">
                                                 <div class="dropdown">
@@ -443,10 +440,6 @@
                                             <p class="mt-2" style="width: 80px;">Kiểu tay: </p>
                                             <div class="d-flex gap-2" id="kieuTayBox">
                                                 <div class="icon-container">
-                                                    <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                       data-bs-target="#ModalHotAddKTA"
-                                                       id="iconHotAddKieuTay"
-                                                       style="font-size: 25px"></i>
                                                 </div>
                                                 <div class="dropdown">
                                                     <button class="btn btn-outline-secondary dropdown-toggle"
@@ -474,9 +467,6 @@
                                         <div class="d-flex">
                                             <p class="mt-2" style="width: 80px;">Màu sắc: </p>
                                             <div class="icon-container">
-                                                <i class=" bi bi-folder-plus col-3" data-bs-toggle="modal"
-                                                   data-bs-target="#ModalHotAddMS" id="iconHotAddMauSac"
-                                                   style="font-size: 25px"></i>
                                             </div>
                                             <div class="d-flex flex-wrap gap-2" id="mauSacBox">
 
@@ -1534,10 +1524,6 @@
                 '<div class="d-flex">' +
                 '<p class="mt-2" style="width: 80px;">' + lstDataSet[i].name + '</p>' +
                 '<div class="icon-container">' +
-                '<i class="bi bi-folder-plus col-3" data-bs-toggle="modal" ' +
-                'data-bs-target="#ModalHotAddKT" ' +
-                'id="iconHotAddKichThuoc_' + lstDataSet[i].name + '" ' +
-                'style="font-size: 25px"></i>' +
                 '</div>' +
                 '<div class="d-flex flex-wrap gap-2" id="kichThuocBox_' + lstDataSet[i].name + '">';
 
