@@ -51,7 +51,12 @@ public class AdminController {
                 String role = nhanVienByTK.getIdCV().getTen();
                 session.setAttribute("userRole", role);
                 redirectAttributes.addFlashAttribute("success", "Đăng nhập thành công");
-                return "redirect:/admin/thong-ke/view";
+                if (nhanVienByTK.getIdCV().getTen().equals("Quản lý")){
+                    return "redirect:/admin/thong-ke/view";
+                }else {
+                    return "redirect:/admin/ban-hang-tai-quay/hien-thi";
+                }
+
             }else {
                 redirectAttributes.addFlashAttribute("error", "Mật khẩu nhập vào chưa đúng!");
                 return "redirect:/admin/dang-nhap-view";
