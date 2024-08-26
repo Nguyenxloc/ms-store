@@ -13,7 +13,7 @@ import java.util.*;
 public class ConfigVNpay {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:8080/ban-hang-tai-quay/payment-info";
+    public static String vnp_ReturnUrl = "http://localhost:8080/admin/ban-hang-tai-quay/payment-info";
     public static String vnp_TmnCode = "ZLY1HKRX";
     public static String secretKey = "M92Z4J1D3DJKFD2UGSHE8SQ8S0BR5U6I";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

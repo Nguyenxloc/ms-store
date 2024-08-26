@@ -1958,7 +1958,7 @@
                                 'Dữ liệu đã được ghi nhận.',
                                 'success'
                             ).then(() => {
-                                window.location.href = '/admin/ban-hang-tai-quay';
+                                window.location.href = '/admin/ban-hang-tai-quay/hien-thi';
                             });
                             button.closest('tr').remove();
                         });

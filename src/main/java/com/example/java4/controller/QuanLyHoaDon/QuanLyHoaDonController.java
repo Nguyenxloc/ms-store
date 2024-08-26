@@ -398,6 +398,9 @@ public class QuanLyHoaDonController {
         for (ChiTietHoaDon chiTietHoaDon : listHDCT) {
             totalSoLuong += chiTietHoaDon.getSoLuong();
         }
+        BigDecimal tongTienThanhToan = calculateTongTienThanhToan(tongTien, khuyenMai, giaoHang);
+        hoaDon.setTongTien(tongTienThanhToan);
+        _hoaDonRepo.save(hoaDon);
         model.addAttribute("listLichSuHoaDonDTO", listLichSuHoaDonDTO);
         model.addAttribute("hinhAnhMap", hinhAnhMap);
         model.addAttribute("hinhAnhMapCTSP", hinhAnhMapCTSP);

@@ -127,7 +127,7 @@ public interface ThongKeRepository extends JpaRepository<HoaDon, String> {
 
 
     // Thống kê sản phẩm sắp hết hàng
-    @Query("SELECT c FROM ChiTietSanPham c WHERE c.soLuong <= 10" +
+    @Query("SELECT c FROM ChiTietSanPham c WHERE c.soLuong <= 10 and c.trangThai=1 and c.idSanPham.trangThai=1" +
             " ORDER BY c.soLuong  ASC")
     Page<ChiTietSanPham> findProductsLowOnStock(Pageable pageable);
 

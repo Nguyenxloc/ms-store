@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -47,6 +49,12 @@ public class SanPhamController {
     SPCTRepository spctRepository;
     @Autowired
     SearchService search;
+    @Autowired
+    GiaoHangRepo giaoHangRepo;
+    @Autowired
+    KhuyenMaiRepository khuyenMaiRepo;
+    @Autowired
+    HoaDonRepository hoaDonRepo;
 
     public SanPhamController() {
     }
@@ -303,6 +311,39 @@ public class SanPhamController {
         }
         return ResponseEntity.ok(sanPhamViewList);
     }
+    @CrossOrigin
+    @PostMapping("update-phiship")
+    public ResponseEntity<Boolean> save(
+            @RequestParam("newPhiShip") String newPhiShip,
+            @RequestParam("idHoaDon") String idHoaDon
+    ) {
+        System.out.println("id hoa don test: " + idHoaDon);
+        System.out.println("new phi ship test: " + newPhiShip);
+        try {
+            // Convert the newPhiShip parameter to BigDecimal
+            NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+            Number number = format.parse(newPhiShip);
+            BigDecimal bigDecimalPhiShip = new BigDecimal(number.toString());
 
+            // Update the value in the database
+            int updatedRows = giaoHangRepo.updatePhiShipByHoaDonId(idHoaDon, bigDecimalPhiShip);
+
+            // Return true if the update affected at least one row, false otherwise
+            if (updatedRows > 0) {
+                return ResponseEntity.ok(true);
+            } else {
+                return ResponseEntity.ok(false);
+            }
+        } catch (ParseException | NumberFormatException e) {
+            // Log the exception and return false
+            e.printStackTrace();
+            return ResponseEntity.ok(false);
+        } catch (Exception e) {
+            // Catch any other exceptions and return false
+            e.printStackTrace();
+            return ResponseEntity.ok(false);
+        }
+
+    }
 
 }

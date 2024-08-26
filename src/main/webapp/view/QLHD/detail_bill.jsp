@@ -1626,7 +1626,6 @@
     }
 
     //start debug
-
     // Hàm tính lại phí ship và tổng tiền thanh toán
     function calculateShippingAndTotal(tongTien, soLuongGioHang, giamGia) {
         // Get necessary values
@@ -1661,7 +1660,6 @@
 
                 var firstFee = data_total.data.total;
                 console.log("API Response: ", firstFee); // Log the shipping fee
-
                 // Calculate the new total
                 var newTotal = tongTien + firstFee - giamGia;
 
@@ -1718,11 +1716,37 @@
                 var firstFee = data_total.data.total;
                 console.log("API Response: ", firstFee); // Log the shipping fee
 
+                /// continue
                 // Return the shipping fee via callback
                 callback(firstFee);
             });
         });
     }
+    let newPhiShip = 0;
+    function getPhiVanChuyenValue() {
+        var spanElement = document.getElementById('phiVanChuyen');
+        var displayedValue = spanElement.textContent || spanElement.innerText;
+        // Remove the currency symbol (₫) and commas
+        var numericValue = displayedValue.replace(/[₫,]/g, '').trim();
+        // Convert the cleaned string to a number
+        var numberValue = parseFloat(numericValue);
+        // Multiply by 100 to convert to integer value
+        var integerValue = Math.round(numberValue * 1000);
+        // Output the result
+        console.log("Converted value:", integerValue);
+        newPhiShip = integerValue;
+        const queryString = window.location.pathname;
+        const pathParts = queryString.split('/');
+        const pathVariable = pathParts[pathParts.length - 1];
+        fetch(`/san-pham/update-phiship?idHoaDon=`+ pathVariable+`&newPhiShip=`+integerValue, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+    // Call the function every second (1000 milliseconds)
+    setInterval(getPhiVanChuyenValue, 1000);
 
 
 </script>
